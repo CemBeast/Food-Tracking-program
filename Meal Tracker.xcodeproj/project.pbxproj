@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B22239432ACD3C17004EF7DD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22239422ACD3C17004EF7DD /* main.cpp */; };
+		B222394B2ACD3C3B004EF7DD /* Food.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22239492ACD3C3B004EF7DD /* Food.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,12 @@
 /* Begin PBXFileReference section */
 		B222393F2ACD3C17004EF7DD /* Meal Tracker */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Meal Tracker"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22239422ACD3C17004EF7DD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		B22239492ACD3C3B004EF7DD /* Food.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Food.cpp; sourceTree = "<group>"; };
+		B222394A2ACD3C3B004EF7DD /* Food.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Food.hpp; sourceTree = "<group>"; };
+		B222394E2ACD416B004EF7DD /* RunApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RunApp.hpp; sourceTree = "<group>"; };
+		B22239502ACD4BCA004EF7DD /* FoodData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FoodData.csv; path = "../../../../Users/cem/Documents/Personal Stuff/Meal Tracker/Meal Tracker/FoodData.csv"; sourceTree = DEVELOPER_DIR; };
+		B24B66992B7A00EF00673F17 /* DayTotals.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = DayTotals.txt; sourceTree = "<group>"; };
+		B2DF760C2B3A43160069D56C /* FoodLog.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FoodLog.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +64,13 @@
 		B22239412ACD3C17004EF7DD /* Meal Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				B2DF760C2B3A43160069D56C /* FoodLog.txt */,
+				B22239502ACD4BCA004EF7DD /* FoodData.csv */,
 				B22239422ACD3C17004EF7DD /* main.cpp */,
+				B222394A2ACD3C3B004EF7DD /* Food.hpp */,
+				B22239492ACD3C3B004EF7DD /* Food.cpp */,
+				B222394E2ACD416B004EF7DD /* RunApp.hpp */,
+				B24B66992B7A00EF00673F17 /* DayTotals.txt */,
 			);
 			path = "Meal Tracker";
 			sourceTree = "<group>";
@@ -120,6 +133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B22239432ACD3C17004EF7DD /* main.cpp in Sources */,
+				B222394B2ACD3C3B004EF7DD /* Food.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +252,7 @@
 		B22239472ACD3C17004EF7DD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -246,6 +261,7 @@
 		B22239482ACD3C17004EF7DD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
