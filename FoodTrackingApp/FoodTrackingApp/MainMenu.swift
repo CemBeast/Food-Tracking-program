@@ -23,14 +23,46 @@ struct CustomButtonStyle: ButtonStyle {
 }
 
 struct MainMenu: View {
+    @State private var calories = 0
+    @State private var protein = 0.0
+    @State private var carbs = 0.0
+    @State private var fats = 0.0
+    
+    // State for selected food item
+    @State private var selectedFood: FoodItem? = nil
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                // Food Macros Display
+                FoodMacrosDisplay(calories: calories, protein: protein, carbs: carbs, fats: fats)
+                
+                Spacer()
+                
                 NavigationLink(destination: DictionaryView()) {
                         Text("View Food Dictionary")
                         .buttonStyle(CustomButtonStyle())
                     }
+                Button(action: {
+                                    // Trigger logic to let the user select a food item
+                                    // This will navigate to the DictionaryView
+                                    // (Already handled via NavigationLink)
+                                }) {
+                                    Text("Select Food to Track")
+                                        .buttonStyle(CustomButtonStyle())
+                                }
+                                
+                                // Display selected food macros if available
+                                if let food = selectedFood {
+                                    FoodMacrosDisplay(
+                                        calories: food.calories,
+                                        protein: food.protein,
+                                        carbs: food.carbs,
+                                        fats: food.fats
+                                    )
+                                }
                        // Add more NavigationLinks for other options
+                Spacer()
                    }
                    .navigationTitle("Food Tracking Menu")
                }

@@ -14,6 +14,7 @@
 		B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF76002B36ECDF0069D56C /* ContentView.swift */; };
 		B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76022B36ECE00069D56C /* Assets.xcassets */; };
 		B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */; };
+		B2FAC9E42CEB2DB600AE1129 /* FoodMacrosDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		B2DF76002B36ECDF0069D56C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B2DF76022B36ECE00069D56C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMacrosDisplay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				B2569F222CCFB4BD006532EE /* FoodData.csv */,
 				B2569F1E2CCFB320006532EE /* DictionaryView.swift */,
+				B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */,
 				B2569F1C2CCFAE41006532EE /* MainMenu.swift */,
 				B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */,
 				B2DF76002B36ECDF0069D56C /* ContentView.swift */,
@@ -149,6 +152,7 @@
 			files = (
 				B2569F1F2CCFB32C006532EE /* DictionaryView.swift in Sources */,
 				B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */,
+				B2FAC9E42CEB2DB600AE1129 /* FoodMacrosDisplay.swift in Sources */,
 				B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */,
 				B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */,
 			);
