@@ -10,20 +10,24 @@ struct FoodItem: Identifiable {
     var id = UUID()
     var name: String
     var weightInGrams: Int
-    var servings: Int // Represents the number of servings
+    var servings: Int
     var calories: Int
     var protein: Double
     var carbs: Double
     var fats: Double
     
     var isMeasuredByServing: Bool {
-        return servings > 0 // True if servings is greater than 0
+        return servings > 0
     }
 }
 
 struct DictionaryView: View {
+    @Binding var selectedFood: FoodItem?
+    @Binding var showGramsInput: Bool
     @State private var foodItems: [FoodItem] = []
     @State private var searchText: String = ""
+    
+    var readOnly: Bool = false
 
     let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -34,63 +38,88 @@ struct DictionaryView: View {
     }()
     
     var body: some View {
-        HStack {
-                TextField("Search", text: $searchText)
-                    .padding(8)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(maxWidth: .infinity)
-            }
-            .padding(.bottom, 0) // Remove extra space above the search bar
-            Spacer(minLength: 0)
-        List(foodItems.filter { foodItem in
-            searchText.isEmpty || foodItem.name.localizedCaseInsensitiveContains(searchText)}) { foodItem in
-            VStack(alignment: .leading) {
-                Text(foodItem.name)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    
-                HStack {
-                    VStack(alignment: .leading) {
-                        if foodItem.isMeasuredByServing {
-                            Text("Servings")
-                            Text("\(foodItem.servings)")
-                        } else {
-                            Text("Weight")
-                            Text("\(foodItem.weightInGrams)g")
-                        }
+        VStack {
+            TextField("Search", text: $searchText)
+                .padding(8)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 8)
+
+            List(filteredFoodItems) { foodItem in
+                if !readOnly {
+                    Button(action: {
+                        selectedFood = foodItem
+                        showGramsInput = true
+                    }) {
+                        content(for: foodItem)
                     }
-                    .frame(maxWidth: .infinity) // Make this VStack take full width
-                    VStack(alignment: .leading) {
-                        Text("Calories")
-                        Text("\(foodItem.calories)")
-                    }
-                    .frame(maxWidth: .infinity) // Make this VStack take full width
-                    VStack(alignment: .leading) {
-                        Text("Protein")
-                        Text("\(formatter.string(from: NSNumber(value: foodItem.protein)) ?? "")g")
-                    }
-                    .frame(maxWidth: .infinity) // Make this VStack take full width
-                    VStack(alignment: .leading) {
-                        Text("Carbs")
-                        Text("\(formatter.string(from: NSNumber(value: foodItem.carbs)) ?? "")g")
-                    }
-                    .frame(maxWidth: .infinity) // Make this VStack take full width
-                    VStack(alignment: .leading) {
-                        Text("Fats")
-                        Text("\(formatter.string(from: NSNumber(value: foodItem.fats)) ?? "")g")
-                    }
-                    .frame(maxWidth: .infinity) // Make this VStack take full width
+                    .buttonStyle(PlainButtonStyle())
+                } else {
+                    content(for: foodItem)
                 }
             }
         }
         .navigationTitle("Food Dictionary")
         .listStyle(PlainListStyle())
-        .padding(.top, 0) // Optional: Set top padding to 0
         .onAppear {
             loadFoodDictionary()
         }
     }
-
+    
+    private var filteredFoodItems: [FoodItem] {
+        foodItems.filter { foodItem in
+            searchText.isEmpty || foodItem.name.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+    
+    private func content(for foodItem: FoodItem) -> some View {
+        VStack(alignment: .leading) {
+            Text(foodItem.name)
+                .font(.title2)
+                .fontWeight(.semibold)
+            
+            HStack {
+                VStack(alignment: .leading) {
+                    if foodItem.isMeasuredByServing {
+                        Text("Servings")
+                        Text("\(foodItem.servings)")
+                    } else {
+                        Text("Weight")
+                        Text("\(foodItem.weightInGrams)g")
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack(alignment: .leading) {
+                    Text("Calories")
+                    Text("\(foodItem.calories)")
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack(alignment: .leading) {
+                    Text("Protein")
+                    Text("\(formatter.string(from: NSNumber(value: foodItem.protein)) ?? "")g")
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack(alignment: .leading) {
+                    Text("Carbs")
+                    Text("\(formatter.string(from: NSNumber(value: foodItem.carbs)) ?? "")g")
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack(alignment: .leading) {
+                    Text("Fats")
+                    Text("\(formatter.string(from: NSNumber(value: foodItem.fats)) ?? "")g")
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(8)
+    }
+    
     func loadFoodDictionary() {
         guard let fileURL = Bundle.main.url(forResource: "FoodData", withExtension: "csv") else {
             print("CSV file not found.")
@@ -110,7 +139,7 @@ struct DictionaryView: View {
                       let fats = Double(columns[6]),
                       let servingType = Int(columns[2]) else { return nil }
                 
-                let servings: Int = servingType > 0 ? servingType : 0 // Use servingType directly if > 0
+                let servings: Int = servingType > 0 ? servingType : 0
                 
                 return FoodItem(name: columns[0],
                                 weightInGrams: weight,
@@ -123,10 +152,16 @@ struct DictionaryView: View {
         } catch {
             print("Error loading CSV file: \(error)")
         }
-    }}
-
-struct DictionaryViewPreview: PreviewProvider{
-    static var previews: some View {
-        DictionaryView() 
     }
 }
+
+// MARK: - Preview
+
+//struct DictionaryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DictionaryView(
+//            selectedFood: .constant(nil),
+//            showGramsInput: .constant(false)
+//        )
+//    }
+//}

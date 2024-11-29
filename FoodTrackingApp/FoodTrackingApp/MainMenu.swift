@@ -30,6 +30,9 @@ struct MainMenu: View {
     
     // State for selected food item
     @State private var selectedFood: FoodItem? = nil
+    @State private var showFoodSelection = false
+    @State private var showGramsInput = false
+    @State private var gramsOrServings: Int? = nil
     
     var body: some View {
         NavigationView {
@@ -39,51 +42,45 @@ struct MainMenu: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: DictionaryView()) {
+                NavigationLink(destination: DictionaryView(selectedFood: $selectedFood, showGramsInput: $showGramsInput, readOnly: true)) {
                         Text("View Food Dictionary")
                         .buttonStyle(CustomButtonStyle())
                     }
                 Button(action: {
-                                    // Trigger logic to let the user select a food item
-                                    // This will navigate to the DictionaryView
-                                    // (Already handled via NavigationLink)
+                                    showFoodSelection.toggle()
                                 }) {
                                     Text("Select Food to Track")
                                         .buttonStyle(CustomButtonStyle())
                                 }
                                 
-                                // Display selected food macros if available
-                                if let food = selectedFood {
-                                    FoodMacrosDisplay(
-                                        calories: food.calories,
-                                        protein: food.protein,
-                                        carbs: food.carbs,
-                                        fats: food.fats
-                                    )
+                                // Show modal for grams/servings input if a food is selected
+                                .sheet(isPresented: $showFoodSelection) {
+                                    DictionaryView(selectedFood: $selectedFood, showGramsInput: $showGramsInput, readOnly: false)
+                                    // After food selection, show grams/servings input prompt
+                                    if showGramsInput, let food = selectedFood {
+                                        GramsOrServingsInput(
+                                            food: food,
+                                            gramsOrServings: $gramsOrServings,
+                                            showGramsInput: $showGramsInput,
+                                            updateMacros: { calculatedCalories, calculatedFats, calculatedProtein, calculatedCarbs in
+                                                self.calories += Int(calculatedCalories)
+                                                self.fats += calculatedFats
+                                                self.protein += calculatedProtein
+                                                self.carbs += calculatedCarbs
+                                            }
+                                        )
+                                    }
                                 }
-                       // Add more NavigationLinks for other options
                 Spacer()
                    }
                    .navigationTitle("Food Tracking Menu")
                }
     }
-    
-    let menuOptions = [
-        "Enter food item",
-        "Print list of food ate today with macros",
-        "Print total macros",
-        "Add food to dictionary",
-        "Print food dictionary",
-        "Save Dictionary file",
-        "Write food to log file",
-        "Edit Food",
-        "Enter quick food"
-    ]
 }
 
-struct MainMenuPreviews: PreviewProvider {
-    static var previews: some View {
-        MainMenu()
-    }
-}
+//struct MainMenuPreviews: PreviewProvider {
+//    static var previews: some View {
+//        MainMenu()
+//    }
+//}
 
