@@ -4654,3 +4654,9 @@ Grams:46  Servings:0  Calories:26  Protein:0.322  Carbs:6.44  Fat:0.138
 Todays Totals:
 Calories:357  Protein:27  Carbs:39  Fats:10
 ----------------------------------------------------------------------------------
+Date: Sun Apr  6 18:03:32 2025
+Sirloin Steak
+Grams:52  Servings:0  Calories:126  Protein:14.0706  Carbs:0  Fat:7.34118
+Todays Totals:
+Calories:483  Protein:41  Carbs:39  Fats:17
+----------------------------------------------------------------------------------

@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'Meal Tracker' in project 'Meal Tracker' (no dependencies)
