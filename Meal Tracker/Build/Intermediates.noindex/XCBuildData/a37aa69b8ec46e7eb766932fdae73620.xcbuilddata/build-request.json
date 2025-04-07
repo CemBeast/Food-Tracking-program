@@ -1,0 +1,57 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildAndRun"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "db6ea14f76a0a1ee7d1689b50b2aea1e8ee84d36d877c283e56b37d220e240ad"
+    }
+  ],
+  "containerPath" : "/Users/cem/Documents/Personal Stuff/Meal Tracker code/Meal Tracker/MealTracker.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "macosx",
+      "sdk" : "macosx15.2",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "arm64e",
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/cem/Documents/Personal Stuff/Meal Tracker code/Meal Tracker/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/cem/Documents/Personal Stuff/Meal Tracker code/Meal Tracker/Build/Products",
+      "derivedDataPath" : "/Users/cem/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/cem/Library/Developer/Xcode/DerivedData/MealTracker-ftxrwazgofdshffnzgrbvcetrvtt/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/cem/Library/Developer/Xcode/DerivedData/MealTracker-ftxrwazgofdshffnzgrbvcetrvtt/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/cem/Documents/Personal Stuff/Meal Tracker code/Meal Tracker/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
