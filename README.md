@@ -1,0 +1,1 @@
+Within this repo there are two main files, FoodTrackingApp and Meal Tracker. FoodTrackingApp is a work in progress swift UI version of the working Meal Tracker C++ version. I mainly use the C++ version as it is fully functional, but I am trying to convert it into an application using Swift UI.
