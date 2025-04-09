@@ -46,7 +46,8 @@ public:
     void printTotalFoodAteInSession();
     bool isToday();
     bool isTodayForDayFoods();
-    void concatDates();
+    void writeToDatesAndMacrosFile();
+    void printDatesAndMacros();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -56,6 +57,7 @@ private:
     fstream mFoodLog; // only is written to appending good ate
     fstream DayTotals;
     fstream mFoodAteTodayFile;
+    fstream mMacrosLog;
     int mFoodNum;
     Macros dailyMacros;
     
@@ -82,6 +84,8 @@ RunApp::~RunApp ()
 void RunApp::RunGame()
 {
     int choice = 0;
+    
+    writeToDatesAndMacrosFile();
     mFoodNum = readFile();
     Food foodEntry;
     do
@@ -113,9 +117,10 @@ void RunApp::RunGame()
                 break;
             case 11: printTotalFoodAteInSession();
                 break;
+            case 12: printDatesAndMacros();
+                break;
         }
-    }while (choice != 12);
-    //create a save function to save the dictionary into the file
+    }while (choice != 13);
     saveDictionary();
 }
 
@@ -135,7 +140,8 @@ void RunApp::printMenu()
     cout << "9. Enter quick food" << endl;
     cout << "10. Print food ate in this session" << endl;
     cout << "11. Print total macros of food ate in this session" << endl;
-    cout << "12. Exit" << endl;
+    cout << "12. Print log of macros for each day" << endl;
+    cout << "13. Exit" << endl;
     cout << "---------------------------------------------------------" << endl;
 }
 
@@ -672,8 +678,7 @@ void RunApp::writeToDailyLog()
     time_t now = time(0);
     char *dt = ctime(&now);
     string junk = "", date = "";
-    int count = 0;
-
+    
     if (!isTodayForDayFoods())
     {
         // rewrite
@@ -761,19 +766,38 @@ bool RunApp::isTodayForDayFoods()
 
 }
 
-void RunApp::concatDates()
+// reads the
+void RunApp::writeToDatesAndMacrosFile()
 {
     if (!isToday())
     {
         string date = "", macros = "";
-        // add to list showing dates and macros ate
+
         DayTotals.open("DayTotals.txt");
         getline(DayTotals, date);
         getline(DayTotals, macros);
-        pair<string, string> p(date, macros);
-        mDatesAndMacros.push_back(p);
+        //pair<string, string> p(date, macros);
+        //mDatesAndMacros.push_back(p);
         DayTotals.close();
+        
+        mMacrosLog.open("MacrosLog.txt");
+        mMacrosLog << date << endl;
+        mMacrosLog << macros << endl;
+        mMacrosLog.close();
     }
 }
+
+void RunApp::printDatesAndMacros()
+{
+    for(const auto &pair : mDatesAndMacros)
+    {
+        cout << pair.first << endl;
+        cout << pair.second << endl;
+    }
+}
+
+// NEed to write to a txt file to store Date and macros
+// need to read that file to save into a vector<pair<string, string>>
+
 
 #endif /* RunApp_hpp */

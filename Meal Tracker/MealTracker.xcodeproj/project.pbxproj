@@ -36,6 +36,7 @@
 		B2A584C92D93C180003549DD /* Macros.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Macros.cpp; sourceTree = "<group>"; };
 		B2A584CE2D93D02B003549DD /* DayFoods.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = DayFoods.txt; sourceTree = "<group>"; };
 		B2DF760C2B3A43160069D56C /* FoodLog.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FoodLog.txt; sourceTree = "<group>"; };
+		B2F3E3302DA64C5B002F5669 /* MacrosLog.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = MacrosLog.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +69,7 @@
 		B22239412ACD3C17004EF7DD /* Meal Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				B2F3E3302DA64C5B002F5669 /* MacrosLog.txt */,
 				B2A584CE2D93D02B003549DD /* DayFoods.txt */,
 				B24A763B2D1285D1003F339D /* FoodData.csv */,
 				B2DF760C2B3A43160069D56C /* FoodLog.txt */,
@@ -116,7 +118,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B222393A2ACD3C17004EF7DD /* Build configuration list for PBXProject "Meal Tracker" */;
+			buildConfigurationList = B222393A2ACD3C17004EF7DD /* Build configuration list for PBXProject "MealTracker" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -278,7 +280,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B222393A2ACD3C17004EF7DD /* Build configuration list for PBXProject "Meal Tracker" */ = {
+		B222393A2ACD3C17004EF7DD /* Build configuration list for PBXProject "MealTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B22239442ACD3C17004EF7DD /* Debug */,
