@@ -792,23 +792,24 @@ void RunApp::writeToDatesAndMacrosFile()
 // writes to the history log
 void RunApp::readDatesAndMacrosFile()
 {
-    if (!isToday())
-    {
-        string date = "", macros = "";
-        
-        mMacrosLog.open("MacrosLog.txt");
-        
-        while (true)
-        {
-            getline(mMacrosLog, date);
-            getline(mMacrosLog, macros);
-            pair<string, string> p(date, macros);
-            mDatesAndMacros.push_back(p);
-            if (mMacrosLog.eof())
-                break;
-        }
-        mMacrosLog.close();
+    string date = "", macros = "";
+    
+    mMacrosLog.open("MacrosLog.txt");
+    
+//    while (true)
+//    {
+//        getline(mMacrosLog, date);
+//        getline(mMacrosLog, macros);
+//        pair<string, string> p(date, macros);
+//        mDatesAndMacros.push_back(p);
+//        if (mMacrosLog.eof())
+//            break;
+//    }
+    while (std::getline(mMacrosLog, date) && std::getline(mMacrosLog, macros)) {
+        mDatesAndMacros.emplace_back(date, macros);
     }
+    mMacrosLog.close();
+
 }
 
 

@@ -1,28 +1,24 @@
-Date-Tue Apr  8 17:25:17 2025
+Date-Wed Apr  9 09:52:41 2025
 ---------------------------------------------------------
-Carne Asada
-Grams:156  Servings:0  Calories:345  Protein:40.6714  Carbs:0.557143  Fat:18.9429
-Vegetable Melange
-Grams:220  Servings:0  Calories:116  Protein:2.58824  Carbs:12.9412  Fat:6.47059
-Almond Milk Whey Protein Shake
-Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
-Trader joes chile lime chips
-Grams:29  Servings:0  Calories:155  Protein:2.07143  Carbs:17.6071  Fat:8.28571
-Total beets
-Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
-Nonfat Costco Yogurt
-Grams:178  Servings:0  Calories:104  Protein:18.8471  Carbs:7.32941  Fat:0
-Fat Free Mozzarella Cheese
-Grams:62  Servings:0  Calories:99  Protein:19.9286  Carbs:4.42857  Fat:0
-Egg Whites
-Grams:201  Servings:0  Calories:109  Protein:21.8478  Carbs:0  Fat:0
 Oil
-Grams:10  Servings:0  Calories:80  Protein:0  Carbs:0  Fat:9.33333
-Chicken Tenders
-Grams:146  Servings:0  Calories:130  Protein:29.9821  Carbs:0  Fat:1.30357
-Rice
-Grams:308  Servings:0  Calories:301  Protein:5.775  Carbs:65.065  Fat:2.5025
+Grams:3  Servings:0  Calories:24  Protein:0  Carbs:0  Fat:2.8
+Blueberries
+Grams:51  Servings:0  Calories:29  Protein:0.357  Carbs:7.14  Fat:0.153
+Blackberries
+Grams:52  Servings:0  Calories:22  Protein:0.728  Carbs:4.992  Fat:0.26
+Raspberries
+Grams:53  Servings:0  Calories:27  Protein:0.636  Carbs:6.36  Fat:0.371
+Egg Whites
+Grams:153  Servings:0  Calories:83  Protein:16.6304  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:51  Servings:0  Calories:81  Protein:16.3929  Carbs:3.64286  Fat:0
 Nonfat Costco Yogurt
-Grams:188  Servings:0  Calories:110  Protein:19.9059  Carbs:7.74118  Fat:0
+Grams:156  Servings:0  Calories:91  Protein:16.5176  Carbs:6.42353  Fat:0
 Fish oils
-Grams:0  Servings:3  Calories:30  Protein:0  Carbs:0  Fat:3
+Grams:0  Servings:2  Calories:20  Protein:0  Carbs:0  Fat:2
+Chicken Tenders
+Grams:158  Servings:0  Calories:141  Protein:32.4464  Carbs:0  Fat:1.41071
+Rice
+Grams:315  Servings:0  Calories:307  Protein:5.90625  Carbs:66.5438  Fat:2.55937
+Nonfat Costco Yogurt
+Grams:185  Servings:0  Calories:108  Protein:19.5882  Carbs:7.61765  Fat:0
