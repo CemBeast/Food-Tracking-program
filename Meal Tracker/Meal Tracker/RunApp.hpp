@@ -46,10 +46,12 @@ public:
     void printTotalFoodAteInSession();
     bool isToday();
     bool isTodayForDayFoods();
+    void concatDates();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
     vector<Food> mDailyLog; // loads the food ate today into this vector for printing daily macros
+    vector<pair<string, string> > mDatesAndMacros;
     fstream mfoodFile;
     fstream mFoodLog; // only is written to appending good ate
     fstream DayTotals;
@@ -759,5 +761,19 @@ bool RunApp::isTodayForDayFoods()
 
 }
 
+void RunApp::concatDates()
+{
+    if (!isToday())
+    {
+        string date = "", macros = "";
+        // add to list showing dates and macros ate
+        DayTotals.open("DayTotals.txt");
+        getline(DayTotals, date);
+        getline(DayTotals, macros);
+        pair<string, string> p(date, macros);
+        mDatesAndMacros.push_back(p);
+        DayTotals.close();
+    }
+}
 
 #endif /* RunApp_hpp */

@@ -4660,3 +4660,37 @@ Grams:52  Servings:0  Calories:126  Protein:14.0706  Carbs:0  Fat:7.34118
 Todays Totals:
 Calories:483  Protein:41  Carbs:39  Fats:17
 ----------------------------------------------------------------------------------
+Date: Tue Apr  8 17:25:17 2025
+Carne Asada
+Grams:156  Servings:0  Calories:345  Protein:40.6714  Carbs:0.557143  Fat:18.9429
+Vegetable Melange
+Grams:220  Servings:0  Calories:116  Protein:2.58824  Carbs:12.9412  Fat:6.47059
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Trader joes chile lime chips
+Grams:29  Servings:0  Calories:155  Protein:2.07143  Carbs:17.6071  Fat:8.28571
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Nonfat Costco Yogurt
+Grams:178  Servings:0  Calories:104  Protein:18.8471  Carbs:7.32941  Fat:0
+Fat Free Mozzarella Cheese
+Grams:62  Servings:0  Calories:99  Protein:19.9286  Carbs:4.42857  Fat:0
+Egg Whites
+Grams:201  Servings:0  Calories:109  Protein:21.8478  Carbs:0  Fat:0
+Oil
+Grams:10  Servings:0  Calories:80  Protein:0  Carbs:0  Fat:9.33333
+Todays Totals:
+Calories:1178  Protein:132  Carbs:50  Fats:47
+----------------------------------------------------------------------------------
+Date: Tue Apr  8 23:06:49 2025
+Chicken Tenders
+Grams:146  Servings:0  Calories:130  Protein:29.9821  Carbs:0  Fat:1.30357
+Rice
+Grams:308  Servings:0  Calories:301  Protein:5.775  Carbs:65.065  Fat:2.5025
+Nonfat Costco Yogurt
+Grams:188  Servings:0  Calories:110  Protein:19.9059  Carbs:7.74118  Fat:0
+Fish oils
+Grams:0  Servings:3  Calories:30  Protein:0  Carbs:0  Fat:3
+Todays Totals:
+Calories:1749  Protein:188  Carbs:123  Fats:54
+----------------------------------------------------------------------------------
