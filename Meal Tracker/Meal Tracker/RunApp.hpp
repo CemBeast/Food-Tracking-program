@@ -48,6 +48,7 @@ public:
     bool isTodayForDayFoods();
     void writeToDatesAndMacrosFile();
     void printDatesAndMacros();
+    void readDatesAndMacrosFile();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -85,7 +86,9 @@ void RunApp::RunGame()
 {
     int choice = 0;
     
+    
     writeToDatesAndMacrosFile();
+    readDatesAndMacrosFile();
     mFoodNum = readFile();
     Food foodEntry;
     do
@@ -693,6 +696,7 @@ void RunApp::writeToDailyLog()
     }
     else
     {
+        // appends to the file
         mFoodAteTodayFile.open("DayFoods.txt", std::ios::app);
         for(auto i = mLog.begin(); i != mLog.end(); ++i)
         {
@@ -766,7 +770,7 @@ bool RunApp::isTodayForDayFoods()
 
 }
 
-// reads the
+// writes to the history log
 void RunApp::writeToDatesAndMacrosFile()
 {
     if (!isToday())
@@ -776,16 +780,38 @@ void RunApp::writeToDatesAndMacrosFile()
         DayTotals.open("DayTotals.txt");
         getline(DayTotals, date);
         getline(DayTotals, macros);
-        //pair<string, string> p(date, macros);
-        //mDatesAndMacros.push_back(p);
         DayTotals.close();
         
-        mMacrosLog.open("MacrosLog.txt");
+        mMacrosLog.open("MacrosLog.txt", std::ios::app); // make it append
         mMacrosLog << date << endl;
         mMacrosLog << macros << endl;
         mMacrosLog.close();
     }
 }
+
+// writes to the history log
+void RunApp::readDatesAndMacrosFile()
+{
+    if (!isToday())
+    {
+        string date = "", macros = "";
+        
+        mMacrosLog.open("MacrosLog.txt");
+        
+        while (true)
+        {
+            getline(mMacrosLog, date);
+            getline(mMacrosLog, macros);
+            pair<string, string> p(date, macros);
+            mDatesAndMacros.push_back(p);
+            if (mMacrosLog.eof())
+                break;
+        }
+        mMacrosLog.close();
+    }
+}
+
+
 
 void RunApp::printDatesAndMacros()
 {
