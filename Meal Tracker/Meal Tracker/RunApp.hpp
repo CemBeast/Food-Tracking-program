@@ -49,6 +49,7 @@ public:
     void writeToDatesAndMacrosFile();
     void printDatesAndMacros();
     void readDatesAndMacrosFile();
+    void printAverages();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -796,15 +797,6 @@ void RunApp::readDatesAndMacrosFile()
     
     mMacrosLog.open("MacrosLog.txt");
     
-//    while (true)
-//    {
-//        getline(mMacrosLog, date);
-//        getline(mMacrosLog, macros);
-//        pair<string, string> p(date, macros);
-//        mDatesAndMacros.push_back(p);
-//        if (mMacrosLog.eof())
-//            break;
-//    }
     while (std::getline(mMacrosLog, date) && std::getline(mMacrosLog, macros)) {
         mDatesAndMacros.emplace_back(date, macros);
     }
@@ -823,8 +815,40 @@ void RunApp::printDatesAndMacros()
     }
 }
 
-// NEed to write to a txt file to store Date and macros
-// need to read that file to save into a vector<pair<string, string>>
+void RunApp::printAverages()
+{
+    
+    double avgCal = 0.0, avgProtein = 0.0, avgCarb = 0.0, avgFat = 0.0;
+    
+    
+    cout << "1. Average calories" << endl;
+    cout << "2. Average protein" << endl;
+    cout << "3. Average carbs" << endl;
+    cout << "4. Average fats" << endl;
+    int choice = 0;
+    cin >> choice;
+    
+    
+    switch (choice)
+    {
+        case 1:
+            std::sort(mList.begin(), mList.end(), compareByName);
+            break;
+        case 2:
+            std::sort(mList.begin(), mList.end(), compareByCalories);
+            break;
+        case 3:
+            std::sort(mList.begin(), mList.end(), compareByProtein);
+            break;
+        case 4:
+            std::sort(mList.begin(), mList.end(), compareByCarbs);
+            break;
+        case 5:
+            std::sort(mList.begin(), mList.end(), compareByFats);
+            break;
+        default:
+            cout << "Invalid choice, pritning unsorted" << endl;
+    }}
 
 
 #endif /* RunApp_hpp */

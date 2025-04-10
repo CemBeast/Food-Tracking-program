@@ -4724,3 +4724,57 @@ Grams:185  Servings:0  Calories:108  Protein:19.5882  Carbs:7.61765  Fat:0
 Todays Totals:
 Calories:933  Protein:109  Carbs:103  Fats:10
 ----------------------------------------------------------------------------------
+Date: Wed Apr  9 16:06:38 2025
+Kiwis
+Grams:149  Servings:0  Calories:90  Protein:1.639  Carbs:22.35  Fat:0.745
+Todays Totals:
+Calories:1023  Protein:111  Carbs:125  Fats:11
+----------------------------------------------------------------------------------
+Date: Wed Apr  9 20:15:09 2025
+Superior Keto Buns
+Grams:0  Servings:1  Calories:70  Protein:9  Carbs:16  Fat:2
+Beyond Patty
+Grams:0  Servings:1  Calories:250  Protein:19  Carbs:6  Fat:15
+Tomatoes
+Grams:47  Servings:0  Calories:8  Protein:0.4136  Carbs:1.8283  Fat:0.094
+Avacado
+Grams:36  Servings:0  Calories:57  Protein:0.72  Carbs:3.06  Fat:5.4
+Red Onions
+Grams:20  Servings:0  Calories:6  Protein:0.2  Carbs:1.6  Fat:0
+Super Greens
+Grams:7  Servings:0  Calories:1  Protein:0.164706  Carbs:0.247059  Fat:0
+Todays Totals:
+Calories:1415  Protein:140  Carbs:154  Fats:33
+----------------------------------------------------------------------------------
+Date: Wed Apr  9 20:19:41 2025
+Fire Roasted Primavera Mistura
+Grams:314  Servings:0  Calories:147  Protein:3.69412  Carbs:22.1647  Fat:7.38824
+Todays Totals:
+Calories:1562  Protein:144  Carbs:176  Fats:40
+----------------------------------------------------------------------------------
+Date: Wed Apr  9 23:21:52 2025
+Costco Tuxedo Chocolate Mousse Cake
+Grams:90  Servings:0  Calories:306  Protein:3.57353  Carbs:35.0735  Fat:17.8676
+Todays Totals:
+Calories:1868  Protein:148  Carbs:211  Fats:58
+----------------------------------------------------------------------------------
+Date: Wed Apr  9 23:24:18 2025
+Dreyers Cookies n Cream
+Grams:77  Servings:0  Calories:140  Protein:2.81707  Carbs:24.4146  Fat:3.28659
+Todays Totals:
+Calories:2008  Protein:151  Carbs:235  Fats:61
+----------------------------------------------------------------------------------
+Date: Thu Apr 10 10:18:03 2025
+Oil
+Grams:4  Servings:0  Calories:32  Protein:0  Carbs:0  Fat:3.73333
+Tomatoes
+Grams:107  Servings:0  Calories:19  Protein:0.9416  Carbs:4.1623  Fat:0.214
+Egg Whites
+Grams:180  Servings:0  Calories:97  Protein:19.5652  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:56  Servings:0  Calories:90  Protein:18  Carbs:4  Fat:0
+Nonfat Costco Yogurt
+Grams:180  Servings:0  Calories:105  Protein:19.0588  Carbs:7.41176  Fat:0
+Todays Totals:
+Calories:343  Protein:58  Carbs:16  Fats:4
+----------------------------------------------------------------------------------

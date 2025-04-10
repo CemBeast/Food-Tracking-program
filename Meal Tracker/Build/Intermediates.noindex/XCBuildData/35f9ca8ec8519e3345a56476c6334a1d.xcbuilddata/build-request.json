@@ -2,7 +2,7 @@
   "buildCommand" : {
     "command" : "build",
     "skipDependencies" : false,
-    "style" : "buildAndRun"
+    "style" : "buildOnly"
   },
   "configuredTargets" : [
     {
@@ -38,7 +38,7 @@
       "indexPCHPath" : "/Users/cem/Library/Developer/Xcode/DerivedData/MealTracker-ftxrwazgofdshffnzgrbvcetrvtt/Index.noindex/PrecompiledHeaders",
       "pchPath" : "/Users/cem/Documents/Personal Stuff/Meal Tracker code/Meal Tracker/Build/Intermediates.noindex/PrecompiledHeaders"
     },
-    "configurationName" : "Debug",
+    "configurationName" : "Release",
     "overrides" : {
       "synthesized" : {
         "table" : {
@@ -48,6 +48,7 @@
       }
     }
   },
+  "qos" : "default",
   "schemeCommand" : "launch",
   "showNonLoggedProgress" : true,
   "useDryRun" : false,
