@@ -123,8 +123,10 @@ void RunApp::RunGame()
                 break;
             case 12: printDatesAndMacros();
                 break;
+            case 13: printAverages();
+                break;
         }
-    }while (choice != 13);
+    }while (choice != 14);
     saveDictionary();
 }
 
@@ -145,7 +147,8 @@ void RunApp::printMenu()
     cout << "10. Print food ate in this session" << endl;
     cout << "11. Print total macros of food ate in this session" << endl;
     cout << "12. Print log of macros for each day" << endl;
-    cout << "13. Exit" << endl;
+    cout << "13. Print average macros" << endl;
+    cout << "14. Exit" << endl;
     cout << "---------------------------------------------------------" << endl;
 }
 
@@ -817,12 +820,34 @@ void RunApp::printDatesAndMacros()
 
 void RunApp::printAverages()
 {
-    
+    string junk = "", proteinStr = "", carbStr = "", calorieStr = "", fatStr = "";
     double avgCal = 0.0, avgProtein = 0.0, avgCarb = 0.0, avgFat = 0.0;
+    
+    for(const auto &pair : mDatesAndMacros)
+    {
+        string txt = pair.second;
+        stringstream ss(txt);
+        getline(ss, junk, ':');
+        getline(ss, calorieStr, ' ');
+        getline(ss, junk, ':');
+        getline(ss, proteinStr, ' ');
+        getline(ss, junk, ':');
+        getline(ss, carbStr, ' ');
+        getline(ss, junk, ':');
+        getline(ss, fatStr, '\n');
+        avgCal += stoi(calorieStr);
+        avgProtein += stoi(proteinStr);
+        avgCarb += stoi(carbStr);
+        avgFat += stoi(fatStr);
+    }
+    avgCal /= mDatesAndMacros.size();
+    avgProtein /= mDatesAndMacros.size();
+    avgCarb /= mDatesAndMacros.size();
+    avgFat /= mDatesAndMacros.size();
     
     
     cout << "1. Average calories" << endl;
-    cout << "2. Average protein" << endl;
+    cout << "2. Average proteins" << endl;
     cout << "3. Average carbs" << endl;
     cout << "4. Average fats" << endl;
     int choice = 0;
@@ -832,22 +857,19 @@ void RunApp::printAverages()
     switch (choice)
     {
         case 1:
-            std::sort(mList.begin(), mList.end(), compareByName);
+            cout << "Average calories:" << avgCal << endl;
             break;
         case 2:
-            std::sort(mList.begin(), mList.end(), compareByCalories);
+            cout << "Average proteins:" << avgProtein << endl;
             break;
         case 3:
-            std::sort(mList.begin(), mList.end(), compareByProtein);
+            cout << "Average carbs:" << avgCarb << endl;
             break;
         case 4:
-            std::sort(mList.begin(), mList.end(), compareByCarbs);
-            break;
-        case 5:
-            std::sort(mList.begin(), mList.end(), compareByFats);
+            cout << "Average fats:" << avgFat << endl;
             break;
         default:
-            cout << "Invalid choice, pritning unsorted" << endl;
+            cout << "Invalid choice, pritning average calories" << avgCal << endl;
     }}
 
 
