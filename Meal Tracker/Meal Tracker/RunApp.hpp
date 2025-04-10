@@ -846,32 +846,9 @@ void RunApp::printAverages()
     avgCarb /= mDatesAndMacros.size();
     avgFat /= mDatesAndMacros.size();
     
-    do {
-        cout << "1. Average calories" << endl;
-        cout << "2. Average proteins" << endl;
-        cout << "3. Average carbs" << endl;
-        cout << "4. Average fats" << endl;
-        cout << "5. Exit" << endl;
-        choice = getChoice();
-        
-        switch (choice)
-        {
-            case 1:
-                cout << "Average calories:" << avgCal << endl;
-                break;
-            case 2:
-                cout << "Average proteins:" << avgProtein << endl;
-                break;
-            case 3:
-                cout << "Average carbs:" << avgCarb << endl;
-                break;
-            case 4:
-                cout << "Average fats:" << avgFat << endl;
-                break;
-            default:
-                cout << "Invalid choice, pritning average calories" << avgCal << endl;
-        }
-    } while (choice != 5);
+    cout << "Averages" << endl;
+    cout << "Calories:" << avgCal << "  Proteins:" << avgProtein << "  Carbs:" << avgCarb << "  Fats:" << avgFat << endl;
+    
     
 }
     

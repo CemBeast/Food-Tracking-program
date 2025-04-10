@@ -4778,3 +4778,29 @@ Grams:180  Servings:0  Calories:105  Protein:19.0588  Carbs:7.41176  Fat:0
 Todays Totals:
 Calories:343  Protein:58  Carbs:16  Fats:4
 ----------------------------------------------------------------------------------
+Date: Thu Apr 10 12:42:19 2025
+Raspberries
+Grams:50  Servings:0  Calories:26  Protein:0.6  Carbs:6  Fat:0.35
+Blueberries
+Grams:50  Servings:0  Calories:28  Protein:0.35  Carbs:7  Fat:0.15
+Blackberries
+Grams:50  Servings:0  Calories:21  Protein:0.7  Carbs:4.8  Fat:0.25
+Kiwis
+Grams:140  Servings:0  Calories:85  Protein:1.54  Carbs:21  Fat:0.7
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Todays Totals:
+Calories:513  Protein:61  Carbs:57  Fats:5
+----------------------------------------------------------------------------------
+Date: Thu Apr 10 16:12:16 2025
+Rice
+Grams:346  Servings:0  Calories:338  Protein:6.4875  Carbs:73.0925  Fat:2.81125
+Chicken Tenders
+Grams:136  Servings:0  Calories:121  Protein:27.9286  Carbs:0  Fat:1.21429
+Nonfat Costco Yogurt
+Grams:193  Servings:0  Calories:113  Protein:20.4353  Carbs:7.94706  Fat:0
+Ultimate hydration
+Grams:0  Servings:1  Calories:20  Protein:0  Carbs:5  Fat:0
+Todays Totals:
+Calories:1105  Protein:116  Carbs:143  Fats:9
+----------------------------------------------------------------------------------
