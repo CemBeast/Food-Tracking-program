@@ -254,7 +254,7 @@ void RunApp::printDictionary()
     cout << "4. Sort by carbs" << endl;
     cout << "5. Sort by fats" << endl;
     int choice = 0;
-    cin >> choice;
+    choice = getChoice();
     switch (choice)
     {
         case 1:
@@ -430,18 +430,18 @@ void RunApp::addFoodToDictionary()
     cin.ignore();
     getline(cin, name);
     cout << "Is your food meadured by weight(1) or is your food measured by servings(0):";
-    cin >> weighOrServing;
+    weighOrServing = getChoice();
     if (weighOrServing)
     {
         cout << "Enter the serving size in grams: ";
-        cin >> grams;
+        grams = getChoice();
     }
     else{
         cout << "Enter the amount of servings: ";
-        cin >> servings;
+        servings = getChoice();
     }
     cout << "Enter how many calories are in one serving: ";
-    cin >> cals;
+    cals = getChoice();
     cout << "Enter how much protein is in one serving: ";
     cin >> protein;
     cout << "Enter how many carbs are in one serving: ";
@@ -820,6 +820,7 @@ void RunApp::printDatesAndMacros()
 
 void RunApp::printAverages()
 {
+    int choice = 0;
     string junk = "", proteinStr = "", carbStr = "", calorieStr = "", fatStr = "";
     double avgCal = 0.0, avgProtein = 0.0, avgCarb = 0.0, avgFat = 0.0;
     
@@ -845,32 +846,34 @@ void RunApp::printAverages()
     avgCarb /= mDatesAndMacros.size();
     avgFat /= mDatesAndMacros.size();
     
+    do {
+        cout << "1. Average calories" << endl;
+        cout << "2. Average proteins" << endl;
+        cout << "3. Average carbs" << endl;
+        cout << "4. Average fats" << endl;
+        cout << "5. Exit" << endl;
+        choice = getChoice();
+        
+        switch (choice)
+        {
+            case 1:
+                cout << "Average calories:" << avgCal << endl;
+                break;
+            case 2:
+                cout << "Average proteins:" << avgProtein << endl;
+                break;
+            case 3:
+                cout << "Average carbs:" << avgCarb << endl;
+                break;
+            case 4:
+                cout << "Average fats:" << avgFat << endl;
+                break;
+            default:
+                cout << "Invalid choice, pritning average calories" << avgCal << endl;
+        }
+    } while (choice != 5);
     
-    cout << "1. Average calories" << endl;
-    cout << "2. Average proteins" << endl;
-    cout << "3. Average carbs" << endl;
-    cout << "4. Average fats" << endl;
-    int choice = 0;
-    cin >> choice;
+}
     
-    
-    switch (choice)
-    {
-        case 1:
-            cout << "Average calories:" << avgCal << endl;
-            break;
-        case 2:
-            cout << "Average proteins:" << avgProtein << endl;
-            break;
-        case 3:
-            cout << "Average carbs:" << avgCarb << endl;
-            break;
-        case 4:
-            cout << "Average fats:" << avgFat << endl;
-            break;
-        default:
-            cout << "Invalid choice, pritning average calories" << avgCal << endl;
-    }}
-
 
 #endif /* RunApp_hpp */
