@@ -145,7 +145,7 @@ void RunApp::RunGame()
 void RunApp::printMenu()
 {
     cout << "---------------------------------------------------------" << endl;
-    cout << dailyMacros << endl;
+    printMacrosLeftUntilDayGoal();
     cout << "---------------------------------------------------------" << endl;
     cout << "0. Exit" << endl;
     cout << "1. Enter food item" << endl;
@@ -869,21 +869,31 @@ void RunApp::printAverages()
 int RunApp::readMacroGoals()
 {
     string txt = "", junk = "", proteinStr = "", carbStr = "", calorieStr = "", fatStr = "";
-     mMacroGoals.open("MacroGoals.txt");
-//    if (mMacroGoals.tellg() == 0)
-//    {
-//        cout << "Error opening MacroGoals or file is empty" << endl;
-//        return 0;
-//    }
+    mMacroGoals.open("MacroGoals.txt", std::ios::in);
+   
+    if (!mMacroGoals.is_open())
+    {
+        cout << "Failed to open MacroGoals.txt" << endl;
+        return 0;
+    }
+    string line;
+    getline(mMacroGoals, line);
+    if (line.empty())
+    {
+        cout << "Macro Goals not set." << endl;
+        editMacroGoals();
+        mMacroGoals.close();
+        return 0;
+    }
     getline(mMacroGoals, calorieStr, ',');
     getline(mMacroGoals, proteinStr, ',');
     getline(mMacroGoals, carbStr, ',');
     getline(mMacroGoals, fatStr, '\n');
     
     mGoalMacros.setCalories(stoi(calorieStr));
-    mGoalMacros.setProtein(stoi(calorieStr));
-    mGoalMacros.setCarbs(stoi(calorieStr));
-    mGoalMacros.setFats(stoi(calorieStr));
+    mGoalMacros.setProtein(stoi(proteinStr));
+    mGoalMacros.setCarbs(stoi(carbStr));
+    mGoalMacros.setFats(stoi(fatStr));
     
     mMacroGoals.close();
     return 1;
@@ -937,7 +947,17 @@ void RunApp::printMacroGoals()
 
 void RunApp::printMacrosLeftUntilDayGoal()
 {
-    
+    Macros left;
+    int calsLeft = 0, proteinLeft = 0, carbsLeft = 0, fatsLeft = 0;
+    calsLeft =   mGoalMacros.getCalories() - dailyMacros.getCalories();
+    proteinLeft = mGoalMacros.getProteins() - dailyMacros.getProteins() ;
+    carbsLeft = mGoalMacros.getCarbs() - dailyMacros.getCarbs();
+    fatsLeft =  mGoalMacros.getFats() - dailyMacros.getFats();
+    left.setCalories(calsLeft);
+    left.setProtein(proteinLeft);
+    left.setCarbs(carbsLeft);
+    left.setFats(fatsLeft);
+    cout << left << endl ;
 }
 
 #endif /* RunApp_hpp */

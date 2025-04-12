@@ -4856,3 +4856,9 @@ Grams:200  Servings:0  Calories:365  Protein:7.31707  Carbs:63.4146  Fat:8.53659
 Todays Totals:
 Calories:1961  Protein:168  Carbs:262  Fats:27
 ----------------------------------------------------------------------------------
+Date: Sat Apr 12 00:17:15 2025
+Dreyers Cookies n Cream
+Grams:55  Servings:0  Calories:100  Protein:2.0122  Carbs:17.439  Fat:2.34756
+Todays Totals:
+Calories:100  Protein:2  Carbs:17  Fats:2
+----------------------------------------------------------------------------------
