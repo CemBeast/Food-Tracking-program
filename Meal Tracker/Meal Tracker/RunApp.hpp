@@ -145,6 +145,7 @@ void RunApp::RunGame()
 void RunApp::printMenu()
 {
     cout << "---------------------------------------------------------" << endl;
+    cout << "  Macros left until goal is reached" << endl;
     printMacrosLeftUntilDayGoal();
     cout << "---------------------------------------------------------" << endl;
     cout << "0. Exit" << endl;
@@ -868,7 +869,6 @@ void RunApp::printAverages()
 
 int RunApp::readMacroGoals()
 {
-    string txt = "", junk = "", proteinStr = "", carbStr = "", calorieStr = "", fatStr = "";
     mMacroGoals.open("MacroGoals.txt", std::ios::in);
    
     if (!mMacroGoals.is_open())
@@ -881,19 +881,25 @@ int RunApp::readMacroGoals()
     if (line.empty())
     {
         cout << "Macro Goals not set." << endl;
-        editMacroGoals();
         mMacroGoals.close();
+        editMacroGoals();
         return 0;
     }
-    getline(mMacroGoals, calorieStr, ',');
-    getline(mMacroGoals, proteinStr, ',');
-    getline(mMacroGoals, carbStr, ',');
-    getline(mMacroGoals, fatStr, '\n');
+    else
+    {
+        string proteinStr = "", carbStr = "", calorieStr = "", fatStr = "";
+        stringstream ss(line);
+        getline(ss, calorieStr, ',');
+        getline(ss, proteinStr, ',');
+        getline(ss, carbStr, ',');
+        getline(ss, fatStr, '\n');
+        
+        mGoalMacros.setCalories(stoi(calorieStr));
+        mGoalMacros.setProtein(stoi(proteinStr));
+        mGoalMacros.setCarbs(stoi(carbStr));
+        mGoalMacros.setFats(stoi(fatStr));
+    }
     
-    mGoalMacros.setCalories(stoi(calorieStr));
-    mGoalMacros.setProtein(stoi(proteinStr));
-    mGoalMacros.setCarbs(stoi(carbStr));
-    mGoalMacros.setFats(stoi(fatStr));
     
     mMacroGoals.close();
     return 1;
@@ -942,6 +948,7 @@ Macros RunApp::editMacroGoals()
     
 void RunApp::printMacroGoals()
 {
+    cout << "  Macro Goals" << endl;
     cout << mGoalMacros << endl;
 }
 
