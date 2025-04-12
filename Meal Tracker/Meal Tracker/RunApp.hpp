@@ -50,8 +50,8 @@ public:
     void printDatesAndMacros();
     void readDatesAndMacrosFile();
     void printAverages();
-    void setMacroGoals();
-    void editMacroGoals();
+    void setMacroGoals(Macros goal);
+    Macros editMacroGoals();
     int readMacroGoals();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
@@ -131,8 +131,10 @@ void RunApp::RunGame()
                 break;
             case 13: printAverages();
                 break;
+            case 14: editMacroGoals();
+                break;
         }
-    }while (choice != 14);
+    }while (choice != 0);
     saveDictionary();
 }
 
@@ -141,6 +143,7 @@ void RunApp::printMenu()
     cout << "---------------------------------------------------------" << endl;
     cout << dailyMacros << endl;
     cout << "---------------------------------------------------------" << endl;
+    cout << "0. Exit" << endl;
     cout << "1. Enter food item" << endl;
     cout << "2. Print list of food ate today with macros" << endl;
     cout << "3. Print total macros" << endl;
@@ -154,7 +157,7 @@ void RunApp::printMenu()
     cout << "11. Print total macros of food ate in this session" << endl;
     cout << "12. Print log of macros for each day" << endl;
     cout << "13. Print average macros" << endl;
-    cout << "14. Exit" << endl;
+    cout << "14. Edit MacroGoals" << endl;
     cout << "---------------------------------------------------------" << endl;
 }
 
@@ -881,17 +884,35 @@ int RunApp::readMacroGoals()
     return 1;
 }
 
-void RunApp::setMacroGoals()
+void RunApp::setMacroGoals(Macros goal)
 {
     mMacroGoals.open("MacroGoals.txt");
+    mMacrosLog << to_string(goal.getCalories()) << ',' << to_string(goal.getProteins()) << to_string(goal.getCarbs()) << to_string(goal.getFats());
     mMacroGoals.close();
-    
-    
 }
 
-void RunApp::editMacroGoals()
+Macros RunApp::editMacroGoals()
 {
+    Macros goal;
+    int cals = 0, protein = 0, fats = 0, carbs = 0;
     
+    cout << "What is your calorie goal?";
+    cin >> cals;
+    cout << "What is your protein goal?";
+    cin >> protein;
+    cout << "What is your carbs goal?";
+    cin >> carbs;
+    cout << "What is your fats goal?";
+    cin >> fats;
+    goal.setCalories(cals);
+    goal.setProtein(protein);
+    goal.setCarbs(carbs);
+    goal.setFats(fats);
+
+    mGoalMacros = goal;
+    setMacroGoals(goal);
+    
+    return goal;
 }
     
 

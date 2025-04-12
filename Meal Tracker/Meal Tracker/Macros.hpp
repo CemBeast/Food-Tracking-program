@@ -36,6 +36,8 @@ class Macros
         double getCarbs() const;
         double getFats() const;
     
+        Macros &operator=( const Macros &obj);
+    
         friend std::ostream& operator<<(std::ostream& os, const Macros& obj) {
             os << "  Calories:" << obj.mCalories
             << "  Protein:" << obj.mProtein

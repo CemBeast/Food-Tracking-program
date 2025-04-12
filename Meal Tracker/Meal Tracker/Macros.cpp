@@ -69,3 +69,15 @@ double  Macros::getFats() const
 {
     return mFats;
 }
+
+Macros &Macros::operator=( const Macros &obj)
+{
+    if (this != &obj)
+    {
+        this->mCalories = obj.mCalories;
+        this->mProtein = obj.mProtein;
+        this->mFats = obj.mFats;
+        this->mCarbs = obj.mCarbs;
+    }
+    return *this;
+}
