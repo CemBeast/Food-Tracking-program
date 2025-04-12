@@ -51,7 +51,8 @@ public:
     void readDatesAndMacrosFile();
     void printAverages();
     void setMacroGoals();
-    void editMacroGoals();'
+    void editMacroGoals();
+    int readMacroGoals();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -62,8 +63,10 @@ private:
     fstream DayTotals;
     fstream mFoodAteTodayFile;
     fstream mMacrosLog;
+    fstream mMacroGoals;
     int mFoodNum;
     Macros dailyMacros;
+    Macros mGoalMacros;
     
 };
 
@@ -92,6 +95,7 @@ void RunApp::RunGame()
     
     writeToDatesAndMacrosFile();
     readDatesAndMacrosFile();
+    readMacroGoals();
     mFoodNum = readFile();
     Food foodEntry;
     do
@@ -854,8 +858,34 @@ void RunApp::printAverages()
     
 }
 
+int RunApp::readMacroGoals()
+{
+    string txt = "", junk = "", proteinStr = "", carbStr = "", calorieStr = "", fatStr = "";
+    mMacroGoals.open("MacroGoals.txt");
+    if (mMacroGoals.tellg() == 0)
+    {
+        cout << "Error opening MacroGoals or file is empty" << endl;
+        return 0;
+    }
+    getline(mMacroGoals, calorieStr, ',');
+    getline(mMacroGoals, proteinStr, ',');
+    getline(mMacroGoals, carbStr, ',');
+    getline(mMacroGoals, fatStr, ',');
+    
+    mGoalMacros.setCalories(stoi(calorieStr));
+    mGoalMacros.setProtein(stoi(calorieStr));
+    mGoalMacros.setCarbs(stoi(calorieStr));
+    mGoalMacros.setFats(stoi(calorieStr));
+    
+    mMacroGoals.close();
+    return 1;
+}
+
 void RunApp::setMacroGoals()
 {
+    mMacroGoals.open("MacroGoals.txt");
+    mMacroGoals.close();
+    
     
 }
 
