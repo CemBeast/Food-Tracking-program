@@ -1,30 +1,30 @@
-Date-Thu Apr 10 10:18:03 2025
+Date-Fri Apr 11 18:54:14 2025
 ---------------------------------------------------------
 Oil
-Grams:4  Servings:0  Calories:32  Protein:0  Carbs:0  Fat:3.73333
-Tomatoes
-Grams:107  Servings:0  Calories:19  Protein:0.9416  Carbs:4.1623  Fat:0.214
-Egg Whites
-Grams:180  Servings:0  Calories:97  Protein:19.5652  Carbs:0  Fat:0
-Fat Free Mozzarella Cheese
-Grams:56  Servings:0  Calories:90  Protein:18  Carbs:4  Fat:0
-Nonfat Costco Yogurt
-Grams:180  Servings:0  Calories:105  Protein:19.0588  Carbs:7.41176  Fat:0
-Raspberries
-Grams:50  Servings:0  Calories:26  Protein:0.6  Carbs:6  Fat:0.35
-Blueberries
-Grams:50  Servings:0  Calories:28  Protein:0.35  Carbs:7  Fat:0.15
-Blackberries
-Grams:50  Servings:0  Calories:21  Protein:0.7  Carbs:4.8  Fat:0.25
-Kiwis
-Grams:140  Servings:0  Calories:85  Protein:1.54  Carbs:21  Fat:0.7
+Grams:3  Servings:0  Calories:24  Protein:0  Carbs:0  Fat:2.8
 Total beets
 Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
-Rice
-Grams:346  Servings:0  Calories:338  Protein:6.4875  Carbs:73.0925  Fat:2.81125
-Chicken Tenders
-Grams:136  Servings:0  Calories:121  Protein:27.9286  Carbs:0  Fat:1.21429
+Egg Whites
+Grams:170  Servings:0  Calories:92  Protein:18.4783  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:57  Servings:0  Calories:91  Protein:18.3214  Carbs:4.07143  Fat:0
+Blackberries
+Grams:98  Servings:0  Calories:42  Protein:1.372  Carbs:9.408  Fat:0.49
+Blueberries
+Grams:60  Servings:0  Calories:34  Protein:0.42  Carbs:8.4  Fat:0.18
+Raspberries
+Grams:59  Servings:0  Calories:30  Protein:0.708  Carbs:7.08  Fat:0.413
 Nonfat Costco Yogurt
-Grams:193  Servings:0  Calories:113  Protein:20.4353  Carbs:7.94706  Fat:0
-Ultimate hydration
-Grams:0  Servings:1  Calories:20  Protein:0  Carbs:5  Fat:0
+Grams:183  Servings:0  Calories:107  Protein:19.3765  Carbs:7.53529  Fat:0
+Chicken Tenders
+Grams:140  Servings:0  Calories:125  Protein:28.75  Carbs:0  Fat:1.25
+Rice
+Grams:350  Servings:0  Calories:342  Protein:6.5625  Carbs:73.9375  Fat:2.84375
+Rice
+Grams:376  Servings:0  Calories:367  Protein:7.05  Carbs:79.43  Fat:3.055
+Nonfat Costco Yogurt
+Grams:192  Servings:0  Calories:112  Protein:20.3294  Carbs:7.90588  Fat:0
+Chicken Tenders
+Grams:191  Servings:0  Calories:170  Protein:39.2232  Carbs:0  Fat:1.70536
+Fish oils
+Grams:0  Servings:5  Calories:50  Protein:0  Carbs:0  Fat:5

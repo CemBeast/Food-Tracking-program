@@ -4804,3 +4804,49 @@ Grams:0  Servings:1  Calories:20  Protein:0  Carbs:5  Fat:0
 Todays Totals:
 Calories:1105  Protein:116  Carbs:143  Fats:9
 ----------------------------------------------------------------------------------
+Date: Thu Apr 10 21:14:10 2025
+Beyond Keto Burger
+Grams:0  Servings:2  Calories:784  Protein:58  Carbs:58  Fat:44
+Todays Totals:
+Calories:1889  Protein:174  Carbs:201  Fats:53
+----------------------------------------------------------------------------------
+Date: Fri Apr 11 18:54:14 2025
+Oil
+Grams:3  Servings:0  Calories:24  Protein:0  Carbs:0  Fat:2.8
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Egg Whites
+Grams:170  Servings:0  Calories:92  Protein:18.4783  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:57  Servings:0  Calories:91  Protein:18.3214  Carbs:4.07143  Fat:0
+Blackberries
+Grams:98  Servings:0  Calories:42  Protein:1.372  Carbs:9.408  Fat:0.49
+Blueberries
+Grams:60  Servings:0  Calories:34  Protein:0.42  Carbs:8.4  Fat:0.18
+Raspberries
+Grams:59  Servings:0  Calories:30  Protein:0.708  Carbs:7.08  Fat:0.413
+Nonfat Costco Yogurt
+Grams:183  Servings:0  Calories:107  Protein:19.3765  Carbs:7.53529  Fat:0
+Chicken Tenders
+Grams:140  Servings:0  Calories:125  Protein:28.75  Carbs:0  Fat:1.25
+Rice
+Grams:350  Servings:0  Calories:342  Protein:6.5625  Carbs:73.9375  Fat:2.84375
+Todays Totals:
+Calories:897  Protein:94  Carbs:112  Fats:8
+----------------------------------------------------------------------------------
+Date: Fri Apr 11 21:19:03 2025
+Rice
+Grams:376  Servings:0  Calories:367  Protein:7.05  Carbs:79.43  Fat:3.055
+Nonfat Costco Yogurt
+Grams:192  Servings:0  Calories:112  Protein:20.3294  Carbs:7.90588  Fat:0
+Chicken Tenders
+Grams:191  Servings:0  Calories:170  Protein:39.2232  Carbs:0  Fat:1.70536
+Todays Totals:
+Calories:1546  Protein:161  Carbs:199  Fats:13
+----------------------------------------------------------------------------------
+Date: Fri Apr 11 21:23:20 2025
+Fish oils
+Grams:0  Servings:5  Calories:50  Protein:0  Carbs:0  Fat:5
+Todays Totals:
+Calories:1596  Protein:161  Carbs:199  Fats:18
+----------------------------------------------------------------------------------

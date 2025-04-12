@@ -50,6 +50,8 @@ public:
     void printDatesAndMacros();
     void readDatesAndMacrosFile();
     void printAverages();
+    void setMacroGoals();
+    void editMacroGoals();'
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -849,6 +851,16 @@ void RunApp::printAverages()
     cout << "Averages" << endl;
     cout << "Calories:" << avgCal << "  Proteins:" << avgProtein << "  Carbs:" << avgCarb << "  Fats:" << avgFat << endl;
     
+    
+}
+
+void RunApp::setMacroGoals()
+{
+    
+}
+
+void RunApp::editMacroGoals()
+{
     
 }
     
