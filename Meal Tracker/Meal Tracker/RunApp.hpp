@@ -53,6 +53,8 @@ public:
     void setMacroGoals(Macros goal);
     Macros editMacroGoals();
     int readMacroGoals();
+    void printMacroGoals();
+    void printMacrosLeftUntilDayGoal();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -133,6 +135,8 @@ void RunApp::RunGame()
                 break;
             case 14: editMacroGoals();
                 break;
+            case 15: printMacroGoals();
+                break;
         }
     }while (choice != 0);
     saveDictionary();
@@ -157,7 +161,8 @@ void RunApp::printMenu()
     cout << "11. Print total macros of food ate in this session" << endl;
     cout << "12. Print log of macros for each day" << endl;
     cout << "13. Print average macros" << endl;
-    cout << "14. Edit MacroGoals" << endl;
+    cout << "14. Edit Macro Goals" << endl;
+    cout << "15. Print Macro Goals" << endl;
     cout << "---------------------------------------------------------" << endl;
 }
 
@@ -864,16 +869,16 @@ void RunApp::printAverages()
 int RunApp::readMacroGoals()
 {
     string txt = "", junk = "", proteinStr = "", carbStr = "", calorieStr = "", fatStr = "";
-    mMacroGoals.open("MacroGoals.txt");
-    if (mMacroGoals.tellg() == 0)
-    {
-        cout << "Error opening MacroGoals or file is empty" << endl;
-        return 0;
-    }
+     mMacroGoals.open("MacroGoals.txt");
+//    if (mMacroGoals.tellg() == 0)
+//    {
+//        cout << "Error opening MacroGoals or file is empty" << endl;
+//        return 0;
+//    }
     getline(mMacroGoals, calorieStr, ',');
     getline(mMacroGoals, proteinStr, ',');
     getline(mMacroGoals, carbStr, ',');
-    getline(mMacroGoals, fatStr, ',');
+    getline(mMacroGoals, fatStr, '\n');
     
     mGoalMacros.setCalories(stoi(calorieStr));
     mGoalMacros.setProtein(stoi(calorieStr));
@@ -886,8 +891,18 @@ int RunApp::readMacroGoals()
 
 void RunApp::setMacroGoals(Macros goal)
 {
-    mMacroGoals.open("MacroGoals.txt");
-    mMacrosLog << to_string(goal.getCalories()) << ',' << to_string(goal.getProteins()) << to_string(goal.getCarbs()) << to_string(goal.getFats());
+    string cals = "", protein = "", carbs = "", fats = "";
+    cals = to_string(static_cast<int>(goal.getCalories()));
+    protein = to_string(static_cast<int>(goal.getProteins()));
+    carbs = to_string(static_cast<int>(goal.getCarbs()));
+    fats = to_string(static_cast<int>(goal.getFats()));
+    
+    mMacroGoals.open("MacroGoals.txt", std::ofstream::out);
+    if (mMacroGoals.is_open()) {
+        mMacroGoals << cals << "," << protein << "," << carbs  << "," << fats;
+    } else {
+        std::cout << "Could not open MacroGoals.txt\n";
+    }
     mMacroGoals.close();
 }
 
@@ -915,5 +930,14 @@ Macros RunApp::editMacroGoals()
     return goal;
 }
     
+void RunApp::printMacroGoals()
+{
+    cout << mGoalMacros << endl;
+}
+
+void RunApp::printMacrosLeftUntilDayGoal()
+{
+    
+}
 
 #endif /* RunApp_hpp */

@@ -37,7 +37,7 @@
 		B2A584CE2D93D02B003549DD /* DayFoods.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = DayFoods.txt; sourceTree = "<group>"; };
 		B2DF760C2B3A43160069D56C /* FoodLog.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FoodLog.txt; sourceTree = "<group>"; };
 		B2F3E3302DA64C5B002F5669 /* MacrosLog.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = MacrosLog.txt; sourceTree = "<group>"; };
-		B2F3E3822DAA39FD002F5669 /* MacroGoals.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = MacroGoals.txt; sourceTree = "<group>"; };
+		B2F3E3842DAA4857002F5669 /* MacroGoals.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = MacroGoals.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +70,7 @@
 		B22239412ACD3C17004EF7DD /* Meal Tracker */ = {
 			isa = PBXGroup;
 			children = (
-				B2F3E3822DAA39FD002F5669 /* MacroGoals.txt */,
+				B2F3E3842DAA4857002F5669 /* MacroGoals.txt */,
 				B2F3E3302DA64C5B002F5669 /* MacrosLog.txt */,
 				B2A584CE2D93D02B003549DD /* DayFoods.txt */,
 				B24A763B2D1285D1003F339D /* FoodData.csv */,

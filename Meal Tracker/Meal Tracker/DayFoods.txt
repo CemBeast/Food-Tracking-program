@@ -28,3 +28,5 @@ Chicken Tenders
 Grams:191  Servings:0  Calories:170  Protein:39.2232  Carbs:0  Fat:1.70536
 Fish oils
 Grams:0  Servings:5  Calories:50  Protein:0  Carbs:0  Fat:5
+Dreyers Cookies n Cream
+Grams:200  Servings:0  Calories:365  Protein:7.31707  Carbs:63.4146  Fat:8.53659
