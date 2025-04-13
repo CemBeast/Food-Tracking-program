@@ -1,4 +1,8 @@
-Date-Sat Apr 12 00:17:15 2025
+Date-Sun Apr 13 10:45:31 2025
 ---------------------------------------------------------
-Dreyers Cookies n Cream
-Grams:55  Servings:0  Calories:100  Protein:2.0122  Carbs:17.439  Fat:2.34756
+Oil
+Grams:0  Servings:0  Calories:0  Protein:0  Carbs:0  Fat:0
+Kiwis
+Grams:139  Servings:0  Calories:84  Protein:1.529  Carbs:20.85  Fat:0.695
+Smoothie from Sanctuary
+Grams:0  Servings:0  Calories:300  Protein:22  Carbs:37  Fat:7

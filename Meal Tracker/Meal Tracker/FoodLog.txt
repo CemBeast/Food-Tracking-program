@@ -4862,3 +4862,47 @@ Grams:55  Servings:0  Calories:100  Protein:2.0122  Carbs:17.439  Fat:2.34756
 Todays Totals:
 Calories:100  Protein:2  Carbs:17  Fats:2
 ----------------------------------------------------------------------------------
+Date: Sat Apr 12 13:44:12 2025
+Oil
+Grams:3  Servings:0  Calories:24  Protein:0  Carbs:0  Fat:2.8
+Egg Whites
+Grams:199  Servings:0  Calories:108  Protein:21.6304  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:64  Servings:0  Calories:102  Protein:20.5714  Carbs:4.57143  Fat:0
+Nonfat Costco Yogurt
+Grams:200  Servings:0  Calories:117  Protein:21.1765  Carbs:8.23529  Fat:0
+Carne Asada
+Grams:54  Servings:0  Calories:119  Protein:14.0786  Carbs:0.192857  Fat:6.55714
+Todays Totals:
+Calories:570  Protein:79  Carbs:30  Fats:11
+----------------------------------------------------------------------------------
+Date: Sat Apr 12 21:03:50 2025
+Chicken Tenders
+Grams:134  Servings:0  Calories:119  Protein:27.5179  Carbs:0  Fat:1.19643
+Crinkle Cut French Fries
+Grams:245  Servings:0  Calories:379  Protein:5.83333  Carbs:58.3333  Fat:14.5833
+Todays Totals:
+Calories:1068  Protein:112  Carbs:88  Fats:27
+----------------------------------------------------------------------------------
+Date: Sat Apr 12 22:23:41 2025
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Dreyers Cookies n Cream
+Grams:140  Servings:0  Calories:256  Protein:5.12195  Carbs:44.3902  Fat:5.97561
+Todays Totals:
+Calories:1484  Protein:143  Carbs:137  Fats:37
+----------------------------------------------------------------------------------
+Date: Sun Apr 13 10:45:31 2025
+Oil
+Grams:0  Servings:0  Calories:0  Protein:0  Carbs:0  Fat:0
+Todays Totals:
+Calories:0  Protein:0  Carbs:0  Fats:0
+----------------------------------------------------------------------------------
+Date: Sun Apr 13 14:59:15 2025
+Kiwis
+Grams:139  Servings:0  Calories:84  Protein:1.529  Carbs:20.85  Fat:0.695
+Smoothie from Sanctuary
+Grams:0  Servings:0  Calories:300  Protein:22  Carbs:37  Fat:7
+Todays Totals:
+Calories:384  Protein:24  Carbs:58  Fats:8
+----------------------------------------------------------------------------------

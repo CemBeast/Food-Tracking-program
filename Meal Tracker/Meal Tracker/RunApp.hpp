@@ -145,6 +145,8 @@ void RunApp::RunGame()
 void RunApp::printMenu()
 {
     cout << "---------------------------------------------------------" << endl;
+    cout << "  Macros consumed" << endl;
+    cout << dailyMacros << endl;
     cout << "  Macros left until goal is reached" << endl;
     printMacrosLeftUntilDayGoal();
     cout << "---------------------------------------------------------" << endl;
