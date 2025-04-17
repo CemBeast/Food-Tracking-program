@@ -8,4 +8,9 @@ Date-Fri Apr 11 23:56:19 2025
 Calories:1961  Protein:168  Carbs:262  Fats:27
 Date-Sat Apr 12 22:23:41 2025
 Calories:1794  Protein:147  Carbs:172  Fats:54
-
+Date-Sun Apr 13 22:36:34 2025
+Calories:1767  Protein:106  Carbs:210  Fats:57
+Date-Mon Apr 14 22:06:43 2025
+Calories:1981  Protein:186  Carbs:148  Fats:73
+Date-Tue Apr 15 22:50:48 2025
+Calories:1697  Protein:138  Carbs:162  Fats:57

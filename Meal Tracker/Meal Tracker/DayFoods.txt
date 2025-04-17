@@ -1,8 +1,26 @@
-Date-Sun Apr 13 10:45:31 2025
+Date-Wed Apr 16 14:51:47 2025
 ---------------------------------------------------------
 Oil
-Grams:0  Servings:0  Calories:0  Protein:0  Carbs:0  Fat:0
+Grams:4  Servings:0  Calories:32  Protein:0  Carbs:0  Fat:3.73333
+Egg Whites
+Grams:230  Servings:0  Calories:125  Protein:25  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:64  Servings:0  Calories:102  Protein:20.5714  Carbs:4.57143  Fat:0
+Tomatoes
+Grams:383  Servings:0  Calories:68  Protein:3.3704  Carbs:14.8987  Fat:0.766
+Nonfat Costco Yogurt
+Grams:181  Servings:0  Calories:106  Protein:19.1647  Carbs:7.45294  Fat:0
 Kiwis
-Grams:139  Servings:0  Calories:84  Protein:1.529  Carbs:20.85  Fat:0.695
-Smoothie from Sanctuary
-Grams:0  Servings:0  Calories:300  Protein:22  Carbs:37  Fat:7
+Grams:132  Servings:0  Calories:80  Protein:1.452  Carbs:19.8  Fat:0.66
+Chicken Tenders
+Grams:191  Servings:0  Calories:170  Protein:39.2232  Carbs:0  Fat:1.70536
+Beyond Keto Burger
+Grams:0  Servings:1  Calories:392  Protein:29  Carbs:29  Fat:22
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Fat Free Mozzarella Cheese
+Grams:18  Servings:0  Calories:28  Protein:5.78571  Carbs:1.28571  Fat:0
+Fire Roasted Primavera Mistura
+Grams:266  Servings:0  Calories:125  Protein:3.12941  Carbs:18.7765  Fat:6.25882
+Trader joes chile lime chips
+Grams:36  Servings:0  Calories:192  Protein:2.57143  Carbs:21.8571  Fat:10.2857
