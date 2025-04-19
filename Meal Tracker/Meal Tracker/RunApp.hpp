@@ -138,6 +138,8 @@ void RunApp::RunGame()
                 break;
             case 15: printMacroGoals();
                 break;
+            case 16: printDetails();
+                break;
         }
     }while (choice != 0);
     saveDictionary();
@@ -167,6 +169,7 @@ void RunApp::printMenu()
     cout << "13. Print average macros" << endl;
     cout << "14. Edit Macro Goals" << endl;
     cout << "15. Print Macro Goals" << endl;
+    cout << "15. Print details" << endl;
     cout << "---------------------------------------------------------" << endl;
 }
 
