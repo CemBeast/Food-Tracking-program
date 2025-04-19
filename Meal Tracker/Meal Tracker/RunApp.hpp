@@ -142,6 +142,15 @@ void RunApp::RunGame()
                 break;
             case 16: printDetails();
                 break;
+            case 99:
+                if (mConsumedToday == false)
+                {
+                    mConsumedToday = true;
+                }
+                else
+                {
+                    mConsumedToday = false;
+                }
         }
     }while (choice != 0);
     saveDictionary();
@@ -177,7 +186,8 @@ void RunApp::printMenu()
     cout << "13. Print average macros" << endl;
     cout << "14. Edit Macro Goals" << endl;
     cout << "15. Print Macro Goals" << endl;
-    cout << "15. Print details" << endl;
+    cout << "16. Print details" << endl;
+    cout << "99. Toggle calorie display" << endl;
     cout << "---------------------------------------------------------" << endl;
 }
 
