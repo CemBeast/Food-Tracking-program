@@ -5148,3 +5148,17 @@ Grams:84  Servings:0  Calories:153  Protein:3.07317  Carbs:26.6341  Fat:3.58537
 Todays Totals:
 Calories:1984  Protein:168  Carbs:182  Fats:76
 ----------------------------------------------------------------------------------
+Date: Sat Apr 19 15:55:24 2025
+Daves Breakfast Sandwich
+Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
+Trader joes chile lime chips
+Grams:42  Servings:0  Calories:225  Protein:3  Carbs:25.5  Fat:12
+Strawberries
+Grams:178  Servings:0  Calories:56  Protein:1.246  Carbs:13.706  Fat:0.534
+Raspberries
+Grams:88  Servings:0  Calories:45  Protein:1.056  Carbs:10.56  Fat:0.616
+Blueberries
+Grams:88  Servings:0  Calories:50  Protein:0.616  Carbs:12.32  Fat:0.264
+Todays Totals:
+Calories:827  Protein:41  Carbs:117  Fats:26
+----------------------------------------------------------------------------------

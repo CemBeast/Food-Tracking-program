@@ -70,6 +70,7 @@ private:
     int mFoodNum;
     Macros dailyMacros;
     Macros mGoalMacros;
+    bool mConsumedToday;
     
 };
 
@@ -84,6 +85,7 @@ string toLowerCase(const string& input) {
 RunApp::RunApp ()
 {
     mFoodNum = 0;
+    mConsumedToday = true;
 }
 
 RunApp::~RunApp ()
@@ -148,10 +150,16 @@ void RunApp::RunGame()
 void RunApp::printMenu()
 {
     cout << "---------------------------------------------------------" << endl;
-    cout << "  Macros consumed" << endl;
-    cout << dailyMacros << endl;
-    cout << "  Macros left until goal is reached" << endl;
-    printMacrosLeftUntilDayGoal();
+    if (mConsumedToday)
+    {
+        cout << "  Macros consumed" << endl;
+        cout << dailyMacros << endl;
+    }
+    else
+    {
+        cout << "  Macros left until goal is reached" << endl;
+        printMacrosLeftUntilDayGoal();
+    }
     cout << "---------------------------------------------------------" << endl;
     cout << "0. Exit" << endl;
     cout << "1. Enter food item" << endl;
@@ -867,7 +875,7 @@ void RunApp::printAverages()
     avgCarb /= mDatesAndMacros.size();
     avgFat /= mDatesAndMacros.size();
     
-    cout << "Averages" << endl;
+    cout << "Averages:" << endl;
     cout << "Calories:" << avgCal << "  Proteins:" << avgProtein << "  Carbs:" << avgCarb << "  Fats:" << avgFat << endl;
     
     
@@ -988,6 +996,7 @@ void RunApp::printDetails()
     if (mGoalMacros.getFats() > 0)
         fatRatio = (double)dailyMacros.getFats() / mGoalMacros.getFats() * 100;
 
+    cout << "Ratio of macros consumed today" << endl;
     // Print results
     cout << "Calories: " << dailyMacros.getCalories() << " / " << mGoalMacros.getCalories()
          << " (" << calorieRatio << "%)" << endl;
@@ -996,7 +1005,9 @@ void RunApp::printDetails()
     cout << "Carbs: " << dailyMacros.getCarbs() << " / " << mGoalMacros.getCarbs()
          << " (" << carbRatio << "%)" << endl;
     cout << "Fats: " << dailyMacros.getFats() << " / " << mGoalMacros.getFats()
-         << " (" << fatRatio << "%)" << endl;
+    << " (" << fatRatio << "%)" << endl << endl;
+    
+    printAverages();
 }
 
 #endif /* RunApp_hpp */
