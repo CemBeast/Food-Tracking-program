@@ -1,26 +1,28 @@
-Date-Wed Apr 16 14:51:47 2025
+Date-Fri Apr 18 11:11:08 2025
 ---------------------------------------------------------
-Oil
-Grams:4  Servings:0  Calories:32  Protein:0  Carbs:0  Fat:3.73333
-Egg Whites
-Grams:230  Servings:0  Calories:125  Protein:25  Carbs:0  Fat:0
-Fat Free Mozzarella Cheese
-Grams:64  Servings:0  Calories:102  Protein:20.5714  Carbs:4.57143  Fat:0
-Tomatoes
-Grams:383  Servings:0  Calories:68  Protein:3.3704  Carbs:14.8987  Fat:0.766
-Nonfat Costco Yogurt
-Grams:181  Servings:0  Calories:106  Protein:19.1647  Carbs:7.45294  Fat:0
-Kiwis
-Grams:132  Servings:0  Calories:80  Protein:1.452  Carbs:19.8  Fat:0.66
 Chicken Tenders
-Grams:191  Servings:0  Calories:170  Protein:39.2232  Carbs:0  Fat:1.70536
-Beyond Keto Burger
-Grams:0  Servings:1  Calories:392  Protein:29  Carbs:29  Fat:22
+Grams:199  Servings:0  Calories:177  Protein:40.8661  Carbs:0  Fat:1.77679
+Nonfat Costco Yogurt
+Grams:136  Servings:0  Calories:80  Protein:14.4  Carbs:5.6  Fat:0
+Fire Roasted Primavera Mistura
+Grams:293  Servings:0  Calories:137  Protein:3.44706  Carbs:20.6824  Fat:6.89412
+Daves Breakfast Sandwich
+Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
+Trader joes chile lime chips
+Grams:32  Servings:0  Calories:171  Protein:2.28571  Carbs:19.4286  Fat:9.14286
 Almond Milk Whey Protein Shake
 Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
-Fat Free Mozzarella Cheese
-Grams:18  Servings:0  Calories:28  Protein:5.78571  Carbs:1.28571  Fat:0
-Fire Roasted Primavera Mistura
-Grams:266  Servings:0  Calories:125  Protein:3.12941  Carbs:18.7765  Fat:6.25882
-Trader joes chile lime chips
-Grams:36  Servings:0  Calories:192  Protein:2.57143  Carbs:21.8571  Fat:10.2857
+Tomatoes
+Grams:190  Servings:0  Calories:34  Protein:1.672  Carbs:7.391  Fat:0.38
+Avacado
+Grams:115  Servings:0  Calories:184  Protein:2.3  Carbs:9.775  Fat:17.25
+Chicken Thighs
+Grams:225  Servings:0  Calories:301  Protein:36.1607  Carbs:0  Fat:18.0804
+Strawberries
+Grams:169  Servings:0  Calories:54  Protein:1.183  Carbs:13.013  Fat:0.507
+Blueberries
+Grams:78  Servings:0  Calories:44  Protein:0.546  Carbs:10.92  Fat:0.234
+Raspberries
+Grams:74  Servings:0  Calories:38  Protein:0.888  Carbs:8.88  Fat:0.518
+Dreyers Cookies n Cream
+Grams:84  Servings:0  Calories:153  Protein:3.07317  Carbs:26.6341  Fat:3.58537

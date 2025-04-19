@@ -5056,3 +5056,95 @@ Grams:36  Servings:0  Calories:192  Protein:2.57143  Carbs:21.8571  Fat:10.2857
 Todays Totals:
 Calories:1580  Protein:176  Carbs:123  Fats:49
 ----------------------------------------------------------------------------------
+Date: Wed Apr 16 23:38:17 2025
+Dreyers Cookies n Cream
+Grams:200  Servings:0  Calories:365  Protein:7.31707  Carbs:63.4146  Fat:8.53659
+Todays Totals:
+Calories:1945  Protein:183  Carbs:186  Fats:58
+----------------------------------------------------------------------------------
+Date: Thu Apr 17 08:38:01 2025
+Strawberries
+Grams:148  Servings:0  Calories:47  Protein:1.036  Carbs:11.396  Fat:0.444
+Raspberries
+Grams:53  Servings:0  Calories:27  Protein:0.636  Carbs:6.36  Fat:0.371
+Blueberries
+Grams:58  Servings:0  Calories:33  Protein:0.406  Carbs:8.12  Fat:0.174
+Todays Totals:
+Calories:107  Protein:2  Carbs:26  Fats:1
+----------------------------------------------------------------------------------
+Date: Thu Apr 17 13:55:21 2025
+Nonfat Costco Yogurt
+Grams:135  Servings:0  Calories:79  Protein:14.2941  Carbs:5.55882  Fat:0
+Daves Breakfast Sandwich
+Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
+Trader joes chile lime chips
+Grams:31  Servings:0  Calories:166  Protein:2.21429  Carbs:18.8214  Fat:8.85714
+Fish oils
+Grams:0  Servings:2  Calories:20  Protein:0  Carbs:0  Fat:2
+Yerba Mate
+Grams:0  Servings:1  Calories:120  Protein:1  Carbs:28  Fat:0
+Chicken Tenders
+Grams:182  Servings:0  Calories:162  Protein:37.375  Carbs:0  Fat:1.625
+Todays Totals:
+Calories:1105  Protein:92  Carbs:133  Fats:26
+----------------------------------------------------------------------------------
+Date: Thu Apr 17 21:01:46 2025
+Naan bread
+Grams:0  Servings:1  Calories:140  Protein:4  Carbs:22  Fat:3.5
+Sliced Havarti
+Grams:0  Servings:1  Calories:110  Protein:6  Carbs:0  Fat:9
+Tomatoes
+Grams:200  Servings:0  Calories:36  Protein:1.76  Carbs:7.78  Fat:0.4
+Oil
+Grams:0  Servings:0  Calories:0  Protein:0  Carbs:0  Fat:0
+Costco Fried Fish
+Grams:259  Servings:0  Calories:396  Protein:36.5647  Carbs:27.4235  Fat:15.2353
+Homemade Fries
+Grams:0  Servings:0  Calories:209  Protein:4  Carbs:36  Fat:8.8
+Todays Totals:
+Calories:1996  Protein:144  Carbs:226  Fats:63
+----------------------------------------------------------------------------------
+Date: Thu Apr 17 21:02:09 2025
+Fish oils
+Grams:0  Servings:2  Calories:20  Protein:0  Carbs:0  Fat:2
+Todays Totals:
+Calories:2016  Protein:144  Carbs:226  Fats:65
+----------------------------------------------------------------------------------
+Date: Fri Apr 18 11:11:08 2025
+Chicken Tenders
+Grams:199  Servings:0  Calories:177  Protein:40.8661  Carbs:0  Fat:1.77679
+Nonfat Costco Yogurt
+Grams:136  Servings:0  Calories:80  Protein:14.4  Carbs:5.6  Fat:0
+Fire Roasted Primavera Mistura
+Grams:293  Servings:0  Calories:137  Protein:3.44706  Carbs:20.6824  Fat:6.89412
+Daves Breakfast Sandwich
+Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
+Trader joes chile lime chips
+Grams:32  Servings:0  Calories:171  Protein:2.28571  Carbs:19.4286  Fat:9.14286
+Todays Totals:
+Calories:1016  Protein:96  Carbs:101  Fats:31
+----------------------------------------------------------------------------------
+Date: Fri Apr 18 20:48:38 2025
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Tomatoes
+Grams:190  Servings:0  Calories:34  Protein:1.672  Carbs:7.391  Fat:0.38
+Avacado
+Grams:115  Servings:0  Calories:184  Protein:2.3  Carbs:9.775  Fat:17.25
+Chicken Thighs
+Grams:225  Servings:0  Calories:301  Protein:36.1607  Carbs:0  Fat:18.0804
+Todays Totals:
+Calories:1695  Protein:162  Carbs:123  Fats:71
+----------------------------------------------------------------------------------
+Date: Fri Apr 18 23:36:08 2025
+Strawberries
+Grams:169  Servings:0  Calories:54  Protein:1.183  Carbs:13.013  Fat:0.507
+Blueberries
+Grams:78  Servings:0  Calories:44  Protein:0.546  Carbs:10.92  Fat:0.234
+Raspberries
+Grams:74  Servings:0  Calories:38  Protein:0.888  Carbs:8.88  Fat:0.518
+Dreyers Cookies n Cream
+Grams:84  Servings:0  Calories:153  Protein:3.07317  Carbs:26.6341  Fat:3.58537
+Todays Totals:
+Calories:1984  Protein:168  Carbs:182  Fats:76
+----------------------------------------------------------------------------------

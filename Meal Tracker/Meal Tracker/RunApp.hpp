@@ -55,6 +55,7 @@ public:
     int readMacroGoals();
     void printMacroGoals();
     void printMacrosLeftUntilDayGoal();
+    void printDetails();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -967,6 +968,32 @@ void RunApp::printMacrosLeftUntilDayGoal()
     left.setCarbs(carbsLeft);
     left.setFats(fatsLeft);
     cout << left << endl ;
+}
+
+void RunApp::printDetails()
+{
+    // Calculate macro percentages
+    double proteinRatio = 0.0, carbRatio = 0.0, fatRatio = 0.0, calorieRatio = 0.0;
+
+    // Avoid divide-by-zero by checking goal values
+    if (mGoalMacros.getCalories() > 0)
+        calorieRatio = (double)dailyMacros.getCalories() / mGoalMacros.getCalories() * 100;
+    if (mGoalMacros.getProteins() > 0)
+        proteinRatio = (double)dailyMacros.getProteins() / mGoalMacros.getProteins() * 100;
+    if (mGoalMacros.getCarbs() > 0)
+        carbRatio = (double)dailyMacros.getCarbs() / mGoalMacros.getCarbs() * 100;
+    if (mGoalMacros.getFats() > 0)
+        fatRatio = (double)dailyMacros.getFats() / mGoalMacros.getFats() * 100;
+
+    // Print results
+    cout << "Calories: " << dailyMacros.getCalories() << " / " << mGoalMacros.getCalories()
+         << " (" << calorieRatio << "%)" << endl;
+    cout << "Protein: " << dailyMacros.getProteins() << " / " << mGoalMacros.getProteins()
+         << " (" << proteinRatio << "%)" << endl;
+    cout << "Carbs: " << dailyMacros.getCarbs() << " / " << mGoalMacros.getCarbs()
+         << " (" << carbRatio << "%)" << endl;
+    cout << "Fats: " << dailyMacros.getFats() << " / " << mGoalMacros.getFats()
+         << " (" << fatRatio << "%)" << endl;
 }
 
 #endif /* RunApp_hpp */
