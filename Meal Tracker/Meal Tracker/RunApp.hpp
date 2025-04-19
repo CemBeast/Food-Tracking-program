@@ -56,6 +56,7 @@ public:
     void printMacroGoals();
     void printMacrosLeftUntilDayGoal();
     void printDetails();
+    void toggleDisplay();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -143,14 +144,7 @@ void RunApp::RunGame()
             case 16: printDetails();
                 break;
             case 99:
-                if (mConsumedToday == false)
-                {
-                    mConsumedToday = true;
-                }
-                else
-                {
-                    mConsumedToday = false;
-                }
+                toggleDisplay();
         }
     }while (choice != 0);
     saveDictionary();
@@ -989,6 +983,18 @@ void RunApp::printMacrosLeftUntilDayGoal()
     left.setCarbs(carbsLeft);
     left.setFats(fatsLeft);
     cout << left << endl ;
+}
+
+void RunApp::toggleDisplay()
+{
+    if (mConsumedToday == false)
+    {
+        mConsumedToday = true;
+    }
+    else
+    {
+        mConsumedToday = false;
+    }
 }
 
 void RunApp::printDetails()
