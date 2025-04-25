@@ -59,6 +59,7 @@ public:
     void toggleDisplay();
     void printMacrosConsumedToday();
     void printMacrisLeftToday();
+    void EditFoodLog();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
