@@ -1,12 +1,26 @@
-Date-Sat Apr 19 15:55:24 2025
+Date-Thu Apr 24 12:02:11 2025
 ---------------------------------------------------------
-Daves Breakfast Sandwich
-Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
-Trader joes chile lime chips
-Grams:42  Servings:0  Calories:225  Protein:3  Carbs:25.5  Fat:12
 Strawberries
-Grams:178  Servings:0  Calories:56  Protein:1.246  Carbs:13.706  Fat:0.534
+Grams:200  Servings:0  Calories:64  Protein:1.4  Carbs:15.4  Fat:0.6
 Raspberries
-Grams:88  Servings:0  Calories:45  Protein:1.056  Carbs:10.56  Fat:0.616
-Blueberries
-Grams:88  Servings:0  Calories:50  Protein:0.616  Carbs:12.32  Fat:0.264
+Grams:100  Servings:0  Calories:52  Protein:1.2  Carbs:12  Fat:0.7
+Lactaid Milk
+Grams:0  Servings:1  Calories:160  Protein:9  Carbs:13  Fat:9
+Kirkland Whey Protein
+Grams:0  Servings:1  Calories:130  Protein:25  Carbs:4  Fat:1.5
+Impossible nuggets
+Grams:0  Servings:8  Calories:384  Protein:20.8  Carbs:30.4  Fat:19.2
+Nonfat Costco Yogurt
+Grams:178  Servings:0  Calories:104  Protein:18.8471  Carbs:7.32941  Fat:0
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Rice
+Grams:353  Servings:0  Calories:345  Protein:6.61875  Carbs:74.5712  Fat:2.86813
+Nonfat Costco Yogurt
+Grams:213  Servings:0  Calories:125  Protein:22.5529  Carbs:8.77059  Fat:0
+Chicken Thighs
+Grams:191  Servings:0  Calories:255  Protein:30.6964  Carbs:0  Fat:15.3482
+Cake
+Grams:0  Servings:0  Calories:246  Protein:2.7  Carbs:31.9  Fat:13.4
+Breyers Brownie a La Mode
+Grams:200  Servings:0  Calories:240  Protein:4.81928  Carbs:48.1928  Fat:12.0482

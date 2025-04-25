@@ -57,6 +57,8 @@ public:
     void printMacrosLeftUntilDayGoal();
     void printDetails();
     void toggleDisplay();
+    void printMacrosConsumedToday();
+    void printMacrisLeftToday();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -135,13 +137,9 @@ void RunApp::RunGame()
                 break;
             case 12: printDatesAndMacros();
                 break;
-            case 13: printAverages();
+            case 13: editMacroGoals();
                 break;
-            case 14: editMacroGoals();
-                break;
-            case 15: printMacroGoals();
-                break;
-            case 16: printDetails();
+            case 14: printDetails();
                 break;
             case 99:
                 toggleDisplay();
@@ -150,19 +148,25 @@ void RunApp::RunGame()
     saveDictionary();
 }
 
+void RunApp::printMacrosConsumedToday()
+{
+    cout << "  Macros consumed" << endl;
+    cout << dailyMacros << endl;
+}
+
+void RunApp::printMacrisLeftToday()
+{
+    cout << "  Macros left until goal is reached" << endl;
+    printMacrosLeftUntilDayGoal();
+}
+
 void RunApp::printMenu()
 {
     cout << "---------------------------------------------------------" << endl;
     if (mConsumedToday)
-    {
-        cout << "  Macros consumed" << endl;
-        cout << dailyMacros << endl;
-    }
+        printMacrosConsumedToday();
     else
-    {
-        cout << "  Macros left until goal is reached" << endl;
-        printMacrosLeftUntilDayGoal();
-    }
+        printMacrisLeftToday();
     cout << "---------------------------------------------------------" << endl;
     cout << "0. Exit" << endl;
     cout << "1. Enter food item" << endl;
@@ -177,10 +181,9 @@ void RunApp::printMenu()
     cout << "10. Print food ate in this session" << endl;
     cout << "11. Print total macros of food ate in this session" << endl;
     cout << "12. Print log of macros for each day" << endl;
-    cout << "13. Print average macros" << endl;
-    cout << "14. Edit Macro Goals" << endl;
-    cout << "15. Print Macro Goals" << endl;
-    cout << "16. Print details" << endl;
+    cout << "13. Edit Macro Goals" << endl;
+    cout << "14. Print details" << endl;
+    cout << "15. Edit the food log for today" << endl;
     cout << "99. Toggle calorie display" << endl;
     cout << "---------------------------------------------------------" << endl;
 }
@@ -1012,6 +1015,8 @@ void RunApp::printDetails()
     if (mGoalMacros.getFats() > 0)
         fatRatio = (double)dailyMacros.getFats() / mGoalMacros.getFats() * 100;
 
+    printMacrisLeftToday();
+    
     cout << "Ratio of macros consumed today" << endl;
     // Print results
     cout << "Calories: " << dailyMacros.getCalories() << " / " << mGoalMacros.getCalories()
@@ -1024,6 +1029,8 @@ void RunApp::printDetails()
     << " (" << fatRatio << "%)" << endl << endl;
     
     printAverages();
+    cout << endl;
+    printMacroGoals();
 }
 
 #endif /* RunApp_hpp */
