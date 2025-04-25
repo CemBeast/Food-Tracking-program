@@ -142,6 +142,8 @@ void RunApp::RunGame()
                 break;
             case 14: printDetails();
                 break;
+            case 15: EditFoodLog();
+                break;
             case 99:
                 toggleDisplay();
         }
@@ -1034,4 +1036,9 @@ void RunApp::printDetails()
     printMacroGoals();
 }
 
+void RunApp::EditFoodLog()
+{
+    printMacrosList();
+
+}
 #endif /* RunApp_hpp */
