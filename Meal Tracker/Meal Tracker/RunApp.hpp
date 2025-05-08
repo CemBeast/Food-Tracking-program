@@ -60,6 +60,7 @@ public:
     void printMacrosConsumedToday();
     void printMacrisLeftToday();
     void EditFoodLog();
+    void loadDailyLog();
 private:
     vector<Food> mList; // register of all food items -- food dictionary read from FoodData and loaded in
     vector<Food> mLog; // log- each meal logged on it and then printed to the FoodLog File
@@ -1039,6 +1040,14 @@ void RunApp::printDetails()
 void RunApp::EditFoodLog()
 {
     printMacrosList();
+    for(auto i = mDailyLog.begin(); i != mDailyLog.end(); ++i)
+    {
+        cout << *i << endl;
+    }
+}
 
+void RunApp::loadDailyLog()
+{
+    
 }
 #endif /* RunApp_hpp */

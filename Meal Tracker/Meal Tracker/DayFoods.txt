@@ -1,26 +1,24 @@
-Date-Thu Apr 24 12:02:11 2025
+Date-Thu May  8 09:06:06 2025
 ---------------------------------------------------------
+Oil
+Grams:3  Servings:0  Calories:25  Protein:0  Carbs:0  Fat:3
 Strawberries
-Grams:200  Servings:0  Calories:64  Protein:1.4  Carbs:15.4  Fat:0.6
+Grams:150  Servings:0  Calories:48  Protein:1.05  Carbs:11.55  Fat:0.45
 Raspberries
-Grams:100  Servings:0  Calories:52  Protein:1.2  Carbs:12  Fat:0.7
-Lactaid Milk
-Grams:0  Servings:1  Calories:160  Protein:9  Carbs:13  Fat:9
-Kirkland Whey Protein
-Grams:0  Servings:1  Calories:130  Protein:25  Carbs:4  Fat:1.5
-Impossible nuggets
-Grams:0  Servings:8  Calories:384  Protein:20.8  Carbs:30.4  Fat:19.2
-Nonfat Costco Yogurt
-Grams:178  Servings:0  Calories:104  Protein:18.8471  Carbs:7.32941  Fat:0
-Total beets
-Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Grams:50  Servings:0  Calories:26  Protein:0.6  Carbs:6  Fat:0.35
+Blueberries
+Grams:90  Servings:0  Calories:51  Protein:0.63  Carbs:12.6  Fat:0.27
+Egg Whites
+Grams:157  Servings:0  Calories:85  Protein:17.0652  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:51  Servings:0  Calories:81  Protein:16.3929  Carbs:3.64286  Fat:0
+Avacado
+Grams:93  Servings:0  Calories:148  Protein:1.86  Carbs:7.905  Fat:13.95
 Rice
-Grams:353  Servings:0  Calories:345  Protein:6.61875  Carbs:74.5712  Fat:2.86813
+Grams:349  Servings:0  Calories:341  Protein:6.54375  Carbs:73.7263  Fat:2.83563
+Chicken Tenders
+Grams:234  Servings:0  Calories:208  Protein:48.0536  Carbs:0  Fat:2.08929
 Nonfat Costco Yogurt
-Grams:213  Servings:0  Calories:125  Protein:22.5529  Carbs:8.77059  Fat:0
-Chicken Thighs
-Grams:191  Servings:0  Calories:255  Protein:30.6964  Carbs:0  Fat:15.3482
-Cake
-Grams:0  Servings:0  Calories:246  Protein:2.7  Carbs:31.9  Fat:13.4
-Breyers Brownie a La Mode
-Grams:200  Servings:0  Calories:240  Protein:4.81928  Carbs:48.1928  Fat:12.0482
+Grams:143  Servings:0  Calories:84  Protein:15.1412  Carbs:5.88824  Fat:0
+Gatorade Powder
+Grams:16  Servings:0  Calories:53  Protein:0  Carbs:14.2222  Fat:0

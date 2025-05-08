@@ -6,9 +6,6 @@
 //
 import SwiftUI
 
-
-import SwiftUI
-
 struct CustomButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -42,7 +39,8 @@ struct MainMenu: View {
                 )
 
                 Spacer()
-
+                
+                // View the food dictionary only
                 NavigationLink(destination: DictionaryView(
                     selectedFood: $selectedFood,
                     showGramsInput: $showGramsInput,
@@ -51,7 +49,8 @@ struct MainMenu: View {
                     Text("View Food Dictionary")
                         .buttonStyle(CustomButtonStyle())
                 }
-
+                
+                // Track food from within the dictionary view
                 Button(action: {
                     showFoodSelection.toggle()
                 }) {
@@ -78,6 +77,7 @@ struct MainMenu: View {
                         )
                     }
                 }
+                
                 // Save Button
                 Button(action: {
                     let today = viewModel.formatDate(Date())

@@ -21,6 +21,16 @@ struct FoodItem: Identifiable {
     }
 }
 
+enum SortOption: String, CaseIterable, Identifiable {
+    case name = "Name"
+    case calories = "Calories"
+    case protein = "Protein"
+    case carbs = "Carbs"
+    case fats = "Fats"
+    
+    var id: String { self.rawValue}
+}
+
 struct DictionaryView: View {
     @Binding var selectedFood: FoodItem?
     @Binding var showGramsInput: Bool
@@ -28,6 +38,7 @@ struct DictionaryView: View {
     @State private var searchText: String = ""
     @State private var selectedFoodID: UUID? // Track the selected food item's ID
     @State private var highlightFoodID: UUID? // Track food item being highlighted briefly
+    @State private var sortOption: SortOption = .name
     
     var readOnly: Bool = false
 
@@ -47,6 +58,14 @@ struct DictionaryView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 8)
 
+            Picker("Sort by", selection: $sortOption) {
+                ForEach(SortOption.allCases) {option in
+                    Text(option.rawValue).tag(option)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            
             List(filteredFoodItems) { foodItem in
                 if !readOnly {
                     Button(action: {
@@ -70,9 +89,25 @@ struct DictionaryView: View {
     }
     
     private var filteredFoodItems: [FoodItem] {
-        foodItems.filter { foodItem in
+        var result = foodItems.filter { foodItem in
             searchText.isEmpty || foodItem.name.localizedCaseInsensitiveContains(searchText)
         }
+        
+        result.sort { (a: FoodItem, b: FoodItem) -> Bool in
+            switch sortOption {
+            case .name:
+                return a.name.lowercased() < b.name.lowercased()
+            case .calories:
+                return a.calories > b.calories
+            case .protein:
+                return a.protein > b.protein
+            case .carbs:
+                return a.carbs > b.carbs
+            case .fats:
+                return a.fats > b.fats
+            }
+        }
+        return result
     }
     
     private func content(for foodItem: FoodItem, isSelected: Bool) -> some View {

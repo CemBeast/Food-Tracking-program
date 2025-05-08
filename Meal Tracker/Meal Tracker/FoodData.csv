@@ -24,6 +24,7 @@ Blackberries,100,0,43,1.4,9.6,0.5
 Blueberries,100,0,57,0.7,14,0.3
 Bok Choy,70,0,9,1,1.5,0
 Breakfast Sandwich,0,1,500,36,66,10
+Breyers Brownie a La Mode,83,0,100,2,20,5
 Broccoli,90,0,35,2.3,5.6,0.3
 Butter,100,0,714,0,0,78.6
 Cake,0,1,2461,27,319,134
@@ -53,12 +54,16 @@ Empty Artesano Burger,0,1,271,7,42,8
 Everything Bagel,0,1,310,12,61,2.5
 Everything Rice,1058,0,931,20,157,27
 Fairlife protein shake,0,1,150,30,4,2.5
+Farm Raised Atlantic Salmon,100,0,142,19.8,0,6.3
 Fat Free Mozzarella Cheese,28,0,45,9,2,0
 Feta Cheese,28,0,90,5,0.5,7
+Filet Mignon Steak,85,0,227,22,0,15
 Fire Roasted Primavera Mistura,85,0,40,1,6,2
 Fish oils,0,1,10,0,0,1
+Frozen Berries,126,0,70,2,16,0
 Garlic,100,0,149,6.4,33.1,0.5
 Gatorade,0,1,140,0,36,0
+Gatorade Powder,9,0,30,0,8,0
 Ginger Paste,5,0,10,0,2,0
 Gold Circle Egg Whites,56,0,30,5,1,0
 Gold Standard Whey,0,1,120,24,4,1
@@ -114,6 +119,7 @@ Pilsbury chocolate chip cookie,0,1,85,0.5,12,4
 Popcorn Chicken,84,0,190,12,15,9
 Pringles Chile & Lime,28,0,150,1,16,9
 Protein milkshake,0,1,400,33,38.5,18.5
+Raineer Beer,0,1,134,1,11,0
 Ramen Broth,0,1,40,2,2,2.5
 Raspberries,100,0,52,1.2,12,0.7
 Red Apple,100,0,52,0.3,13.8,0.2
@@ -169,5 +175,5 @@ White Wine,0,1,121,0.1,3.8,0
 WholeWheatBaguette,10,0,28,1,6,0
 Wild Caught Alaska Sockeye Salmon,168,0,220,38,0,8
 Yerba Mate,0,1,120,1,28,0
+Zesty Twirls French Fries,84,0,180,2,23,9
 eak,85,0,264,22,0,19
-Breyers Brownie a La Mode,83,0,100,2,20,5

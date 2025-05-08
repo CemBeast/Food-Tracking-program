@@ -68,15 +68,15 @@
 			isa = PBXGroup;
 			children = (
 				B2569F222CCFB4BD006532EE /* FoodData.csv */,
-				B2569F1E2CCFB320006532EE /* DictionaryView.swift */,
-				B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */,
+				B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */,
+				B2DF76002B36ECDF0069D56C /* ContentView.swift */,
 				B2569F1C2CCFAE41006532EE /* MainMenu.swift */,
+				B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */,
+				B2569F1E2CCFB320006532EE /* DictionaryView.swift */,
 				B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */,
 				B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */,
 				B2ECDC322D1D261D00C220DB /* MacroDetailView.swift */,
 				B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */,
-				B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */,
-				B2DF76002B36ECDF0069D56C /* ContentView.swift */,
 				B2DF76022B36ECE00069D56C /* Assets.xcassets */,
 				B2DF76042B36ECE00069D56C /* Preview Content */,
 			);
