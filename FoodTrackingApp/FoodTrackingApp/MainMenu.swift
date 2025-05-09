@@ -21,6 +21,7 @@ struct CustomButtonStyle: ButtonStyle {
 
 struct MainMenu: View {
     @StateObject private var viewModel = MacroTrackerViewModel()
+    @StateObject private var foodModel = FoodModel()
 
     @State private var selectedFood: FoodItem? = nil
     @State private var showFoodSelection = false
@@ -41,8 +42,7 @@ struct MainMenu: View {
                 Spacer()
                 
                 NavigationLink(destination: AddFoodView(onAdd: {newFood in
-                    foodItems.append(newFood)
-                    saveChanges()
+                    foodModel.add(newFood)
                 })) {
                     Text("➕ Add New Food")
                         .buttonStyle(CustomButtonStyle())
@@ -52,6 +52,7 @@ struct MainMenu: View {
                 NavigationLink(destination: DictionaryView(
                     selectedFood: $selectedFood,
                     showGramsInput: $showGramsInput,
+                    foodModel: foodModel,
                     readOnly: true
                 )) {
                     Text("View Food Dictionary")
@@ -69,6 +70,7 @@ struct MainMenu: View {
                     DictionaryView(
                         selectedFood: $selectedFood,
                         showGramsInput: $showGramsInput,
+                        foodModel: foodModel,
                         readOnly: false
                     )
                     if showGramsInput, let food = selectedFood {

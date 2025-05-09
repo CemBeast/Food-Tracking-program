@@ -3,16 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2569F1C2CCFAE41006532EE /* MainMenu.swift */; };
-		B2569F1F2CCFB32C006532EE /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2569F1E2CCFB320006532EE /* DictionaryView.swift */; };
 		B2569F232CCFB4BD006532EE /* FoodData.csv in Resources */ = {isa = PBXBuildFile; fileRef = B2569F222CCFB4BD006532EE /* FoodData.csv */; };
 		B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */; };
-		B2DE9D242DCD7B4400FEB006 /* FoodStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DE9D232DCD7B3B00FEB006 /* FoodStorage.swift */; };
-		B2DE9D262DCD7D9D00FEB006 /* AddFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DE9D252DCD7D9500FEB006 /* AddFoodView.swift */; };
 		B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */; };
 		B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF76002B36ECDF0069D56C /* ContentView.swift */; };
 		B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76022B36ECE00069D56C /* Assets.xcassets */; };
@@ -25,11 +22,8 @@
 
 /* Begin PBXFileReference section */
 		B2569F1C2CCFAE41006532EE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-		B2569F1E2CCFB320006532EE /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
 		B2569F222CCFB4BD006532EE /* FoodData.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = FoodData.csv; sourceTree = "<group>"; };
 		B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GramsOrServingsInput.swift; sourceTree = "<group>"; };
-		B2DE9D232DCD7B3B00FEB006 /* FoodStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodStorage.swift; sourceTree = "<group>"; };
-		B2DE9D252DCD7D9500FEB006 /* AddFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodView.swift; sourceTree = "<group>"; };
 		B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTrackingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackingAppApp.swift; sourceTree = "<group>"; };
 		B2DF76002B36ECDF0069D56C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -40,6 +34,10 @@
 		B2ECDC322D1D261D00C220DB /* MacroDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroDetailView.swift; sourceTree = "<group>"; };
 		B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMacrosDisplay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B2DE9D272DCD7FE900FEB006 /* Dictionary Info */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Dictionary Info"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B2DF75F82B36ECDF0069D56C /* Frameworks */ = {
@@ -71,14 +69,12 @@
 		B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */ = {
 			isa = PBXGroup;
 			children = (
-				B2DE9D252DCD7D9500FEB006 /* AddFoodView.swift */,
+				B2DE9D272DCD7FE900FEB006 /* Dictionary Info */,
 				B2569F222CCFB4BD006532EE /* FoodData.csv */,
 				B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */,
 				B2DF76002B36ECDF0069D56C /* ContentView.swift */,
 				B2569F1C2CCFAE41006532EE /* MainMenu.swift */,
 				B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */,
-				B2569F1E2CCFB320006532EE /* DictionaryView.swift */,
-				B2DE9D232DCD7B3B00FEB006 /* FoodStorage.swift */,
 				B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */,
 				B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */,
 				B2ECDC322D1D261D00C220DB /* MacroDetailView.swift */,
@@ -111,6 +107,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B2DE9D272DCD7FE900FEB006 /* Dictionary Info */,
 			);
 			name = FoodTrackingApp;
 			productName = FoodTrackingApp;
@@ -169,16 +168,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2ECDC312D1D23E200C220DB /* MacroHistoryView.swift in Sources */,
-				B2569F1F2CCFB32C006532EE /* DictionaryView.swift in Sources */,
 				B2ECDC332D1D262500C220DB /* MacroDetailView.swift in Sources */,
 				B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */,
 				B2FAC9E42CEB2DB600AE1129 /* FoodMacrosDisplay.swift in Sources */,
 				B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */,
 				B2ECDC2F2D1D20BA00C220DB /* MacroTrackerViewModel.swift in Sources */,
-				B2DE9D242DCD7B4400FEB006 /* FoodStorage.swift in Sources */,
 				B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */,
 				B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */,
-				B2DE9D262DCD7D9D00FEB006 /* AddFoodView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -34,7 +34,7 @@ enum SortOption: String, CaseIterable, Identifiable {
 struct DictionaryView: View {
     @Binding var selectedFood: FoodItem?
     @Binding var showGramsInput: Bool
-    @State private var foodItems: [FoodItem] = []
+    @ObservedObject var foodModel: FoodModel
     @State private var searchText: String = ""
     @State private var selectedFoodID: UUID? // Track the selected food item's ID
     @State private var highlightFoodID: UUID? // Track food item being highlighted briefly
@@ -84,12 +84,12 @@ struct DictionaryView: View {
         .navigationTitle("Food Dictionary")
         .listStyle(PlainListStyle())
         .onAppear {
-            loadFoodDictionary()
+            foodModel.load()
         }
     }
     
     private var filteredFoodItems: [FoodItem] {
-        var result = foodItems.filter { foodItem in
+        var result = foodModel.items.filter { foodItem in
             searchText.isEmpty || foodItem.name.localizedCaseInsensitiveContains(searchText)
         }
         
@@ -178,7 +178,7 @@ struct DictionaryView: View {
     }
     
     func loadFoodDictionary() {
-        foodItems = loadFoodItems()
+        foodModel.load()
 //        guard let fileURL = Bundle.main.url(forResource: "FoodData", withExtension: "csv") else {
 //            print("CSV file not found.")
 //            return
@@ -210,15 +210,6 @@ struct DictionaryView: View {
 //        } catch {
 //            print("Error loading CSV file: \(error)")
 //        }
-    }
-    
-    func saveChanges() {
-        saveFoodItems(foodItems)
-    }
-    
-    func addFoodItem(_ item: FoodItem) {
-        foodItems.append(item)
-        saveChanges()
     }
 }
 
