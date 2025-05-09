@@ -40,6 +40,14 @@ struct MainMenu: View {
 
                 Spacer()
                 
+                NavigationLink(destination: AddFoodView(onAdd: {newFood in
+                    foodItems.append(newFood)
+                    saveChanges()
+                })) {
+                    Text("➕ Add New Food")
+                        .buttonStyle(CustomButtonStyle())
+                }
+                
                 // View the food dictionary only
                 NavigationLink(destination: DictionaryView(
                     selectedFood: $selectedFood,
