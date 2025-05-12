@@ -16,11 +16,11 @@
 		B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */; };
 		B2ECDC2F2D1D20BA00C220DB /* MacroTrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */; };
 		B2ECDC312D1D23E200C220DB /* MacroHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */; };
-		B2ECDC332D1D262500C220DB /* MacroDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECDC322D1D261D00C220DB /* MacroDetailView.swift */; };
 		B2FAC9E42CEB2DB600AE1129 /* FoodMacrosDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B23C6A2E2DD17A34004D770F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B2569F1C2CCFAE41006532EE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		B2569F222CCFB4BD006532EE /* FoodData.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = FoodData.csv; sourceTree = "<group>"; };
 		B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GramsOrServingsInput.swift; sourceTree = "<group>"; };
@@ -31,11 +31,11 @@
 		B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerViewModel.swift; sourceTree = "<group>"; };
 		B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroHistoryView.swift; sourceTree = "<group>"; };
-		B2ECDC322D1D261D00C220DB /* MacroDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroDetailView.swift; sourceTree = "<group>"; };
 		B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMacrosDisplay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B23C6A2F2DD17A91004D770F /* BarcodeScanner */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BarcodeScanner; sourceTree = "<group>"; };
 		B2DE9D272DCD7FE900FEB006 /* Dictionary Info */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Dictionary Info"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -69,15 +69,16 @@
 		B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */ = {
 			isa = PBXGroup;
 			children = (
+				B23C6A2E2DD17A34004D770F /* Info.plist */,
 				B2DE9D272DCD7FE900FEB006 /* Dictionary Info */,
 				B2569F222CCFB4BD006532EE /* FoodData.csv */,
 				B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */,
 				B2DF76002B36ECDF0069D56C /* ContentView.swift */,
 				B2569F1C2CCFAE41006532EE /* MainMenu.swift */,
+				B23C6A2F2DD17A91004D770F /* BarcodeScanner */,
 				B2FAC9E32CEB2DB500AE1129 /* FoodMacrosDisplay.swift */,
 				B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */,
 				B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */,
-				B2ECDC322D1D261D00C220DB /* MacroDetailView.swift */,
 				B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */,
 				B2DF76022B36ECE00069D56C /* Assets.xcassets */,
 				B2DF76042B36ECE00069D56C /* Preview Content */,
@@ -109,6 +110,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				B23C6A2F2DD17A91004D770F /* BarcodeScanner */,
 				B2DE9D272DCD7FE900FEB006 /* Dictionary Info */,
 			);
 			name = FoodTrackingApp;
@@ -168,7 +170,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2ECDC312D1D23E200C220DB /* MacroHistoryView.swift in Sources */,
-				B2ECDC332D1D262500C220DB /* MacroDetailView.swift in Sources */,
 				B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */,
 				B2FAC9E42CEB2DB600AE1129 /* FoodMacrosDisplay.swift in Sources */,
 				B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */,
@@ -306,7 +307,9 @@
 				DEVELOPMENT_TEAM = R7BBRQXG8B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FoodTrackingApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Meal Tracker";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to the camera to scan barcodes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -336,7 +339,9 @@
 				DEVELOPMENT_TEAM = R7BBRQXG8B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FoodTrackingApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Meal Tracker";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to the camera to scan barcodes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

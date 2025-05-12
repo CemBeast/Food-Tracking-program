@@ -1,24 +1,12 @@
-Date-Thu May  8 09:06:06 2025
+Date-Sat May 10 06:59:05 2025
 ---------------------------------------------------------
-Oil
-Grams:3  Servings:0  Calories:25  Protein:0  Carbs:0  Fat:3
-Strawberries
-Grams:150  Servings:0  Calories:48  Protein:1.05  Carbs:11.55  Fat:0.45
-Raspberries
-Grams:50  Servings:0  Calories:26  Protein:0.6  Carbs:6  Fat:0.35
-Blueberries
-Grams:90  Servings:0  Calories:51  Protein:0.63  Carbs:12.6  Fat:0.27
-Egg Whites
-Grams:157  Servings:0  Calories:85  Protein:17.0652  Carbs:0  Fat:0
-Fat Free Mozzarella Cheese
-Grams:51  Servings:0  Calories:81  Protein:16.3929  Carbs:3.64286  Fat:0
-Avacado
-Grams:93  Servings:0  Calories:148  Protein:1.86  Carbs:7.905  Fat:13.95
-Rice
-Grams:349  Servings:0  Calories:341  Protein:6.54375  Carbs:73.7263  Fat:2.83563
-Chicken Tenders
-Grams:234  Servings:0  Calories:208  Protein:48.0536  Carbs:0  Fat:2.08929
-Nonfat Costco Yogurt
-Grams:143  Servings:0  Calories:84  Protein:15.1412  Carbs:5.88824  Fat:0
-Gatorade Powder
-Grams:16  Servings:0  Calories:53  Protein:0  Carbs:14.2222  Fat:0
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Banana
+Grams:0  Servings:1  Calories:115  Protein:1.4  Carbs:29  Fat:0.4
+Daves Breakfast Sandwich
+Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
+Nancys whole milk yogurt
+Grams:100  Servings:0  Calories:76  Protein:5.29412  Carbs:5.29412  Fat:3.52941
+Lunch with mom
+Grams:0  Servings:0  Calories:889  Protein:29.6  Carbs:74.3  Fat:52.6

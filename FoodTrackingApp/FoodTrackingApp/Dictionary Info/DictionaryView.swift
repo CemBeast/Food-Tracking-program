@@ -179,47 +179,5 @@ struct DictionaryView: View {
     
     func loadFoodDictionary() {
         foodModel.load()
-//        guard let fileURL = Bundle.main.url(forResource: "FoodData", withExtension: "csv") else {
-//            print("CSV file not found.")
-//            return
-//        }
-//        
-//        do {
-//            let data = try String(contentsOf: fileURL)
-//            let rows = data.components(separatedBy: "\n")
-//            foodItems = rows.compactMap { row in
-//                let columns = row.components(separatedBy: ",")
-//                guard columns.count == 7,
-//                      let weight = Int(columns[1]),
-//                      let calories = Int(columns[3]),
-//                      let protein = Double(columns[4]),
-//                      let carbs = Double(columns[5]),
-//                      let fats = Double(columns[6]),
-//                      let servingType = Int(columns[2]) else { return nil }
-//                
-//                let servings: Int = servingType > 0 ? servingType : 0
-//                
-//                return FoodItem(name: columns[0],
-//                                weightInGrams: weight,
-//                                servings: servings,
-//                                calories: calories,
-//                                protein: (protein * 10).rounded() / 10.0,
-//                                carbs: (carbs * 10).rounded() / 10.0,
-//                                fats: (fats * 10).rounded() / 10.0)
-//            }
-//        } catch {
-//            print("Error loading CSV file: \(error)")
-//        }
     }
 }
-
-// MARK: - Preview
-
-//struct DictionaryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DictionaryView(
-//            selectedFood: .constant(nil),
-//            showGramsInput: .constant(false)
-//        )
-//    }
-//}

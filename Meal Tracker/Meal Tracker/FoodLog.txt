@@ -5734,3 +5734,111 @@ Grams:16  Servings:0  Calories:53  Protein:0  Carbs:14.2222  Fat:0
 Todays Totals:
 Calories:1150  Protein:108  Carbs:136  Fats:23
 ----------------------------------------------------------------------------------
+Date: Thu May  8 20:28:05 2025
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Tomatoes
+Grams:247  Servings:0  Calories:44  Protein:2.1736  Carbs:9.6083  Fat:0.494
+Zesty Twirls French Fries
+Grams:150  Servings:0  Calories:321  Protein:3.57143  Carbs:41.0714  Fat:16.0714
+Chicken Tenders
+Grams:207  Servings:0  Calories:184  Protein:42.5089  Carbs:0  Fat:1.84821
+Todays Totals:
+Calories:1869  Protein:182  Carbs:194  Fats:45
+----------------------------------------------------------------------------------
+Date: Thu May  8 20:50:02 2025
+Gatorade Powder
+Grams:22  Servings:0  Calories:73  Protein:0  Carbs:19.5556  Fat:0
+Todays Totals:
+Calories:1942  Protein:182  Carbs:214  Fats:45
+----------------------------------------------------------------------------------
+Date: Thu May  8 20:50:10 2025
+Fish oils
+Grams:0  Servings:3  Calories:30  Protein:0  Carbs:0  Fat:3
+Todays Totals:
+Calories:1972  Protein:182  Carbs:214  Fats:48
+----------------------------------------------------------------------------------
+Date: Thu May  8 20:50:17 2025
+Fish oils
+Grams:0  Servings:2  Calories:20  Protein:0  Carbs:0  Fat:2
+Todays Totals:
+Calories:1992  Protein:182  Carbs:214  Fats:50
+----------------------------------------------------------------------------------
+Date: Fri May  9 11:32:54 2025
+Oil
+Grams:2  Servings:0  Calories:17  Protein:0  Carbs:0  Fat:2
+Strawberries
+Grams:158  Servings:0  Calories:50  Protein:1.106  Carbs:12.166  Fat:0.474
+Raspberries
+Grams:74  Servings:0  Calories:38  Protein:0.888  Carbs:8.88  Fat:0.518
+Blueberries
+Grams:74  Servings:0  Calories:42  Protein:0.518  Carbs:10.36  Fat:0.222
+Egg Whites
+Grams:218  Servings:0  Calories:118  Protein:23.6957  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:63  Servings:0  Calories:101  Protein:20.25  Carbs:4.5  Fat:0
+Avacado
+Grams:100  Servings:0  Calories:160  Protein:2  Carbs:8.5  Fat:15
+Todays Totals:
+Calories:526  Protein:48  Carbs:44  Fats:18
+----------------------------------------------------------------------------------
+Date: Fri May  9 16:35:35 2025
+Tomatoes
+Grams:187  Servings:0  Calories:33  Protein:1.6456  Carbs:7.2743  Fat:0.374
+Chicken Tenders
+Grams:184  Servings:0  Calories:164  Protein:37.7857  Carbs:0  Fat:1.64286
+Gatorade Powder
+Grams:22  Servings:0  Calories:73  Protein:0  Carbs:19.5556  Fat:0
+Todays Totals:
+Calories:796  Protein:87  Carbs:71  Fats:20
+----------------------------------------------------------------------------------
+Date: Fri May  9 21:24:53 2025
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Todays Totals:
+Calories:956  Protein:113  Carbs:76  Fats:24
+----------------------------------------------------------------------------------
+Date: Fri May  9 22:23:02 2025
+Seitan Protein Ramen
+Grams:360  Servings:0  Calories:589  Protein:47.1  Carbs:77.5  Fat:12.3
+Todays Totals:
+Calories:1545  Protein:160  Carbs:154  Fats:36
+----------------------------------------------------------------------------------
+Date: Fri May  9 22:27:44 2025
+Gatorade Powder
+Grams:19  Servings:0  Calories:63  Protein:0  Carbs:16.8889  Fat:0
+Todays Totals:
+Calories:1608  Protein:160  Carbs:171  Fats:36
+----------------------------------------------------------------------------------
+Date: Fri May  9 22:34:41 2025
+Seitan Protein Ramen
+Grams:191  Servings:0  Calories:312  Protein:24.9892  Carbs:41.1181  Fat:6.52583
+Todays Totals:
+Calories:1920  Protein:185  Carbs:212  Fats:43
+----------------------------------------------------------------------------------
+Date: Fri May  9 23:01:13 2025
+Fish oils
+Grams:0  Servings:4  Calories:40  Protein:0  Carbs:0  Fat:4
+Todays Totals:
+Calories:1960  Protein:185  Carbs:212  Fats:47
+----------------------------------------------------------------------------------
+Date: Sat May 10 06:59:05 2025
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Banana
+Grams:0  Servings:1  Calories:115  Protein:1.4  Carbs:29  Fat:0.4
+Daves Breakfast Sandwich
+Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
+Todays Totals:
+Calories:726  Protein:62  Carbs:89  Fats:17
+----------------------------------------------------------------------------------
+Date: Sat May 10 14:57:12 2025
+Nancys whole milk yogurt
+Grams:100  Servings:0  Calories:76  Protein:5.29412  Carbs:5.29412  Fat:3.52941
+Lunch with mom
+Grams:0  Servings:0  Calories:889  Protein:29.6  Carbs:74.3  Fat:52.6
+Todays Totals:
+Calories:1691  Protein:97  Carbs:169  Fats:73
+----------------------------------------------------------------------------------

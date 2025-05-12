@@ -27,6 +27,9 @@ struct MainMenu: View {
     @State private var showFoodSelection = false
     @State private var showGramsInput = false
     @State private var gramsOrServings: Int? = nil
+    
+    @State private var showManual = false
+    @State private var showScanner = false
 
     var body: some View {
         NavigationView {
@@ -40,13 +43,24 @@ struct MainMenu: View {
                 )
 
                 Spacer()
-                
-                NavigationLink(destination: AddFoodView(onAdd: {newFood in
-                    foodModel.add(newFood)
-                })) {
-                    Text("➕ Add New Food")
-                        .buttonStyle(CustomButtonStyle())
+                Menu("Add New Food") {
+                    Button("Add Manually") {
+                        showManual = true
+                    }
+                    Button("Scan Barcode") {
+                        showScanner = true
+                    }
                 }
+                .buttonStyle(CustomButtonStyle())
+                .sheet(isPresented: $showManual) {
+                    AddFoodView(onAdd: {newFood in
+                        foodModel.add(newFood)
+                    })
+                }
+                .sheet(isPresented: $showScanner) {
+                    BarcodeScannerView(foodModel: foodModel)
+                }
+                
                 
                 // View the food dictionary only
                 NavigationLink(destination: DictionaryView(
@@ -89,18 +103,13 @@ struct MainMenu: View {
                 }
                 
                 // Save Button
-                Button(action: {
-                    let today = viewModel.formatDate(Date())
-                        viewModel.saveMacros(for: today)
-                        print("Macros saved for today: \(today)")
-                    }) {
-                    Text("Save Today's Macros")
-                        .buttonStyle(CustomButtonStyle())
+                Button("Clear Macro History") {
+                    viewModel.clearHistory()
                 }
-                
+                   
                 // History Button
-                NavigationLink(destination: MacroHistoryView(viewModel: viewModel)) {
-                    Text("View Macro History")
+                NavigationLink(destination: MacroHistoryView(history: viewModel.history)) {
+                    Text("View History")
                         .buttonStyle(CustomButtonStyle())
                 }
                 

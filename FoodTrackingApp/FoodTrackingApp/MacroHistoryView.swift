@@ -9,41 +9,17 @@
 import SwiftUI
 
 struct MacroHistoryView: View {
-    @ObservedObject var viewModel: MacroTrackerViewModel
-    @State private var selectedDate: String? = nil
-    @State private var selectedFoodEntries: [FoodEntry] = []
-
-    
-    struct MacroHistory: Identifiable {
-            let id = UUID()
-            let date: String
-            let calories: Int
-            let protein: Double
-            let carbs: Double
-            let fats: Double
-            let foodEntries:  [FoodEntry] // Ensure this property exists!
-        }
+    let history: [MacroHistoryEntry]
     
     var body: some View {
-        List {
-            ForEach(viewModel.getAllMacroHistory(), id: \.date) { history in
-                NavigationLink(
-                    destination: MacroDetailView(
-                        date: history.date,
-                        foodEntries: history.foodEntries
-                    )
-                ) {
-                    VStack(alignment: .leading) {
-                        Text("Date: \(history.date)")
-                            .font(.headline)
-                        Text("Calories: \(history.calories)")
-                    }
-                }
-                .onTapGesture{
-                    print("Navigating to MacroDetailView with \(history.foodEntries.count) food entries")
-                }
+        List(history.sorted(by: {$0.date > $1.date})) { entry in
+            VStack(alignment: .leading) {
+                Text(entry.date.formatted(date: .abbreviated, time: .omitted))
+                    .font(.headline)
+                Text("Calories: \(entry.calories), Protein: \(Int(entry.protein.rounded()))g, Carbs: \(Int(entry.carbs.rounded()))g, Fats: \(Int(entry.fats.rounded()))g")
+                    .font(.subheadline)
             }
         }
-        .navigationTitle("Macro History")
+        .navigationTitle("")
     }
 }
