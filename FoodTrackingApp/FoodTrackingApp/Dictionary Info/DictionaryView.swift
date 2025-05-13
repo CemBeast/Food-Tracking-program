@@ -31,14 +31,19 @@ enum SortOption: String, CaseIterable, Identifiable {
     var id: String { self.rawValue}
 }
 
+enum MeasurementMode {
+    case weight, serving
+}
+
 struct DictionaryView: View {
     @Binding var selectedFood: FoodItem?
     @Binding var showGramsInput: Bool
     @Binding var selectedFoodID: UUID? // Track the selected food item's ID
+    @Binding var selectedMeasurementMode: MeasurementMode?
     @ObservedObject var foodModel: FoodModel
     @State private var searchText: String = ""
-    @State private var highlightFoodID: UUID? // Track food item being highlighted briefly
     @State private var sortOption: SortOption = .name
+    @State private var showMeasurementDialog: Bool = false
     
     var readOnly: Bool = false
 
@@ -73,7 +78,7 @@ struct DictionaryView: View {
                         Button(action: {
                             selectedFood = foodItem
                             selectedFoodID = foodItem.id // Highlight the selected item
-                            showGramsInput = true
+                            showMeasurementDialog = true
                         }) {
                             content(for: foodItem, isSelected: foodItem.id == selectedFoodID)
                         }
@@ -89,6 +94,22 @@ struct DictionaryView: View {
         }
         .navigationTitle("Food Dictionary")
         .listStyle(PlainListStyle())
+        // 3) Confirmation dialog for "Track by"
+        .confirmationDialog(
+            "Track by",
+            isPresented: $showMeasurementDialog,
+            titleVisibility: .visible
+        ) {
+            Button("Weight") {
+                selectedMeasurementMode = .weight
+                showGramsInput = true
+            }
+            Button("Servings") {
+                selectedMeasurementMode = .serving
+                showGramsInput = true
+            }
+            Button("Cancel", role: .cancel) {}
+        }
     }
     
     private var filteredFoodItems: [FoodItem] {
@@ -121,21 +142,22 @@ struct DictionaryView: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    if foodItem.isMeasuredByServing {
-                        Text("Servings")
-                            .font(.callout)
-                            .lineLimit(1) // Ensures the text stays on one line
-                            .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
-                        Text("\(foodItem.servings)")
-                            .font(.headline)
-                    } else {
-                        Text("Weight")
-                            .font(.callout)
-                            .lineLimit(1) // Ensures the text stays on one line
-                            .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
-                        Text("\(foodItem.weightInGrams)g")
-                            .font(.headline)
-                    }
+                    Text("Servings")
+                        .font(.callout)
+                        .lineLimit(1) // Ensures the text stays on one line
+                        .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
+                    Text("\(foodItem.servings)")
+                        .font(.headline)
+                }
+                .frame(maxWidth: .infinity)
+                
+                VStack(alignment: .leading) {
+                    Text("Weight")
+                        .font(.callout)
+                        .lineLimit(1) // Ensures the text stays on one line
+                        .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
+                    Text("\(foodItem.weightInGrams)g")
+                        .font(.headline)
                 }
                 .frame(maxWidth: .infinity)
                 

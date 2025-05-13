@@ -30,7 +30,9 @@ struct MainMenu: View {
     @State private var showFoodSelection = false
     @State private var showGramsInput = false
     @State private var gramsOrServings: Int? = nil
+    @State private var selectedMeasurementMode: MeasurementMode? = nil   // ← New
     
+    // For manually adding foods or using barcode
     @State private var showManual = false
     @State private var showScanner = false
 
@@ -70,6 +72,7 @@ struct MainMenu: View {
                     selectedFood: $selectedFood,
                     showGramsInput: $showGramsInput,
                     selectedFoodID: $selectedFoodID,
+                    selectedMeasurementMode: $selectedMeasurementMode,
                     foodModel: foodModel,
                     readOnly: true
                 )) {
@@ -90,13 +93,18 @@ struct MainMenu: View {
                             selectedFood: $selectedFood,
                             showGramsInput: $showGramsInput,
                             selectedFoodID: $selectedFoodID,
+                            selectedMeasurementMode: $selectedMeasurementMode,
                             foodModel: foodModel,
                             readOnly: false
                         )
                         // model of grams/serving overlay
-                        if showGramsInput, let food = selectedFood {
+                        if showGramsInput,
+                            let food = selectedFood,
+                            let mode = selectedMeasurementMode
+                        {
                             GramsOrServingsInput(
                                 food: food,
+                                mode: mode,
                                 gramsOrServings: $gramsOrServings,
                                 showGramsInput: $showGramsInput,
                                 updateMacros: { cals, fats, prot, carbs in
@@ -109,10 +117,11 @@ struct MainMenu: View {
                         }
                     }
                     // Once as showGramsInput is false we clear the seciton
-                    .onChange(of: showGramsInput) { newVal in
-                        if newVal == false {
+                    .onChange(of: showGramsInput) { done in
+                        if done == false {
                             selectedFood = nil
                             selectedFoodID = nil
+                            selectedMeasurementMode    = nil
                         }
                     }
                 }
