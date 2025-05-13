@@ -87,7 +87,17 @@ struct MainMenu: View {
                     Text("Select Food to Track")
                         .buttonStyle(CustomButtonStyle())
                 }
-                .sheet(isPresented: $showFoodSelection) {
+                .sheet(
+                    isPresented: $showFoodSelection,
+                    onDismiss: {
+                        // Reset everything when the sheet is swiped down
+                        selectedFood               = nil
+                        selectedFoodID             = nil
+                        selectedMeasurementMode    = nil
+                        showGramsInput             = false
+                        gramsOrServings            = nil
+                    }
+                )   {
                     ZStack {
                         DictionaryView(
                             selectedFood: $selectedFood,

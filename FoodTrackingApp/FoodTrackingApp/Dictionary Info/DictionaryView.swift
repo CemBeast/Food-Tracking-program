@@ -108,7 +108,10 @@ struct DictionaryView: View {
                 selectedMeasurementMode = .serving
                 showGramsInput = true
             }
-            Button("Cancel", role: .cancel) {}
+            Button("Cancel", role: .cancel) {
+                selectedFood = nil
+                selectedFoodID = nil
+            }
         }
     }
     
