@@ -34,9 +34,9 @@ enum SortOption: String, CaseIterable, Identifiable {
 struct DictionaryView: View {
     @Binding var selectedFood: FoodItem?
     @Binding var showGramsInput: Bool
+    @Binding var selectedFoodID: UUID? // Track the selected food item's ID
     @ObservedObject var foodModel: FoodModel
     @State private var searchText: String = ""
-    @State private var selectedFoodID: UUID? // Track the selected food item's ID
     @State private var highlightFoodID: UUID? // Track food item being highlighted briefly
     @State private var sortOption: SortOption = .name
     
@@ -67,6 +67,7 @@ struct DictionaryView: View {
             .padding(.horizontal)
             
             List {
+                // Tracking food from the dictionary
                 if !readOnly {
                     ForEach(filteredFoodItems) { foodItem in
                         Button(action: {

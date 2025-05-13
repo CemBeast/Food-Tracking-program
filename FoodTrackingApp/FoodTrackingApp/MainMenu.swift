@@ -26,6 +26,7 @@ struct MainMenu: View {
     @StateObject private var foodModel = FoodModel()
 
     @State private var selectedFood: FoodItem? = nil
+    @State private var selectedFoodID: UUID? 
     @State private var showFoodSelection = false
     @State private var showGramsInput = false
     @State private var gramsOrServings: Int? = nil
@@ -68,6 +69,7 @@ struct MainMenu: View {
                 NavigationLink(destination: DictionaryView(
                     selectedFood: $selectedFood,
                     showGramsInput: $showGramsInput,
+                    selectedFoodID: $selectedFoodID,
                     foodModel: foodModel,
                     readOnly: true
                 )) {
@@ -83,24 +85,35 @@ struct MainMenu: View {
                         .buttonStyle(CustomButtonStyle())
                 }
                 .sheet(isPresented: $showFoodSelection) {
-                    DictionaryView(
-                        selectedFood: $selectedFood,
-                        showGramsInput: $showGramsInput,
-                        foodModel: foodModel,
-                        readOnly: false
-                    )
-                    if showGramsInput, let food = selectedFood {
-                        GramsOrServingsInput(
-                            food: food,
-                            gramsOrServings: $gramsOrServings,
+                    ZStack {
+                        DictionaryView(
+                            selectedFood: $selectedFood,
                             showGramsInput: $showGramsInput,
-                            updateMacros: { calculatedCalories, calculatedFats, calculatedProtein, calculatedCarbs in
-                                viewModel.calories += Int(calculatedCalories)
-                                viewModel.fats += calculatedFats
-                                viewModel.protein += calculatedProtein
-                                viewModel.carbs += calculatedCarbs
-                            }
+                            selectedFoodID: $selectedFoodID,
+                            foodModel: foodModel,
+                            readOnly: false
                         )
+                        // model of grams/serving overlay
+                        if showGramsInput, let food = selectedFood {
+                            GramsOrServingsInput(
+                                food: food,
+                                gramsOrServings: $gramsOrServings,
+                                showGramsInput: $showGramsInput,
+                                updateMacros: { cals, fats, prot, carbs in
+                                    viewModel.calories += Int(cals)
+                                    viewModel.fats     += fats
+                                    viewModel.protein  += prot
+                                    viewModel.carbs     += carbs
+                                }
+                            )
+                        }
+                    }
+                    // Once as showGramsInput is false we clear the seciton
+                    .onChange(of: showGramsInput) { newVal in
+                        if newVal == false {
+                            selectedFood = nil
+                            selectedFoodID = nil
+                        }
                     }
                 }
                 
