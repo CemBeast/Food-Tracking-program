@@ -4,6 +4,8 @@
 //
 //  Created by Cem Beyenal on 11/18/24.
 //
+//  UI for showing daily macros at the top of the main menu
+
 import SwiftUI
 
 struct FoodMacrosDisplay: View {

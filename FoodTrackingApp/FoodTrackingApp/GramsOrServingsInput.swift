@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct GramsOrServingsInput: View {
+    @Environment(\.dismiss) private var dismiss // to dismiss parent view resetting everything
     var food: FoodItem
     let mode: MeasurementMode
     @Binding var gramsOrServings: Int?
@@ -64,9 +65,6 @@ struct GramsOrServingsInput: View {
         let calculatedCarbs = ratio * Double(food.carbs)
         
         updateMacros(calculatedCalories, calculatedFats, calculatedProtein, calculatedCarbs)
-        
-        // After updating, close the modal by setting `showGramsInput` to `false`
-        showGramsInput = false  // This will dismiss the view
-
+        dismiss()
     }
 }
