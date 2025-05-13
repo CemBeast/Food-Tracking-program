@@ -14,14 +14,9 @@ struct BarcodeScannerView: View {
             // UIKit camera controller (wrapped)
             ScannerViewControllerWrapper(foodModel: foodModel)
                 .edgesIgnoringSafeArea(.all)
-
-            // Overlay on top
-            VStack {
-                //Spacer()
-                BarcodeOverlay()
+            BarcodeOverlay()
                     .frame(width: 300, height: 200)
                     .padding(.bottom, 100)
-            }
         }
     }
 }

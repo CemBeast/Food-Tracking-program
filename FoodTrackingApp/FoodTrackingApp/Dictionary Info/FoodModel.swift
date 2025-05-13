@@ -15,6 +15,11 @@ class FoodModel: ObservableObject {
     }
     
     func add(_ item: FoodItem) {
+        // never add the same food name twice
+        guard !items.contains(where: { $0.name.lowercased() == item.name.lowercased() }) else {
+            return
+        }
+        print("💾 FoodModel.add() called for:", item.name)
         items.append(item)
         save()
     }

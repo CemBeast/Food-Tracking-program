@@ -20,7 +20,9 @@ struct CustomButtonStyle: ButtonStyle {
 }
 
 struct MainMenu: View {
+    // viewModel to track todays macros
     @StateObject private var viewModel = MacroTrackerViewModel()
+    // foodModel is the food dictionary
     @StateObject private var foodModel = FoodModel()
 
     @State private var selectedFood: FoodItem? = nil
@@ -34,7 +36,7 @@ struct MainMenu: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // Food Macros Display
+                // Todays Macros
                 FoodMacrosDisplay(
                     calories: viewModel.calories,
                     protein: viewModel.protein,

@@ -1,12 +1,10 @@
-Date-Sat May 10 06:59:05 2025
+Date-Tue May 13 10:48:02 2025
 ---------------------------------------------------------
+Banana
+Grams:108  Servings:0  Calories:100  Protein:0.915254  Carbs:24.7119  Fat:0
 Almond Milk Whey Protein Shake
 Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
-Banana
-Grams:0  Servings:1  Calories:115  Protein:1.4  Carbs:29  Fat:0.4
-Daves Breakfast Sandwich
-Grams:0  Servings:1  Calories:451  Protein:35  Carbs:55  Fat:13
-Nancys whole milk yogurt
-Grams:100  Servings:0  Calories:76  Protein:5.29412  Carbs:5.29412  Fat:3.52941
-Lunch with mom
-Grams:0  Servings:0  Calories:889  Protein:29.6  Carbs:74.3  Fat:52.6
+1/4 Tutta Bella Margherita Pizza
+Grams:0  Servings:2  Calories:520  Protein:24  Carbs:78  Fat:10
+Chicken Tenders
+Grams:250  Servings:0  Calories:223  Protein:51.3393  Carbs:0  Fat:2.23214

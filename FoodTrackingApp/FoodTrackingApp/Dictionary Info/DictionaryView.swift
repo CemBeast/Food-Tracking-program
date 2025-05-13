@@ -66,26 +66,28 @@ struct DictionaryView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
             
-            List(filteredFoodItems) { foodItem in
+            List {
                 if !readOnly {
-                    Button(action: {
-                        selectedFood = foodItem
-                        selectedFoodID = foodItem.id // Highlight the selected item
-                        showGramsInput = true
-                    }) {
-                        content(for: foodItem, isSelected: foodItem.id == selectedFoodID)
+                    ForEach(filteredFoodItems) { foodItem in
+                        Button(action: {
+                            selectedFood = foodItem
+                            selectedFoodID = foodItem.id // Highlight the selected item
+                            showGramsInput = true
+                        }) {
+                            content(for: foodItem, isSelected: foodItem.id == selectedFoodID)
+                        }
                     }
                     .buttonStyle(PlainButtonStyle())
                 } else {
-                    content(for: foodItem, isSelected: false)
+                    ForEach(filteredFoodItems) { foodItem in
+                        content (for : foodItem, isSelected: false)
+                    }
+                    .onDelete(perform: deleteItems)
                 }
             }
         }
         .navigationTitle("Food Dictionary")
         .listStyle(PlainListStyle())
-        .onAppear {
-            foodModel.load()
-        }
     }
     
     private var filteredFoodItems: [FoodItem] {
@@ -179,5 +181,18 @@ struct DictionaryView: View {
     
     func loadFoodDictionary() {
         foodModel.load()
+    }
+    
+    private func deleteItems(at offsets: IndexSet) {
+        // figure out which FoodItems are being deleted
+        let toDelete = offsets.map { filteredFoodItems[$0] }
+        // remove them from the underlying model
+        for item in toDelete {
+            if let idx = foodModel.items.firstIndex(where: { $0.id == item.id}) {
+                foodModel.items.remove(at: idx)
+            }
+        }
+        // persist the change
+        foodModel.save()
     }
 }
