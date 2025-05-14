@@ -23,7 +23,6 @@ class MacroTrackerViewModel: ObservableObject {
     @Published var protein = 0.0
     @Published var carbs = 0.0
     @Published var fats = 0.0
-    
     // Historical macro entries, lastUpdatedDate is used for updating history when its a new day
     @Published var history: [MacroHistoryEntry] = []
     @Published var lastUpdatedDate: Date = Date()
@@ -31,32 +30,45 @@ class MacroTrackerViewModel: ObservableObject {
     // UserDefaults Key to store the encoded history
     private let historyKey = "macro_history"
     private let lastDateKey = "macro_last_updated"
+    private let caloriesKey   = "macro_calories"
+    private let proteinKey    = "macro_protein"
+    private let carbsKey      = "macro_carbs"
+    private let fatsKey       = "macro_fats"
     
     private var cancellables = Set<AnyCancellable>()
     
     init() {
+        let defaults = UserDefaults.standard
+        
+        // Load persisted Macros
+        self.calories = defaults.integer(forKey: caloriesKey)
+        self.protein = defaults.double(forKey: proteinKey)
+        self.carbs = defaults.double(forKey: carbsKey)
+        self.fats = defaults.double(forKey: fatsKey)
+        
         loadHistory()
         loadLastDate()
+        
+        // Persist macros whenever they change
+        $calories
+            .sink { val in defaults.set(val, forKey: self.caloriesKey) }
+            .store(in: &cancellables)
+        $protein
+            .sink { val in defaults.set(val, forKey: self.proteinKey) }
+            .store(in: &cancellables)
+        $carbs
+            .sink { val in defaults.set(val, forKey: self.carbsKey) }
+            .store(in: &cancellables)
+        $fats
+            .sink { val in defaults.set(val, forKey: self.fatsKey) }
+            .store(in: &cancellables)
+        
         checkForNewDay()
         
         // Run check when app becomes active again
         NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink { [weak self] _ in
-                self?.checkForNewDay()
-            }
+            .sink { [weak self] _ in self?.checkForNewDay() }
             .store(in: &cancellables)
-    }
-    
-    func resetForNewdDay() {
-        let entry = MacroHistoryEntry(date: Date(), calories: calories, protein: protein, carbs: carbs, fats: fats)
-        history.append(entry)
-        saveHistory()
-        
-        // reset macros
-        calories = 0
-        protein = 0.0
-        carbs = 0.0
-        fats = 0.0
     }
 
     // Save the 'history' array to UserDefaults by encoding it to JSON
@@ -70,10 +82,13 @@ class MacroTrackerViewModel: ObservableObject {
     private func loadHistory() {
         // Try to read saved Data from UserDefaults
         if let data = UserDefaults.standard.data(forKey: historyKey),
-            let decoded = try? JSONDecoder().decode([MacroHistoryEntry].self, from: data){
-                history = decoded
-            }
+           let decoded = try? JSONDecoder().decode([MacroHistoryEntry].self, from: data){
+            history = decoded
         }
+        else {
+            self.history = []
+        }
+    }
        
     private func rollOverToNewDay() {
         // save yesterdays macros
@@ -82,10 +97,7 @@ class MacroTrackerViewModel: ObservableObject {
             saveHistory()
 
         // Reset current macros
-        calories = 0
-        protein = 0.0
-        carbs = 0.0
-        fats = 0.0
+        resetMacros()
 
         // Update date
         lastUpdatedDate = Date()
@@ -98,7 +110,10 @@ class MacroTrackerViewModel: ObservableObject {
 
     private func loadLastDate() {
         if let savedDate = UserDefaults.standard.object(forKey: lastDateKey) as? Date {
-            lastUpdatedDate = savedDate
+            self.lastUpdatedDate = Calendar.current.startOfDay(for: savedDate)
+        } else {
+            self.lastUpdatedDate = Calendar.current.startOfDay(for: Date())
+            saveLastDate()
         }
     }
     
@@ -111,5 +126,15 @@ class MacroTrackerViewModel: ObservableObject {
     func clearHistory() {
         history.removeAll() // Clear macro history array
         UserDefaults.standard.removeObject(forKey: historyKey)
+        lastUpdatedDate = Calendar.current.startOfDay(for: Date())
+        saveLastDate()
+    }
+    
+    func resetMacros() {
+        calories = 0
+        protein  = 0
+        carbs    = 0
+        fats     = 0
+        // (the Combine sinks you already have will write zeros back to UserDefaults)
     }
 }

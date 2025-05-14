@@ -77,8 +77,8 @@ struct MainMenu: View {
                     readOnly: true
                 )) {
                     Text("View Food Dictionary")
-                        .buttonStyle(CustomButtonStyle())
                 }
+                .buttonStyle(CustomButtonStyle())
                 
                 // Track food from within the dictionary view
                 Button(action: {
@@ -135,17 +135,25 @@ struct MainMenu: View {
                         }
                     }
                 }
+                .buttonStyle(CustomButtonStyle())
                 
                 // Save Button
                 Button("Clear Macro History") {
                     viewModel.clearHistory()
                 }
+                .buttonStyle(CustomButtonStyle())
                    
                 // History Button
                 NavigationLink(destination: MacroHistoryView(history: viewModel.history)) {
                     Text("View History")
                         .buttonStyle(CustomButtonStyle())
                 }
+                .buttonStyle(CustomButtonStyle())
+                
+                Button("Clear Daily Macros") {
+                    viewModel.resetMacros()
+                }
+                .buttonStyle(CustomButtonStyle())
                 
                 Spacer()
             }
