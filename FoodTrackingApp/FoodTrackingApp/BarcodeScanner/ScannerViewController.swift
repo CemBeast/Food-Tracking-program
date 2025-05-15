@@ -118,8 +118,16 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                     return nil
                 }()
                 
-                let calories = nutriments["energy-kcal_serving"] as? Int ??
-                               nutriments["energy-kcal_100g"] as? Int ?? 0
+                // Try kcal per serving and convert from there
+                let calories: Int = {
+                    if let kcalServing = nutriments["energy-kcal_serving"] as? Int {
+                        return kcalServing
+                    } else if let energyKJ = nutriments["energy_serving"] as? Double {
+                        return Int(energyKJ / 4.184)
+                    } else {
+                        return nutriments["energy-kcal_100g"] as? Int ?? 0
+                    }
+                }()
 
                 let protein = nutriments["proteins_serving"] as? Double ??
                               nutriments["proteins_100g"] as? Double ?? 0
