@@ -79,22 +79,77 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if let metadataObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
            let code = metadataObject.stringValue {
-            print("✅ Scanned: \(code)")
-
-            let item = FoodItem(
-                name: "Scanned \(code)",
-                weightInGrams: 100,
-                servings: 1,
-                calories: 200,
-                protein: 10.0,
-                carbs: 25.0,
-                fats: 8.0
-            )
-
-            foodModel.add(item)
+            print("Scanned: \(code)")
+            
+            lookupFood(barcode: code)
 
             captureSession.stopRunning()
             dismiss(animated: true)
         }
     }
+    
+    func lookupFood(barcode: String) {
+        let urlString = "https://world.openfoodfacts.org/api/v0/product/\(barcode).json"
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Network error: \(error?.localizedDescription ?? "unknown")")
+                return
+            }
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: data)  as? [String: Any]
+                guard let product = json?["product"] as? [String: Any],
+                      let name = product["product_name"] as? String,
+                      let nutriments = product["nutriments"] as? [String: Any] else {
+                    print("Invalid JSON structure")
+                    return
+                }
+                let servingString = product["serving_size"] as? String ?? ""
+                let servingsGram: Int? = {
+                    let pattern = #"(\d+(?:\.\d+)?)\s*g"#
+                    if let match = servingString.range(of: pattern, options: .regularExpression) {
+                        let numberString = servingString[match]
+                            .replacingOccurrences(of: "g", with: "")
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                        return Int(Double(numberString) ?? 100)
+                    }
+                    return nil
+                }()
+                
+                let calories = nutriments["energy-kcal_serving"] as? Int ??
+                               nutriments["energy-kcal_100g"] as? Int ?? 0
+
+                let protein = nutriments["proteins_serving"] as? Double ??
+                              nutriments["proteins_100g"] as? Double ?? 0
+
+                let carbs = nutriments["carbohydrates_serving"] as? Double ??
+                            nutriments["carbohydrates_100g"] as? Double ?? 0
+
+                let fats = nutriments["fat_serving"] as? Double ??
+                           nutriments["fat_100g"] as? Double ?? 0
+                
+                let item = FoodItem(
+                    name:name,
+                    weightInGrams: servingsGram ?? 100,
+                    servings: 1,
+                    calories: calories,
+                    protein: protein,
+                    carbs: carbs,
+                    fats: fats
+                )
+                
+                DispatchQueue.main.async {
+                    self.foodModel.add(item)
+                    self.captureSession.stopRunning()
+                    self.dismiss(animated: true)
+                }
+            } catch {
+                print("JSON parse error: \(error.localizedDescription)")
+            }
+        }
+        task.resume()
+    }
+    
 }
