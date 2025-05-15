@@ -10,8 +10,11 @@ struct GramsOrServingsInput: View {
     @Environment(\.dismiss) private var dismiss // to dismiss parent view resetting everything
     var food: FoodItem
     let mode: MeasurementMode
+    @State private var numberInput: String = ""
+    @FocusState private var isTextFieldFocused: Bool
     @Binding var gramsOrServings: Int?
     @Binding var showGramsInput: Bool
+    
     
     var updateMacros: (Double, Double, Double, Double) -> Void // Closure to update macros
 
@@ -24,27 +27,89 @@ struct GramsOrServingsInput: View {
     }()
     
     var body: some View {
-        VStack {
-            Text("Enter \(mode == .serving ? "Servings" : "Grams")")
-                .font(.title)
-
-            // input field
-            TextField(
-                mode == .serving ? "0" : "0",
-                value: $gramsOrServings,
-                formatter: numberFormatter
-            )
-            .keyboardType(.numberPad)
-            .padding()
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-
-            Button(action: updateFoodTracking) {
-                Text("Done")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(CustomButtonStyle())
+        var liveCalories: Double { inputRatio * Double(food.calories) }
+        var liveFats: Double { inputRatio * Double(food.fats) }
+        var liveProtein: Double { inputRatio * Double(food.protein) }
+        var liveCarbs: Double { inputRatio * Double(food.carbs) }
+        
+        var parsedInput: Double {
+            Double(numberInput) ?? 0
         }
-        .padding()
+        
+        var inputRatio: Double {
+            switch mode {
+            case .serving:
+                return parsedInput / Double(food.servings)
+            case .weight:
+                return parsedInput / Double(food.weightInGrams)
+            }
+        }
+        
+        ZStack {
+            // Background
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+
+            VStack(spacing: 24) {
+                // Title
+                if (mode == .serving) {
+                    Text("Enter Servings")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                }
+                else {
+                    Text("Enter Weight in Grams")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                }
+                
+
+                // Card-style input box
+                VStack(spacing: 16) {
+                    TextField("", text: $numberInput)
+                        .keyboardType(.numberPad)
+                        .focused($isTextFieldFocused)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(12)
+                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 24, weight: .medium))
+                        .foregroundColor(.black)
+                        .onChange(of: numberInput) { newValue in
+                            let filtered = newValue.filter { $0.isNumber }
+                            numberInput = filtered
+                            gramsOrServings = Int(filtered)
+                        }
+                    
+                    VStack(spacing: 8) {
+                        Text(food.name)
+                        Text("Calories: \(Int(liveCalories)) kcal")
+                        Text("Fats: \(String(format: "%.1f", liveFats)) g")
+                        Text("Protein: \(String(format: "%.1f", liveProtein)) g")
+                        Text("Carbs: \(String(format: "%.1f", liveCarbs)) g")
+                    }
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .transition(.opacity)
+
+                    Button("Confirm") {
+                        updateFoodTracking()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.blue)
+                }
+                .padding()
+                .background(.ultraThinMaterial)
+                .cornerRadius(16)
+                .shadow(radius: 5)
+                .frame(maxWidth: 300)
+            }
+            .padding()
+        }
+        .task {
+            isTextFieldFocused = true
+        }
     }
 
     func updateFoodTracking() {

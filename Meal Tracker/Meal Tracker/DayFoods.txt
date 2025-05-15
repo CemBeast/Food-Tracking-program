@@ -1,10 +1,20 @@
-Date-Tue May 13 10:48:02 2025
+Date-Thu May 15 09:45:28 2025
 ---------------------------------------------------------
-Banana
-Grams:108  Servings:0  Calories:100  Protein:0.915254  Carbs:24.7119  Fat:0
-Almond Milk Whey Protein Shake
-Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
-1/4 Tutta Bella Margherita Pizza
-Grams:0  Servings:2  Calories:520  Protein:24  Carbs:78  Fat:10
+Oil
+Grams:4  Servings:0  Calories:34  Protein:0  Carbs:0  Fat:4
+Strawberries
+Grams:181  Servings:0  Calories:57  Protein:1.267  Carbs:13.937  Fat:0.543
+Raspberries
+Grams:79  Servings:0  Calories:41  Protein:0.948  Carbs:9.48  Fat:0.553
+Blueberries
+Grams:89  Servings:0  Calories:50  Protein:0.623  Carbs:12.46  Fat:0.267
+Egg Whites
+Grams:222  Servings:0  Calories:120  Protein:24.1304  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:51  Servings:0  Calories:81  Protein:16.3929  Carbs:3.64286  Fat:0
+Plain Rice
+Grams:273  Servings:0  Calories:452  Protein:8.21766  Carbs:99.8761  Fat:0.632127
 Chicken Tenders
-Grams:250  Servings:0  Calories:223  Protein:51.3393  Carbs:0  Fat:2.23214
+Grams:247  Servings:0  Calories:220  Protein:50.7232  Carbs:0  Fat:2.20536
+Nonfat Costco Yogurt
+Grams:180  Servings:0  Calories:105  Protein:19.0588  Carbs:7.41176  Fat:0

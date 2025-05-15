@@ -5912,3 +5912,103 @@ Grams:250  Servings:0  Calories:223  Protein:51.3393  Carbs:0  Fat:2.23214
 Todays Totals:
 Calories:1003  Protein:102  Carbs:108  Fats:16
 ----------------------------------------------------------------------------------
+Date: Tue May 13 20:53:38 2025
+Chicken Thighs
+Grams:300  Servings:0  Calories:401  Protein:48.2143  Carbs:0  Fat:24.1071
+Tomatoes
+Grams:603  Servings:0  Calories:108  Protein:5.3064  Carbs:23.4567  Fat:1.206
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Avacado
+Grams:119  Servings:0  Calories:190  Protein:2.38  Carbs:10.115  Fat:17.85
+Todays Totals:
+Calories:1712  Protein:158  Carbs:144  Fats:59
+----------------------------------------------------------------------------------
+Date: Tue May 13 20:56:18 2025
+Chicken Thighs
+Grams:300  Servings:0  Calories:401  Protein:48.2143  Carbs:0  Fat:24.1071
+Tomatoes
+Grams:603  Servings:0  Calories:108  Protein:5.3064  Carbs:23.4567  Fat:1.206
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Avacado
+Grams:119  Servings:0  Calories:190  Protein:2.38  Carbs:10.115  Fat:17.85
+Oil
+Grams:0  Servings:0  Calories:0  Protein:0  Carbs:0  Fat:0
+Oil
+Grams:0  Servings:0  Calories:0  Protein:0  Carbs:0  Fat:0
+Lays Korean Style
+Grams:51  Servings:0  Calories:273  Protein:3.64286  Carbs:27.3214  Fat:18.2143
+Todays Totals:
+Calories:2694  Protein:218  Carbs:207  Fats:120
+----------------------------------------------------------------------------------
+Date: Tue May 13 21:27:51 2025
+Fish oils
+Grams:0  Servings:5  Calories:50  Protein:0  Carbs:0  Fat:5
+Todays Totals:
+Calories:2035  Protein:162  Carbs:171  Fats:82
+----------------------------------------------------------------------------------
+Date: Wed May 14 21:21:51 2025
+Oil
+Grams:4  Servings:0  Calories:34  Protein:0  Carbs:0  Fat:4
+Egg Whites
+Grams:200  Servings:0  Calories:108  Protein:21.7391  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:54  Servings:0  Calories:86  Protein:17.3571  Carbs:3.85714  Fat:0
+Strawberries
+Grams:197  Servings:0  Calories:63  Protein:1.379  Carbs:15.169  Fat:0.591
+Raspberries
+Grams:49  Servings:0  Calories:25  Protein:0.588  Carbs:5.88  Fat:0.343
+Blueberries
+Grams:79  Servings:0  Calories:45  Protein:0.553  Carbs:11.06  Fat:0.237
+Nonfat Costco Yogurt
+Grams:160  Servings:0  Calories:94  Protein:16.9412  Carbs:6.58824  Fat:0
+Banana
+Grams:0  Servings:1  Calories:115  Protein:1.4  Carbs:29  Fat:0.4
+Tomatoes
+Grams:226  Servings:0  Calories:40  Protein:1.9888  Carbs:8.7914  Fat:0.452
+Avacado
+Grams:76  Servings:0  Calories:121  Protein:1.52  Carbs:6.46  Fat:11.4
+Chicken Thighs
+Grams:212  Servings:0  Calories:283  Protein:34.0714  Carbs:0  Fat:17.0357
+Lays Korean Style
+Grams:28  Servings:0  Calories:150  Protein:2  Carbs:15  Fat:10
+Plain Rice
+Grams:189  Servings:0  Calories:350  Protein:6.5644  Carbs:83.1491  Fat:0
+Todays Totals:
+Calories:1514  Protein:106  Carbs:185  Fats:44
+----------------------------------------------------------------------------------
+Date: Wed May 14 21:34:11 2025
+Rice
+Grams:189  Servings:0  Calories:184  Protein:3.54375  Carbs:39.9262  Fat:1.53563
+Plain Rice
+Grams:234  Servings:0  Calories:387  Protein:7.0437  Carbs:85.6081  Fat:0.541823
+Chicken Tenders
+Grams:250  Servings:0  Calories:223  Protein:51.3393  Carbs:0  Fat:2.23214
+Nonfat Costco Yogurt
+Grams:187  Servings:0  Calories:110  Protein:19.8  Carbs:7.7  Fat:0
+Todays Totals:
+Calories:2418  Protein:188  Carbs:318  Fats:48
+----------------------------------------------------------------------------------
+Date: Thu May 15 09:45:28 2025
+Oil
+Grams:4  Servings:0  Calories:34  Protein:0  Carbs:0  Fat:4
+Strawberries
+Grams:181  Servings:0  Calories:57  Protein:1.267  Carbs:13.937  Fat:0.543
+Raspberries
+Grams:79  Servings:0  Calories:41  Protein:0.948  Carbs:9.48  Fat:0.553
+Blueberries
+Grams:89  Servings:0  Calories:50  Protein:0.623  Carbs:12.46  Fat:0.267
+Egg Whites
+Grams:222  Servings:0  Calories:120  Protein:24.1304  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:51  Servings:0  Calories:81  Protein:16.3929  Carbs:3.64286  Fat:0
+Plain Rice
+Grams:273  Servings:0  Calories:452  Protein:8.21766  Carbs:99.8761  Fat:0.632127
+Chicken Tenders
+Grams:247  Servings:0  Calories:220  Protein:50.7232  Carbs:0  Fat:2.20536
+Nonfat Costco Yogurt
+Grams:180  Servings:0  Calories:105  Protein:19.0588  Carbs:7.41176  Fat:0
+Todays Totals:
+Calories:1160  Protein:121  Carbs:147  Fats:8
+----------------------------------------------------------------------------------
