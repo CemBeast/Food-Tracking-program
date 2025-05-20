@@ -126,7 +126,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 let useServingBased = (servingsGram != nil)
 
                 // Print serving string
-                print("🔍 Serving size string: \(servingString)")
+                print("🔍 Serving size string: \(product["serving_size"] ?? "N/A")")
                 print("📦 Nutrients per serving:")
                 print("  - Calories: \(nutriments["energy-kcal_serving"] ?? "N/A")")
                 print("  - Energy (kJ): \(nutriments["energy_serving"] ?? "N/A")")

@@ -27,7 +27,7 @@ struct EditFoodItemView: View {
                         Stepper("Servings: \(foodItem.servings)", value: $foodItem.servings, in: 0...1000)
 
                         HStack {
-                            Text("Weight (g)")
+                            Text(foodItem.servingUnit == .grams ? "Weight" : "Volume")
                             Spacer()
                             TextField("0", value: $foodItem.weightInGrams, formatter: NumberFormatter())
                                 .keyboardType(.numberPad)

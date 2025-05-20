@@ -15,10 +15,7 @@ struct FoodItem: Identifiable, Codable {
     var protein: Double
     var carbs: Double
     var fats: Double
-    
-    var isMeasuredByServing: Bool {
-        return servings > 0
-    }
+    var servingUnit: ServingUnit = .grams
 }
 
 enum SortOption: String, CaseIterable, Identifiable {
@@ -29,6 +26,10 @@ enum SortOption: String, CaseIterable, Identifiable {
     case fats = "Fats"
     
     var id: String { self.rawValue}
+}
+
+enum ServingUnit: String, Codable {
+    case grams, milliliters
 }
 
 enum MeasurementMode {
@@ -178,11 +179,11 @@ struct DictionaryView: View {
                 .frame(maxWidth: .infinity)
                 
                 VStack(alignment: .leading) {
-                    Text("Weight")
+                    Text(foodItem.servingUnit == .grams ? "Weight" : "Volume")
                         .font(.callout)
                         .lineLimit(1) // Ensures the text stays on one line
                         .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
-                    Text("\(foodItem.weightInGrams)g")
+                    Text("\(foodItem.weightInGrams)\(foodItem.servingUnit == .grams ? "g" : "ml")")
                         .font(.headline)
                 }
                 .frame(maxWidth: .infinity)
