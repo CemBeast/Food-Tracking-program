@@ -197,5 +197,4 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
         task.resume()
     }
-    
 }

@@ -35,6 +35,11 @@ struct MainMenu: View {
     // For manually adding foods or using barcode
     @State private var showManual = false
     @State private var showScanner = false
+    
+    // For tracking through barcode scan
+    @State private var scannedItem: FoodItem? = nil
+    @State private var showScannerTracking = false
+    @State private var showConfirmScannedItem = false
 
     var body: some View {
         NavigationView {
@@ -77,6 +82,36 @@ struct MainMenu: View {
                     readOnly: true
                 )) {
                     Text("View Food Dictionary")
+                }
+                .buttonStyle(CustomButtonStyle())
+                
+                // Track food by scanning a barcode
+                Button("Track Food from Barcode") {
+                    showScannerTracking = true
+                }
+                .sheet(isPresented: $showScannerTracking) {
+                    ScannerViewForTracking { item in
+                        scannedItem = item
+                        showConfirmScannedItem = true
+                    }
+                }
+                .sheet(isPresented: $showConfirmScannedItem) {
+                    if let food = scannedItem {
+                        GramsOrServingsInput(
+                            food: food,
+                            mode: food.servingUnit == .grams ? .weight : .serving,
+                            gramsOrServings: $gramsOrServings,
+                            showGramsInput: $showConfirmScannedItem,
+                            updateMacros: { cals, fats, prot, carbs in
+                                viewModel.calories += Int(cals)
+                                viewModel.fats     += fats
+                                viewModel.protein  += prot
+                                viewModel.carbs     += carbs
+                                // Clear
+                                scannedItem = nil
+                            }
+                        )
+                    }
                 }
                 .buttonStyle(CustomButtonStyle())
                 
