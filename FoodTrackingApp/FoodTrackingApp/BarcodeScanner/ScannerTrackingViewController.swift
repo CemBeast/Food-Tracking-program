@@ -67,14 +67,29 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
                   let nutriments = product["nutriments"] as? [String: Any] else { return }
 
             let servingString = product["serving_size"] as? String ?? ""
-            var servingAmount: Int? = 100
-            var unit: ServingUnit = .grams
+
+            // Extract amount and unit
+            var servingAmount: Int?
+            var servingUnit: ServingUnit = .grams  // default
             let pattern = #"(\d+(?:\.\d+)?)\s*(g|ml)"#
             if let match = servingString.range(of: pattern, options: .regularExpression) {
-                let matched = String(servingString[match])
-                if matched.contains("ml") { unit = .milliliters }
-                servingAmount = Int(Double(matched.components(separatedBy: CharacterSet.letters).joined()) ?? 100)
+                let matchedText = String(servingString[match])
+                let numberPart = matchedText
+                    .components(separatedBy: CharacterSet.letters)
+                    .joined()
+                    .trimmingCharacters(in: .whitespaces)
+                
+                if let value = Double(numberPart) {
+                    servingAmount = Int(value)
+                    if matchedText.contains("ml") {
+                        servingUnit = .milliliters
+                    } else if matchedText.contains("g") {
+                        servingUnit = .grams
+                    }
+                }
             }
+
+            let useServingBased = (servingAmount != nil)
 
             // Print serving string
             print("🔍 Serving size string: \(product["serving_size"] ?? "N/A")")
@@ -90,16 +105,39 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
             print("  - Protein (g): \(nutriments["proteins_100g"] ?? "N/A")")
             print("  - Carbs (g): \(nutriments["carbohydrates_100g"] ?? "N/A")")
             print("  - Fat (g): \(nutriments["fat_100g"] ?? "N/A")")
-            
+
+            // Macronutrient extraction
+            let calories: Int = {
+                if useServingBased {
+                    if let kcal = nutriments["energy-kcal_serving"] as? Int {
+                        return kcal
+                    } else if let kj = nutriments["energy_serving"] as? Double {
+                        return Int(kj / 4.184)
+                    }
+                }
+                return Int(nutriments["energy-kcal_100g"] as? Double ?? 0)
+            }()
+
+            let protein = useServingBased
+                ? (nutriments["proteins_serving"] as? Double ?? 0)
+                : (nutriments["proteins_100g"] as? Double ?? 0)
+
+            let carbs = useServingBased
+                ? (nutriments["carbohydrates_serving"] as? Double ?? 0)
+                : (nutriments["carbohydrates_100g"] as? Double ?? 0)
+
+            let fats = useServingBased
+                ? (nutriments["fat_serving"] as? Double ?? 0)
+                : (nutriments["fat_100g"] as? Double ?? 0)
             let item = FoodItem(
                 name: name,
                 weightInGrams: servingAmount ?? 100,
                 servings: 1,
-                calories: Int(nutriments["energy-kcal_100g"] as? Double ?? 0),
-                protein: nutriments["proteins_100g"] as? Double ?? 0,
-                carbs: nutriments["carbohydrates_100g"] as? Double ?? 0,
-                fats: nutriments["fat_100g"] as? Double ?? 0,
-                servingUnit: unit
+                calories: calories,
+                protein: protein,
+                carbs: carbs,
+                fats: fats,
+                servingUnit: servingUnit
             )
 
             DispatchQueue.main.async {

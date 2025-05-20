@@ -91,27 +91,25 @@ struct MainMenu: View {
                 }
                 .sheet(isPresented: $showScannerTracking) {
                     ScannerViewForTracking { item in
+                        print("✅ Scanned food: \(item.name)")
                         scannedItem = item
                         showConfirmScannedItem = true
                     }
                 }
-                .sheet(isPresented: $showConfirmScannedItem) {
-                    if let food = scannedItem {
-                        GramsOrServingsInput(
-                            food: food,
-                            mode: food.servingUnit == .grams ? .weight : .serving,
-                            gramsOrServings: $gramsOrServings,
-                            showGramsInput: $showConfirmScannedItem,
-                            updateMacros: { cals, fats, prot, carbs in
-                                viewModel.calories += Int(cals)
-                                viewModel.fats     += fats
-                                viewModel.protein  += prot
-                                viewModel.carbs     += carbs
-                                // Clear
-                                scannedItem = nil
-                            }
-                        )
-                    }
+                .sheet(item: $scannedItem) { food in
+                    GramsOrServingsInput(
+                        food: food,
+                        mode: food.servingUnit == .grams ? .weight : .serving,
+                        gramsOrServings: $gramsOrServings,
+                        showGramsInput: .constant(true),  // or bind this to a local @State if needed
+                        updateMacros: { cals, fats, prot, carbs in
+                            viewModel.calories += Int(cals)
+                            viewModel.fats     += fats
+                            viewModel.protein  += prot
+                            viewModel.carbs     += carbs
+                            scannedItem = nil  // dismiss after adding
+                        }
+                    )
                 }
                 .buttonStyle(CustomButtonStyle())
                 
