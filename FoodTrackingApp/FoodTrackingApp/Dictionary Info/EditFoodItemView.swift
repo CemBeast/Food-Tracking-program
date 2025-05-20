@@ -25,7 +25,15 @@ struct EditFoodItemView: View {
                     Group {
                         TextField("Name", text: $foodItem.name)
                         Stepper("Servings: \(foodItem.servings)", value: $foodItem.servings, in: 0...1000)
-                        Stepper("Weight: \(foodItem.weightInGrams)g", value: $foodItem.weightInGrams, in: 0...5000)
+
+                        HStack {
+                            Text("Weight (g)")
+                            Spacer()
+                            TextField("0", value: $foodItem.weightInGrams, formatter: NumberFormatter())
+                                .keyboardType(.numberPad)
+                                .multilineTextAlignment(.trailing)
+                                .disableAutocorrection(true)
+                        }
                     }
 
                     Group {
@@ -33,25 +41,33 @@ struct EditFoodItemView: View {
                             Text("Calories")
                             Spacer()
                             TextField("0", value: $foodItem.calories, formatter: NumberFormatter())
+                                .keyboardType(.numberPad)
                                 .multilineTextAlignment(.trailing)
+                                .disableAutocorrection(true)
                         }
                         HStack {
                             Text("Protein (g)")
                             Spacer()
                             TextField("0", value: $foodItem.protein, formatter: NumberFormatter())
+                                .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
+                                .disableAutocorrection(true)
                         }
                         HStack {
                             Text("Carbs (g)")
                             Spacer()
                             TextField("0", value: $foodItem.carbs, formatter: NumberFormatter())
+                                .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
+                                .disableAutocorrection(true)
                         }
                         HStack {
                             Text("Fats (g)")
                             Spacer()
                             TextField("0", value: $foodItem.fats, formatter: NumberFormatter())
+                                .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
+                                .disableAutocorrection(true)
                         }
                     }
                 }
