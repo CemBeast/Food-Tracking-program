@@ -106,6 +106,11 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                     print("Invalid JSON structure")
                     return
                 }
+                
+                // For weight foods only * first
+                // First try and get the macros as per serving
+                // If unavailable then we get macros per 100g
+                
                 let servingString = product["serving_size"] as? String ?? ""
                 let servingsGram: Int? = {
                     let pattern = #"(\d+(?:\.\d+)?)\s*g"#
@@ -117,29 +122,50 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                     }
                     return nil
                 }()
-                
-                // Try kcal per serving and convert from there
+
+                let useServingBased = (servingsGram != nil)
+
+                // Print serving string
+                print("🔍 Serving size string: \(servingString)")
+                print("📦 Nutrients per serving:")
+                print("  - Calories: \(nutriments["energy-kcal_serving"] ?? "N/A")")
+                print("  - Energy (kJ): \(nutriments["energy_serving"] ?? "N/A")")
+                print("  - Protein (g): \(nutriments["proteins_serving"] ?? "N/A")")
+                print("  - Carbs (g): \(nutriments["carbohydrates_serving"] ?? "N/A")")
+                print("  - Fat (g): \(nutriments["fat_serving"] ?? "N/A")")
+
+                print("📊 Nutrients per 100g:")
+                print("  - Calories (kcal_100g): \(nutriments["energy-kcal_100g"] ?? "N/A")")
+                print("  - Protein (g): \(nutriments["proteins_100g"] ?? "N/A")")
+                print("  - Carbs (g): \(nutriments["carbohydrates_100g"] ?? "N/A")")
+                print("  - Fat (g): \(nutriments["fat_100g"] ?? "N/A")")
+
+                // Macronutrient extraction
                 let calories: Int = {
-                    if let kcalServing = nutriments["energy-kcal_serving"] as? Int {
-                        return kcalServing
-                    } else if let energyKJ = nutriments["energy_serving"] as? Double {
-                        return Int(energyKJ / 4.184)
-                    } else {
-                        return nutriments["energy-kcal_100g"] as? Int ?? 0
+                    if useServingBased {
+                        if let kcal = nutriments["energy-kcal_serving"] as? Int {
+                            return kcal
+                        } else if let kj = nutriments["energy_serving"] as? Double {
+                            return Int(kj / 4.184)
+                        }
                     }
+                    return Int(nutriments["energy-kcal_100g"] as? Double ?? 0)
                 }()
 
-                let protein = nutriments["proteins_serving"] as? Double ??
-                              nutriments["proteins_100g"] as? Double ?? 0
+                let protein = useServingBased
+                    ? (nutriments["proteins_serving"] as? Double ?? 0)
+                    : (nutriments["proteins_100g"] as? Double ?? 0)
 
-                let carbs = nutriments["carbohydrates_serving"] as? Double ??
-                            nutriments["carbohydrates_100g"] as? Double ?? 0
+                let carbs = useServingBased
+                    ? (nutriments["carbohydrates_serving"] as? Double ?? 0)
+                    : (nutriments["carbohydrates_100g"] as? Double ?? 0)
 
-                let fats = nutriments["fat_serving"] as? Double ??
-                           nutriments["fat_100g"] as? Double ?? 0
-                
+                let fats = useServingBased
+                    ? (nutriments["fat_serving"] as? Double ?? 0)
+                    : (nutriments["fat_100g"] as? Double ?? 0)
+
                 let item = FoodItem(
-                    name:name,
+                    name: name,
                     weightInGrams: servingsGram ?? 100,
                     servings: 1,
                     calories: calories,

@@ -6012,3 +6012,69 @@ Grams:180  Servings:0  Calories:105  Protein:19.0588  Carbs:7.41176  Fat:0
 Todays Totals:
 Calories:1160  Protein:121  Carbs:147  Fats:8
 ----------------------------------------------------------------------------------
+Date: Thu May 15 21:20:55 2025
+Banana
+Grams:0  Servings:1  Calories:115  Protein:1.4  Carbs:29  Fat:0.4
+Nonfat Costco Yogurt
+Grams:184  Servings:0  Calories:108  Protein:19.4824  Carbs:7.57647  Fat:0
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Todays Totals:
+Calories:1543  Protein:168  Carbs:189  Fats:12
+----------------------------------------------------------------------------------
+Date: Thu May 15 22:16:54 2025
+Impossible nuggets
+Grams:0  Servings:10  Calories:480  Protein:26  Carbs:38  Fat:24
+Todays Totals:
+Calories:2023  Protein:194  Carbs:227  Fats:36
+----------------------------------------------------------------------------------
+Date: Mon May 19 09:50:26 2025
+Oil
+Grams:4  Servings:0  Calories:34  Protein:0  Carbs:0  Fat:4
+Tomatoes
+Grams:293  Servings:0  Calories:52  Protein:2.5784  Carbs:11.3977  Fat:0.586
+Egg Whites
+Grams:200  Servings:0  Calories:108  Protein:21.7391  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:58  Servings:0  Calories:93  Protein:18.6429  Carbs:4.14286  Fat:0
+Chicken Tenders
+Grams:228  Servings:0  Calories:203  Protein:46.8214  Carbs:0  Fat:2.03571
+Parmigiano Reggiano
+Grams:9  Servings:0  Calories:35  Protein:2.89286  Carbs:0.321429  Fat:2.57143
+Trader joes chile lime chips
+Grams:16  Servings:0  Calories:85  Protein:1.14286  Carbs:9.71429  Fat:4.57143
+Plain Rice
+Grams:300  Servings:0  Calories:497  Protein:9.03039  Carbs:109.754  Fat:0.694645
+Todays Totals:
+Calories:1107  Protein:103  Carbs:135  Fats:14
+----------------------------------------------------------------------------------
+Date: Mon May 19 20:25:43 2025
+Wild Salmon
+Grams:300  Servings:0  Calories:437  Protein:63.5294  Carbs:0  Fat:17.6471
+Homemade French Fries
+Grams:120  Servings:0  Calories:216  Protein:3.6  Carbs:37.2  Fat:9.12
+Todays Totals:
+Calories:1760  Protein:170  Carbs:172  Fats:41
+----------------------------------------------------------------------------------
+Date: Tue May 20 09:38:56 2025
+Oil
+Grams:3  Servings:0  Calories:25  Protein:0  Carbs:0  Fat:3
+Tomatoes
+Grams:139  Servings:0  Calories:25  Protein:1.2232  Carbs:5.4071  Fat:0.278
+Egg Whites
+Grams:175  Servings:0  Calories:95  Protein:19.0217  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:44  Servings:0  Calories:70  Protein:14.1429  Carbs:3.14286  Fat:0
+Chicken Tenders
+Grams:200  Servings:0  Calories:178  Protein:41.0714  Carbs:0  Fat:1.78571
+Plain Rice
+Grams:280  Servings:0  Calories:463  Protein:8.42836  Carbs:102.437  Fat:0.648336
+Parmigiano Reggiano
+Grams:10  Servings:0  Calories:39  Protein:3.21429  Carbs:0.357143  Fat:2.85714
+Nonfat Costco Yogurt
+Grams:163  Servings:0  Calories:95  Protein:17.2588  Carbs:6.71176  Fat:0
+Gatorade Powder
+Grams:14  Servings:0  Calories:46  Protein:0  Carbs:12.4444  Fat:0
+Todays Totals:
+Calories:1036  Protein:104  Carbs:131  Fats:9
+----------------------------------------------------------------------------------
