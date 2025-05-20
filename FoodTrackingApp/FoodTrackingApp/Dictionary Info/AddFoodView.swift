@@ -18,14 +18,21 @@ struct AddFoodView: View {
     @State private var protein = ""
     @State private var carbs = ""
     @State private var fats = ""
+    @State private var selectedUnit: ServingUnit = .grams
 
     var body: some View {
         Form {
             Section(header: Text("Food Info")) {
                 TextField("Name", text: $name)
-                TextField("Weight (grams)", text: $weightInGrams)
+                Picker("Measurement Unit", selection: $selectedUnit) {
+                    ForEach(ServingUnit.allCases) { unit in
+                        Text(unit.rawValue.uppercased()).tag(unit)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                TextField(selectedUnit == .grams ? "Weight (g)" : "Volume (ml)", text: $weightInGrams)
                     .keyboardType(.numberPad)
-                TextField("Servings (0 if N/A)", text: $servings)
+                TextField("Servings", text: $servings)
                     .keyboardType(.numberPad)
                 TextField("Calories", text: $calories)
                     .keyboardType(.numberPad)
@@ -55,9 +62,9 @@ struct AddFoodView: View {
                     calories: cal,
                     protein: prot,
                     carbs: carb,
-                    fats: fat
+                    fats: fat,
+                    servingUnit: selectedUnit
                 )
-
                 onAdd(newFood)
                 presentationMode.wrappedValue.dismiss()
             }

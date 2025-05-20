@@ -112,18 +112,29 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 // If unavailable then we get macros per 100g
                 
                 let servingString = product["serving_size"] as? String ?? ""
-                let servingsGram: Int? = {
-                    let pattern = #"(\d+(?:\.\d+)?)\s*g"#
-                    if let match = servingString.range(of: pattern, options: .regularExpression) {
-                        let numberString = servingString[match]
-                            .replacingOccurrences(of: "g", with: "")
-                            .trimmingCharacters(in: .whitespacesAndNewlines)
-                        return Int(Double(numberString) ?? 100)
-                    }
-                    return nil
-                }()
 
-                let useServingBased = (servingsGram != nil)
+                // Extract amount and unit
+                var servingAmount: Int?
+                var servingUnit: ServingUnit = .grams  // default
+                let pattern = #"(\d+(?:\.\d+)?)\s*(g|ml)"#
+                if let match = servingString.range(of: pattern, options: .regularExpression) {
+                    let matchedText = String(servingString[match])
+                    let numberPart = matchedText
+                        .components(separatedBy: CharacterSet.letters)
+                        .joined()
+                        .trimmingCharacters(in: .whitespaces)
+                    
+                    if let value = Double(numberPart) {
+                        servingAmount = Int(value)
+                        if matchedText.contains("ml") {
+                            servingUnit = .milliliters
+                        } else if matchedText.contains("g") {
+                            servingUnit = .grams
+                        }
+                    }
+                }
+
+                let useServingBased = (servingAmount != nil)
 
                 // Print serving string
                 print("🔍 Serving size string: \(product["serving_size"] ?? "N/A")")
@@ -166,12 +177,13 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
                 let item = FoodItem(
                     name: name,
-                    weightInGrams: servingsGram ?? 100,
+                    weightInGrams: servingAmount ?? 100,
                     servings: 1,
                     calories: calories,
                     protein: protein,
                     carbs: carbs,
-                    fats: fats
+                    fats: fats,
+                    servingUnit: servingUnit
                 )
                 
                 DispatchQueue.main.async {
