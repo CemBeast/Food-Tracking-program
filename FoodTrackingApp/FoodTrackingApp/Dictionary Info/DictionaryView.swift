@@ -44,6 +44,8 @@ struct DictionaryView: View {
     @State private var searchText: String = ""
     @State private var sortOption: SortOption = .name
     @State private var showMeasurementDialog: Bool = false
+    @State private var isEditingFood: Bool = false
+    @State private var foodToEdit: FoodItem? = nil
     
     var readOnly: Bool = false
 
@@ -62,7 +64,7 @@ struct DictionaryView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 8)
-
+            
             Picker("Sort by", selection: $sortOption) {
                 ForEach(SortOption.allCases) {option in
                     Text(option.rawValue).tag(option)
@@ -75,18 +77,24 @@ struct DictionaryView: View {
                 // Tracking food from the dictionary
                 if !readOnly {
                     ForEach(filteredFoodItems) { foodItem in
-                        Button(action: {
-                            selectedFood = foodItem
-                            selectedFoodID = foodItem.id // Highlight the selected item
-                            showMeasurementDialog = true
-                        }) {
+                        Button(action: {}) {
                             content(for: foodItem, isSelected: foodItem.id == selectedFoodID)
+                                .onTapGesture{
+                                    selectedFood = foodItem
+                                    selectedFoodID = foodItem.id // Highlight the selected item
+                                    showMeasurementDialog = true
+                                }
                         }
                     }
                     .buttonStyle(PlainButtonStyle())
                 } else {
                     ForEach(filteredFoodItems) { foodItem in
                         content (for : foodItem, isSelected: false)
+                            .onLongPressGesture {
+                                print("Editing \(foodItem.name)")
+                                foodToEdit = foodItem
+                                isEditingFood = true
+                            }
                     }
                     .onDelete(perform: deleteItems)
                 }
@@ -112,6 +120,21 @@ struct DictionaryView: View {
                 selectedFood = nil
                 selectedFoodID = nil
             }
+        }
+        .sheet(item: $foodToEdit) { item in
+            EditFoodItemView(
+                foodItem: item,
+                onSave: { updated in
+                    if let index = foodModel.items.firstIndex(where: { $0.id == updated.id }) {
+                        foodModel.items[index] = updated
+                        foodModel.save()
+                    }
+                    foodToEdit = nil
+                },
+                onCancel: {
+                    foodToEdit = nil
+                }
+            )
         }
     }
     
