@@ -25,7 +25,13 @@ struct EditFoodItemView: View {
                     Group {
                         TextField("Name", text: $foodItem.name)
                         Stepper("Servings: \(foodItem.servings)", value: $foodItem.servings, in: 0...1000)
-
+                        // Unit toggle
+                        Picker("Unit", selection: $foodItem.servingUnit) {
+                            ForEach(ServingUnit.allCases) { unit in
+                                Text(unit.rawValue.uppercased()).tag(unit)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
                         HStack {
                             Text(foodItem.servingUnit == .grams ? "Weight" : "Volume")
                             Spacer()

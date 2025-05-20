@@ -58,7 +58,7 @@ struct GramsOrServingsInput: View {
                         .fontWeight(.semibold)
                 }
                 else {
-                    Text("Enter Weight in Grams")
+                    Text("Enter Amount in \(food.servingUnit == .grams ? "Grams" : "Milliliters")")
                         .font(.title2)
                         .fontWeight(.semibold)
                 }

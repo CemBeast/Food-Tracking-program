@@ -28,8 +28,10 @@ enum SortOption: String, CaseIterable, Identifiable {
     var id: String { self.rawValue}
 }
 
-enum ServingUnit: String, Codable {
-    case grams, milliliters
+enum ServingUnit: String, Codable, CaseIterable, Identifiable {
+    case grams = "g"
+    case milliliters = "ml"
+    var id: String { self.rawValue }
 }
 
 enum MeasurementMode {
