@@ -103,11 +103,8 @@ struct MainMenu: View {
                         gramsOrServings: $gramsOrServings,
                         showGramsInput: .constant(true),  // or bind this to a local @State if needed
                         updateMacros: { cals, fats, prot, carbs in
-                            viewModel.calories += Int(cals)
-                            viewModel.fats     += fats
-                            viewModel.protein  += prot
-                            viewModel.carbs     += carbs
-                            scannedItem = nil  // dismiss after adding
+                            viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: food.servingUnit == .grams ? .weight : .serving)
+                                scannedItem = nil
                         }
                     )
                 }
@@ -151,10 +148,7 @@ struct MainMenu: View {
                                 gramsOrServings: $gramsOrServings,
                                 showGramsInput: $showGramsInput,
                                 updateMacros: { cals, fats, prot, carbs in
-                                    viewModel.calories += Int(cals)
-                                    viewModel.fats     += fats
-                                    viewModel.protein  += prot
-                                    viewModel.carbs     += carbs
+                                    viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: food.servingUnit == .grams ? .weight : .serving)
                                 }
                             )
                         }

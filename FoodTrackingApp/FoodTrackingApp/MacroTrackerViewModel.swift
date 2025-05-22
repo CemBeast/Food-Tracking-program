@@ -18,6 +18,15 @@ struct MacroHistoryEntry: Identifiable, Codable {
     let fats: Double
 }
 
+// Struct to represent a logged food (since foodItem does not have weight/ servings)
+struct LoggedFoodEntry: Identifiable {
+    let id = UUID()
+    var food: FoodItem
+    var quantity: Int
+    var mode: MeasurementMode
+    var servingUnit: ServingUnit
+}
+
 class MacroTrackerViewModel: ObservableObject {
     @Published var calories = 0
     @Published var protein = 0.0
@@ -26,7 +35,7 @@ class MacroTrackerViewModel: ObservableObject {
     // Historical macro entries, lastUpdatedDate is used for updating history when its a new day
     @Published var history: [MacroHistoryEntry] = []
     @Published var lastUpdatedDate: Date = Date()
-    @Published var foodLog: [FoodItem] = [] // Tracks food for the day
+    @Published var foodLog: [LoggedFoodEntry] = [] // Tracks food for the day
     
     // UserDefaults Key to store the encoded history
     private let historyKey = "macro_history"
@@ -140,21 +149,37 @@ class MacroTrackerViewModel: ObservableObject {
     }
     
     // Function to increase macros from logging and put it in food log to track what was ate
-//    func logFood(_ item: FoodItem, gramsOrServings: Int, mode: MeasurementMode) {
-//        let factor: Double = {
-//            switch mode {
-//            case .weight:
-//                return Double(gramsOrServings) / Double(item.weightInGrams)
-//            case .serving:
-//                return Double(gramsOrServings)
-//            }
-//        }()
-//
-//        calories += Int(Double(item.calories) * factor)
-//        protein  += item.protein * factor
-//        carbs    += item.carbs   * factor
-//        fats     += item.fats    * factor
-//
-//        foodLog.append(item)
-//    }
+    func logFood(_ item: FoodItem, gramsOrServings: Int, mode: MeasurementMode) {
+        let factor: Double = {
+            switch mode {
+            case .weight:
+                return Double(gramsOrServings) / Double(item.weightInGrams)
+            case .serving:
+                return Double(gramsOrServings)
+            }
+        }()
+        
+        calories += Int(Double(item.calories) * factor)
+        protein += item.protein * factor
+        carbs += item.carbs * factor
+        fats += item.fats * factor
+        
+        // Log actual portion consumed
+//        let consumed = FoodItem(
+//            name: item.name,
+//            weightInGrams: mode == .weight ? gramsOrServings : item.weightInGrams,
+//            servings: mode == .serving ? gramsOrServings : 1,
+//            calories: Int(Double(item.calories) * factor),
+//            protein: item.protein * factor,
+//            carbs: item.carbs * factor,
+//            fats: item.fats * factor,
+//            servingUnit: item.servingUnit
+//        )
+//        
+//        // Add food to food log
+//        foodLog.append(consumed)
+        let entry = LoggedFoodEntry(food: item, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
+         foodLog.append(entry)
+        
+    }
 }

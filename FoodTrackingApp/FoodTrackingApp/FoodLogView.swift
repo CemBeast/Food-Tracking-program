@@ -7,23 +7,31 @@
 import SwiftUI
 
 struct FoodLogView: View {
-    let foods: [FoodItem]
+    let foods: [LoggedFoodEntry]
 
     var body: some View {
-        List(foods) { food in
-            VStack(alignment: .leading) {
-                Text(food.name).font(.headline)
+        List(foods) { entry in
+            VStack(alignment: .leading, spacing: 6) {
+                Text(entry.food.name)
+                    .font(.headline)
+
                 HStack {
-                    Text("Calories: \(food.calories)")
-                    Spacer()
-                    Text("Protein: \(String(format: "%.1f", food.protein))g")
-                    Text("Carbs: \(String(format: "%.1f", food.carbs))g")
-                    Text("Fats: \(String(format: "%.1f", food.fats))g")
+                    Text("Calories: \(entry.food.calories)")
+                    Text("Protein: \(String(format: "%.1f", entry.food.protein))g")
+                    Text("Carbs: \(String(format: "%.1f", entry.food.carbs))g")
+                    Text("Fats: \(String(format: "%.1f", entry.food.fats))g")
                 }
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+
+                Text(entry.mode == .weight
+                     ? "\(entry.quantity) \(entry.servingUnit.rawValue)"
+                     : "\(entry.quantity) serving\(entry.quantity > 1 ? "s" : "")"
+                )
+                    .font(.footnote)
+                    .foregroundColor(.gray)
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, 6)
         }
         .navigationTitle("Today's Food Log")
     }
