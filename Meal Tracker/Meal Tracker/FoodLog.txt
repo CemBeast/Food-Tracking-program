@@ -6078,3 +6078,61 @@ Grams:14  Servings:0  Calories:46  Protein:0  Carbs:12.4444  Fat:0
 Todays Totals:
 Calories:1036  Protein:104  Carbs:131  Fats:9
 ----------------------------------------------------------------------------------
+Date: Tue May 20 18:45:21 2025
+Almond Milk Whey Protein Shake
+Grams:0  Servings:1  Calories:160  Protein:26  Carbs:5  Fat:4
+Todays Totals:
+Calories:1196  Protein:130  Carbs:136  Fats:13
+----------------------------------------------------------------------------------
+Date: Tue May 20 20:15:04 2025
+Nonfat Costco Yogurt
+Grams:206  Servings:0  Calories:121  Protein:21.8118  Carbs:8.48235  Fat:0
+Plain Rice
+Grams:300  Servings:0  Calories:497  Protein:9.03039  Carbs:109.754  Fat:0.694645
+Chicken Thighs
+Grams:307  Servings:0  Calories:411  Protein:49.3393  Carbs:0  Fat:24.6696
+Todays Totals:
+Calories:2225  Protein:210  Carbs:254  Fats:38
+----------------------------------------------------------------------------------
+Date: Wed May 21 13:21:55 2025
+Oil
+Grams:4  Servings:0  Calories:34  Protein:0  Carbs:0  Fat:4
+Tomatoes
+Grams:244  Servings:0  Calories:43  Protein:2.1472  Carbs:9.4916  Fat:0.488
+Egg Whites
+Grams:213  Servings:0  Calories:115  Protein:23.1522  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:59  Servings:0  Calories:94  Protein:18.9643  Carbs:4.21429  Fat:0
+Strawberries
+Grams:252  Servings:0  Calories:80  Protein:1.764  Carbs:19.404  Fat:0.756
+Blueberries
+Grams:161  Servings:0  Calories:91  Protein:1.127  Carbs:22.54  Fat:0.483
+Raspberries
+Grams:63  Servings:0  Calories:32  Protein:0.756  Carbs:7.56  Fat:0.441
+Parmigiano Reggiano
+Grams:14  Servings:0  Calories:55  Protein:4.5  Carbs:0.5  Fat:4
+Nonfat Costco Yogurt
+Grams:189  Servings:0  Calories:111  Protein:20.0118  Carbs:7.78235  Fat:0
+Todays Totals:
+Calories:655  Protein:72  Carbs:71  Fats:10
+----------------------------------------------------------------------------------
+Date: Wed May 21 20:58:48 2025
+Nonfat Costco Yogurt
+Grams:222  Servings:0  Calories:130  Protein:23.5059  Carbs:9.14118  Fat:0
+Chicken Thighs
+Grams:234  Servings:0  Calories:313  Protein:37.6071  Carbs:0  Fat:18.8036
+Plain Rice
+Grams:315  Servings:0  Calories:521  Protein:9.48191  Carbs:115.242  Fat:0.729378
+Katsu sauce
+Grams:15  Servings:0  Calories:25  Protein:0  Carbs:6  Fat:0
+Gatorade Powder
+Grams:18  Servings:0  Calories:60  Protein:0  Carbs:16  Fat:0
+Todays Totals:
+Calories:1704  Protein:143  Carbs:217  Fats:30
+----------------------------------------------------------------------------------
+Date: Wed May 21 21:02:55 2025
+Fish oils
+Grams:0  Servings:5  Calories:50  Protein:0  Carbs:0  Fat:5
+Todays Totals:
+Calories:1754  Protein:143  Carbs:217  Fats:35
+----------------------------------------------------------------------------------

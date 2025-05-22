@@ -26,6 +26,7 @@ class MacroTrackerViewModel: ObservableObject {
     // Historical macro entries, lastUpdatedDate is used for updating history when its a new day
     @Published var history: [MacroHistoryEntry] = []
     @Published var lastUpdatedDate: Date = Date()
+    @Published var foodLog: [FoodItem] = [] // Tracks food for the day
     
     // UserDefaults Key to store the encoded history
     private let historyKey = "macro_history"
@@ -137,4 +138,23 @@ class MacroTrackerViewModel: ObservableObject {
         fats     = 0
         // (the Combine sinks you already have will write zeros back to UserDefaults)
     }
+    
+    // Function to increase macros from logging and put it in food log to track what was ate
+//    func logFood(_ item: FoodItem, gramsOrServings: Int, mode: MeasurementMode) {
+//        let factor: Double = {
+//            switch mode {
+//            case .weight:
+//                return Double(gramsOrServings) / Double(item.weightInGrams)
+//            case .serving:
+//                return Double(gramsOrServings)
+//            }
+//        }()
+//
+//        calories += Int(Double(item.calories) * factor)
+//        protein  += item.protein * factor
+//        carbs    += item.carbs   * factor
+//        fats     += item.fats    * factor
+//
+//        foodLog.append(item)
+//    }
 }

@@ -175,7 +175,13 @@ struct MainMenu: View {
                     viewModel.clearHistory()
                 }
                 .buttonStyle(CustomButtonStyle())
-                   
+                  
+                // View food ate today
+                NavigationLink(destination: FoodLogView(foods: viewModel.foodLog)) {
+                    Text("View Foods Eaten Today")
+                }
+                .buttonStyle(CustomButtonStyle())
+                
                 // History Button
                 NavigationLink(destination: MacroHistoryView(history: viewModel.history)) {
                     Text("View History")
