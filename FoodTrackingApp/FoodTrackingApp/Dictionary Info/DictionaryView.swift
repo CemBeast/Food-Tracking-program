@@ -15,7 +15,31 @@ struct FoodItem: Identifiable, Codable {
     var protein: Double
     var carbs: Double
     var fats: Double
-    var servingUnit: ServingUnit = .grams
+    var servingUnit: ServingUnit
+    init(
+            name: String,
+            weightInGrams: Int,
+            servings: Int,
+            calories: Int,
+            protein: Double,
+            carbs: Double,
+            fats: Double,
+            servingUnit: ServingUnit
+        ) {
+            self.id = UUID()
+            self.name = name
+            self.weightInGrams = weightInGrams
+            self.servings = servings
+            self.calories = calories
+            self.protein = protein
+            self.carbs = carbs
+            self.fats = fats
+            self.servingUnit = servingUnit
+        }
+    // 🔒 Explicit keys make encoding/decoding bulletproof
+    enum CodingKeys: String, CodingKey {
+        case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit
+    }
 }
 
 enum SortOption: String, CaseIterable, Identifiable {
@@ -34,8 +58,9 @@ enum ServingUnit: String, Codable, CaseIterable, Identifiable {
     var id: String { self.rawValue }
 }
 
-enum MeasurementMode {
+enum MeasurementMode: String, Codable, CaseIterable, Identifiable {
     case weight, serving
+    var id: String { self.rawValue }
 }
 
 struct DictionaryView: View {

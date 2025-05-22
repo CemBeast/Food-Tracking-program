@@ -10,6 +10,7 @@ struct FoodLogView: View {
     let foods: [LoggedFoodEntry]
 
     var body: some View {
+        Text("Food Log Entries: \(foods.count)")
         List(foods) { entry in
             VStack(alignment: .leading, spacing: 6) {
                 Text(entry.food.name)

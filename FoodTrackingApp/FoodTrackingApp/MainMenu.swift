@@ -148,7 +148,8 @@ struct MainMenu: View {
                                 gramsOrServings: $gramsOrServings,
                                 showGramsInput: $showGramsInput,
                                 updateMacros: { cals, fats, prot, carbs in
-                                    viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: food.servingUnit == .grams ? .weight : .serving)
+                                    viewModel.logFood(food, gramsOrServings: 1, mode: .serving)
+                                    //viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: food.servingUnit == .grams ? .weight : .serving)
                                 }
                             )
                         }

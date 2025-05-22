@@ -19,12 +19,20 @@ struct MacroHistoryEntry: Identifiable, Codable {
 }
 
 // Struct to represent a logged food (since foodItem does not have weight/ servings)
-struct LoggedFoodEntry: Identifiable {
-    let id = UUID()
+struct LoggedFoodEntry: Identifiable, Codable {
+    let id: UUID
     var food: FoodItem
     var quantity: Int
     var mode: MeasurementMode
     var servingUnit: ServingUnit
+
+    init(food: FoodItem, quantity: Int, mode: MeasurementMode, servingUnit: ServingUnit) {
+        self.id = UUID()
+        self.food = food
+        self.quantity = quantity
+        self.mode = mode
+        self.servingUnit = servingUnit
+    }
 }
 
 class MacroTrackerViewModel: ObservableObject {
@@ -44,6 +52,7 @@ class MacroTrackerViewModel: ObservableObject {
     private let proteinKey    = "macro_protein"
     private let carbsKey      = "macro_carbs"
     private let fatsKey       = "macro_fats"
+    private let foodLogKey = "macro_food_log"
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -58,6 +67,7 @@ class MacroTrackerViewModel: ObservableObject {
         
         loadHistory()
         loadLastDate()
+        loadFoodLog()
         
         // Persist macros whenever they change
         $calories
@@ -71,6 +81,9 @@ class MacroTrackerViewModel: ObservableObject {
             .store(in: &cancellables)
         $fats
             .sink { val in defaults.set(val, forKey: self.fatsKey) }
+            .store(in: &cancellables)
+        $foodLog
+            .sink {_ in self.saveFoodLog()}
             .store(in: &cancellables)
         
         checkForNewDay()
@@ -145,11 +158,13 @@ class MacroTrackerViewModel: ObservableObject {
         protein  = 0
         carbs    = 0
         fats     = 0
-        // (the Combine sinks you already have will write zeros back to UserDefaults)
+        foodLog = []
+        UserDefaults.standard.removeObject(forKey: foodLogKey)
     }
     
     // Function to increase macros from logging and put it in food log to track what was ate
     func logFood(_ item: FoodItem, gramsOrServings: Int, mode: MeasurementMode) {
+        print("🍽 Logging food: \(item.name), qty: \(gramsOrServings), mode: \(mode)")
         let factor: Double = {
             switch mode {
             case .weight:
@@ -164,7 +179,7 @@ class MacroTrackerViewModel: ObservableObject {
         carbs += item.carbs * factor
         fats += item.fats * factor
         
-        // Log actual portion consumed
+         // Log actual portion consumed
 //        let consumed = FoodItem(
 //            name: item.name,
 //            weightInGrams: mode == .weight ? gramsOrServings : item.weightInGrams,
@@ -175,11 +190,29 @@ class MacroTrackerViewModel: ObservableObject {
 //            fats: item.fats * factor,
 //            servingUnit: item.servingUnit
 //        )
-//        
-//        // Add food to food log
-//        foodLog.append(consumed)
         let entry = LoggedFoodEntry(food: item, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
-         foodLog.append(entry)
+        foodLog = foodLog + [entry] // triggers Combine
         
+    }
+    
+    // Save the food log persistantly
+    private func saveFoodLog() {
+        if let encoded = try? JSONEncoder().encode(foodLog) {
+            UserDefaults.standard.set(encoded, forKey: foodLogKey)
+            print("✅ Food log saved: \(foodLog.count) entries")
+        } else {
+            print("❌ Failed to encode foodLog")
+        }
+    }
+    
+    // load the saved data
+    private func loadFoodLog() {
+        if let data = UserDefaults.standard.data(forKey: foodLogKey),
+           let decoded = try? JSONDecoder().decode([LoggedFoodEntry].self, from: data) {
+            foodLog = decoded
+            print("✅ Loaded foodLog with \(foodLog.count) items")
+        } else {
+            print("❌ No food log found or decoding failed")
+        }
     }
 }
