@@ -139,16 +139,16 @@ struct MainMenu: View {
                         )
                         // model of grams/serving overlay
                         if showGramsInput,
-                            let food = selectedFood,
-                            let mode = selectedMeasurementMode
+                            let food = selectedFood
                         {
+                            let isVolumeOrWeight = (food.servingUnit == .grams || food.servingUnit == .milliliters)
                             GramsOrServingsInput(
                                 food: food,
-                                mode: mode,
+                                mode: isVolumeOrWeight ? .weight : .serving,
                                 gramsOrServings: $gramsOrServings,
                                 showGramsInput: $showGramsInput,
                                 updateMacros: { cals, fats, prot, carbs in
-                                    viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: food.servingUnit == .grams ? .weight : .serving)
+                                    viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: isVolumeOrWeight ? .weight : .serving)
                                 }
                             )
                         }

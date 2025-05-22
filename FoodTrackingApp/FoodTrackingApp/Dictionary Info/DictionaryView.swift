@@ -136,9 +136,11 @@ struct DictionaryView: View {
             isPresented: $showMeasurementDialog,
             titleVisibility: .visible
         ) {
-            Button("Weight") {
-                selectedMeasurementMode = .weight
-                showGramsInput = true
+            if let unit = selectedFood?.servingUnit {
+                Button(unit == .milliliters ? "Volume" : "Weight") {
+                    selectedMeasurementMode = .weight
+                    showGramsInput = true
+                }
             }
             Button("Servings") {
                 selectedMeasurementMode = .serving

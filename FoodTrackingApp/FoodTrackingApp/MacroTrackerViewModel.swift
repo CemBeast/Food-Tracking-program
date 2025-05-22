@@ -192,6 +192,7 @@ class MacroTrackerViewModel: ObservableObject {
         )
         let entry = LoggedFoodEntry(food: consumed, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
         foodLog = foodLog + [entry] // triggers Combine
+        saveFoodLog()
         
     }
     
