@@ -6136,3 +6136,19 @@ Grams:0  Servings:5  Calories:50  Protein:0  Carbs:0  Fat:5
 Todays Totals:
 Calories:1754  Protein:143  Carbs:217  Fats:35
 ----------------------------------------------------------------------------------
+Date: Thu May 22 11:13:54 2025
+Oil
+Grams:3  Servings:0  Calories:25  Protein:0  Carbs:0  Fat:3
+Tomatoes
+Grams:289  Servings:0  Calories:52  Protein:2.5432  Carbs:11.2421  Fat:0.578
+Egg Whites
+Grams:194  Servings:0  Calories:105  Protein:21.087  Carbs:0  Fat:0
+Fat Free Mozzarella Cheese
+Grams:56  Servings:0  Calories:90  Protein:18  Carbs:4  Fat:0
+Nonfat Costco Yogurt
+Grams:183  Servings:0  Calories:107  Protein:19.3765  Carbs:7.53529  Fat:0
+Parmigiano Reggiano
+Grams:16  Servings:0  Calories:62  Protein:5.14286  Carbs:0.571429  Fat:4.57143
+Todays Totals:
+Calories:441  Protein:66  Carbs:23  Fats:8
+----------------------------------------------------------------------------------

@@ -179,18 +179,18 @@ class MacroTrackerViewModel: ObservableObject {
         carbs += item.carbs * factor
         fats += item.fats * factor
         
-         // Log actual portion consumed
-//        let consumed = FoodItem(
-//            name: item.name,
-//            weightInGrams: mode == .weight ? gramsOrServings : item.weightInGrams,
-//            servings: mode == .serving ? gramsOrServings : 1,
-//            calories: Int(Double(item.calories) * factor),
-//            protein: item.protein * factor,
-//            carbs: item.carbs * factor,
-//            fats: item.fats * factor,
-//            servingUnit: item.servingUnit
-//        )
-        let entry = LoggedFoodEntry(food: item, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
+        //Log actual portion consumed
+        let consumed = FoodItem(
+            name: item.name,
+            weightInGrams: mode == .weight ? gramsOrServings : item.weightInGrams,
+            servings: mode == .serving ? gramsOrServings : 1,
+            calories: Int(Double(item.calories) * factor),
+            protein: item.protein * factor,
+            carbs: item.carbs * factor,
+            fats: item.fats * factor,
+            servingUnit: item.servingUnit
+        )
+        let entry = LoggedFoodEntry(food: consumed, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
         foodLog = foodLog + [entry] // triggers Combine
         
     }
