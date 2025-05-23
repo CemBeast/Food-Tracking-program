@@ -93,7 +93,7 @@ class MacroTrackerViewModel: ObservableObject {
             .sink { [weak self] _ in self?.checkForNewDay() }
             .store(in: &cancellables)
     }
-
+    
     // Save the 'history' array to UserDefaults by encoding it to JSON
     private func saveHistory() {
         // Try to convert '[MacroHistoryEntry]' into 'Data'
@@ -101,7 +101,7 @@ class MacroTrackerViewModel: ObservableObject {
             UserDefaults.standard.set(encoded, forKey: historyKey)
         }
     }
-
+    
     private func loadHistory() {
         // Try to read saved Data from UserDefaults
         if let data = UserDefaults.standard.data(forKey: historyKey),
@@ -112,16 +112,16 @@ class MacroTrackerViewModel: ObservableObject {
             self.history = []
         }
     }
-       
+    
     private func rollOverToNewDay() {
         // save yesterdays macros
         let entry = MacroHistoryEntry(date: lastUpdatedDate, calories: calories, protein: protein, carbs: carbs, fats: fats)
         history.append(entry)
-            saveHistory()
-
+        saveHistory()
+        
         // Reset current macros
         resetMacros()
-
+        
         // Update date
         lastUpdatedDate = Date()
         saveLastDate()
@@ -130,7 +130,7 @@ class MacroTrackerViewModel: ObservableObject {
     private func saveLastDate() {
         UserDefaults.standard.set(lastUpdatedDate, forKey: lastDateKey)
     }
-
+    
     private func loadLastDate() {
         if let savedDate = UserDefaults.standard.object(forKey: lastDateKey) as? Date {
             self.lastUpdatedDate = Calendar.current.startOfDay(for: savedDate)
@@ -233,7 +233,7 @@ class MacroTrackerViewModel: ObservableObject {
         protein  -= entry.food.protein * factor
         carbs    -= entry.food.carbs * factor
         fats     -= entry.food.fats * factor
-
+        
         // Safeguard against negative totals
         calories = max(0, calories)
         protein  = max(0, protein)
@@ -242,5 +242,26 @@ class MacroTrackerViewModel: ObservableObject {
         
         // Remove entry
         foodLog.removeAll { $0.id == entry.id }
+    }
+    
+    func updateFoodEntryQuantity(_ entry: LoggedFoodEntry, newQuantity: Int) {
+        guard let index = foodLog.firstIndex(where: { $0.id == entry.id }) else { return }
+        
+        let oldFactor = computeFactor(entry.quantity, entry.food, entry.mode)
+        let newFactor = computeFactor(newQuantity, entry.food, entry.mode)
+        
+        calories += Int(Double(entry.food.calories) * (newFactor - oldFactor))
+        protein  += entry.food.protein * (newFactor - oldFactor)
+        carbs    += entry.food.carbs * (newFactor - oldFactor)
+        fats     += entry.food.fats * (newFactor - oldFactor)
+        
+        foodLog[index].quantity = newQuantity
+    }
+    
+    private func computeFactor(_ quantity: Int, _ food: FoodItem, _ mode: MeasurementMode) -> Double {
+        switch mode {
+        case .weight:  return Double(quantity) / Double(food.weightInGrams)
+        case .serving: return Double(quantity)
+        }
     }
 }

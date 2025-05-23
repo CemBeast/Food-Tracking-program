@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct FoodLogView: View {
-    @State private var foodToEdit: LoggedFoodEntry?
+    @State private var foodToEditQuantity: LoggedFoodEntry?
     @ObservedObject var viewModel: MacroTrackerViewModel
 
     var body: some View {
@@ -38,7 +38,7 @@ struct FoodLogView: View {
                 }
                 .padding(.vertical, 6)
                 .onLongPressGesture {
-                    foodToEdit = entry
+                    foodToEditQuantity = entry
                 }
             }
             .onDelete { indexSet in
@@ -48,16 +48,11 @@ struct FoodLogView: View {
                 }
             }
         }
-        .sheet(item: $foodToEdit) { entry in
-            EditFoodItemView(
-                foodItem: entry.food,
-                onSave: { updatedFood in
-                    viewModel.updateFoodEntry(entry, with: updatedFood)
-                },
-                onCancel: {
-                    foodToEdit = nil
-                }
-            )
+        .sheet(item: $foodToEditQuantity) { entry in
+            EditQuantityView(entry: entry) { newQuantity in
+                viewModel.updateFoodEntryQuantity(entry, newQuantity: newQuantity)
+                foodToEditQuantity = nil
+            }
         }
         .navigationTitle("Today's Food Log")
     }
