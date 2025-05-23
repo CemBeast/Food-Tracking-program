@@ -33,6 +33,33 @@ struct LoggedFoodEntry: Identifiable, Codable {
         self.mode = mode
         self.servingUnit = servingUnit
     }
+    
+    // Computed ratio based on measurement mode
+    var scalingFactor: Double {
+        switch mode {
+        case .weight:
+            return Double(quantity) / Double(food.weightInGrams)
+        case .serving:
+            return Double(quantity)
+        }
+    }
+
+    // Computed macros
+    var scaledCalories: Int {
+        Int(Double(food.calories) * scalingFactor)
+    }
+
+    var scaledProtein: Double {
+        food.protein * scalingFactor
+    }
+
+    var scaledCarbs: Double {
+        food.carbs * scalingFactor
+    }
+
+    var scaledFats: Double {
+        food.fats * scalingFactor
+    }
 }
 
 class MacroTrackerViewModel: ObservableObject {
@@ -255,7 +282,10 @@ class MacroTrackerViewModel: ObservableObject {
         carbs    += entry.food.carbs * (newFactor - oldFactor)
         fats     += entry.food.fats * (newFactor - oldFactor)
         
-        foodLog[index].quantity = newQuantity
+        var updatedEntry = foodLog[index]
+        updatedEntry.quantity = newQuantity
+        foodLog[index] = updatedEntry
+        saveFoodLog()
     }
     
     private func computeFactor(_ quantity: Int, _ food: FoodItem, _ mode: MeasurementMode) -> Double {

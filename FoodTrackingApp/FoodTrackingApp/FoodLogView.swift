@@ -23,18 +23,17 @@ struct FoodLogView: View {
                     .font(.footnote)
                     .foregroundColor(.gray)
 
-                    HStack {
-                        Image(systemName: "flame.fill")
-                        Text("Calories: \(entry.food.calories)")
-                        Image(systemName: "bolt.circle.fill")
-                        Text("Protein: \(String(format: "%.1f", entry.food.protein))g")
-                        Image(systemName: "leaf.circle.fill")
-                        Text("Carbs: \(String(format: "%.1f", entry.food.carbs))g")
-                        Image(systemName: "drop.circle.fill")
-                        Text("Fats: \(String(format: "%.1f", entry.food.fats))g")
+                    GeometryReader { geometry in
+                        let itemWidth = geometry.size.width / 4
+
+                        HStack(spacing: 0) {
+                            macroColumn(icon: "flame.fill", label: "Calories", value: "\(entry.scaledCalories)", width: itemWidth)
+                            macroColumn(icon: "bolt.circle.fill", label: "Protein", value: String(format: "%.1fg", entry.scaledProtein), width: itemWidth)
+                            macroColumn(icon: "leaf.circle.fill", label: "Carbs", value: String(format: "%.1fg", entry.scaledCarbs), width: itemWidth)
+                            macroColumn(icon: "drop.circle.fill", label: "Fats", value: String(format: "%.1fg", entry.scaledFats), width: itemWidth)
+                        }
                     }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .frame(height: 50) // adjust as needed
                 }
                 .padding(.vertical, 6)
                 .onLongPressGesture {
@@ -58,11 +57,19 @@ struct FoodLogView: View {
     }
 
     @ViewBuilder
-    func macroLabel(icon: String, label: String, value: String) -> some View {
-        HStack(spacing: 4) {
+    func macroColumn(icon: String, label: String, value: String, width: CGFloat) -> some View {
+        VStack(spacing: 4) {
             Image(systemName: icon)
-                .font(.system(size: 12))
-            Text("\(label): \(value)")
+                .font(.system(size: 16))
+                .foregroundColor(.white)
+            Text(label)
+                .font(.caption2)
+                .foregroundColor(.gray)
+            Text(value)
+                .font(.caption)
+                .fontWeight(.medium)
+                .foregroundColor(.white)
         }
+        .frame(width: width)
     }
 }
