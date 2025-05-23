@@ -171,7 +171,7 @@ struct MainMenu: View {
                 .buttonStyle(CustomButtonStyle())
                   
                 // View food ate today
-                NavigationLink(destination: FoodLogView(foods: viewModel.foodLog)) {
+                NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
                     Text("View Foods Eaten Today")
                 }
                 .buttonStyle(CustomButtonStyle())

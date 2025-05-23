@@ -7,33 +7,67 @@
 import SwiftUI
 
 struct FoodLogView: View {
-    let foods: [LoggedFoodEntry]
+    @State private var foodToEdit: LoggedFoodEntry?
+    @ObservedObject var viewModel: MacroTrackerViewModel
 
     var body: some View {
-        Text("Food Log Entries: \(foods.count)")
-        List(foods) { entry in
-            VStack(alignment: .leading, spacing: 6) {
-                Text(entry.food.name)
-                    .font(.headline)
-
-                HStack {
-                    Text("Calories: \(entry.food.calories)")
-                    Text("Protein: \(String(format: "%.1f", entry.food.protein))g")
-                    Text("Carbs: \(String(format: "%.1f", entry.food.carbs))g")
-                    Text("Fats: \(String(format: "%.1f", entry.food.fats))g")
-                }
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-                Text(entry.mode == .weight
-                     ? "\(entry.quantity) \(entry.servingUnit.rawValue)"
-                     : "\(entry.quantity) serving\(entry.quantity > 1 ? "s" : "")"
-                )
+        List {
+            ForEach(viewModel.foodLog) { entry in
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(entry.food.name)
+                        .font(.headline)
+                    
+                    Text(entry.mode == .weight
+                         ? "\(entry.quantity) \(entry.servingUnit.rawValue)"
+                         : "\(entry.quantity) serving\(entry.quantity > 1 ? "s" : "")")
                     .font(.footnote)
                     .foregroundColor(.gray)
+
+                    HStack {
+                        Image(systemName: "flame.fill")
+                        Text("Calories: \(entry.food.calories)")
+                        Image(systemName: "bolt.circle.fill")
+                        Text("Protein: \(String(format: "%.1f", entry.food.protein))g")
+                        Image(systemName: "leaf.circle.fill")
+                        Text("Carbs: \(String(format: "%.1f", entry.food.carbs))g")
+                        Image(systemName: "drop.circle.fill")
+                        Text("Fats: \(String(format: "%.1f", entry.food.fats))g")
+                    }
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                }
+                .padding(.vertical, 6)
+                .onLongPressGesture {
+                    foodToEdit = entry
+                }
             }
-            .padding(.vertical, 6)
+            .onDelete { indexSet in
+                indexSet.forEach { index in
+                    let entry = viewModel.foodLog[index]
+                    viewModel.deleteFoodLogEntry(entry)
+                }
+            }
+        }
+        .sheet(item: $foodToEdit) { entry in
+            EditFoodItemView(
+                foodItem: entry.food,
+                onSave: { updatedFood in
+                    viewModel.updateFoodEntry(entry, with: updatedFood)
+                },
+                onCancel: {
+                    foodToEdit = nil
+                }
+            )
         }
         .navigationTitle("Today's Food Log")
+    }
+
+    @ViewBuilder
+    func macroLabel(icon: String, label: String, value: String) -> some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.system(size: 12))
+            Text("\(label): \(value)")
+        }
     }
 }

@@ -216,4 +216,31 @@ class MacroTrackerViewModel: ObservableObject {
             print("❌ No food log found or decoding failed")
         }
     }
+    
+    // Delete a food from the log
+    func deleteFoodLogEntry(_ entry: LoggedFoodEntry) {
+        let factor: Double = {
+            switch entry.mode {
+            case .weight:
+                return Double(entry.quantity) / Double(entry.food.weightInGrams)
+            case .serving:
+                return Double(entry.quantity)
+            }
+        }()
+        
+        // Subtract macros
+        calories -= Int(Double(entry.food.calories) * factor)
+        protein  -= entry.food.protein * factor
+        carbs    -= entry.food.carbs * factor
+        fats     -= entry.food.fats * factor
+
+        // Safeguard against negative totals
+        calories = max(0, calories)
+        protein  = max(0, protein)
+        carbs    = max(0, carbs)
+        fats     = max(0, fats)
+        
+        // Remove entry
+        foodLog.removeAll { $0.id == entry.id }
+    }
 }
