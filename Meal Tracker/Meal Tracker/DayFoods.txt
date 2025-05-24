@@ -12,3 +12,19 @@ Nonfat Costco Yogurt
 Grams:183  Servings:0  Calories:107  Protein:19.3765  Carbs:7.53529  Fat:0
 Parmigiano Reggiano
 Grams:16  Servings:0  Calories:62  Protein:5.14286  Carbs:0.571429  Fat:4.57143
+Plain Rice
+Grams:265  Servings:0  Calories:439  Protein:7.97684  Carbs:96.9493  Fat:0.613603
+Chicken Tenders
+Grams:213  Servings:0  Calories:190  Protein:43.7411  Carbs:0  Fat:1.90179
+Katsu sauce
+Grams:12  Servings:0  Calories:20  Protein:0  Carbs:4.8  Fat:0
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Gatorade Powder
+Grams:16  Servings:0  Calories:53  Protein:0  Carbs:14.2222  Fat:0
+Chicken Tenders
+Grams:221  Servings:0  Calories:197  Protein:45.3839  Carbs:0  Fat:1.97321
+1/4 Tutta Bella Margherita Pizza
+Grams:0  Servings:2  Calories:520  Protein:24  Carbs:78  Fat:10
+Breyers Brownie a La Mode
+Grams:155  Servings:0  Calories:186  Protein:3.73494  Carbs:37.3494  Fat:9.33735

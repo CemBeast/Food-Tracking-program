@@ -27,10 +27,10 @@ struct FoodLogView: View {
                         let itemWidth = geometry.size.width / 4
 
                         HStack(spacing: 0) {
-                            macroColumn(icon: "flame.fill", label: "Calories", value: "\(entry.scaledCalories)", width: itemWidth)
-                            macroColumn(icon: "bolt.circle.fill", label: "Protein", value: String(format: "%.1fg", entry.scaledProtein), width: itemWidth)
-                            macroColumn(icon: "leaf.circle.fill", label: "Carbs", value: String(format: "%.1fg", entry.scaledCarbs), width: itemWidth)
-                            macroColumn(icon: "drop.circle.fill", label: "Fats", value: String(format: "%.1fg", entry.scaledFats), width: itemWidth)
+                            macroColumn(icon: "flame.fill", label: "Calories", value: "\(entry.scaledCalories)", width: itemWidth, color: .red)
+                            macroColumn(icon: "bolt.circle.fill", label: "Protein", value: String(format: "%.1fg", entry.scaledProtein), width: itemWidth, color: .yellow)
+                            macroColumn(icon: "leaf.circle.fill", label: "Carbs", value: String(format: "%.1fg", entry.scaledCarbs), width: itemWidth, color: .green)
+                            macroColumn(icon: "drop.circle.fill", label: "Fats", value: String(format: "%.1fg", entry.scaledFats), width: itemWidth, color: .purple)
                         }
                     }
                     .frame(height: 50) // adjust as needed
@@ -57,18 +57,18 @@ struct FoodLogView: View {
     }
 
     @ViewBuilder
-    func macroColumn(icon: String, label: String, value: String, width: CGFloat) -> some View {
+    func macroColumn(icon: String, label: String, value: String, width: CGFloat, color: Color) -> some View {
         VStack(spacing: 4) {
             Image(systemName: icon)
                 .font(.system(size: 16))
-                .foregroundColor(.white)
+                .foregroundColor(color)
             Text(label)
                 .font(.caption2)
-                .foregroundColor(.gray)
+                .foregroundColor(color)
             Text(value)
                 .font(.caption)
                 .fontWeight(.medium)
-                .foregroundColor(.white)
+                .foregroundColor(color)
         }
         .frame(width: width)
     }

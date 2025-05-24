@@ -6152,3 +6152,31 @@ Grams:16  Servings:0  Calories:62  Protein:5.14286  Carbs:0.571429  Fat:4.57143
 Todays Totals:
 Calories:441  Protein:66  Carbs:23  Fats:8
 ----------------------------------------------------------------------------------
+Date: Thu May 22 20:47:22 2025
+Plain Rice
+Grams:265  Servings:0  Calories:439  Protein:7.97684  Carbs:96.9493  Fat:0.613603
+Chicken Tenders
+Grams:213  Servings:0  Calories:190  Protein:43.7411  Carbs:0  Fat:1.90179
+Katsu sauce
+Grams:12  Servings:0  Calories:20  Protein:0  Carbs:4.8  Fat:0
+Total beets
+Grams:0  Servings:1  Calories:10  Protein:0  Carbs:2  Fat:0
+Gatorade Powder
+Grams:16  Servings:0  Calories:53  Protein:0  Carbs:14.2222  Fat:0
+Todays Totals:
+Calories:1153  Protein:118  Carbs:141  Fats:11
+----------------------------------------------------------------------------------
+Date: Thu May 22 21:25:18 2025
+Chicken Tenders
+Grams:221  Servings:0  Calories:197  Protein:45.3839  Carbs:0  Fat:1.97321
+1/4 Tutta Bella Margherita Pizza
+Grams:0  Servings:2  Calories:520  Protein:24  Carbs:78  Fat:10
+Todays Totals:
+Calories:1870  Protein:187  Carbs:219  Fats:23
+----------------------------------------------------------------------------------
+Date: Thu May 22 23:40:22 2025
+Breyers Brownie a La Mode
+Grams:155  Servings:0  Calories:186  Protein:3.73494  Carbs:37.3494  Fat:9.33735
+Todays Totals:
+Calories:2056  Protein:191  Carbs:256  Fats:32
+----------------------------------------------------------------------------------

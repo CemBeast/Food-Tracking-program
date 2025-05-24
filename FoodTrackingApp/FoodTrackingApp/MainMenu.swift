@@ -8,14 +8,34 @@ import SwiftUI
 
 struct CustomButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(.red)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-            .clipShape(Capsule())
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+        HStack(spacing: 12) {
+            // Placeholder for a logo/icon
+            Image(systemName: "sparkles")
+                .font(.headline)
+                .foregroundColor(.white)
+                .padding(8)
+                .background(
+                    Circle()
+                        .fill(.ultraThinMaterial)
+                        .shadow(color: .white.opacity(0.2), radius: 4, x: 1, y: 2)
+                )
+
+            configuration.label
+                .font(.system(size: 16, weight: .semibold, design: .rounded))
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(
+            LinearGradient(colors: [.blue.opacity(0.8), .purple.opacity(0.8)],
+                           startPoint: .topLeading, endPoint: .bottomTrailing)
+                .cornerRadius(16)
+                .shadow(color: .purple.opacity(configuration.isPressed ? 0.2 : 0.4),
+                        radius: configuration.isPressed ? 4 : 10,
+                        x: 0, y: configuration.isPressed ? 2 : 6)
+        )
+        .foregroundColor(.white)
+        .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
+        .animation(.spring(response: 0.3, dampingFraction: 0.5), value: configuration.isPressed)
     }
 }
 
@@ -44,6 +64,7 @@ struct MainMenu: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                Spacer()
                 // Todays Macros
                 FoodMacrosDisplay(
                     calories: viewModel.calories,
@@ -190,7 +211,6 @@ struct MainMenu: View {
                 
                 Spacer()
             }
-            .navigationTitle("Food Tracking Menu")
         }
     }
 }
