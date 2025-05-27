@@ -142,7 +142,7 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
 
             DispatchQueue.main.async {
                 self.onScanned?(item)
-                self.dismiss(animated: true)
+                //self.dismiss(animated: true)
             }
         }.resume()
     }

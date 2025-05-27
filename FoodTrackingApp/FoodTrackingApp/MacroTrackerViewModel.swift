@@ -72,6 +72,12 @@ class MacroTrackerViewModel: ObservableObject {
     @Published var lastUpdatedDate: Date = Date()
     @Published var foodLog: [LoggedFoodEntry] = [] // Tracks food for the day
     
+    // Temp values
+    @Published var calorieGoal: Int = 2000
+    @Published var proteinGoal: Double = 150
+    @Published var carbGoal: Double = 200
+    @Published var fatGoal: Double = 70
+    
     // UserDefaults Key to store the encoded history
     private let historyKey = "macro_history"
     private let lastDateKey = "macro_last_updated"

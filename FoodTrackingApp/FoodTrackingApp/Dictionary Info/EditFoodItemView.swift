@@ -6,6 +6,15 @@
 //
 import SwiftUI
 
+private let decimalFormatter: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.minimumFractionDigits = 0
+    formatter.maximumFractionDigits = 1
+    formatter.allowsFloats = true
+    return formatter
+}()
+
 struct EditFoodItemView: View {
     @Environment(\.dismiss) private var dismiss
     @State var foodItem: FoodItem
@@ -54,7 +63,7 @@ struct EditFoodItemView: View {
                         HStack {
                             Text("Protein (g)")
                             Spacer()
-                            TextField("0", value: $foodItem.protein, formatter: NumberFormatter())
+                            TextField("0", value: $foodItem.protein, formatter: decimalFormatter)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                                 .disableAutocorrection(true)
@@ -62,7 +71,7 @@ struct EditFoodItemView: View {
                         HStack {
                             Text("Carbs (g)")
                             Spacer()
-                            TextField("0", value: $foodItem.carbs, formatter: NumberFormatter())
+                            TextField("0", value: $foodItem.carbs, formatter: decimalFormatter)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                                 .disableAutocorrection(true)
@@ -70,7 +79,7 @@ struct EditFoodItemView: View {
                         HStack {
                             Text("Fats (g)")
                             Spacer()
-                            TextField("0", value: $foodItem.fats, formatter: NumberFormatter())
+                            TextField("0", value: $foodItem.fats, formatter: decimalFormatter)
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                                 .disableAutocorrection(true)
