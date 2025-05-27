@@ -6,15 +6,18 @@
 //
 import SwiftUI
 
-struct ScannerViewForTracking: UIViewControllerRepresentable {
-    
+struct ScannerViewForTracking: View {
     var onScanned: (FoodItem) -> Void
 
-    func makeUIViewController(context: Context) -> ScannerTrackingViewController {
-        let vc = ScannerTrackingViewController()
-        vc.onScanned = onScanned
-        return vc
-    }
+    var body: some View {
+        ZStack {
+            ScannerTrackingViewWrapper(onScanned: onScanned)
+                .edgesIgnoringSafeArea(.all)
 
-    func updateUIViewController(_ uiViewController: ScannerTrackingViewController, context: Context) {}
+            BarcodeOverlay()
+                .frame(width: 300, height: 200)
+                .padding(.bottom, 100)
+        }
+    }
 }
+
