@@ -65,7 +65,7 @@ struct MainMenu: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // Remaining Macros display
+                // Stationary view of macros consumed/left
                 DailyMacrosDisplay(
                     calories: viewModel.calories,
                     protein: viewModel.protein,

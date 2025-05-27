@@ -25,28 +25,29 @@ struct DailyMacrosDisplay: View {
                 .font(.title2.bold())
                 .foregroundColor(.white)
                 .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .center)
 
             HStack(spacing: 16) {
                 ringMeter(
-                    percent: Double(displayedValue(for: calories, goal: calorieGoal)) / Double(calorieGoal),
+                    percent: calorieGoal == 0 ? 0 : Double(calories) / Double(calorieGoal),
                     color: .red,
                     label: "Calories",
                     value: "\(Int(displayedValue(for: calories, goal: calorieGoal)))"
                 )
                 ringMeter(
-                    percent: proteinGoal == 0 ? 0 : displayedValue(for: protein, goal: proteinGoal) / proteinGoal,
+                    percent: proteinGoal == 0 ? 0 : protein / proteinGoal,
                     color: .yellow,
                     label: "Protein",
                     value: "\(Int(displayedValue(for: protein, goal: proteinGoal)))g"
                 )
                 ringMeter(
-                    percent: carbGoal == 0 ? 0 : displayedValue(for: carbs, goal: carbGoal) / carbGoal,
+                    percent: carbGoal == 0 ? 0 : carbs / carbGoal,
                     color: .green,
                     label: "Carbs",
                     value: "\(Int(displayedValue(for: carbs, goal: carbGoal)))g"
                 )
                 ringMeter(
-                    percent: fatGoal == 0 ? 0 : displayedValue(for: fats, goal: fatGoal) / fatGoal,
+                    percent: fatGoal == 0 ? 0 : fats / fatGoal,
                     color: .purple,
                     label: "Fats",
                     value: "\(Int(displayedValue(for: fats, goal: fatGoal)))g"
