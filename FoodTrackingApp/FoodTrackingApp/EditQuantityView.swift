@@ -27,7 +27,7 @@ struct EditQuantityView: View {
             Text("Current: \(entry.quantity) \(entry.mode == .serving ? "serving(s)" : entry.servingUnit.rawValue)")
 
             TextField("New quantity", text: $quantityInput)
-                .keyboardType(.numberPad)
+                .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
 
             Button("Save") {

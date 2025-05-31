@@ -67,7 +67,7 @@ struct GramsOrServingsInput: View {
                 // Card-style input box
                 VStack(spacing: 16) {
                     TextField("", text: $numberInput)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
                         .focused($isTextFieldFocused)
                         .padding()
                         .background(Color.white)

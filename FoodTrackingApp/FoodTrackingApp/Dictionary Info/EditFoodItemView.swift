@@ -45,7 +45,7 @@ struct EditFoodItemView: View {
                             Text(foodItem.servingUnit == .grams ? "Weight" : "Volume")
                             Spacer()
                             TextField("0", value: $foodItem.weightInGrams, formatter: NumberFormatter())
-                                .keyboardType(.numberPad)
+                                .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                                 .disableAutocorrection(true)
                         }

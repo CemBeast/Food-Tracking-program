@@ -54,6 +54,7 @@ struct DailyMacrosDisplay: View {
                 )
             }
             .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .center)
         }
         .padding()
         .background(
