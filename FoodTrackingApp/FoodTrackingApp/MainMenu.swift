@@ -39,6 +39,32 @@ struct CustomButtonStyle: ButtonStyle {
     }
 }
 
+struct SectionCard<Content: View>: View {
+    let title: String
+    let content: Content
+    
+    init(title: String, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.content = content()
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title)
+                .font(.headline)
+                .padding(.horizontal)
+
+            VStack(spacing: 10) {
+                content
+                    .buttonStyle(CustomButtonStyle())
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
+            .shadow(radius: 2)
+        }
+    }
+}
+
 struct MainMenu: View {
     // viewModel to track todays macros
     @StateObject private var viewModel = MacroTrackerViewModel()
@@ -80,151 +106,152 @@ struct MainMenu: View {
                 
                 ScrollView {
                     VStack(spacing: 16) {
-                        Menu("Add New Food") {
-                            Button("Add Manually") {
+                        // MARK: Food Dictionary Section
+                        SectionCard(title: "Food Dictionary") {
+                            Button("Add Food Manually") {
                                 showManual = true
                             }
-                            Button("Scan Barcode") {
+                            Button("Add Food by Barcode") {
                                 showScanner = true
                             }
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .sheet(isPresented: $showManual) {
-                            AddFoodView(onAdd: {newFood in
-                                foodModel.add(newFood)
-                            })
-                        }
-                        .sheet(isPresented: $showScanner) {
-                            //BarcodeScannerView(foodModel: foodModel)
-                            BarcodeTrackingWrapperView(viewModel: foodModel)
-                        }
-                        
-                        
-                        // View the food dictionary only
-                        NavigationLink(destination: DictionaryView(
-                            selectedFood: $selectedFood,
-                            showGramsInput: $showGramsInput,
-                            selectedFoodID: $selectedFoodID,
-                            selectedMeasurementMode: $selectedMeasurementMode,
-                            foodModel: foodModel,
-                            readOnly: true
-                        )) {
-                            Text("View Food Dictionary")
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        
-                        // Track food by scanning a barcode
-                        Button("Track Food from Barcode") {
-                            showScannerTracking = true
-                        }
-                        .sheet(isPresented: $showScannerTracking) {
-                            ScannerViewForTracking { item in
-                                print("✅ Scanned food: \(item.name)")
-                                scannedItem = item
-                                showConfirmScannedItem = true
-                            }
-                        }
-                        .sheet(item: $scannedItem) { food in
-                            GramsOrServingsInput(
-                                food: food,
-                                mode: food.servingUnit == .grams ? .weight : .serving,
-                                gramsOrServings: $gramsOrServings,
-                                showGramsInput: .constant(true),  // or bind this to a local @State if needed
-                                updateMacros: { cals, fats, prot, carbs in
-                                    viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: food.servingUnit == .grams ? .weight : .serving)
-                                        scannedItem = nil
-                                }
-                            )
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        
-                        // Track food from within the dictionary view
-                        Button(action: {
-                            showFoodSelection.toggle()
-                        }) {
-                            Text("Select Food to Track")
-                                .buttonStyle(CustomButtonStyle())
-                        }
-                        .sheet(
-                            isPresented: $showFoodSelection,
-                            onDismiss: {
-                                // Reset everything when the sheet is swiped down
-                                selectedFood               = nil
-                                selectedFoodID             = nil
-                                selectedMeasurementMode    = nil
-                                showGramsInput             = false
-                                gramsOrServings            = nil
-                            }
-                        )   {
-                            ZStack {
+                            NavigationLink(destination:
                                 DictionaryView(
                                     selectedFood: $selectedFood,
                                     showGramsInput: $showGramsInput,
                                     selectedFoodID: $selectedFoodID,
                                     selectedMeasurementMode: $selectedMeasurementMode,
                                     foodModel: foodModel,
-                                    readOnly: false
+                                    readOnly: true
                                 )
-                                // model of grams/serving overlay
-                                if showGramsInput,
-                                    let food = selectedFood,
-                                    let mode = selectedMeasurementMode
-                                {
-                                    GramsOrServingsInput(
-                                        food: food,
-                                        mode: mode,
-                                        gramsOrServings: $gramsOrServings,
-                                        showGramsInput: $showGramsInput,
-                                        updateMacros: { cals, fats, prot, carbs in
-                                            viewModel.logFood(food, gramsOrServings: gramsOrServings ?? 1, mode: mode)
-                                        }
-                                    )
-                                }
-                            }
-                            // Once as showGramsInput is false we clear the seciton
-                            .onChange(of: showGramsInput) { done in
-                                if done == false {
-                                    selectedFood = nil
-                                    selectedFoodID = nil
-                                    selectedMeasurementMode    = nil
-                                }
+                            ) {
+                                Text("View Food Dictionary")
                             }
                         }
-                        .buttonStyle(CustomButtonStyle())
-                        
-                        // Save Button
-                        Button("Clear Macro History") {
-                            viewModel.clearHistory()
+
+                        // MARK: Tracking Food Section
+                        SectionCard(title: "Tracking Food") {
+                            Button("Track Food from Barcode") {
+                                showScannerTracking = true
+                            }
+                            Button("Select Food to Track") {
+                                showFoodSelection.toggle()
+                            }
                         }
-                        .buttonStyle(CustomButtonStyle())
-                          
-                        // View food ate today
-                        NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
-                            Text("View Foods Eaten Today")
+
+                        // MARK: History Section
+                        SectionCard(title: "History") {
+                            NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
+                                Text("View Foods Eaten Today")
+                            }
+                            NavigationLink(destination: MacroHistoryView(history: viewModel.history)) {
+                                Text("View Macro History")
+                            }
+                            Button("Clear Daily Macros") {
+                                viewModel.resetMacros()
+                            }
+                            Button("Clear History") {
+                                viewModel.clearHistory()
+                            }
                         }
-                        .buttonStyle(CustomButtonStyle())
-                        
-                        // History Button
-                        NavigationLink(destination: MacroHistoryView(history: viewModel.history)) {
-                            Text("View History")
-                                .buttonStyle(CustomButtonStyle())
+
+                        // MARK: Personal Section
+                        SectionCard(title: "Personal") {
+                            Button("Edit Macro Goals") {
+                                showEditGoals = true
+                            }
                         }
-                        .buttonStyle(CustomButtonStyle())
-                        
-                        Button("Clear Daily Macros") {
-                            viewModel.resetMacros()
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        
-                        Button("Edit Macro Goals") {
-                            showEditGoals = true
-                        }
-                        .sheet(isPresented: $showEditGoals) {
-                            EditGoalsView(calorieGoal: $viewModel.calorieGoal, proteinGoal: $viewModel.proteinGoal, carbGoal: $viewModel.carbGoal, fatGoal: $viewModel.fatGoal)
-                        }
-                        .buttonStyle(CustomButtonStyle())
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            // MARK: Sheets for Food Dictionary
+            .sheet(isPresented: $showManual) {
+                AddFoodView(onAdd: { newFood in
+                    foodModel.add(newFood)
+                })
+            }
+            .sheet(isPresented: $showScanner) {
+                BarcodeTrackingWrapperView(viewModel: foodModel)
+            }
+
+            // MARK: Sheet for Tracking Food by Barcode
+            .sheet(isPresented: $showScannerTracking) {
+                ScannerViewForTracking { item in
+                    scannedItem = item
+                    showConfirmScannedItem = true
+                }
+            }
+            .sheet(item: $scannedItem) { food in
+                GramsOrServingsInput(
+                    food: food,
+                    mode: food.servingUnit == .grams ? .weight : .serving,
+                    gramsOrServings: $gramsOrServings,
+                    showGramsInput: .constant(true),
+                    updateMacros: { _, _, _, _ in
+                        viewModel.logFood(
+                            food,
+                            gramsOrServings: gramsOrServings ?? 1,
+                            mode: food.servingUnit == .grams ? .weight : .serving
+                        )
+                        scannedItem = nil
+                    }
+                )
+            }
+
+            // MARK: Sheet for Selecting Food from Dictionary
+            .sheet(
+                isPresented: $showFoodSelection,
+                onDismiss: {
+                    selectedFood = nil
+                    selectedFoodID = nil
+                    selectedMeasurementMode = nil
+                    showGramsInput = false
+                    gramsOrServings = nil
+                }
+            ) {
+                ZStack {
+                    DictionaryView(
+                        selectedFood: $selectedFood,
+                        showGramsInput: $showGramsInput,
+                        selectedFoodID: $selectedFoodID,
+                        selectedMeasurementMode: $selectedMeasurementMode,
+                        foodModel: foodModel,
+                        readOnly: false
+                    )
+                    if showGramsInput,
+                       let food = selectedFood,
+                       let mode = selectedMeasurementMode
+                    {
+                        GramsOrServingsInput(
+                            food: food,
+                            mode: mode,
+                            gramsOrServings: $gramsOrServings,
+                            showGramsInput: $showGramsInput,
+                            updateMacros: { _, _, _, _ in
+                                viewModel.logFood(food,
+                                                  gramsOrServings: gramsOrServings ?? 1,
+                                                  mode: mode)
+                            }
+                        )
                     }
                 }
+                .onChange(of: showGramsInput) { done in
+                    if done == false {
+                        selectedFood = nil
+                        selectedFoodID = nil
+                        selectedMeasurementMode = nil
+                    }
+                }
+            }
+
+            // MARK: Sheet for Editing Goals
+            .sheet(isPresented: $showEditGoals) {
+                EditGoalsView(
+                    calorieGoal: $viewModel.calorieGoal,
+                    proteinGoal: $viewModel.proteinGoal,
+                    carbGoal: $viewModel.carbGoal,
+                    fatGoal: $viewModel.fatGoal
+                )
             }
         }
     }
