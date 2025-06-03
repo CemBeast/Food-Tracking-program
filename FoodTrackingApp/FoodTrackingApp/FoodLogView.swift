@@ -17,14 +17,13 @@ struct FoodLogView: View {
                     Text(entry.food.name)
                         .font(.headline)
                     
-                    // 1) Show quantity with exactly one decimal place
                    if entry.mode == .weight {
                        // e.g. "1.6 g"
-                       Text(String(format: "%.1f %@", entry.quantity, entry.servingUnit.rawValue))
+                       Text(String(format: "%.0f %@", entry.quantity, entry.servingUnit.rawValue))
                            .font(.footnote)
                            .foregroundColor(.gray)
                    } else {
-                       // servings (no change needed here)
+                       // Show quantity with exactly one decimal place
                        Text(String(format: "%.1f serving%@", entry.quantity, entry.quantity > 1 ? "s" : ""))
                            .font(.footnote)
                            .foregroundColor(.gray)

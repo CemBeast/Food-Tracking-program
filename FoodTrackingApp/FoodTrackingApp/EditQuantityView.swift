@@ -9,10 +9,10 @@ import SwiftUI
 struct EditQuantityView: View {
     @Environment(\.dismiss) private var dismiss
     let entry: LoggedFoodEntry
-    var onSave: (Int) -> Void
+    var onSave: (Double) -> Void
     @State private var quantityInput: String
 
-    init(entry: LoggedFoodEntry, onSave: @escaping (Int) -> Void) {
+    init(entry: LoggedFoodEntry, onSave: @escaping (Double) -> Void) {
         self.entry = entry
         self.onSave = onSave
         self._quantityInput = State(initialValue: String(entry.quantity))
@@ -24,14 +24,16 @@ struct EditQuantityView: View {
                 .font(.title2)
                 .bold()
 
-            Text("Current: \(entry.quantity) \(entry.mode == .serving ? "serving(s)" : entry.servingUnit.rawValue)")
+            Text( "Current: \(String(format: "%.0f", entry.quantity)) " +
+                  "\(entry.mode == .serving ? "serving(s)" : entry.servingUnit.rawValue)"
+            )
 
             TextField("New quantity", text: $quantityInput)
                 .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
 
             Button("Save") {
-                if let newQty = Int(quantityInput), newQty > 0 {
+                if let newQty = Double(quantityInput), newQty > 0 {
                     onSave(newQty)
                     dismiss()
                 }
