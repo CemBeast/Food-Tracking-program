@@ -75,7 +75,7 @@ struct MainMenu: View {
     @State private var selectedFoodID: UUID? 
     @State private var showFoodSelection = false
     @State private var showGramsInput = false
-    @State private var gramsOrServings: Int? = nil
+    @State private var gramsOrServings: Double? = nil
     @State private var selectedMeasurementMode: MeasurementMode? = nil   // ← New
     
     // For manually adding foods or using barcode
@@ -85,7 +85,6 @@ struct MainMenu: View {
     // For tracking through barcode scan
     @State private var scannedItem: FoodItem? = nil
     @State private var showScannerTracking = false
-    @State private var showConfirmScannedItem = false
     @State private var showEditGoals = false
 
     var body: some View {
@@ -177,8 +176,8 @@ struct MainMenu: View {
             // MARK: Sheet for Tracking Food by Barcode
             .sheet(isPresented: $showScannerTracking) {
                 ScannerViewForTracking { item in
+                    showScannerTracking = false
                     scannedItem = item
-                    showConfirmScannedItem = true
                 }
             }
             .sheet(item: $scannedItem) { food in
@@ -188,9 +187,11 @@ struct MainMenu: View {
                     gramsOrServings: $gramsOrServings,
                     showGramsInput: .constant(true),
                     updateMacros: { _, _, _, _ in
+                        // Ensure we have a valid Double quantity (e.g. 1.6)
+                        let actualQuantity = gramsOrServings ?? 0.0
                         viewModel.logFood(
                             food,
-                            gramsOrServings: gramsOrServings ?? 1,
+                            gramsOrServings: actualQuantity,
                             mode: food.servingUnit == .grams ? .weight : .serving
                         )
                         scannedItem = nil
@@ -228,8 +229,10 @@ struct MainMenu: View {
                             gramsOrServings: $gramsOrServings,
                             showGramsInput: $showGramsInput,
                             updateMacros: { _, _, _, _ in
+                                // Ensure we have a valid Double quantity (e.g. 1.6)
+                                let actualQuantity = gramsOrServings ?? 0.0
                                 viewModel.logFood(food,
-                                                  gramsOrServings: gramsOrServings ?? 1,
+                                                  gramsOrServings: actualQuantity,
                                                   mode: mode)
                             }
                         )

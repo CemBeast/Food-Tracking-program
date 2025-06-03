@@ -12,7 +12,7 @@ struct GramsOrServingsInput: View {
     let mode: MeasurementMode
     @State private var numberInput: String = ""
     @FocusState private var isTextFieldFocused: Bool
-    @Binding var gramsOrServings: Int?
+    @Binding var gramsOrServings: Double?
     @Binding var showGramsInput: Bool
     
     
@@ -77,9 +77,28 @@ struct GramsOrServingsInput: View {
                         .font(.system(size: 24, weight: .medium))
                         .foregroundColor(.black)
                         .onChange(of: numberInput) { newValue in
-                            let filtered = newValue.filter { $0.isNumber }
-                            numberInput = filtered
-                            gramsOrServings = Int(filtered)
+                            let filtered = newValue.filter { char in
+                                char.isNumber || char == "."
+                            }
+                            let components = filtered.split(separator: ".")
+                            if components.count > 2 {
+                                // More than one “.” → revert to previous valid string
+                                // In practice, you could keep track of a `previousText` to revert.
+                                // Here, we’ll just strip extra “.” out:
+                                let firstPart = components[0]
+                                let secondPart = components.dropFirst().joined(separator: "")
+                                numberInput = firstPart + "." + secondPart
+                            }
+                            else {
+                                numberInput = filtered
+                            }
+
+                            // Try parsing it into a Double
+                            if let parsed = Double(numberInput) {
+                                gramsOrServings = parsed
+                            } else {
+                                gramsOrServings = nil
+                            }
                         }
                     
                     VStack(spacing: 8) {

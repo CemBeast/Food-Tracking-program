@@ -17,17 +17,23 @@ struct FoodLogView: View {
                     Text(entry.food.name)
                         .font(.headline)
                     
-                    Text(entry.mode == .weight
-                         ? "\(entry.quantity) \(entry.servingUnit.rawValue)"
-                         : "\(entry.quantity) serving\(entry.quantity > 1 ? "s" : "")")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-
+                    // 1) Show quantity with exactly one decimal place
+                   if entry.mode == .weight {
+                       // e.g. "1.6 g"
+                       Text(String(format: "%.1f %@", entry.quantity, entry.servingUnit.rawValue))
+                           .font(.footnote)
+                           .foregroundColor(.gray)
+                   } else {
+                       // servings (no change needed here)
+                       Text(String(format: "%.1f serving%@", entry.quantity, entry.quantity > 1 ? "s" : ""))
+                           .font(.footnote)
+                           .foregroundColor(.gray)
+                   }
                     GeometryReader { geometry in
                         let itemWidth = geometry.size.width / 4
 
                         HStack(spacing: 0) {
-                            macroColumn(icon: "flame.fill", label: "Calories", value: "\(entry.scaledCalories)", width: itemWidth, color: .red)
+                            macroColumn(icon: "flame.fill", label: "Calories", value: "\(entry.calories)", width: itemWidth, color: .red)
                             macroColumn(icon: "bolt.circle.fill", label: "Protein", value: String(format: "%.1fg", entry.scaledProtein), width: itemWidth, color: .yellow)
                             macroColumn(icon: "leaf.circle.fill", label: "Carbs", value: String(format: "%.1fg", entry.scaledCarbs), width: itemWidth, color: .green)
                             macroColumn(icon: "drop.circle.fill", label: "Fats", value: String(format: "%.1fg", entry.scaledFats), width: itemWidth, color: .purple)
@@ -49,7 +55,7 @@ struct FoodLogView: View {
         }
         .sheet(item: $foodToEditQuantity) { entry in
             EditQuantityView(entry: entry) { newQuantity in
-                viewModel.updateFoodEntryQuantity(entry, newQuantity: newQuantity)
+                viewModel.updateFoodEntryQuantity(entry, newQuantity: Double(newQuantity))
                 foodToEditQuantity = nil
             }
         }

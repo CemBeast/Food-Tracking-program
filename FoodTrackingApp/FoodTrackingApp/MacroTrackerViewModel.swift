@@ -22,11 +22,11 @@ struct MacroHistoryEntry: Identifiable, Codable {
 struct LoggedFoodEntry: Identifiable, Codable {
     let id: UUID
     var food: FoodItem
-    var quantity: Int
+    var quantity: Double
     var mode: MeasurementMode
     var servingUnit: ServingUnit
 
-    init(food: FoodItem, quantity: Int, mode: MeasurementMode, servingUnit: ServingUnit) {
+    init(food: FoodItem, quantity: Double, mode: MeasurementMode, servingUnit: ServingUnit) {
         self.id = UUID()
         self.food = food
         self.quantity = quantity
@@ -38,8 +38,12 @@ struct LoggedFoodEntry: Identifiable, Codable {
     var scalingFactor: Double {
         switch mode {
         case .weight:
+            // If weightInGrams is zero, just treat it as zero rather than inf/NaN:
+            guard food.weightInGrams > 0 else { return 0.0 }
             return Double(quantity) / Double(food.weightInGrams)
         case .serving:
+            // If “servings” (number of grams per serving) is zero, avoid dividing by zero:
+            guard food.servings > 0 else { return 0.0 }
             return Double(quantity)
         }
     }
@@ -196,17 +200,21 @@ class MacroTrackerViewModel: ObservableObject {
     }
     
     // Function to increase macros from logging and put it in food log to track what was ate
-    func logFood(_ item: FoodItem, gramsOrServings: Int, mode: MeasurementMode) {
+    func logFood(_ item: FoodItem, gramsOrServings: Double, mode: MeasurementMode) {
         print("🍽 Logging food: \(item.name), qty: \(gramsOrServings), mode: \(mode)")
         let factor: Double = {
             switch mode {
             case .weight:
-                return Double(gramsOrServings) / Double(item.weightInGrams)
+                guard item.weightInGrams > 0 else { return 0.0 }
+                return gramsOrServings / Double(item.weightInGrams)
             case .serving:
-                return Double(gramsOrServings)
+                // If servings‐per‐item is zero, avoid dividing by zero:
+                guard item.servings > 0 else { return 0.0 }
+                return gramsOrServings
             }
         }()
         
+        // increment daily macros
         calories += Int(Double(item.calories) * factor)
         protein += item.protein * factor
         carbs += item.carbs * factor
@@ -215,18 +223,17 @@ class MacroTrackerViewModel: ObservableObject {
         //Log actual portion consumed
         let consumed = FoodItem(
             name: item.name,
-            weightInGrams: mode == .weight ? gramsOrServings : item.weightInGrams,
-            servings: mode == .serving ? gramsOrServings : 1,
+            weightInGrams: item.weightInGrams,
+            servings: item.servings,
             calories: Int(Double(item.calories) * factor),
             protein: item.protein * factor,
             carbs: item.carbs * factor,
             fats: item.fats * factor,
             servingUnit: item.servingUnit
-        )
-        let entry = LoggedFoodEntry(food: consumed, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
+        ) // TESTING WITH FOOD BEING ORIGINAL MACROS RATHER THAN SCALED
+        let entry = LoggedFoodEntry(food: item, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
         foodLog = foodLog + [entry] // triggers Combine
         saveFoodLog()
-        
     }
     
     // Save the food log persistantly
@@ -277,7 +284,7 @@ class MacroTrackerViewModel: ObservableObject {
         foodLog.removeAll { $0.id == entry.id }
     }
     
-    func updateFoodEntryQuantity(_ entry: LoggedFoodEntry, newQuantity: Int) {
+    func updateFoodEntryQuantity(_ entry: LoggedFoodEntry, newQuantity: Double) {
         guard let index = foodLog.firstIndex(where: { $0.id == entry.id }) else { return }
         
         let oldFactor = computeFactor(entry.quantity, entry.food, entry.mode)
@@ -294,10 +301,14 @@ class MacroTrackerViewModel: ObservableObject {
         saveFoodLog()
     }
     
-    private func computeFactor(_ quantity: Int, _ food: FoodItem, _ mode: MeasurementMode) -> Double {
+    private func computeFactor(_ quantity: Double, _ food: FoodItem, _ mode: MeasurementMode) -> Double {
         switch mode {
-        case .weight:  return Double(quantity) / Double(food.weightInGrams)
-        case .serving: return Double(quantity)
+            case .weight:
+                guard food.weightInGrams > 0 else { return 0.0 }
+                return quantity / Double(food.weightInGrams)
+            case .serving:
+                guard food.servings > 0 else { return 0.0 }
+                return quantity
         }
     }
 }
