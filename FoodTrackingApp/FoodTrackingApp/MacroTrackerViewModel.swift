@@ -77,10 +77,10 @@ class MacroTrackerViewModel: ObservableObject {
     @Published var foodLog: [LoggedFoodEntry] = [] // Tracks food for the day
     
     // Temp values
-    @Published var calorieGoal: Int = 2000
-    @Published var proteinGoal: Double = 150
-    @Published var carbGoal: Double = 200
-    @Published var fatGoal: Double = 70
+    @Published var caloriesGoal: Int = 0
+    @Published var proteinGoal: Double = 0
+    @Published var carbGoal: Double = 0
+    @Published var fatGoal: Double = 0
     
     // UserDefaults Key to store the encoded history
     private let historyKey = "macro_history"
@@ -89,6 +89,10 @@ class MacroTrackerViewModel: ObservableObject {
     private let proteinKey    = "macro_protein"
     private let carbsKey      = "macro_carbs"
     private let fatsKey       = "macro_fats"
+    private let caloriesGoalKey = "macro_calorie_goal"
+    private let proteinGoalKey = "macro_protein_goal"
+    private let carbsGoalKey    = "macro_carbs_goal"
+    private let fatsGoalKey     = "macro_fats_goal"
     private let foodLogKey = "macro_food_log"
     
     private var cancellables = Set<AnyCancellable>()
@@ -101,12 +105,17 @@ class MacroTrackerViewModel: ObservableObject {
         self.protein = defaults.double(forKey: proteinKey)
         self.carbs = defaults.double(forKey: carbsKey)
         self.fats = defaults.double(forKey: fatsKey)
+        // Load persisted Goal Macros
+        self.caloriesGoal = defaults.integer(forKey: caloriesGoalKey)
+        self.proteinGoal = defaults.double(forKey: proteinGoalKey)
+        self.carbGoal = defaults.double(forKey: carbsGoalKey)
+        self.fatGoal = defaults.double(forKey: fatsGoalKey)
         
         loadHistory()
         loadLastDate()
         loadFoodLog()
         
-        // Persist macros whenever they change
+        // Persist Dailymacros/foodLog/macrogoals whenever they change
         $calories
             .sink { val in defaults.set(val, forKey: self.caloriesKey) }
             .store(in: &cancellables)
@@ -121,6 +130,18 @@ class MacroTrackerViewModel: ObservableObject {
             .store(in: &cancellables)
         $foodLog
             .sink {_ in self.saveFoodLog()}
+            .store(in: &cancellables)
+        $caloriesGoal
+            .sink { val in defaults.set(val, forKey: self.caloriesGoalKey) }
+            .store(in: &cancellables)
+        $proteinGoal
+            .sink { val in defaults.set(val, forKey: self.proteinGoalKey) }
+            .store(in: &cancellables)
+        $carbGoal
+            .sink { val in defaults.set(val, forKey: self.carbsGoalKey) }
+            .store(in: &cancellables)
+        $fatGoal
+            .sink { val in defaults.set(val, forKey: self.fatsGoalKey) }
             .store(in: &cancellables)
         
         checkForNewDay()

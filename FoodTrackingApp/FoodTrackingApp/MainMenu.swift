@@ -96,7 +96,7 @@ struct MainMenu: View {
                     protein: viewModel.protein,
                     carbs: viewModel.carbs,
                     fats: viewModel.fats,
-                    calorieGoal: viewModel.calorieGoal,
+                    calorieGoal: viewModel.caloriesGoal,
                     proteinGoal: viewModel.proteinGoal,
                     carbGoal: viewModel.carbGoal,
                     fatGoal: viewModel.fatGoal
@@ -250,7 +250,7 @@ struct MainMenu: View {
             // MARK: Sheet for Editing Goals
             .sheet(isPresented: $showEditGoals) {
                 EditGoalsView(
-                    calorieGoal: $viewModel.calorieGoal,
+                    calorieGoal: $viewModel.caloriesGoal,
                     proteinGoal: $viewModel.proteinGoal,
                     carbGoal: $viewModel.carbGoal,
                     fatGoal: $viewModel.fatGoal
