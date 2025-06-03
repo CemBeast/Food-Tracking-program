@@ -230,7 +230,7 @@ class MacroTrackerViewModel: ObservableObject {
             carbs: item.carbs * factor,
             fats: item.fats * factor,
             servingUnit: item.servingUnit
-        ) // TESTING WITH FOOD BEING ORIGINAL MACROS RATHER THAN SCALED
+        )
         let entry = LoggedFoodEntry(food: item, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
         foodLog = foodLog + [entry] // triggers Combine
         saveFoodLog()

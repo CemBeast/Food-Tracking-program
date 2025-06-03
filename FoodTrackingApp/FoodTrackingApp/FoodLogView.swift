@@ -33,7 +33,7 @@ struct FoodLogView: View {
                         let itemWidth = geometry.size.width / 4
 
                         HStack(spacing: 0) {
-                            macroColumn(icon: "flame.fill", label: "Calories", value: "\(entry.calories)", width: itemWidth, color: .red)
+                            macroColumn(icon: "flame.fill", label: "Calories", value: "\(entry.scaledCalories)", width: itemWidth, color: .red)
                             macroColumn(icon: "bolt.circle.fill", label: "Protein", value: String(format: "%.1fg", entry.scaledProtein), width: itemWidth, color: .yellow)
                             macroColumn(icon: "leaf.circle.fill", label: "Carbs", value: String(format: "%.1fg", entry.scaledCarbs), width: itemWidth, color: .green)
                             macroColumn(icon: "drop.circle.fill", label: "Fats", value: String(format: "%.1fg", entry.scaledFats), width: itemWidth, color: .purple)
