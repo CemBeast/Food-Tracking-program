@@ -86,6 +86,10 @@ struct MainMenu: View {
     @State private var scannedItem: FoodItem? = nil
     @State private var showScannerTracking = false
     @State private var showEditGoals = false
+    
+    // For confirming user wants to clear daily/history macros
+    @State private var showingClearDailyMacrosAlert = false
+    @State private var showingClearHistoryMacrosAlert = false
 
     var body: some View {
         NavigationView {
@@ -146,10 +150,26 @@ struct MainMenu: View {
                                 Text("View Macro History")
                             }
                             Button("Clear Daily Macros") {
-                                viewModel.resetMacros()
+                                showingClearDailyMacrosAlert = true
+                            }
+                            .alert("Are you sure?", isPresented: $showingClearDailyMacrosAlert) {
+                                Button("Clear", role: .destructive) {
+                                    viewModel.resetMacros()
+                                }
+                                Button("Cancel", role: .cancel) {}
+                            } message : {
+                                Text("This will reset today's tracked macros.")
                             }
                             Button("Clear History") {
-                                viewModel.clearHistory()
+                                showingClearHistoryMacrosAlert = true
+                            }
+                            .alert("Are you sure?", isPresented: $showingClearHistoryMacrosAlert) {
+                                Button("Clear", role: .destructive) {
+                                    viewModel.clearHistory()
+                                }
+                                Button("Cancel", role: .cancel) {}
+                            } message: {
+                                Text("This will permanently delete all saved food logs")
                             }
                         }
 
@@ -259,7 +279,7 @@ struct MainMenu: View {
         }
     }
 }
-
+//
 //struct MainMenuPreviews: PreviewProvider {
 //    static var previews: some View {
 //        MainMenu()
