@@ -142,7 +142,7 @@ struct MainMenu: View {
                             NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
                                 Text("View Foods Eaten Today")
                             }
-                            NavigationLink(destination: MacroHistoryView(history: viewModel.history)) {
+                            NavigationLink(destination: MacroHistoryView(viewModel: viewModel)) {
                                 Text("View Macro History")
                             }
                             Button("Clear Daily Macros") {

@@ -16,6 +16,7 @@ struct MacroHistoryEntry: Identifiable, Codable {
     let protein: Double
     let carbs: Double
     let fats: Double
+    let foodsEaten: [LoggedFoodEntry] // Stores food ate within that day
 }
 
 // Struct to represent a logged food (since foodItem does not have weight/ servings)
@@ -172,8 +173,8 @@ class MacroTrackerViewModel: ObservableObject {
     }
     
     private func rollOverToNewDay() {
-        // save yesterdays macros
-        let entry = MacroHistoryEntry(date: lastUpdatedDate, calories: calories, protein: protein, carbs: carbs, fats: fats)
+        // save yesterdays macros and foodLog 
+        let entry = MacroHistoryEntry(date: lastUpdatedDate, calories: calories, protein: protein, carbs: carbs, fats: fats, foodsEaten: foodLog)
         history.append(entry)
         saveHistory()
         

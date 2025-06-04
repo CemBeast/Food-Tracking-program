@@ -13,6 +13,7 @@
 		B23C6A662DDFFA9C004D770F /* EditQuantityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */; };
 		B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2569F1C2CCFAE41006532EE /* MainMenu.swift */; };
 		B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */; };
+		B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */; };
 		B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */; };
 		B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF76002B36ECDF0069D56C /* ContentView.swift */; };
 		B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76022B36ECE00069D56C /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditQuantityView.swift; sourceTree = "<group>"; };
 		B2569F1C2CCFAE41006532EE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GramsOrServingsInput.swift; sourceTree = "<group>"; };
+		B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogViewForDate.swift; sourceTree = "<group>"; };
 		B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTrackingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackingAppApp.swift; sourceTree = "<group>"; };
 		B2DF76002B36ECDF0069D56C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -80,11 +82,12 @@
 				B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */,
 				B2DF76002B36ECDF0069D56C /* ContentView.swift */,
 				B2569F1C2CCFAE41006532EE /* MainMenu.swift */,
-				B23C6A632DDEDAE6004D770F /* FoodLogView.swift */,
 				B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */,
 				B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */,
 				B22A49932DE662240073119C /* EditGoalsView.swift */,
 				B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */,
+				B23C6A632DDEDAE6004D770F /* FoodLogView.swift */,
+				B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */,
 				B22A49972DE6682D0073119C /* DailyMacrosDisplay.swift */,
 				B2DF76022B36ECE00069D56C /* Assets.xcassets */,
 				B2DF76042B36ECE00069D56C /* Preview Content */,
@@ -183,6 +186,7 @@
 				B23C6A642DDEDAE6004D770F /* FoodLogView.swift in Sources */,
 				B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */,
 				B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */,
+				B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */,
 				B22A49982DE6682D0073119C /* DailyMacrosDisplay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
