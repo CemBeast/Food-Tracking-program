@@ -6,6 +6,12 @@
 //
 import SwiftUI
 
+let intFormatter: NumberFormatter = {
+    let f = NumberFormatter()
+    f.numberStyle = .none
+    return f
+}()
+
 private let decimalFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
@@ -14,6 +20,88 @@ private let decimalFormatter: NumberFormatter = {
     formatter.allowsFloats = true
     return formatter
 }()
+
+// For selecting entire int values at once
+struct SelectableTextFieldInt: UIViewRepresentable {
+    @Binding var value: Int
+    var formatter: NumberFormatter
+    var keyboardType: UIKeyboardType
+
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: SelectableTextFieldInt
+        init(_ parent: SelectableTextFieldInt) { self.parent = parent }
+
+        func textFieldDidBeginEditing(_ textField: UITextField) {
+            DispatchQueue.main.async { textField.selectAll(nil) }
+        }
+
+        @objc func textFieldDidChange(_ textField: UITextField) {
+            if let text = textField.text,
+               let number = parent.formatter.number(from: text) {
+                parent.value = number.intValue
+            }
+        }
+    }
+
+    func makeUIView(context: Context) -> UITextField {
+        let textField = UITextField()
+        textField.delegate = context.coordinator
+        textField.keyboardType = keyboardType
+        textField.textAlignment = .right
+        textField.autocorrectionType = .no
+        textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange(_:)), for: .editingChanged)
+        return textField
+    }
+
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        uiView.text = formatter.string(from: NSNumber(value: value))
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+}
+
+// For selecting entire double values at once
+struct SelectableTextFieldDouble: UIViewRepresentable {
+    @Binding var value: Double
+    var formatter: NumberFormatter
+    var keyboardType: UIKeyboardType
+
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: SelectableTextFieldDouble
+        init(_ parent: SelectableTextFieldDouble) { self.parent = parent }
+
+        func textFieldDidBeginEditing(_ textField: UITextField) {
+            DispatchQueue.main.async { textField.selectAll(nil) }
+        }
+
+        @objc func textFieldDidChange(_ textField: UITextField) {
+            if let text = textField.text,
+               let number = parent.formatter.number(from: text) {
+                parent.value = number.doubleValue
+            }
+        }
+    }
+
+    func makeUIView(context: Context) -> UITextField {
+        let textField = UITextField()
+        textField.delegate = context.coordinator
+        textField.keyboardType = keyboardType
+        textField.textAlignment = .right
+        textField.autocorrectionType = .no
+        textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange(_:)), for: .editingChanged)
+        return textField
+    }
+
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        uiView.text = formatter.string(from: NSNumber(value: value))
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+}
 
 struct EditFoodItemView: View {
     @Environment(\.dismiss) private var dismiss
@@ -44,10 +132,8 @@ struct EditFoodItemView: View {
                         HStack {
                             Text(foodItem.servingUnit == .grams ? "Weight" : "Volume")
                             Spacer()
-                            TextField("0", value: $foodItem.weightInGrams, formatter: NumberFormatter())
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .disableAutocorrection(true)
+                            SelectableTextFieldInt(value: $foodItem.weightInGrams, formatter: intFormatter, keyboardType: .numberPad)
+                                .frame(height: 30)
                         }
                     }
 
@@ -55,34 +141,26 @@ struct EditFoodItemView: View {
                         HStack {
                             Text("Calories")
                             Spacer()
-                            TextField("0", value: $foodItem.calories, formatter: NumberFormatter())
-                                .keyboardType(.numberPad)
-                                .multilineTextAlignment(.trailing)
-                                .disableAutocorrection(true)
+                            SelectableTextFieldInt(value: $foodItem.calories, formatter: intFormatter, keyboardType: .numberPad)
+                                .frame(height: 30)
                         }
                         HStack {
                             Text("Protein (g)")
                             Spacer()
-                            TextField("0", value: $foodItem.protein, formatter: decimalFormatter)
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .disableAutocorrection(true)
+                            SelectableTextFieldDouble(value: $foodItem.protein, formatter: decimalFormatter, keyboardType: .decimalPad)
+                                .frame(height: 30)
                         }
                         HStack {
                             Text("Carbs (g)")
                             Spacer()
-                            TextField("0", value: $foodItem.carbs, formatter: decimalFormatter)
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .disableAutocorrection(true)
+                            SelectableTextFieldDouble(value: $foodItem.carbs, formatter: decimalFormatter, keyboardType: .decimalPad)
+                                .frame(height: 30)
                         }
                         HStack {
                             Text("Fats (g)")
                             Spacer()
-                            TextField("0", value: $foodItem.fats, formatter: decimalFormatter)
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .disableAutocorrection(true)
+                            SelectableTextFieldDouble(value: $foodItem.fats, formatter: decimalFormatter, keyboardType: .decimalPad)
+                                .frame(height: 30)
                         }
                     }
                 }
