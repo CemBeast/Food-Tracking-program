@@ -104,9 +104,9 @@ struct GramsOrServingsInput: View {
                     VStack(spacing: 8) {
                         Text(food.name)
                         Text("Calories: \(Int(liveCalories)) kcal")
-                        Text("Fats: \(String(format: "%.1f", liveFats)) g")
                         Text("Protein: \(String(format: "%.1f", liveProtein)) g")
                         Text("Carbs: \(String(format: "%.1f", liveCarbs)) g")
+                        Text("Fats: \(String(format: "%.1f", liveFats)) g")
                     }
                     .font(.subheadline)
                     .foregroundColor(.secondary)
