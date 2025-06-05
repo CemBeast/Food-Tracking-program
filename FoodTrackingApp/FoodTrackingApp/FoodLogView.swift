@@ -16,6 +16,7 @@ struct FoodLogView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(entry.food.name)
                         .font(.headline)
+                        .foregroundColor(Color("TextPrimary"))
                     
                    if entry.mode == .weight {
                        // e.g. "1.6 g"

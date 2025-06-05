@@ -21,54 +21,57 @@ struct AddFoodView: View {
     @State private var selectedUnit: ServingUnit = .grams
 
     var body: some View {
-        Form {
-            Section(header: Text("Food Info")) {
-                TextField("Name", text: $name)
-                Picker("Measurement Unit", selection: $selectedUnit) {
-                    ForEach(ServingUnit.allCases) { unit in
-                        Text(unit.rawValue.uppercased()).tag(unit)
+        ZStack {
+            Color("PrimaryBackground").ignoresSafeArea()
+            Form {
+                Section(header: Text("Food Info")) {
+                    TextField("Name", text: $name)
+                    Picker("Measurement Unit", selection: $selectedUnit) {
+                        ForEach(ServingUnit.allCases) { unit in
+                            Text(unit.rawValue.uppercased()).tag(unit)
+                        }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
+                    TextField(selectedUnit == .grams ? "Weight (g)" : "Volume (ml)", text: $weightInGrams)
+                        .keyboardType(.numberPad)
+                    TextField("Servings", text: $servings)
+                        .keyboardType(.numberPad)
+                    TextField("Calories", text: $calories)
+                        .keyboardType(.numberPad)
+                    TextField("Protein (g)", text: $protein)
+                        .keyboardType(.decimalPad)
+                    TextField("Carbs (g)", text: $carbs)
+                        .keyboardType(.decimalPad)
+                    TextField("Fats (g)", text: $fats)
+                        .keyboardType(.decimalPad)
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                TextField(selectedUnit == .grams ? "Weight (g)" : "Volume (ml)", text: $weightInGrams)
-                    .keyboardType(.numberPad)
-                TextField("Servings", text: $servings)
-                    .keyboardType(.numberPad)
-                TextField("Calories", text: $calories)
-                    .keyboardType(.numberPad)
-                TextField("Protein (g)", text: $protein)
-                    .keyboardType(.decimalPad)
-                TextField("Carbs (g)", text: $carbs)
-                    .keyboardType(.decimalPad)
-                TextField("Fats (g)", text: $fats)
-                    .keyboardType(.decimalPad)
-            }
-
-            Button("Add Food") {
-                guard let weight = Int(weightInGrams),
-                      let servingsInt = Int(servings),
-                      let cal = Int(calories),
-                      let prot = Double(protein),
-                      let carb = Double(carbs),
-                      let fat = Double(fats) else {
-                    // You could show an alert here
-                    return
+                
+                Button("Add Food") {
+                    guard let weight = Int(weightInGrams),
+                          let servingsInt = Int(servings),
+                          let cal = Int(calories),
+                          let prot = Double(protein),
+                          let carb = Double(carbs),
+                          let fat = Double(fats) else {
+                        // You could show an alert here
+                        return
+                    }
+                    
+                    let newFood = FoodItem(
+                        name: name,
+                        weightInGrams: weight,
+                        servings: servingsInt,
+                        calories: cal,
+                        protein: prot,
+                        carbs: carb,
+                        fats: fat,
+                        servingUnit: selectedUnit
+                    )
+                    onAdd(newFood)
+                    presentationMode.wrappedValue.dismiss()
                 }
-
-                let newFood = FoodItem(
-                    name: name,
-                    weightInGrams: weight,
-                    servings: servingsInt,
-                    calories: cal,
-                    protein: prot,
-                    carbs: carb,
-                    fats: fat,
-                    servingUnit: selectedUnit
-                )
-                onAdd(newFood)
-                presentationMode.wrappedValue.dismiss()
             }
+            .navigationTitle("Add Food")
         }
-        .navigationTitle("Add Food")
     }
 }

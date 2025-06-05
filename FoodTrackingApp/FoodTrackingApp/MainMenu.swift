@@ -59,7 +59,7 @@ struct SectionCard<Content: View>: View {
                     .buttonStyle(CustomButtonStyle())
             }
             .padding()
-            .background(RoundedRectangle(cornerRadius: 16).fill(Color(.secondarySystemBackground)))
+            .background(RoundedRectangle(cornerRadius: 16).fill(Color("CardBackground")))
             .shadow(radius: 2)
         }
     }
@@ -105,7 +105,6 @@ struct MainMenu: View {
                     carbGoal: viewModel.carbGoal,
                     fatGoal: viewModel.fatGoal
                 )
-                .padding(.top)
                 
                 ScrollView {
                     VStack(spacing: 16) {
@@ -183,6 +182,7 @@ struct MainMenu: View {
                     .padding(.horizontal)
                 }
             }
+            .background(Color("PrimaryBackground"))
             // MARK: Sheets for Food Dictionary
             .sheet(isPresented: $showManual) {
                 AddFoodView(onAdd: { newFood in

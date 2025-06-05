@@ -23,7 +23,7 @@ struct DailyMacrosDisplay: View {
         VStack(alignment: .leading, spacing: 16) {
             Text(showConsumed ? "Macros Consumed" : "Macros Left")
                 .font(.title2.bold())
-                .foregroundColor(.white)
+                .foregroundColor(Color("TextPrimary"))
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .center)
 
@@ -59,7 +59,7 @@ struct DailyMacrosDisplay: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.black.opacity(0.25))
+                .fill(Color("CardBackground"))
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.white.opacity(0.08), lineWidth: 1)
@@ -103,10 +103,10 @@ struct DailyMacrosDisplay: View {
             VStack(spacing: 2) {
                 Text(label)
                     .font(.caption)
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color("TextPrimary").opacity(0.8))
                 Text(value)
                     .font(.caption2.weight(.semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor(Color("TextPrimary"))
             }
         }
     }
