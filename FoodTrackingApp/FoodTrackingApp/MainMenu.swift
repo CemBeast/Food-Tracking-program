@@ -119,6 +119,7 @@ struct HistoryTab: View {
     @Binding var showEditGoals: Bool
     @Binding var showingClearDailyMacrosAlert: Bool
     @Binding var showingClearHistoryMacrosAlert: Bool
+    @Binding var showGoalWizard: Bool
 
     var body: some View {
         VStack(spacing: 16) {
@@ -154,6 +155,17 @@ struct HistoryTab: View {
                 Button("Edit Macro Goals") {
                     showEditGoals = true
                 }
+                Button("Calculate My Macros") {
+                    showGoalWizard = true
+                }
+                .sheet(isPresented: $showGoalWizard) {
+                    MacroGoalWizardView(
+                        calorieGoal: $viewModel.caloriesGoal,
+                        proteinGoal: $viewModel.proteinGoal,
+                        carbGoal: $viewModel.carbGoal,
+                        fatGoal: $viewModel.fatGoal
+                    )
+                }
                 Button("⚠️ Reset Macro Goals (for testing)") {
                     let defaults = UserDefaults.standard
                         defaults.removeObject(forKey: "macro_calorie_goal")
@@ -184,7 +196,10 @@ struct MainMenu: View {
     @State private var showGramsInput = false
     @State private var gramsOrServings: Double? = nil
     @State private var selectedMeasurementMode: MeasurementMode? = nil
-    @State private var showInitialGoalPrompt = false // for first launch setting macro goals
+    
+    // For first launch setting macro goals
+    @State private var showInitialGoalPrompt = false
+    @State private var showGoalWizard = false
     
     // For manually adding foods or using barcode
     @State private var showManual = false
@@ -246,7 +261,8 @@ struct MainMenu: View {
                             viewModel: viewModel,
                             showEditGoals: $showEditGoals,
                             showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
-                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
+                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert,
+                            showGoalWizard: $showGoalWizard
                         )
                         .padding()
                     }
@@ -381,8 +397,21 @@ struct MainMenu: View {
                         showInitialGoalPrompt = false
                     }
                     .buttonStyle(.bordered)
+                    
+                    Button("Calculate for Me") {
+                            showGoalWizard = true
+                        showInitialGoalPrompt = false
+                        }
                 }
                 .padding()
+            }
+            .sheet(isPresented: $showGoalWizard) {
+                MacroGoalWizardView(
+                    calorieGoal: $viewModel.caloriesGoal,
+                    proteinGoal: $viewModel.proteinGoal,
+                    carbGoal: $viewModel.carbGoal,
+                    fatGoal: $viewModel.fatGoal
+                )
             }
         }
     }
