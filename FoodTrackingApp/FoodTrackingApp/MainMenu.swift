@@ -154,6 +154,19 @@ struct HistoryTab: View {
                 Button("Edit Macro Goals") {
                     showEditGoals = true
                 }
+                Button("⚠️ Reset Macro Goals (for testing)") {
+                    let defaults = UserDefaults.standard
+                        defaults.removeObject(forKey: "macro_calorie_goal")
+                        defaults.removeObject(forKey: "macro_protein_goal")
+                        defaults.removeObject(forKey: "macro_carbs_goal")
+                        defaults.removeObject(forKey: "macro_fats_goal")
+                        
+                        // Set the @Published properties AFTER clearing defaults
+                        viewModel.caloriesGoal = 0
+                        viewModel.proteinGoal = 0
+                        viewModel.carbGoal = 0
+                        viewModel.fatGoal = 0
+                }
             }
         }
     }
@@ -170,7 +183,8 @@ struct MainMenu: View {
     @State private var showFoodSelection = false
     @State private var showGramsInput = false
     @State private var gramsOrServings: Double? = nil
-    @State private var selectedMeasurementMode: MeasurementMode? = nil   // ← New
+    @State private var selectedMeasurementMode: MeasurementMode? = nil
+    @State private var showInitialGoalPrompt = false // for first launch setting macro goals
     
     // For manually adding foods or using barcode
     @State private var showManual = false
@@ -242,6 +256,14 @@ struct MainMenu: View {
                 }
             }
             .background(Color("PrimaryBackground"))
+            .onAppear {
+                if viewModel.caloriesGoal == 0 &&
+                   viewModel.proteinGoal == 0 &&
+                   viewModel.carbGoal == 0 &&
+                   viewModel.fatGoal == 0 {
+                    showInitialGoalPrompt = true
+                }
+            }
             // MARK: Sheets for Food Dictionary
             .sheet(isPresented: $showManual) {
                 AddFoodView(onAdd: { newFood in
@@ -334,6 +356,33 @@ struct MainMenu: View {
                     carbGoal: $viewModel.carbGoal,
                     fatGoal: $viewModel.fatGoal
                 )
+            }
+            // MARK: Sheet for Setting Goals Upon First Launch
+            .sheet(isPresented: $showInitialGoalPrompt) {
+                VStack(spacing: 20) {
+                    Text("Set Your Macro Goals")
+                        .font(.title2.bold())
+                        .padding()
+
+                    Text("Would you like to set your calorie and macro goals now? This enables the progress rings to track your goals.")
+                        .padding()
+
+                    Button("Set My Goals") {
+                        showInitialGoalPrompt = false
+                        showEditGoals = true
+                    }
+                    .buttonStyle(.borderedProminent)
+
+                    Button("Use Default Goals") {
+                        viewModel.caloriesGoal = 2000
+                        viewModel.proteinGoal = 150
+                        viewModel.carbGoal = 250
+                        viewModel.fatGoal = 70
+                        showInitialGoalPrompt = false
+                    }
+                    .buttonStyle(.bordered)
+                }
+                .padding()
             }
         }
     }
