@@ -65,6 +65,100 @@ struct SectionCard<Content: View>: View {
     }
 }
 
+struct FoodDictionaryTab: View {
+    @Binding var showManual: Bool
+    @Binding var showScanner: Bool
+    @Binding var selectedFood: FoodItem?
+    @Binding var selectedFoodID: UUID?
+    @Binding var showGramsInput: Bool
+    @Binding var selectedMeasurementMode: MeasurementMode?
+    var foodModel: FoodModel
+
+    var body: some View {
+        SectionCard(title: "Food Dictionary") {
+            Button("Add Food Manually") {
+                showManual = true
+            }
+            Button("Add Food by Barcode") {
+                showScanner = true
+            }
+            NavigationLink(destination:
+                DictionaryView(
+                    selectedFood: $selectedFood,
+                    showGramsInput: $showGramsInput,
+                    selectedFoodID: $selectedFoodID,
+                    selectedMeasurementMode: $selectedMeasurementMode,
+                    foodModel: foodModel,
+                    readOnly: true
+                )
+            ) {
+                Text("View Food Dictionary")
+            }
+        }
+    }
+}
+
+struct TrackFoodTab: View {
+    @Binding var showFoodSelection: Bool
+    @Binding var showScannerTracking: Bool
+
+    var body: some View {
+        SectionCard(title: "Tracking Food") {
+            Button("Track Food from Barcode") {
+                showScannerTracking = true
+            }
+            Button("Select Food to Track") {
+                showFoodSelection.toggle()
+            }
+        }
+    }
+}
+
+struct HistoryTab: View {
+    @ObservedObject var viewModel: MacroTrackerViewModel
+    @Binding var showEditGoals: Bool
+    @Binding var showingClearDailyMacrosAlert: Bool
+    @Binding var showingClearHistoryMacrosAlert: Bool
+
+    var body: some View {
+        VStack(spacing: 16) {
+            SectionCard(title: "History") {
+                NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
+                    Text("View Foods Eaten Today")
+                }
+                NavigationLink(destination: MacroHistoryView(viewModel: viewModel)) {
+                    Text("View Macro History")
+                }
+                Button("Clear Daily Macros") {
+                    showingClearDailyMacrosAlert = true
+                }
+                .alert("Are you sure?", isPresented: $showingClearDailyMacrosAlert) {
+                    Button("Clear", role: .destructive) {
+                        viewModel.resetMacros()
+                    }
+                    Button("Cancel", role: .cancel) {}
+                }
+
+                Button("Clear History") {
+                    showingClearHistoryMacrosAlert = true
+                }
+                .alert("Are you sure?", isPresented: $showingClearHistoryMacrosAlert) {
+                    Button("Clear", role: .destructive) {
+                        viewModel.clearHistory()
+                    }
+                    Button("Cancel", role: .cancel) {}
+                }
+            }
+
+            SectionCard(title: "Personal") {
+                Button("Edit Macro Goals") {
+                    showEditGoals = true
+                }
+            }
+        }
+    }
+}
+
 struct MainMenu: View {
     // viewModel to track todays macros
     @StateObject private var viewModel = MacroTrackerViewModel()
@@ -105,81 +199,46 @@ struct MainMenu: View {
                     carbGoal: viewModel.carbGoal,
                     fatGoal: viewModel.fatGoal
                 )
-                
-                ScrollView {
-                    VStack(spacing: 16) {
-                        // MARK: Food Dictionary Section
-                        SectionCard(title: "Food Dictionary") {
-                            Button("Add Food Manually") {
-                                showManual = true
-                            }
-                            Button("Add Food by Barcode") {
-                                showScanner = true
-                            }
-                            NavigationLink(destination:
-                                DictionaryView(
-                                    selectedFood: $selectedFood,
-                                    showGramsInput: $showGramsInput,
-                                    selectedFoodID: $selectedFoodID,
-                                    selectedMeasurementMode: $selectedMeasurementMode,
-                                    foodModel: foodModel,
-                                    readOnly: true
-                                )
-                            ) {
-                                Text("View Food Dictionary")
-                            }
-                        }
-
-                        // MARK: Tracking Food Section
-                        SectionCard(title: "Tracking Food") {
-                            Button("Track Food from Barcode") {
-                                showScannerTracking = true
-                            }
-                            Button("Select Food to Track") {
-                                showFoodSelection.toggle()
-                            }
-                        }
-
-                        // MARK: History Section
-                        SectionCard(title: "History") {
-                            NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
-                                Text("View Foods Eaten Today")
-                            }
-                            NavigationLink(destination: MacroHistoryView(viewModel: viewModel)) {
-                                Text("View Macro History")
-                            }
-                            Button("Clear Daily Macros") {
-                                showingClearDailyMacrosAlert = true
-                            }
-                            .alert("Are you sure?", isPresented: $showingClearDailyMacrosAlert) {
-                                Button("Clear", role: .destructive) {
-                                    viewModel.resetMacros()
-                                }
-                                Button("Cancel", role: .cancel) {}
-                            } message : {
-                                Text("This will reset today's tracked macros.")
-                            }
-                            Button("Clear History") {
-                                showingClearHistoryMacrosAlert = true
-                            }
-                            .alert("Are you sure?", isPresented: $showingClearHistoryMacrosAlert) {
-                                Button("Clear", role: .destructive) {
-                                    viewModel.clearHistory()
-                                }
-                                Button("Cancel", role: .cancel) {}
-                            } message: {
-                                Text("This will permanently delete all saved food logs")
-                            }
-                        }
-
-                        // MARK: Personal Section
-                        SectionCard(title: "Personal") {
-                            Button("Edit Macro Goals") {
-                                showEditGoals = true
-                            }
-                        }
+                TabView {
+                    ScrollView {
+                        FoodDictionaryTab(
+                            showManual: $showManual,
+                            showScanner: $showScanner,
+                            selectedFood: $selectedFood,
+                            selectedFoodID: $selectedFoodID,
+                            showGramsInput: $showGramsInput,
+                            selectedMeasurementMode: $selectedMeasurementMode,
+                            foodModel: foodModel
+                        )
+                        .padding()
                     }
-                    .padding(.horizontal)
+                    .tabItem {
+                        Label("Dictionary", systemImage: "book")
+                    }
+
+                    ScrollView {
+                        TrackFoodTab(
+                            showFoodSelection: $showFoodSelection,
+                            showScannerTracking: $showScannerTracking
+                        )
+                        .padding()
+                    }
+                    .tabItem {
+                        Label("Track", systemImage: "fork.knife")
+                    }
+
+                    ScrollView {
+                        HistoryTab(
+                            viewModel: viewModel,
+                            showEditGoals: $showEditGoals,
+                            showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
+                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
+                        )
+                        .padding()
+                    }
+                    .tabItem {
+                        Label("History", systemImage: "clock")
+                    }
                 }
             }
             .background(Color("PrimaryBackground"))
