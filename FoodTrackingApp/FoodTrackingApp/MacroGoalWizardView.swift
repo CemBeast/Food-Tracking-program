@@ -15,13 +15,26 @@ struct MacroGoalWizardView: View {
     @Binding var fatGoal: Double
 
     @State private var age: Int = 25
-    @State private var height: Double = 170 // cm
-    @State private var weight: Double = 70 // kg
+    @State private var heightFeet: Int = 5
+    @State private var heightInches: Int = 8
+    @State private var weightLbs: Double = 154
     @State private var sex: String = "Male"
     @State private var activityLevel: String = "Moderate"
+    @State private var personalGoal: String = "Maintain Weight"
 
     let sexes = ["Male", "Female"]
     let activityOptions = ["Sedentary", "Light", "Moderate", "Active", "Very Active"]
+    let goals = [
+        "Very Significant Weight Gain (2 lb/week)",
+        "Significant Weight Gain (1.5 lb/week)",
+        "Moderate Weight Gain (1 lb/week)",
+        "Mild Weight Gain (0.5 lb/week)",
+        "Maintain Weight",
+        "Mild Weight Loss (0.5 lb/week)",
+        "Moderate Weight Loss (1 lb/week)",
+        "Significant Weight Loss (1.5 lb/week)",
+        "Very Significant Weight Loss (2 lb/week)"
+    ]
 
     var body: some View {
         NavigationView {
@@ -31,13 +44,33 @@ struct MacroGoalWizardView: View {
                         ForEach(sexes, id: \.self) { Text($0) }
                     }
                     Stepper("Age: \(age)", value: $age, in: 10...100)
-                    Stepper("Height: \(height, specifier: "%.0f") cm", value: $height, in: 100...230)
-                    Stepper("Weight: \(weight, specifier: "%.0f") kg", value: $weight, in: 30...200)
+                    Stepper("Height: \(heightFeet) ft \(heightInches) in", onIncrement: {
+                        if heightInches < 11 {
+                            heightInches += 1
+                        } else {
+                            heightInches = 0
+                            heightFeet += 1
+                        }
+                    }, onDecrement: {
+                        if heightInches > 0 {
+                            heightInches -= 1
+                        } else if heightFeet > 1 {
+                            heightInches = 11
+                            heightFeet -= 1
+                        }
+                    })
+
+                    Stepper("Weight: \(weightLbs, specifier: "%.0f") lbs", value: $weightLbs, in: 66...400)
                 }
 
                 Section(header: Text("Activity Level")) {
                     Picker("Activity Level", selection: $activityLevel) {
                         ForEach(activityOptions, id: \.self) { Text($0) }
+                    }
+                }
+                Section(header: Text("Your Goal")) {
+                    Picker("Your Goal", selection: $personalGoal) {
+                        ForEach(goals, id: \.self) { Text($0) }
                     }
                 }
 
@@ -54,11 +87,13 @@ struct MacroGoalWizardView: View {
     }
 
     func calculateMacros() {
+        let height = Double(heightFeet * 12 + heightInches) * 2.54 // convert inches to cm
+        let weight = weightLbs * 0.453592 // convert lbs to kg
         let bmr: Double = {
             if sex == "Male" {
-                return 10 * weight + 6.25 * height - 5 * Double(age) + 5
+                return (10 * weight) + (6.25 * height) - (5 * Double(age)) + 5
             } else {
-                return 10 * weight + 6.25 * height - 5 * Double(age) - 161
+                return (10 * weight) + (6.25 * height) - (5 * Double(age)) - 161
             }
         }()
 
