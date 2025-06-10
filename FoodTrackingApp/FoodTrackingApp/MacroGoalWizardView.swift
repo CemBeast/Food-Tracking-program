@@ -107,8 +107,22 @@ struct MacroGoalWizardView: View {
             default: return 1.55
             }
         }()
+        
+        let goalCalorieAdjustment: Int = {
+            switch personalGoal {
+            case "Very Significant Weight Gain (2 lb/week)": return 1000
+            case "Significant Weight Gain (1.5 lb/week)": return 750
+            case "Moderate Weight Gain (1 lb/week)": return 500
+            case "Mild Weight Gain (0.5 lb/week)": return 250
+            case "Mild Weight Loss (0.5 lb/week)": return -250
+            case "Moderate Weight Loss (1 lb/week)": return -500
+            case "Significant Weight Loss (1.5 lb/week)": return -750
+            case "Very Significant Weight Loss (2 lb/week)": return -1000
+            default: return 0 // Maintain Weight
+            }
+        }()
 
-        let totalCalories = Int(bmr * activityMultiplier)
+        let totalCalories = Int(bmr * activityMultiplier) + goalCalorieAdjustment
         calorieGoal = totalCalories
 
         proteinGoal = Double(weight) * 2.0 // grams per kg
