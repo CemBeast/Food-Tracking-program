@@ -191,71 +191,47 @@ struct DictionaryView: View {
     }
     
     private func content(for foodItem: FoodItem, isSelected: Bool) -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 6) {
             Text(foodItem.name)
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Servings")
-                        .font(.callout)
-                        .lineLimit(1) // Ensures the text stays on one line
-                        .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
-                    Text("\(foodItem.servings)")
-                        .font(.headline)
-                }
-                .frame(maxWidth: .infinity)
-                
-                VStack(alignment: .leading) {
-                    Text(foodItem.servingUnit == .grams ? "Weight" : "Volume")
-                        .font(.callout)
-                        .lineLimit(1) // Ensures the text stays on one line
-                        .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
-                    Text("\(foodItem.weightInGrams)\(foodItem.servingUnit == .grams ? "g" : "ml")")
-                        .font(.headline)
-                }
-                .frame(maxWidth: .infinity)
-                
-                VStack(alignment: .leading) {
-                    Text("Calories")
-                        .font(.callout)
-                        .lineLimit(1) // Ensures the text stays on one line
-                        .minimumScaleFactor(0.8) // Allows text to shrink slightly if necessary
-                    Text("\(foodItem.calories)")
-                        .font(.headline)
-                    
-                }
-                .frame(maxWidth: .infinity)
-                
-                VStack(alignment: .leading) {
-                    Text("Protein")
-                        .font(.callout)
-                    Text("\(formatter.string(from: NSNumber(value: foodItem.protein)) ?? "")g")
-                        .font(.headline)
-                }
-                .frame(maxWidth: .infinity)
-                
-                VStack(alignment: .leading) {
-                    Text("Carbs")
-                        .font(.callout)
-                    Text("\(formatter.string(from: NSNumber(value: foodItem.carbs)) ?? "")g")
-                        .font(.headline)
-                }
-                .frame(maxWidth: .infinity)
-                
-                VStack(alignment: .leading) {
-                    Text("Fats")
-                        .font(.callout)
-                    Text("\(formatter.string(from: NSNumber(value: foodItem.fats)) ?? "")g")
-                        .font(.headline)
-                }
-                .frame(maxWidth: .infinity)
+                .font(.headline)
+
+            HStack(spacing: 12) {
+                macroColumn(icon: "number.circle.fill", label: "Servings", value: "\(foodItem.servings)", color: Color("TextPrimary").opacity(0.6))
+                macroColumn(
+                    icon: foodItem.servingUnit == .grams ? "scalemass.fill" : "eyedropper",
+                    label: foodItem.servingUnit == .grams ? "Weight" : "Volume",
+                    value: "\(foodItem.weightInGrams)\(foodItem.servingUnit == .grams ? "g" : "ml")",
+                    color: Color("TextPrimary").opacity(0.6)
+                )
+                macroColumn(icon: "flame.fill", label: "Calories", value: "\(foodItem.calories)", color: .red)
+                macroColumn(icon: "bolt.circle.fill", label: "Protein", value: String(format: "%.1fg", foodItem.protein), color: .yellow)
+                macroColumn(icon: "leaf.circle.fill", label: "Carbs", value: String(format: "%.1fg", foodItem.carbs), color: .green)
+                macroColumn(icon: "drop.circle.fill", label: "Fats", value: String(format: "%.1fg", foodItem.fats), color: .purple)
             }
+            .lineLimit(1)
+            .minimumScaleFactor(0.75)
         }
-        .padding()
-        .background(isSelected ? Color.blue.opacity(0.2) : Color.gray.opacity(0.1)) // Highlight if selected
-        .cornerRadius(8)
+        .padding(.vertical, 8)
+        .padding(.horizontal)
+        .background(isSelected ? Color.blue.opacity(0.15) : Color.gray.opacity(0.05))
+        .cornerRadius(10)
+    }
+    
+    @ViewBuilder
+    func macroColumn(icon: String, label: String, value: String, color: Color) -> some View {
+        VStack(spacing: 2) {
+            Image(systemName: icon)
+                .foregroundColor(color)
+                .font(.caption)
+            Text(label)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+            Text(value)
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundColor(color)
+        }
+        .frame(minWidth: 50)
     }
     
     func loadFoodDictionary() {

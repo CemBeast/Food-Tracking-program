@@ -116,6 +116,7 @@ struct TrackFoodTab: View {
 
 struct HistoryTab: View {
     @ObservedObject var viewModel: MacroTrackerViewModel
+    @ObservedObject var foodModel: FoodModel
     @Binding var showEditGoals: Bool
     @Binding var showingClearDailyMacrosAlert: Bool
     @Binding var showingClearHistoryMacrosAlert: Bool
@@ -178,6 +179,10 @@ struct HistoryTab: View {
                         viewModel.proteinGoal = 0
                         viewModel.carbGoal = 0
                         viewModel.fatGoal = 0
+                }
+                Button("⚠️ Delete Food Dictionary (for testing)") {
+                    foodModel.clearUserFoodDictionary()
+                    foodModel.load() // reloads and triggers fallback if empty
                 }
             }
         }
@@ -259,6 +264,7 @@ struct MainMenu: View {
                     ScrollView {
                         HistoryTab(
                             viewModel: viewModel,
+                            foodModel: foodModel,
                             showEditGoals: $showEditGoals,
                             showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
                             showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert,

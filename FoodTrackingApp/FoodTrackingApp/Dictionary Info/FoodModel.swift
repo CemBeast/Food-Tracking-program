@@ -32,4 +32,11 @@ class FoodModel: ObservableObject {
         print("🛠 Documents Directory:", getDocumentsDirectory().path)
         items = loadFoodItems()
     }
+    
+    // For Testing purposes to clear the dictionary
+    func clearUserFoodDictionary() {
+        items = []
+        save() // This will overwrite the file with an empty array []
+        print("🧹 Cleared user food dictionary.")
+    }
 }

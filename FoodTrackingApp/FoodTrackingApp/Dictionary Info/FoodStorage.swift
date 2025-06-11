@@ -25,20 +25,28 @@ func saveFoodItems(_ items : [FoodItem]) {
 
 func loadFoodItems() -> [FoodItem] {
     let url = getDocumentsDirectory().appendingPathComponent(foodDictionaryFileName)
+    print("📂 Loading from user_foods.json at: \(url.path)")
 
     if FileManager.default.fileExists(atPath: url.path) {
-        print("📂 Loading from user_foods.json at:", url.path)
         do {
             let data = try Data(contentsOf: url)
-            return try JSONDecoder().decode([FoodItem].self, from: data)
+            let decoded = try JSONDecoder().decode([FoodItem].self, from: data)
+            
+            if decoded.isEmpty {
+                print("📭 user_foods.json is empty. Loading default.")
+                let defaultItems = loadDefaultFoodItems(from: "default_all")
+                saveFoodItems(defaultItems)
+                return defaultItems
+            }
+
+            return decoded
         } catch {
             print("❌ Failed to load user food items: \(error)")
             return []
         }
     } else {
-        print("📦 user_foods.json not found. Loading from default_all.json.")
+        print("📭 user_foods.json does not exist. Loading default.")
         let defaultItems = loadDefaultFoodItems(from: "default_all")
-        print("✅ Loaded \(defaultItems.count) default foods.")
         saveFoodItems(defaultItems)
         return defaultItems
     }
