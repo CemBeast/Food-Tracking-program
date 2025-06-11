@@ -29,6 +29,7 @@ class FoodModel: ObservableObject {
     }
     
     func load() {
+        print("🛠 Documents Directory:", getDocumentsDirectory().path)
         items = loadFoodItems()
     }
 }

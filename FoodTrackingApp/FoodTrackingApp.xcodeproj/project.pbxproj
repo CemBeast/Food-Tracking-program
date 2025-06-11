@@ -12,6 +12,7 @@
 		B23C6A642DDEDAE6004D770F /* FoodLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23C6A632DDEDAE6004D770F /* FoodLogView.swift */; };
 		B23C6A662DDFFA9C004D770F /* EditQuantityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */; };
 		B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2569F1C2CCFAE41006532EE /* MainMenu.swift */; };
+		B29497A42DFA3DE2001AC1A0 /* default_all.json in Resources */ = {isa = PBXBuildFile; fileRef = B29497A32DFA3DC1001AC1A0 /* default_all.json */; };
 		B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */; };
 		B2BCD32C2DF3B686005FA708 /* MacroGoalWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */; };
 		B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */; };
@@ -30,6 +31,7 @@
 		B23C6A632DDEDAE6004D770F /* FoodLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogView.swift; sourceTree = "<group>"; };
 		B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditQuantityView.swift; sourceTree = "<group>"; };
 		B2569F1C2CCFAE41006532EE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		B29497A32DFA3DC1001AC1A0 /* default_all.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = default_all.json; sourceTree = "<group>"; };
 		B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GramsOrServingsInput.swift; sourceTree = "<group>"; };
 		B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroGoalWizardView.swift; sourceTree = "<group>"; };
 		B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogViewForDate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */ = {
 			isa = PBXGroup;
 			children = (
+				B29497A32DFA3DC1001AC1A0 /* default_all.json */,
 				B23C6A2E2DD17A34004D770F /* Info.plist */,
 				B2DE9D272DCD7FE900FEB006 /* Dictionary Info */,
 				B23C6A522DD40F50004D770F /* BarcodeScanner */,
@@ -168,6 +171,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29497A42DFA3DE2001AC1A0 /* default_all.json in Resources */,
 				B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */,
 				B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */,
 			);

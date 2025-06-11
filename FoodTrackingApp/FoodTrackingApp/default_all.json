@@ -1,0 +1,35 @@
+[
+  {
+    "id": "9A798DAF-0D76-4D4D-9D62-239B2AFCCDA3",
+    "name": "1",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 100,
+    "protein": 10.0,
+    "carbs": 15.0,
+    "fats": 5.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "41A9FA6C-B8F3-48A1-9B55-7B0F10ACDA4A",
+    "name": "2",
+    "weightInGrams": 150,
+    "servings": 2,
+    "calories": 250,
+    "protein": 20.0,
+    "carbs": 30.0,
+    "fats": 10.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F1716EBE-B5C5-4C98-9612-2C8C3F2EEDB7",
+    "name": "3",
+    "weightInGrams": 75,
+    "servings": 1,
+    "calories": 90,
+    "protein": 5.0,
+    "carbs": 10.0,
+    "fats": 2.0,
+    "servingUnit": "ml"
+  }
+]
