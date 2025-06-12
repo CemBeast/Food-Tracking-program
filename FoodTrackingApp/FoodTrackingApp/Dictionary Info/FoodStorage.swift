@@ -23,6 +23,7 @@ func saveFoodItems(_ items : [FoodItem]) {
     }
 }
 
+// Need to make it load the selected food dictionary when user is prompted upon first launch
 func loadFoodItems() -> [FoodItem] {
     let url = getDocumentsDirectory().appendingPathComponent(foodDictionaryFileName)
     print("📂 Loading from user_foods.json at: \(url.path)")
@@ -33,10 +34,10 @@ func loadFoodItems() -> [FoodItem] {
             let decoded = try JSONDecoder().decode([FoodItem].self, from: data)
             
             if decoded.isEmpty {
-                print("📭 user_foods.json is empty. Loading default.")
-                let defaultItems = loadDefaultFoodItems(from: "default_all")
-                saveFoodItems(defaultItems)
-                return defaultItems
+                print("📭 user_foods.json is empty. Loading empty.")
+//                let defaultItems = loadDefaultFoodItems(from: "default_all")
+//                saveFoodItems(defaultItems)
+                return []
             }
 
             return decoded

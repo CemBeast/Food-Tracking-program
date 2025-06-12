@@ -73,6 +73,8 @@ struct FoodDictionaryTab: View {
     @Binding var showGramsInput: Bool
     @Binding var selectedMeasurementMode: MeasurementMode?
     var foodModel: FoodModel
+    @Binding var showDietPrompt: Bool
+    @Binding var pendingAction: (() -> Void)?
 
     var body: some View {
         SectionCard(title: "Food Dictionary") {
@@ -218,6 +220,10 @@ struct MainMenu: View {
     // For confirming user wants to clear daily/history macros
     @State private var showingClearDailyMacrosAlert = false
     @State private var showingClearHistoryMacrosAlert = false
+    
+    // If user has an empty food dictionary we prompt option to add default ones
+    @State private var showDietPrompt = false
+    @State private var pendingAction: (() -> Void)? = nil
 
     var body: some View {
         NavigationView {
