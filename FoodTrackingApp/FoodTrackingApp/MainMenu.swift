@@ -198,7 +198,7 @@ struct MainMenu: View {
     @StateObject private var foodModel = FoodModel()
 
     @State private var selectedFood: FoodItem? = nil
-    @State private var selectedFoodID: UUID? 
+    @State private var selectedFoodID: UUID?
     @State private var showFoodSelection = false
     @State private var showGramsInput = false
     @State private var gramsOrServings: Double? = nil
@@ -248,8 +248,9 @@ struct MainMenu: View {
                             selectedFoodID: $selectedFoodID,
                             showGramsInput: $showGramsInput,
                             selectedMeasurementMode: $selectedMeasurementMode,
-                            foodModel: foodModel
-                        )
+                            foodModel: foodModel,
+                            showDietPrompt: $showDietPrompt,
+                            pendingAction: $pendingAction) 
                         .padding()
                     }
                     .tabItem {
