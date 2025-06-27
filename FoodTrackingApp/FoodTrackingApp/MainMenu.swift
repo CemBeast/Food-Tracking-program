@@ -330,7 +330,8 @@ struct MainMenu: View {
                         viewModel.logFood(
                             food,
                             gramsOrServings: actualQuantity,
-                            mode: food.servingUnit == .grams ? .weight : .serving
+                            mode: food.servingUnit == .grams ? .weight : .serving,
+                            at: Date()
                         )
                         scannedItem = nil
                     }
@@ -371,7 +372,8 @@ struct MainMenu: View {
                                 let actualQuantity = gramsOrServings ?? 0.0
                                 viewModel.logFood(food,
                                                   gramsOrServings: actualQuantity,
-                                                  mode: mode)
+                                                  mode: mode,
+                                                  at: Date())
                             }
                         )
                     }
@@ -436,7 +438,7 @@ struct MainMenu: View {
             }
             .sheet(isPresented: $showQuickTracking) {
                 QuickMacroTrackView { quickFood in
-                        viewModel.logFood(quickFood, gramsOrServings: 1.0, mode: .serving)
+                    viewModel.logFood(quickFood, gramsOrServings: 1.0, mode: .serving, at: Date())
                 }
             }
         }

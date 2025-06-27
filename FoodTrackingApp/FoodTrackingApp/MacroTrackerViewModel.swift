@@ -26,13 +26,15 @@ struct LoggedFoodEntry: Identifiable, Codable {
     var quantity: Double
     var mode: MeasurementMode
     var servingUnit: ServingUnit
+    var timestamp: Date
 
-    init(food: FoodItem, quantity: Double, mode: MeasurementMode, servingUnit: ServingUnit) {
+    init(food: FoodItem, quantity: Double, mode: MeasurementMode, servingUnit: ServingUnit, timestamp: Date) {
         self.id = UUID()
         self.food = food
         self.quantity = quantity
         self.mode = mode
         self.servingUnit = servingUnit
+        self.timestamp = timestamp
     }
     
     // Computed ratio based on measurement mode
@@ -222,7 +224,7 @@ class MacroTrackerViewModel: ObservableObject {
     }
     
     // Function to increase macros from logging and put it in food log to track what was ate
-    func logFood(_ item: FoodItem, gramsOrServings: Double, mode: MeasurementMode) {
+    func logFood(_ item: FoodItem, gramsOrServings: Double, mode: MeasurementMode, at time: Date = Date()) {
         print("🍽 Logging food: \(item.name), qty: \(gramsOrServings), mode: \(mode)")
         let factor: Double = {
             switch mode {
@@ -242,7 +244,7 @@ class MacroTrackerViewModel: ObservableObject {
         carbs += item.carbs * factor
         fats += item.fats * factor
         
-        let entry = LoggedFoodEntry(food: item, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit)
+        let entry = LoggedFoodEntry(food: item, quantity: gramsOrServings, mode: mode, servingUnit: item.servingUnit, timestamp: time)
         foodLog = foodLog + [entry] // triggers Combine
         saveFoodLog()
     }

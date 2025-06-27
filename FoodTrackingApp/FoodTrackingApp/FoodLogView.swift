@@ -17,18 +17,23 @@ struct FoodLogView: View {
                     Text(entry.food.name)
                         .font(.headline)
                         .foregroundColor(Color("TextPrimary"))
-                    
-                   if entry.mode == .weight {
-                       // e.g. "1.6 g"
-                       Text(String(format: "%.0f %@", entry.quantity, entry.servingUnit.rawValue))
-                           .font(.footnote)
-                           .foregroundColor(.gray)
-                   } else {
-                       // Show quantity with exactly one decimal place
-                       Text(String(format: "%.1f serving%@", entry.quantity, entry.quantity > 1 ? "s" : ""))
-                           .font(.footnote)
-                           .foregroundColor(.gray)
-                   }
+                    HStack(){
+                        if entry.mode == .weight {
+                            // e.g. "1.6 g"
+                            Text(String(format: "%.0f %@", entry.quantity, entry.servingUnit.rawValue))
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        } else {
+                            // Show quantity with exactly one decimal place
+                            Text(String(format: "%.1f serving%@", entry.quantity, entry.quantity > 1 ? "s" : ""))
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        Text("\(entry.timestamp.formatted(date: .omitted, time: .shortened))")
+                            .font(.caption2)
+                            .foregroundColor(.gray)
+                    }
                     GeometryReader { geometry in
                         let itemWidth = geometry.size.width / 4
 
