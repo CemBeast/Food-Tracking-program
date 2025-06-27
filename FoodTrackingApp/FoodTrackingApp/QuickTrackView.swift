@@ -15,9 +15,9 @@ struct QuickMacroTrackView: View {
         NavigationView {
             Form {
                 Section(header: Text("Quick Track Food")) {
-                    TextField("Food Name (optional)", text: $name)
+                    TextField("Food Name", text: $name)
                     TextField("Calories", text: $calories)
-                        .keyboardType(.decimalPad)
+                        .keyboardType(.numberPad)
                     TextField("Protein (g)", text: $protein)
                         .keyboardType(.decimalPad)
                     TextField("Carbs (g)", text: $carbs)

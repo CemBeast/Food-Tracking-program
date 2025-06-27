@@ -291,8 +291,9 @@ class MacroTrackerViewModel: ObservableObject {
         carbs    = max(0, carbs)
         fats     = max(0, fats)
         
-        // Remove entry
+        // Remove entry and save Food log
         foodLog.removeAll { $0.id == entry.id }
+        saveFoodLog()
     }
     
     func updateFoodEntryQuantity(_ entry: LoggedFoodEntry, newQuantity: Double) {
