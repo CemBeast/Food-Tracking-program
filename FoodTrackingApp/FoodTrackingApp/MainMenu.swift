@@ -103,6 +103,7 @@ struct FoodDictionaryTab: View {
 struct TrackFoodTab: View {
     @Binding var showFoodSelection: Bool
     @Binding var showScannerTracking: Bool
+    @Binding var showQuickTracking: Bool
 
     var body: some View {
         SectionCard(title: "Tracking Food") {
@@ -111,6 +112,9 @@ struct TrackFoodTab: View {
             }
             Button("Select Food to Track") {
                 showFoodSelection.toggle()
+            }
+            Button("Quick Track") {
+                showQuickTracking.toggle()
             }
         }
     }
@@ -224,6 +228,9 @@ struct MainMenu: View {
     // If user has an empty food dictionary we prompt option to add default ones
     @State private var showDietPrompt = false
     @State private var pendingAction: (() -> Void)? = nil
+    
+    // For quick tracking , adding in macros manually for one food name
+    @State private var showQuickTracking = false
 
     var body: some View {
         NavigationView {
@@ -260,7 +267,8 @@ struct MainMenu: View {
                     ScrollView {
                         TrackFoodTab(
                             showFoodSelection: $showFoodSelection,
-                            showScannerTracking: $showScannerTracking
+                            showScannerTracking: $showScannerTracking,
+                            showQuickTracking: $showQuickTracking
                         )
                         .padding()
                     }
@@ -425,6 +433,11 @@ struct MainMenu: View {
                     carbGoal: $viewModel.carbGoal,
                     fatGoal: $viewModel.fatGoal
                 )
+            }
+            .sheet(isPresented: $showQuickTracking) {
+                QuickMacroTrackView { quickFood in
+                        viewModel.logFood(quickFood, gramsOrServings: 1.0, mode: .serving)
+                }
             }
         }
     }
