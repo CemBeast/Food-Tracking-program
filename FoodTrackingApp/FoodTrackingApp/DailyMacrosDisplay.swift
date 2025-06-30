@@ -18,7 +18,7 @@ struct DailyMacrosDisplay: View {
     var fatGoal: Double
 
     @State private var showConsumed = true
-    @State private var garbage = false
+    @State private var garbage = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
