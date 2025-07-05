@@ -325,4 +325,13 @@ class MacroTrackerViewModel: ObservableObject {
                 return quantity
         }
     }
+    
+    // For saving macros to be seen on widget
+    func saveDailyMacrosToDefaults() {
+        let defaults = UserDefaults(suiteName: "group.com.yourname.FoodTrackingApp")
+        defaults?.set(calories, forKey: "calories")
+        defaults?.set(protein, forKey: "protein")
+        defaults?.set(carbs, forKey: "carbs")
+        defaults?.set(fats, forKey: "fats")
+    }
 }

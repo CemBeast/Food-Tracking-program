@@ -45,13 +45,15 @@ struct MacroDisplayWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+        VStack(alignment: .leading) {
+            Text("Today’s Macros")
+                .font(.headline)
+            Text("Calories: \(entry.calories)")
+            Text("Protein: \(entry.protein)g")
+            Text("Carbs: \(entry.carbs)g")
+            Text("Fats: \(entry.fats)g")
         }
+        .padding()
     }
 }
 
