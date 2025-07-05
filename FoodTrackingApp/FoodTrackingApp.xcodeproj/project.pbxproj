@@ -20,10 +20,37 @@
 		B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF76002B36ECDF0069D56C /* ContentView.swift */; };
 		B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76022B36ECE00069D56C /* Assets.xcassets */; };
 		B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */; };
+		B2E1FF4C2E19B65A00D1520B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E1FF4B2E19B65A00D1520B /* WidgetKit.framework */; };
+		B2E1FF4E2E19B65A00D1520B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E1FF4D2E19B65A00D1520B /* SwiftUI.framework */; };
+		B2E1FF5F2E19B65D00D1520B /* MacroDisplayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B2E1FF492E19B65A00D1520B /* MacroDisplayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B2E3799F2E0E342D00CF37C0 /* QuickTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E3799D2E0E342500CF37C0 /* QuickTrackView.swift */; };
 		B2ECDC2F2D1D20BA00C220DB /* MacroTrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */; };
 		B2ECDC312D1D23E200C220DB /* MacroHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B2E1FF5D2E19B65D00D1520B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B2DF75F32B36ECDF0069D56C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2E1FF482E19B65A00D1520B;
+			remoteInfo = MacroDisplayWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B2E1FF602E19B65D00D1520B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B2E1FF5F2E19B65D00D1520B /* MacroDisplayWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B22A49932DE662240073119C /* EditGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalsView.swift; sourceTree = "<group>"; };
@@ -41,14 +68,28 @@
 		B2DF76002B36ECDF0069D56C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B2DF76022B36ECE00069D56C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B2E1FF492E19B65A00D1520B /* MacroDisplayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MacroDisplayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2E1FF4B2E19B65A00D1520B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B2E1FF4D2E19B65A00D1520B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B2E3799D2E0E342500CF37C0 /* QuickTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickTrackView.swift; sourceTree = "<group>"; };
 		B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerViewModel.swift; sourceTree = "<group>"; };
 		B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B2E1FF632E19B65D00D1520B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B2E1FF482E19B65A00D1520B /* MacroDisplayWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B23C6A522DD40F50004D770F /* BarcodeScanner */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BarcodeScanner; sourceTree = "<group>"; };
 		B2DE9D272DCD7FE900FEB006 /* Dictionary Info */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Dictionary Info"; sourceTree = "<group>"; };
+		B2E1FF4F2E19B65A00D1520B /* MacroDisplayWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (B2E1FF632E19B65D00D1520B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = MacroDisplayWidget; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +100,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2E1FF462E19B65A00D1520B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2E1FF4E2E19B65A00D1520B /* SwiftUI.framework in Frameworks */,
+				B2E1FF4C2E19B65A00D1520B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -66,6 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */,
+				B2E1FF4F2E19B65A00D1520B /* MacroDisplayWidget */,
+				B2E1FF4A2E19B65A00D1520B /* Frameworks */,
 				B2DF75FC2B36ECDF0069D56C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */,
+				B2E1FF492E19B65A00D1520B /* MacroDisplayWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,6 +165,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		B2E1FF4A2E19B65A00D1520B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B2E1FF4B2E19B65A00D1520B /* WidgetKit.framework */,
+				B2E1FF4D2E19B65A00D1520B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,10 +184,12 @@
 				B2DF75F72B36ECDF0069D56C /* Sources */,
 				B2DF75F82B36ECDF0069D56C /* Frameworks */,
 				B2DF75F92B36ECDF0069D56C /* Resources */,
+				B2E1FF602E19B65D00D1520B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B2E1FF5E2E19B65D00D1520B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B23C6A522DD40F50004D770F /* BarcodeScanner */,
@@ -136,6 +200,28 @@
 			productReference = B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B2E1FF482E19B65A00D1520B /* MacroDisplayWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2E1FF642E19B65D00D1520B /* Build configuration list for PBXNativeTarget "MacroDisplayWidgetExtension" */;
+			buildPhases = (
+				B2E1FF452E19B65A00D1520B /* Sources */,
+				B2E1FF462E19B65A00D1520B /* Frameworks */,
+				B2E1FF472E19B65A00D1520B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B2E1FF4F2E19B65A00D1520B /* MacroDisplayWidget */,
+			);
+			name = MacroDisplayWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = MacroDisplayWidgetExtension;
+			productReference = B2E1FF492E19B65A00D1520B /* MacroDisplayWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -143,11 +229,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					B2DF75FA2B36ECDF0069D56C = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					B2E1FF482E19B65A00D1520B = {
+						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
@@ -165,6 +254,7 @@
 			projectRoot = "";
 			targets = (
 				B2DF75FA2B36ECDF0069D56C /* FoodTrackingApp */,
+				B2E1FF482E19B65A00D1520B /* MacroDisplayWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -177,6 +267,13 @@
 				B29497A42DFA3DE2001AC1A0 /* default_all.json in Resources */,
 				B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */,
 				B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2E1FF472E19B65A00D1520B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +300,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2E1FF452E19B65A00D1520B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B2E1FF5E2E19B65D00D1520B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2E1FF482E19B65A00D1520B /* MacroDisplayWidgetExtension */;
+			targetProxy = B2E1FF5D2E19B65D00D1520B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B2DF76072B36ECE00069D56C /* Debug */ = {
@@ -384,6 +496,71 @@
 			};
 			name = Release;
 		};
+		B2E1FF612E19B65D00D1520B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R7BBRQXG8B;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MacroDisplayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MacroDisplayWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CBoss.FoodTrackingApp.MacroDisplayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B2E1FF622E19B65D00D1520B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R7BBRQXG8B;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MacroDisplayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MacroDisplayWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CBoss.FoodTrackingApp.MacroDisplayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -401,6 +578,15 @@
 			buildConfigurations = (
 				B2DF760A2B36ECE00069D56C /* Debug */,
 				B2DF760B2B36ECE00069D56C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2E1FF642E19B65D00D1520B /* Build configuration list for PBXNativeTarget "MacroDisplayWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2E1FF612E19B65D00D1520B /* Debug */,
+				B2E1FF622E19B65D00D1520B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
