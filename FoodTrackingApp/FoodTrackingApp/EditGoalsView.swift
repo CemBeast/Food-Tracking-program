@@ -31,17 +31,17 @@ struct EditGoalsView: View {
                     }
                     HStack {
                         Text("Protein")
-                        TextField("Protein (g)", value: $proteinGoal, formatter: formatter)
+                        TextField("(g)", value: $proteinGoal, formatter: formatter)
                             .keyboardType(.decimalPad)
                     }
                     HStack {
                         Text("Carbs")
-                        TextField("Carbs (g)", value: $carbGoal, formatter: formatter)
+                        TextField("(g)", value: $carbGoal, formatter: formatter)
                             .keyboardType(.decimalPad)
                     }
                     HStack {
                         Text("Fats")
-                        TextField("Fats (g)", value: $fatGoal, formatter: formatter)
+                        TextField("(g)", value: $fatGoal, formatter: formatter)
                             .keyboardType(.decimalPad)
                     }
                 }
