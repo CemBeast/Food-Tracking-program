@@ -24,14 +24,26 @@ struct EditGoalsView: View {
         NavigationView {
             Form {
                 Section(header: Text("Macro Goals")) {
-                    TextField("Calories", value: $calorieGoal, formatter: formatter)
-                        .keyboardType(.numberPad)
-                    TextField("Protein (g)", value: $proteinGoal, formatter: formatter)
-                        .keyboardType(.decimalPad)
-                    TextField("Carbs (g)", value: $carbGoal, formatter: formatter)
-                        .keyboardType(.decimalPad)
-                    TextField("Fats (g)", value: $fatGoal, formatter: formatter)
-                        .keyboardType(.decimalPad)
+                    HStack {
+                        Text("Calories:")
+                        TextField("0", value: $calorieGoal, formatter: formatter)
+                            .keyboardType(.numberPad)
+                    }
+                    HStack {
+                        Text("Protein")
+                        TextField("Protein (g)", value: $proteinGoal, formatter: formatter)
+                            .keyboardType(.decimalPad)
+                    }
+                    HStack {
+                        Text("Carbs")
+                        TextField("Carbs (g)", value: $carbGoal, formatter: formatter)
+                            .keyboardType(.decimalPad)
+                    }
+                    HStack {
+                        Text("Fats")
+                        TextField("Fats (g)", value: $fatGoal, formatter: formatter)
+                            .keyboardType(.decimalPad)
+                    }
                 }
             }
         }

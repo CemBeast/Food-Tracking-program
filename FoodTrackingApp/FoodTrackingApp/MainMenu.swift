@@ -288,7 +288,7 @@ struct MainMenu: View {
                         .padding()
                     }
                     .tabItem {
-                        Label("History", systemImage: "clock")
+                        Label("History & Settings", systemImage: "clock")
                     }
                 }
             }
