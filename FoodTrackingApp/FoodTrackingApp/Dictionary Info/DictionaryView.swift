@@ -215,27 +215,26 @@ struct DictionaryView: View {
     }
     
     private var filteredFoodItems: [FoodItem] {
-        var result = foodModel.items.filter { foodItem in
+        let base = foodModel.items.filter { foodItem in
             searchText.isEmpty || foodItem.name.localizedCaseInsensitiveContains(searchText)
         }
-        
-        result.sort { (a: FoodItem, b: FoodItem) -> Bool in
-            switch sortOption {
-            case .name:
-                return a.name.lowercased() < b.name.lowercased()
-            case .calories:
-                return a.calories > b.calories
-            case .protein:
-                return a.protein > b.protein
-            case .carbs:
-                return a.carbs > b.carbs
-            case .fats:
-                return a.fats > b.fats
-            case .favorites:
-                return a.isFavorite && !b.isFavorite
-            }
+        switch sortOption {
+        case .name:
+            return base.sorted { $0.name.lowercased() < $1.name.lowercased() }
+        case .favorites:
+            //  ONLY favorites
+            return base
+                .filter { $0.isFavorite }
+                .sorted { $0.name.lowercased() < $1.name.lowercased() }
+        case .calories:
+            return base.sorted { $0.calories > $1.calories }
+        case .protein:
+            return base.sorted { $0.protein > $1.protein }
+        case .carbs:
+            return base.sorted { $0.carbs > $1.carbs }
+        case .fats:
+            return base.sorted { $0.fats > $1.fats }
         }
-        return result
     }
     
     private func toggleFavorite(_ foodItem: FoodItem) {
