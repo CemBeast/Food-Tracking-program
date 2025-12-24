@@ -16,6 +16,26 @@ struct FoodItem: Identifiable, Codable {
     var carbs: Double
     var fats: Double
     var servingUnit: ServingUnit
+    var isFavorite: Bool = false
+    
+    // Backwards-compatible decode (old JSON won't have isFavorite)
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        name = try c.decode(String.self, forKey: .name)
+        weightInGrams = try c.decode(Int.self, forKey: .weightInGrams)
+        servings = try c.decode(Int.self, forKey: .servings)
+        calories = try c.decode(Int.self, forKey: .calories)
+        protein = try c.decode(Double.self, forKey: .protein)
+        carbs = try c.decode(Double.self, forKey: .carbs)
+        fats = try c.decode(Double.self, forKey: .fats)
+        servingUnit = try c.decode(ServingUnit.self, forKey: .servingUnit)
+
+        // ✅ default if missing
+        isFavorite = try c.decodeIfPresent(Bool.self, forKey: .isFavorite) ?? false
+    }
+    
     init(
             name: String,
             weightInGrams: Int,
@@ -24,7 +44,8 @@ struct FoodItem: Identifiable, Codable {
             protein: Double,
             carbs: Double,
             fats: Double,
-            servingUnit: ServingUnit
+            servingUnit: ServingUnit,
+            isFavorite: Bool = false
         ) {
             self.id = UUID()
             self.name = name
@@ -35,10 +56,11 @@ struct FoodItem: Identifiable, Codable {
             self.carbs = carbs
             self.fats = fats
             self.servingUnit = servingUnit
+            self.isFavorite = isFavorite
         }
     // 🔒 Explicit keys make encoding/decoding bulletproof
     enum CodingKeys: String, CodingKey {
-        case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit
+        case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit, isFavorite
     }
 }
 
@@ -48,6 +70,7 @@ enum SortOption: String, CaseIterable, Identifiable {
     case protein = "Protein"
     case carbs = "Carbs"
     case fats = "Fats"
+    case favorites = "Favorites"
     
     var id: String { self.rawValue}
 }
@@ -112,7 +135,19 @@ struct DictionaryView: View {
                                     selectedFoodID = foodItem.id // Highlight the selected item
                                     showMeasurementDialog = true
                                 }
+                                .swipeActions(edge: .leading, allowsFullSwipe: true) { //  swipe right to favorite
+                                    Button {
+                                        toggleFavorite(foodItem)
+                                    } label: {
+                                        Label(
+                                            foodItem.isFavorite ? "Unfavorite" : "Favorite",
+                                            systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
+                                        )
+                                    }
+                                    .tint(.yellow)
+                                }
                         }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .buttonStyle(PlainButtonStyle())
                 } else {
@@ -122,6 +157,17 @@ struct DictionaryView: View {
                                 print("Editing \(foodItem.name)")
                                 foodToEdit = foodItem
                                 isEditingFood = true
+                            }
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) { // ✅ swipe right
+                                Button {
+                                    toggleFavorite(foodItem)
+                                } label: {
+                                    Label(
+                                        foodItem.isFavorite ? "Unfavorite" : "Favorite",
+                                        systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
+                                    )
+                                }
+                                .tint(.yellow)
                             }
                     }
                     .onDelete(perform: deleteItems)
@@ -185,16 +231,37 @@ struct DictionaryView: View {
                 return a.carbs > b.carbs
             case .fats:
                 return a.fats > b.fats
+            case .favorites:
+                return a.isFavorite && !b.isFavorite
             }
         }
         return result
     }
     
+    private func toggleFavorite(_ foodItem: FoodItem) {
+        guard let idx = foodModel.items.firstIndex(where: {$0.id == foodItem.id}) else  {return}
+        foodModel.items[idx].isFavorite.toggle()
+        foodModel.save()
+    }
+    
     private func content(for foodItem: FoodItem, isSelected: Bool) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(foodItem.name)
-                .font(.headline)
+            HStack {
+                Text(foodItem.name)
+                    .font(.headline)
 
+                Spacer()
+
+                Button {
+                    toggleFavorite(foodItem)
+                } label: {
+                    Image(systemName: foodItem.isFavorite ? "star.fill" : "star")
+                        .foregroundColor(foodItem.isFavorite ? .yellow : .secondary)
+                        .imageScale(.medium)
+                }
+                .buttonStyle(.plain)
+            }
+            
             HStack(spacing: 12) {
                 macroColumn(icon: "number.circle.fill", label: "Servings", value: "\(foodItem.servings)", color: Color("TextPrimary").opacity(0.6))
                 macroColumn(
