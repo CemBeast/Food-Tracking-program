@@ -6,39 +6,7 @@
 //
 import SwiftUI
 
-struct CustomButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: 12) {
-            // Placeholder for a logo/icon
-            Image(systemName: "sparkles")
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding(8)
-                .background(
-                    Circle()
-                        .fill(.ultraThinMaterial)
-                        .shadow(color: .white.opacity(0.2), radius: 4, x: 1, y: 2)
-                )
-
-            configuration.label
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(
-            LinearGradient(colors: [.blue.opacity(0.8), .purple.opacity(0.8)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-                .cornerRadius(16)
-                .shadow(color: .purple.opacity(configuration.isPressed ? 0.2 : 0.4),
-                        radius: configuration.isPressed ? 4 : 10,
-                        x: 0, y: configuration.isPressed ? 2 : 6)
-        )
-        .foregroundColor(.white)
-        .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.5), value: configuration.isPressed)
-    }
-}
-
+// MARK: - Section Card (Updated)
 struct SectionCard<Content: View>: View {
     let title: String
     let content: Content
@@ -50,21 +18,17 @@ struct SectionCard<Content: View>: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .font(.headline)
-                .padding(.horizontal)
+            SectionHeader(title: title)
 
             VStack(spacing: 10) {
                 content
-                    .buttonStyle(CustomButtonStyle())
             }
-            .padding()
-            .background(RoundedRectangle(cornerRadius: 16).fill(Color("CardBackground")))
-            .shadow(radius: 2)
+            .cardStyle()
         }
     }
 }
 
+// MARK: - Food Dictionary Tab
 struct FoodDictionaryTab: View {
     @Binding var showManual: Bool
     @Binding var showScanner: Bool
@@ -78,12 +42,28 @@ struct FoodDictionaryTab: View {
 
     var body: some View {
         SectionCard(title: "Food Dictionary") {
-            Button("Add Food Manually") {
+            Button {
                 showManual = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 18))
+                    Text("Add Food Manually")
+                }
             }
-            Button("Add Food by Barcode") {
+            .buttonStyle(SleekButtonStyle())
+            
+            Button {
                 showScanner = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "barcode.viewfinder")
+                        .font(.system(size: 18))
+                    Text("Add Food by Barcode")
+                }
             }
+            .buttonStyle(SleekButtonStyle())
+            
             NavigationLink(destination:
                 DictionaryView(
                     selectedFood: $selectedFood,
@@ -94,32 +74,62 @@ struct FoodDictionaryTab: View {
                     readOnly: true
                 )
             ) {
+                HStack(spacing: 12) {
+                    Image(systemName: "book.fill")
+                        .font(.system(size: 18))
                 Text("View Food Dictionary")
+                }
             }
+            .buttonStyle(SleekButtonStyle())
         }
     }
 }
 
+// MARK: - Track Food Tab
 struct TrackFoodTab: View {
     @Binding var showFoodSelection: Bool
     @Binding var showScannerTracking: Bool
     @Binding var showQuickTracking: Bool
 
     var body: some View {
-        SectionCard(title: "Tracking Food") {
-            Button("Track Food from Barcode") {
+        SectionCard(title: "Track Food") {
+            Button {
                 showScannerTracking = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "barcode.viewfinder")
+                        .font(.system(size: 18))
+                    Text("Track from Barcode")
+                }
             }
-            Button("Select Food to Track") {
+            .buttonStyle(SleekButtonStyle())
+            
+            Button {
                 showFoodSelection.toggle()
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "list.bullet.circle.fill")
+                        .font(.system(size: 18))
+                    Text("Select Food to Track")
+                }
             }
-            Button("Quick Track") {
+            .buttonStyle(SleekButtonStyle())
+            
+            Button {
                 showQuickTracking.toggle()
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "bolt.fill")
+                        .font(.system(size: 18))
+                    Text("Quick Track")
+                }
             }
+            .buttonStyle(SleekButtonStyle())
         }
     }
 }
 
+// MARK: - History Tab
 struct HistoryTab: View {
     @ObservedObject var viewModel: MacroTrackerViewModel
     @ObservedObject var foodModel: FoodModel
@@ -129,17 +139,37 @@ struct HistoryTab: View {
     @Binding var showGoalWizard: Bool
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 24) {
+            // History Section
             SectionCard(title: "History") {
                 NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
+                    HStack(spacing: 12) {
+                        Image(systemName: "list.clipboard.fill")
+                            .font(.system(size: 18))
                     Text("View Foods Eaten Today")
+                    }
                 }
+                .buttonStyle(SleekButtonStyle())
+                
                 NavigationLink(destination: MacroHistoryView(viewModel: viewModel)) {
+                    HStack(spacing: 12) {
+                        Image(systemName: "chart.line.uptrend.xyaxis")
+                            .font(.system(size: 18))
                     Text("View Macro History")
+                    }
                 }
-                Button("Clear Daily Macros") {
+                .buttonStyle(SleekButtonStyle())
+                
+                Button {
                     showingClearDailyMacrosAlert = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(.system(size: 18))
+                        Text("Clear Daily Macros")
+                    }
                 }
+                .buttonStyle(SleekButtonStyle(isDestructive: true))
                 .alert("Are you sure?", isPresented: $showingClearDailyMacrosAlert) {
                     Button("Clear", role: .destructive) {
                         viewModel.resetMacros()
@@ -147,9 +177,16 @@ struct HistoryTab: View {
                     Button("Cancel", role: .cancel) {}
                 }
 
-                Button("Clear History") {
+                Button {
                     showingClearHistoryMacrosAlert = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "trash")
+                            .font(.system(size: 18))
+                        Text("Clear History")
+                    }
                 }
+                .buttonStyle(SleekButtonStyle(isDestructive: true))
                 .alert("Are you sure?", isPresented: $showingClearHistoryMacrosAlert) {
                     Button("Clear", role: .destructive) {
                         viewModel.clearHistory()
@@ -158,13 +195,29 @@ struct HistoryTab: View {
                 }
             }
 
+            // Personal Section
             SectionCard(title: "Personal") {
-                Button("Edit Macro Goals") {
+                Button {
                     showEditGoals = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "slider.horizontal.3")
+                            .font(.system(size: 18))
+                        Text("Edit Macro Goals")
+                    }
                 }
-                Button("Calculate My Macros") {
+                .buttonStyle(SleekButtonStyle())
+                
+                Button {
                     showGoalWizard = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 18))
+                        Text("Calculate My Macros")
+                    }
                 }
+                .buttonStyle(SleekButtonStyle())
                 .sheet(isPresented: $showGoalWizard) {
                     MacroGoalWizardView(
                         calorieGoal: $viewModel.caloriesGoal,
@@ -173,32 +226,63 @@ struct HistoryTab: View {
                         fatGoal: $viewModel.fatGoal
                     )
                 }
-                Button("⚠️ Reset Macro Goals (for testing)") {
+            }
+            
+            // Developer Section (collapsed)
+            DisclosureGroup {
+                VStack(spacing: 10) {
+                    Button {
                     let defaults = UserDefaults.standard
                         defaults.removeObject(forKey: "macro_calorie_goal")
                         defaults.removeObject(forKey: "macro_protein_goal")
                         defaults.removeObject(forKey: "macro_carbs_goal")
                         defaults.removeObject(forKey: "macro_fats_goal")
-                        
-                        // Set the @Published properties AFTER clearing defaults
                         viewModel.caloriesGoal = 0
                         viewModel.proteinGoal = 0
                         viewModel.carbGoal = 0
                         viewModel.fatGoal = 0
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                                .font(.system(size: 16))
+                            Text("Reset Macro Goals")
+                                .font(.system(size: 14))
+                        }
+                    }
+                    .buttonStyle(SleekButtonStyle(isSecondary: true))
+                    
+                    Button {
+                        foodModel.clearUserFoodDictionary()
+                        foodModel.load()
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "trash.circle")
+                                .font(.system(size: 16))
+                            Text("Delete Food Dictionary")
+                                .font(.system(size: 14))
+                        }
+                    }
+                    .buttonStyle(SleekButtonStyle(isSecondary: true))
                 }
-                Button("⚠️ Delete Food Dictionary (for testing)") {
-                    foodModel.clearUserFoodDictionary()
-                    foodModel.load() // reloads and triggers fallback if empty
+                .padding(.top, 8)
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "hammer.fill")
+                        .font(.system(size: 14))
+                    Text("Developer Tools")
+                        .font(.system(size: 14, weight: .medium))
                 }
+                .foregroundColor(AppTheme.textTertiary)
             }
+            .accentColor(AppTheme.textTertiary)
+            .padding(.horizontal, 4)
         }
     }
 }
 
+// MARK: - Main Menu
 struct MainMenu: View {
-    // viewModel to track todays macros
     @StateObject private var viewModel = MacroTrackerViewModel()
-    // foodModel is the food dictionary
     @StateObject private var foodModel = FoodModel()
 
     @State private var selectedFood: FoodItem? = nil
@@ -208,34 +292,28 @@ struct MainMenu: View {
     @State private var gramsOrServings: Double? = nil
     @State private var selectedMeasurementMode: MeasurementMode? = nil
     
-    // For first launch setting macro goals
     @State private var showInitialGoalPrompt = false
     @State private var showGoalWizard = false
     
-    // For manually adding foods or using barcode
     @State private var showManual = false
     @State private var showScanner = false
     
-    // For tracking through barcode scan
     @State private var scannedItem: FoodItem? = nil
     @State private var showScannerTracking = false
     @State private var showEditGoals = false
     
-    // For confirming user wants to clear daily/history macros
     @State private var showingClearDailyMacrosAlert = false
     @State private var showingClearHistoryMacrosAlert = false
     
-    // If user has an empty food dictionary we prompt option to add default ones
     @State private var showDietPrompt = false
     @State private var pendingAction: (() -> Void)? = nil
     
-    // For quick tracking , adding in macros manually for one food name
     @State private var showQuickTracking = false
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                // Stationary view of macros consumed/left
+            VStack(spacing: 0) {
+                // Macro Display at top
                 DailyMacrosDisplay(
                     calories: viewModel.calories,
                     protein: viewModel.protein,
@@ -246,6 +324,9 @@ struct MainMenu: View {
                     carbGoal: viewModel.carbGoal,
                     fatGoal: viewModel.fatGoal
                 )
+                .padding(.top, 8)
+                
+                // Tab View
                 TabView {
                     ScrollView {
                         FoodDictionaryTab(
@@ -258,10 +339,12 @@ struct MainMenu: View {
                             foodModel: foodModel,
                             showDietPrompt: $showDietPrompt,
                             pendingAction: $pendingAction) 
-                        .padding()
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
                     }
                     .tabItem {
-                        Label("Dictionary", systemImage: "book")
+                        Label("Dictionary", systemImage: "book.fill")
                     }
 
                     ScrollView {
@@ -270,7 +353,9 @@ struct MainMenu: View {
                             showScannerTracking: $showScannerTracking,
                             showQuickTracking: $showQuickTracking
                         )
-                        .padding()
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
                     }
                     .tabItem {
                         Label("Track", systemImage: "fork.knife")
@@ -285,14 +370,18 @@ struct MainMenu: View {
                             showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert,
                             showGoalWizard: $showGoalWizard
                         )
-                        .padding()
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
                     }
                     .tabItem {
-                        Label("History & Settings", systemImage: "clock")
+                        Label("Settings", systemImage: "gearshape.fill")
                     }
                 }
             }
-            .background(Color("PrimaryBackground"))
+            .background(AppTheme.background.ignoresSafeArea())
+            .setupNavigationAppearance()
+            .setupTabBarAppearance()
             .onAppear {
                 if viewModel.caloriesGoal == 0 &&
                    viewModel.proteinGoal == 0 &&
@@ -301,7 +390,7 @@ struct MainMenu: View {
                     showInitialGoalPrompt = true
                 }
             }
-            // MARK: Sheets for Food Dictionary
+            // MARK: Sheets
             .sheet(isPresented: $showManual) {
                 AddFoodView(onAdd: { newFood in
                     foodModel.add(newFood)
@@ -310,8 +399,6 @@ struct MainMenu: View {
             .sheet(isPresented: $showScanner) {
                 BarcodeTrackingWrapperView(viewModel: foodModel)
             }
-
-            // MARK: Sheet for Tracking Food by Barcode
             .sheet(isPresented: $showScannerTracking) {
                 ScannerViewForTracking { item in
                     showScannerTracking = false
@@ -325,7 +412,6 @@ struct MainMenu: View {
                     gramsOrServings: $gramsOrServings,
                     showGramsInput: .constant(true),
                     updateMacros: { _, _, _, _ in
-                        // Ensure we have a valid Double quantity (e.g. 1.6)
                         let actualQuantity = gramsOrServings ?? 0.0
                         viewModel.logFood(
                             food,
@@ -337,8 +423,6 @@ struct MainMenu: View {
                     }
                 )
             }
-
-            // MARK: Sheet for Selecting Food from Dictionary
             .sheet(
                 isPresented: $showFoodSelection,
                 onDismiss: {
@@ -368,7 +452,6 @@ struct MainMenu: View {
                             gramsOrServings: $gramsOrServings,
                             showGramsInput: $showGramsInput,
                             updateMacros: { _, _, _, _ in
-                                // Ensure we have a valid Double quantity (e.g. 1.6)
                                 let actualQuantity = gramsOrServings ?? 0.0
                                 viewModel.logFood(food,
                                                   gramsOrServings: actualQuantity,
@@ -386,8 +469,6 @@ struct MainMenu: View {
                     }
                 }
             }
-
-            // MARK: Sheet for Editing Goals
             .sheet(isPresented: $showEditGoals) {
                 EditGoalsView(
                     calorieGoal: $viewModel.caloriesGoal,
@@ -396,37 +477,13 @@ struct MainMenu: View {
                     fatGoal: $viewModel.fatGoal
                 )
             }
-            // MARK: Sheet for Setting Goals Upon First Launch
             .sheet(isPresented: $showInitialGoalPrompt) {
-                VStack(spacing: 20) {
-                    Text("Set Your Macro Goals")
-                        .font(.title2.bold())
-                        .padding()
-
-                    Text("Would you like to set your calorie and macro goals now? This enables the progress rings to track your goals.")
-                        .padding()
-
-                    Button("Set My Goals") {
-                        showInitialGoalPrompt = false
-                        showEditGoals = true
-                    }
-                    .buttonStyle(.borderedProminent)
-
-                    Button("Use Default Goals") {
-                        viewModel.caloriesGoal = 2000
-                        viewModel.proteinGoal = 150
-                        viewModel.carbGoal = 250
-                        viewModel.fatGoal = 70
-                        showInitialGoalPrompt = false
-                    }
-                    .buttonStyle(.bordered)
-                    
-                    Button("Calculate for Me") {
-                            showGoalWizard = true
-                        showInitialGoalPrompt = false
-                        }
-                }
-                .padding()
+                InitialGoalPromptView(
+                    showInitialGoalPrompt: $showInitialGoalPrompt,
+                    showEditGoals: $showEditGoals,
+                    showGoalWizard: $showGoalWizard,
+                    viewModel: viewModel
+                )
             }
             .sheet(isPresented: $showGoalWizard) {
                 MacroGoalWizardView(
@@ -444,10 +501,84 @@ struct MainMenu: View {
         }
     }
 }
-//
-//struct MainMenuPreviews: PreviewProvider {
-//    static var previews: some View {
-//        MainMenu()
-//    }
-//}
 
+// MARK: - Initial Goal Prompt View
+struct InitialGoalPromptView: View {
+    @Binding var showInitialGoalPrompt: Bool
+    @Binding var showEditGoals: Bool
+    @Binding var showGoalWizard: Bool
+    @ObservedObject var viewModel: MacroTrackerViewModel
+    
+    var body: some View {
+        ZStack {
+            AppTheme.background.ignoresSafeArea()
+            
+            VStack(spacing: 32) {
+                // Header
+                VStack(spacing: 12) {
+                    Image(systemName: "target")
+                        .font(.system(size: 48, weight: .light))
+                        .foregroundColor(AppTheme.textPrimary)
+                    
+                    Text("Set Your Goals")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(AppTheme.textPrimary)
+                    
+                    Text("Set your calorie and macro goals to track your progress with the rings.")
+                        .font(.system(size: 15))
+                        .foregroundColor(AppTheme.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
+                }
+                .padding(.top, 40)
+                
+                // Buttons
+                VStack(spacing: 12) {
+                    Button {
+                        showInitialGoalPrompt = false
+                        showEditGoals = true
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "slider.horizontal.3")
+                                .font(.system(size: 18))
+                            Text("Set My Goals")
+                        }
+                    }
+                    .buttonStyle(SleekButtonStyle())
+                    
+                    Button {
+                        showInitialGoalPrompt = false
+                        showGoalWizard = true
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 18))
+                            Text("Calculate for Me")
+                        }
+                    }
+                    .buttonStyle(SleekButtonStyle())
+                    
+                    Button {
+                        viewModel.caloriesGoal = 2000
+                        viewModel.proteinGoal = 150
+                        viewModel.carbGoal = 250
+                        viewModel.fatGoal = 70
+                        showInitialGoalPrompt = false
+                    } label: {
+                        HStack(spacing: 12) {
+                            Image(systemName: "checkmark.circle")
+                                .font(.system(size: 18))
+                            Text("Use Default Goals")
+                        }
+                    }
+                    .buttonStyle(SleekButtonStyle(isSecondary: true))
+                }
+                .padding(.horizontal, 24)
+                
+                Spacer()
+            }
+        }
+        .presentationDetents([.medium])
+        .presentationDragIndicator(.visible)
+    }
+}

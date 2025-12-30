@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct GramsOrServingsInput: View {
-    @Environment(\.dismiss) private var dismiss // to dismiss parent view resetting everything
+    @Environment(\.dismiss) private var dismiss
     var food: FoodItem
     let mode: MeasurementMode
     @State private var numberInput: String = ""
@@ -15,8 +15,7 @@ struct GramsOrServingsInput: View {
     @Binding var gramsOrServings: Double?
     @Binding var showGramsInput: Bool
     
-    
-    var updateMacros: (Double, Double, Double, Double) -> Void // Closure to update macros
+    var updateMacros: (Double, Double, Double, Double) -> Void
 
     let numberFormatter: NumberFormatter = {
         let nf = NumberFormatter()
@@ -27,11 +26,6 @@ struct GramsOrServingsInput: View {
     }()
     
     var body: some View {
-        var liveCalories: Double { inputRatio * Double(food.calories) }
-        var liveFats: Double { inputRatio * Double(food.fats) }
-        var liveProtein: Double { inputRatio * Double(food.protein) }
-        var liveCarbs: Double { inputRatio * Double(food.carbs) }
-        
         var parsedInput: Double {
             Double(numberInput) ?? 0
         }
@@ -45,55 +39,52 @@ struct GramsOrServingsInput: View {
             }
         }
         
+        var liveCalories: Double { inputRatio * Double(food.calories) }
+        var liveFats: Double { inputRatio * Double(food.fats) }
+        var liveProtein: Double { inputRatio * Double(food.protein) }
+        var liveCarbs: Double { inputRatio * Double(food.carbs) }
+        
         ZStack {
-            // Background
-            Color(.systemGroupedBackground)
+            // Dimmed background
+            Color.black.opacity(0.85)
                 .ignoresSafeArea()
+                .onTapGesture {
+                    dismiss()
+                }
 
             VStack(spacing: 24) {
-                // Title
-                if (mode == .serving) {
-                    Text("Enter Servings")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                }
-                else {
-                    Text("Enter Amount in \(food.servingUnit == .grams ? "Grams" : "Milliliters")")
-                        .font(.title2)
-                        .fontWeight(.semibold)
+                // Header
+                VStack(spacing: 8) {
+                    Text(food.name)
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(AppTheme.textPrimary)
+                    
+                    Text(mode == .serving ? "Enter Servings" : "Enter \(food.servingUnit == .grams ? "Grams" : "Milliliters")")
+                        .font(.system(size: 14))
+                        .foregroundColor(AppTheme.textSecondary)
                 }
                 
-
-                // Card-style input box
-                VStack(spacing: 16) {
-                    TextField("", text: $numberInput)
+                // Input Field
+                HStack {
+                    TextField("0", text: $numberInput)
                         .keyboardType(.decimalPad)
                         .focused($isTextFieldFocused)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(12)
-                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                        .font(.system(size: 48, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.textPrimary)
                         .multilineTextAlignment(.center)
-                        .font(.system(size: 24, weight: .medium))
-                        .foregroundColor(.black)
                         .onChange(of: numberInput) { newValue in
                             let filtered = newValue.filter { char in
                                 char.isNumber || char == "."
                             }
                             let components = filtered.split(separator: ".")
                             if components.count > 2 {
-                                // More than one “.” → revert to previous valid string
-                                // In practice, you could keep track of a `previousText` to revert.
-                                // Here, we’ll just strip extra “.” out:
                                 let firstPart = components[0]
                                 let secondPart = components.dropFirst().joined(separator: "")
                                 numberInput = firstPart + "." + secondPart
-                            }
-                            else {
+                            } else {
                                 numberInput = filtered
                             }
-
-                            // Try parsing it into a Double
+                            
                             if let parsed = Double(numberInput) {
                                 gramsOrServings = parsed
                             } else {
@@ -101,30 +92,66 @@ struct GramsOrServingsInput: View {
                             }
                         }
                     
-                    VStack(spacing: 8) {
-                        Text(food.name)
-                        Text("Calories: \(Int(liveCalories)) kcal")
-                        Text("Protein: \(String(format: "%.1f", liveProtein)) g")
-                        Text("Carbs: \(String(format: "%.1f", liveCarbs)) g")
-                        Text("Fats: \(String(format: "%.1f", liveFats)) g")
-                    }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .transition(.opacity)
-
-                    Button("Confirm") {
-                        updateFoodTracking()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.blue)
+                    Text(mode == .serving ? "srv" : food.servingUnit.rawValue)
+                        .font(.system(size: 20, weight: .medium))
+                        .foregroundColor(AppTheme.textTertiary)
                 }
-                .padding()
-                .background(.ultraThinMaterial)
-                .cornerRadius(16)
-                .shadow(radius: 5)
-                .frame(maxWidth: 300)
+                .padding(.horizontal, 32)
+                
+                // Live Preview
+                VStack(spacing: 16) {
+                    Text("NUTRITION PREVIEW")
+                        .font(.system(size: 11, weight: .bold))
+                        .tracking(1.2)
+                        .foregroundColor(AppTheme.textTertiary)
+                    
+                    HStack(spacing: 12) {
+                        LiveMacroPill(value: "\(Int(liveCalories))", label: "cal", color: AppTheme.calorieColor)
+                        LiveMacroPill(value: String(format: "%.0f", liveProtein), label: "P", color: AppTheme.proteinColor)
+                        LiveMacroPill(value: String(format: "%.0f", liveCarbs), label: "C", color: AppTheme.carbColor)
+                        LiveMacroPill(value: String(format: "%.0f", liveFats), label: "F", color: AppTheme.fatColor)
+                    }
+                }
+                .padding(.vertical, 20)
+                .padding(.horizontal, 16)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.white.opacity(0.05))
+                )
+                
+                // Confirm Button
+                Button {
+                    updateFoodTracking()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 18))
+                        Text("Add to Log")
+                    }
+                }
+                .buttonStyle(SleekButtonStyle())
+                .padding(.horizontal, 20)
+                
+                // Cancel Button
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Cancel")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(AppTheme.textSecondary)
+                }
+                .padding(.top, 4)
             }
-            .padding()
+            .padding(24)
+            .background(
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(AppTheme.cardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .stroke(AppTheme.border, lineWidth: 1)
+                    )
+            )
+            .padding(.horizontal, 24)
         }
         .task {
             isTextFieldFocused = true
@@ -134,7 +161,6 @@ struct GramsOrServingsInput: View {
     func updateFoodTracking() {
         guard let value = gramsOrServings, value > 0 else { return }
 
-        // Calculate the ratio based on servings or weight
         let ratio: Double
         switch mode {
         case .serving:
@@ -142,7 +168,7 @@ struct GramsOrServingsInput: View {
         case .weight:
             ratio = Double(value) / Double(food.weightInGrams)
         }
-        // Calculate macros
+        
         let calculatedCalories = ratio * Double(food.calories)
         let calculatedFats = ratio * Double(food.fats)
         let calculatedProtein = ratio * Double(food.protein)
@@ -150,5 +176,29 @@ struct GramsOrServingsInput: View {
         
         updateMacros(calculatedCalories, calculatedFats, calculatedProtein, calculatedCarbs)
         dismiss()
+    }
+}
+
+// MARK: - Live Macro Pill
+struct LiveMacroPill: View {
+    let value: String
+    let label: String
+    let color: Color
+    
+    var body: some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .foregroundColor(color)
+            Text(label)
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(color.opacity(0.7))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(color.opacity(0.12))
+        )
     }
 }

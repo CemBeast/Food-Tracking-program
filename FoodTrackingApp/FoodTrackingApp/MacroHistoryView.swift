@@ -13,67 +13,82 @@ struct MacroHistoryView: View {
     var body: some View {
         let (avgCal, avgProtein, avgCarb, avgFat) = getAvgMacros()
 
-        List {
-            Section {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Average Macros")
-                        .font(.headline)
-                        .foregroundColor(Color("TextPrimary"))
-
-                    GeometryReader { geometry in
-                        let columnWidth = geometry.size.width / 4
-                        HStack(spacing: 0) {
-                            macroColumn(title: "Calories", value: "\(avgCal)", width: columnWidth, color: .red)
-                            macroColumn(title: "Protein", value: String(format: "%.1f g", avgProtein), width: columnWidth, color: .yellow)
-                            macroColumn(title: "Carbs", value: String(format: "%.1f g", avgCarb), width: columnWidth, color: .green)
-                            macroColumn(title: "Fats", value: String(format: "%.1f g", avgFat), width: columnWidth, color: .purple)
+        ZStack {
+            AppTheme.background.ignoresSafeArea()
+            
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Average Macros Card
+                    VStack(spacing: 16) {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("DAILY AVERAGE")
+                                    .font(.system(size: 11, weight: .bold))
+                                    .tracking(1.2)
+                                    .foregroundColor(AppTheme.textTertiary)
+                                
+                                Text("Based on \(viewModel.history.count) day\(viewModel.history.count == 1 ? "" : "s")")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(AppTheme.textSecondary)
+                            }
+                            Spacer()
+                        }
+                        
+                        HStack(spacing: 12) {
+                            AverageMacroPill(value: "\(avgCal)", label: "cal", color: AppTheme.calorieColor)
+                            AverageMacroPill(value: String(format: "%.0f", avgProtein), label: "protein", color: AppTheme.proteinColor)
+                            AverageMacroPill(value: String(format: "%.0f", avgCarb), label: "carbs", color: AppTheme.carbColor)
+                            AverageMacroPill(value: String(format: "%.0f", avgFat), label: "fats", color: AppTheme.fatColor)
                         }
                     }
-                    .frame(height: 60)
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color("CardBackground")))
-                .shadow(radius: 1)
-            }
-
-            Section {
-                ForEach(viewModel.history.sorted(by: { $0.date > $1.date })) { entry in
-                    NavigationLink {
-                        FoodLogViewForDate(entries: entry.foodsEaten)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(entry.date.formatted(date: .abbreviated, time: .omitted))
-                                .font(.headline)
-                                .foregroundColor(Color("TextPrimary"))
-                            Text(
-                                "Calories: \(entry.calories), " +
-                                "Protein: \(Int(entry.protein.rounded()))g, " +
-                                "Carbs: \(Int(entry.carbs.rounded()))g, " +
-                                "Fats: \(Int(entry.fats.rounded()))g"
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(AppTheme.cardBackground)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(AppTheme.border, lineWidth: 1)
                             )
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 16)
+                    
+                    // History List
+                    if viewModel.history.isEmpty {
+                        VStack(spacing: 16) {
+                            Image(systemName: "calendar.badge.clock")
+                                .font(.system(size: 48, weight: .light))
+                                .foregroundColor(AppTheme.textTertiary)
+                            
+                            Text("No History Yet")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(AppTheme.textPrimary)
+                            
+                            Text("Your daily macro totals will appear here")
+                                .font(.system(size: 14))
+                                .foregroundColor(AppTheme.textSecondary)
                         }
-                        .padding(.vertical, 4)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 60)
+                    } else {
+                        VStack(spacing: 12) {
+                            ForEach(viewModel.history.sorted(by: { $0.date > $1.date })) { entry in
+                                NavigationLink {
+                                    FoodLogViewForDate(entries: entry.foodsEaten)
+                                } label: {
+                                    HistoryDayRow(entry: entry)
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 20)
                     }
+                    
+                    Spacer(minLength: 40)
                 }
             }
         }
-        .listStyle(InsetGroupedListStyle())
         .navigationTitle("History")
-    }
-
-    func macroColumn(title: String, value: String, width: CGFloat, color: Color) -> some View {
-        VStack(spacing: 4) {
-            Text(title)
-                .font(.caption)
-                .foregroundColor(color)
-            Text(value)
-                .font(.subheadline)
-                .fontWeight(.medium)
-                .foregroundColor(color)
-        }
-        .frame(width: width)
+        .navigationBarTitleDisplayMode(.large)
     }
 
     func getAvgMacros() -> (Int, Double, Double, Double) {
@@ -92,6 +107,67 @@ struct MacroHistoryView: View {
             totalProtein / count,
             totalCarb / count,
             totalFats / count
+        )
+    }
+}
+
+// MARK: - Average Macro Pill
+struct AverageMacroPill: View {
+    let value: String
+    let label: String
+    let color: Color
+    
+    var body: some View {
+        VStack(spacing: 6) {
+            Text(value)
+                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .foregroundColor(color)
+            Text(label)
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(color.opacity(0.7))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(color.opacity(0.1))
+        )
+    }
+}
+
+// MARK: - History Day Row
+struct HistoryDayRow: View {
+    let entry: MacroHistoryEntry
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(entry.date.formatted(date: .abbreviated, time: .omitted))
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(AppTheme.textPrimary)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(AppTheme.textTertiary)
+            }
+            
+            HStack(spacing: 8) {
+                MacroPill(value: "\(entry.calories)", label: "cal", color: AppTheme.calorieColor)
+                MacroPill(value: "\(Int(entry.protein.rounded()))", label: "P", color: AppTheme.proteinColor)
+                MacroPill(value: "\(Int(entry.carbs.rounded()))", label: "C", color: AppTheme.carbColor)
+                MacroPill(value: "\(Int(entry.fats.rounded()))", label: "F", color: AppTheme.fatColor)
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(AppTheme.cardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(AppTheme.border, lineWidth: 1)
+                )
         )
     }
 }

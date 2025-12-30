@@ -38,57 +38,285 @@ struct MacroGoalWizardView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Personal Info")) {
-                    Picker("Sex", selection: $sex) {
-                        ForEach(sexes, id: \.self) { Text($0) }
-                    }
-                    Stepper("Age: \(age)", value: $age, in: 10...100)
-                    Stepper("Height: \(heightFeet) ft \(heightInches) in", onIncrement: {
-                        if heightInches < 11 {
-                            heightInches += 1
-                        } else {
-                            heightInches = 0
-                            heightFeet += 1
+            ZStack {
+                AppTheme.background.ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 24) {
+                        // Header
+                        VStack(spacing: 8) {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 40, weight: .light))
+                                .foregroundColor(AppTheme.textPrimary)
+                            
+                            Text("Calculate Your Macros")
+                                .font(.system(size: 22, weight: .bold))
+                                .foregroundColor(AppTheme.textPrimary)
+                            
+                            Text("We'll calculate your ideal daily targets")
+                                .font(.system(size: 14))
+                                .foregroundColor(AppTheme.textSecondary)
                         }
-                    }, onDecrement: {
-                        if heightInches > 0 {
-                            heightInches -= 1
-                        } else if heightFeet > 1 {
-                            heightInches = 11
-                            heightFeet -= 1
+                        .padding(.top, 20)
+                        .padding(.bottom, 8)
+                        
+                        // Personal Info Section
+                        VStack(alignment: .leading, spacing: 12) {
+                            SectionHeader(title: "Personal Info")
+                            
+                            VStack(spacing: 0) {
+                                // Sex
+                                HStack {
+                                    Text("Sex")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(AppTheme.textPrimary)
+                                    Spacer()
+                                    HStack(spacing: 8) {
+                                        ForEach(sexes, id: \.self) { option in
+                                            Button {
+                                                sex = option
+                                            } label: {
+                                                Text(option)
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .foregroundColor(sex == option ? .black : AppTheme.textSecondary)
+                                                    .padding(.horizontal, 16)
+                                                    .padding(.vertical, 8)
+                                                    .background(
+                                                        RoundedRectangle(cornerRadius: 8)
+                                                            .fill(sex == option ? Color.white : Color.clear)
+                                                    )
+                                            }
+                                        }
+                                    }
+                                    .padding(4)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.white.opacity(0.06))
+                                    )
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                
+                                Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                                
+                                // Age
+                                HStack {
+                                    Text("Age")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(AppTheme.textPrimary)
+                                    Spacer()
+                                    HStack(spacing: 16) {
+                                        Button {
+                                            if age > 10 { age -= 1 }
+                                        } label: {
+                                            Image(systemName: "minus.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(AppTheme.textSecondary)
+                                        }
+                                        Text("\(age)")
+                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .foregroundColor(AppTheme.textPrimary)
+                                            .frame(minWidth: 40)
+                                        Button {
+                                            if age < 100 { age += 1 }
+                                        } label: {
+                                            Image(systemName: "plus.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(AppTheme.textPrimary)
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                
+                                Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                                
+                                // Height
+                                HStack {
+                                    Text("Height")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(AppTheme.textPrimary)
+                                    Spacer()
+                                    HStack(spacing: 8) {
+                                        Button {
+                                            if heightInches > 0 {
+                                                heightInches -= 1
+                                            } else if heightFeet > 1 {
+                                                heightInches = 11
+                                                heightFeet -= 1
+                                            }
+                                        } label: {
+                                            Image(systemName: "minus.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(AppTheme.textSecondary)
+                                        }
+                                        Text("\(heightFeet)'\(heightInches)\"")
+                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .foregroundColor(AppTheme.textPrimary)
+                                            .frame(minWidth: 60)
+                                        Button {
+                                            if heightInches < 11 {
+                                                heightInches += 1
+                                            } else {
+                                                heightInches = 0
+                                                heightFeet += 1
+                                            }
+                                        } label: {
+                                            Image(systemName: "plus.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(AppTheme.textPrimary)
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                
+                                Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                                
+                                // Weight
+                                HStack {
+                                    Text("Weight")
+                                        .font(.system(size: 15))
+                                        .foregroundColor(AppTheme.textPrimary)
+                                    Spacer()
+                                    HStack(spacing: 8) {
+                                        Button {
+                                            if weightLbs > 66 { weightLbs -= 1 }
+                                        } label: {
+                                            Image(systemName: "minus.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(AppTheme.textSecondary)
+                                        }
+                                        Text("\(Int(weightLbs)) lbs")
+                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .foregroundColor(AppTheme.textPrimary)
+                                            .frame(minWidth: 80)
+                                        Button {
+                                            if weightLbs < 400 { weightLbs += 1 }
+                                        } label: {
+                                            Image(systemName: "plus.circle.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundColor(AppTheme.textPrimary)
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(AppTheme.cardBackground)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(AppTheme.border, lineWidth: 1)
+                                    )
+                            )
                         }
-                    })
-
-                    Stepper("Weight: \(weightLbs, specifier: "%.0f") lbs", value: $weightLbs, in: 66...400)
-                }
-
-                Section(header: Text("Activity Level")) {
-                    Picker("Activity Level", selection: $activityLevel) {
-                        ForEach(activityOptions, id: \.self) { Text($0) }
+                        
+                        // Activity Level Section
+                        VStack(alignment: .leading, spacing: 12) {
+                            SectionHeader(title: "Activity Level")
+                            
+                            VStack(spacing: 8) {
+                                ForEach(activityOptions, id: \.self) { option in
+                                    Button {
+                                        activityLevel = option
+                                    } label: {
+                                        HStack {
+                                            Text(option)
+                                                .font(.system(size: 15, weight: activityLevel == option ? .semibold : .regular))
+                                                .foregroundColor(activityLevel == option ? .black : AppTheme.textPrimary)
+                                            Spacer()
+                                            if activityLevel == option {
+                                                Image(systemName: "checkmark")
+                                                    .font(.system(size: 14, weight: .bold))
+                                                    .foregroundColor(.black)
+                                            }
+                                        }
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 14)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .fill(activityLevel == option ? Color.white : AppTheme.cardBackground)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 12)
+                                                        .stroke(activityLevel == option ? Color.clear : AppTheme.border, lineWidth: 1)
+                                                )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Goal Section
+                        VStack(alignment: .leading, spacing: 12) {
+                            SectionHeader(title: "Your Goal")
+                            
+                            Menu {
+                                ForEach(goals, id: \.self) { goal in
+                                    Button {
+                                        personalGoal = goal
+                                    } label: {
+                                        Text(goal)
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Text(personalGoal)
+                                        .font(.system(size: 15))
+                                        .foregroundColor(AppTheme.textPrimary)
+                                    Spacer()
+                                    Image(systemName: "chevron.up.chevron.down")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(AppTheme.textSecondary)
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 16)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(AppTheme.cardBackground)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(AppTheme.border, lineWidth: 1)
+                                        )
+                                )
+                            }
+                        }
+                        
+                        // Calculate Button
+                        Button {
+                            calculateMacros()
+                            dismiss()
+                        } label: {
+                            HStack(spacing: 8) {
+                                Image(systemName: "sparkles")
+                                    .font(.system(size: 18))
+                                Text("Calculate My Macros")
+                            }
+                        }
+                        .buttonStyle(SleekButtonStyle())
+                        .padding(.top, 8)
+                        .padding(.bottom, 40)
                     }
-                }
-                Section(header: Text("Your Goal")) {
-                    Picker("Your Goal", selection: $personalGoal) {
-                        ForEach(goals, id: \.self) { Text($0) }
-                    }
-                }
-
-                Section {
-                    Button("Calculate Macros") {
-                        calculateMacros()
-                        dismiss()
-                    }
-                    .font(.headline)
+                    .padding(.horizontal, 20)
                 }
             }
-            .navigationTitle("Set Your Goals")
+            .navigationTitle("Macro Calculator")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    .foregroundColor(AppTheme.textSecondary)
+                }
+            }
         }
     }
 
     func calculateMacros() {
-        let height = Double(heightFeet * 12 + heightInches) * 2.54 // convert inches to cm
-        let weight = weightLbs * 0.453592 // convert lbs to kg
+        let height = Double(heightFeet * 12 + heightInches) * 2.54
+        let weight = weightLbs * 0.453592
         let bmr: Double = {
             if sex == "Male" {
                 return (10 * weight) + (6.25 * height) - (5 * Double(age)) + 5
@@ -118,14 +346,14 @@ struct MacroGoalWizardView: View {
             case "Moderate Weight Loss (1 lb/week)": return -500
             case "Significant Weight Loss (1.5 lb/week)": return -750
             case "Very Significant Weight Loss (2 lb/week)": return -1000
-            default: return 0 // Maintain Weight
+            default: return 0
             }
         }()
 
         let totalCalories = Int(bmr * activityMultiplier) + goalCalorieAdjustment
         calorieGoal = totalCalories
 
-        proteinGoal = Double(weight) * 2.0 // grams per kg
+        proteinGoal = Double(weight) * 2.0
         fatGoal = Double(totalCalories) * 0.25 / 9
         let proteinCals = proteinGoal * 4
         let fatCals = fatGoal * 9

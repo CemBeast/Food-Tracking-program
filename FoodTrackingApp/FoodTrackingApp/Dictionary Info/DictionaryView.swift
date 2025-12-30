@@ -18,7 +18,6 @@ struct FoodItem: Identifiable, Codable {
     var servingUnit: ServingUnit
     var isFavorite: Bool = false
     
-    // Backwards-compatible decode (old JSON won't have isFavorite)
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -31,8 +30,6 @@ struct FoodItem: Identifiable, Codable {
         carbs = try c.decode(Double.self, forKey: .carbs)
         fats = try c.decode(Double.self, forKey: .fats)
         servingUnit = try c.decode(ServingUnit.self, forKey: .servingUnit)
-
-        // ✅ default if missing
         isFavorite = try c.decodeIfPresent(Bool.self, forKey: .isFavorite) ?? false
     }
     
@@ -58,7 +55,7 @@ struct FoodItem: Identifiable, Codable {
             self.servingUnit = servingUnit
             self.isFavorite = isFavorite
         }
-    // 🔒 Explicit keys make encoding/decoding bulletproof
+    
     enum CodingKeys: String, CodingKey {
         case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit, isFavorite
     }
@@ -89,7 +86,7 @@ enum MeasurementMode: String, Codable, CaseIterable, Identifiable {
 struct DictionaryView: View {
     @Binding var selectedFood: FoodItem?
     @Binding var showGramsInput: Bool
-    @Binding var selectedFoodID: UUID? // Track the selected food item's ID
+    @Binding var selectedFoodID: UUID?
     @Binding var selectedMeasurementMode: MeasurementMode?
     @ObservedObject var foodModel: FoodModel
     @State private var searchText: String = ""
@@ -109,56 +106,80 @@ struct DictionaryView: View {
     }()
     
     var body: some View {
-        VStack {
-            TextField("Search", text: $searchText)
-                .padding(8)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(maxWidth: .infinity)
-                .padding(.bottom, 8)
-            
-            Picker("Sort by", selection: $sortOption) {
-                ForEach(SortOption.allCases) {option in
-                    Text(option.rawValue).tag(option)
+        VStack(spacing: 0) {
+            // Search Bar
+            HStack(spacing: 12) {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 16))
+                    .foregroundColor(AppTheme.textTertiary)
+                
+                TextField("Search foods...", text: $searchText)
+                    .font(.system(size: 16))
+                    .foregroundColor(AppTheme.textPrimary)
+                
+                if !searchText.isEmpty {
+                    Button {
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 16))
+                            .foregroundColor(AppTheme.textTertiary)
+                    }
                 }
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.white.opacity(0.06))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(AppTheme.border, lineWidth: 1)
+                    )
+            )
+            .padding(.horizontal, 20)
+            .padding(.top, 16)
+            .padding(.bottom, 12)
             
+            // Sort Picker
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(SortOption.allCases) { option in
+                        Button {
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                sortOption = option
+                            }
+                        } label: {
+                            Text(option.rawValue)
+                                .font(.system(size: 13, weight: sortOption == option ? .semibold : .medium))
+                                .foregroundColor(sortOption == option ? .black : AppTheme.textSecondary)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(sortOption == option ? Color.white : Color.white.opacity(0.06))
+                                )
+                        }
+                    }
+                }
+                .padding(.horizontal, 20)
+            }
+            .padding(.bottom, 12)
+            
+            // Food List
             List {
-                // Tracking food from the dictionary
                 if !readOnly {
                     ForEach(filteredFoodItems) { foodItem in
                         Button(action: {}) {
-                            content(for: foodItem, isSelected: foodItem.id == selectedFoodID)
-                                .onTapGesture{
-                                    selectedFood = foodItem
-                                    selectedFoodID = foodItem.id // Highlight the selected item
-                                    showMeasurementDialog = true
-                                }
-                                .swipeActions(edge: .leading, allowsFullSwipe: true) { //  swipe right to favorite
-                                    Button {
-                                        toggleFavorite(foodItem)
-                                    } label: {
-                                        Label(
-                                            foodItem.isFavorite ? "Unfavorite" : "Favorite",
-                                            systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
-                                        )
-                                    }
-                                    .tint(.yellow)
-                                }
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                } else {
-                    ForEach(filteredFoodItems) { foodItem in
-                        content (for : foodItem, isSelected: false)
-                            .onLongPressGesture {
-                                print("Editing \(foodItem.name)")
-                                foodToEdit = foodItem
-                                isEditingFood = true
+                            FoodItemRow(foodItem: foodItem, isSelected: foodItem.id == selectedFoodID, onToggleFavorite: {
+                                toggleFavorite(foodItem)
+                            })
+                            .onTapGesture {
+                                selectedFood = foodItem
+                                selectedFoodID = foodItem.id
+                                showMeasurementDialog = true
                             }
-                            .swipeActions(edge: .leading, allowsFullSwipe: true) { // ✅ swipe right
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                 Button {
                                     toggleFavorite(foodItem)
                                 } label: {
@@ -169,14 +190,45 @@ struct DictionaryView: View {
                                 }
                                 .tint(.yellow)
                             }
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                    }
+                } else {
+                    ForEach(filteredFoodItems) { foodItem in
+                        FoodItemRow(foodItem: foodItem, isSelected: false, onToggleFavorite: {
+                            toggleFavorite(foodItem)
+                        })
+                        .onLongPressGesture {
+                            foodToEdit = foodItem
+                            isEditingFood = true
+                        }
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button {
+                                toggleFavorite(foodItem)
+                            } label: {
+                                Label(
+                                    foodItem.isFavorite ? "Unfavorite" : "Favorite",
+                                    systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
+                                )
+                            }
+                            .tint(.yellow)
+                        }
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
                     }
                     .onDelete(perform: deleteItems)
                 }
             }
+            .listStyle(PlainListStyle())
+            .scrollContentBackground(.hidden)
         }
+        .background(AppTheme.background.ignoresSafeArea())
         .navigationTitle("Food Dictionary")
-        .listStyle(PlainListStyle())
-        // 3) Confirmation dialog for "Track by"
+        .navigationBarTitleDisplayMode(.large)
         .confirmationDialog(
             "Track by",
             isPresented: $showMeasurementDialog,
@@ -222,7 +274,6 @@ struct DictionaryView: View {
         case .name:
             return base.sorted { $0.name.lowercased() < $1.name.lowercased() }
         case .favorites:
-            //  ONLY favorites
             return base
                 .filter { $0.isFavorite }
                 .sorted { $0.name.lowercased() < $1.name.lowercased() }
@@ -238,66 +289,9 @@ struct DictionaryView: View {
     }
     
     private func toggleFavorite(_ foodItem: FoodItem) {
-        guard let idx = foodModel.items.firstIndex(where: {$0.id == foodItem.id}) else  {return}
+        guard let idx = foodModel.items.firstIndex(where: {$0.id == foodItem.id}) else { return }
         foodModel.items[idx].isFavorite.toggle()
         foodModel.save()
-    }
-    
-    private func content(for foodItem: FoodItem, isSelected: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text(foodItem.name)
-                    .font(.headline)
-
-                Spacer()
-
-                Button {
-                    toggleFavorite(foodItem)
-                } label: {
-                    Image(systemName: foodItem.isFavorite ? "star.fill" : "star")
-                        .foregroundColor(foodItem.isFavorite ? .yellow : .secondary)
-                        .imageScale(.medium)
-                }
-                .buttonStyle(.plain)
-            }
-            
-            HStack(spacing: 12) {
-                macroColumn(icon: "number.circle.fill", label: "Servings", value: "\(foodItem.servings)", color: Color("TextPrimary").opacity(0.6))
-                macroColumn(
-                    icon: foodItem.servingUnit == .grams ? "scalemass.fill" : "eyedropper",
-                    label: foodItem.servingUnit == .grams ? "Weight" : "Volume",
-                    value: "\(foodItem.weightInGrams)\(foodItem.servingUnit == .grams ? "g" : "ml")",
-                    color: Color("TextPrimary").opacity(0.6)
-                )
-                macroColumn(icon: "flame.fill", label: "Calories", value: "\(foodItem.calories)", color: .red)
-                macroColumn(icon: "bolt.circle.fill", label: "Protein", value: String(format: "%.1fg", foodItem.protein), color: .yellow)
-                macroColumn(icon: "leaf.circle.fill", label: "Carbs", value: String(format: "%.1fg", foodItem.carbs), color: .green)
-                macroColumn(icon: "drop.circle.fill", label: "Fats", value: String(format: "%.1fg", foodItem.fats), color: .purple)
-            }
-            .lineLimit(1)
-            .minimumScaleFactor(0.75)
-        }
-        .padding(.vertical, 8)
-        .padding(.horizontal)
-        .background(isSelected ? Color.blue.opacity(0.15) : Color.gray.opacity(0.05))
-        .cornerRadius(10)
-    }
-    
-    @ViewBuilder
-    func macroColumn(icon: String, label: String, value: String, color: Color) -> some View {
-        VStack(spacing: 2) {
-            Image(systemName: icon)
-                .foregroundColor(color)
-                .font(.caption)
-            Text(label)
-                .font(.caption2)
-                .foregroundColor(.secondary)
-            Text(value)
-                .font(.subheadline)
-                .fontWeight(.medium)
-                .foregroundColor(color)
-        }
-        .frame(minWidth: 50)
     }
     
     func loadFoodDictionary() {
@@ -305,15 +299,93 @@ struct DictionaryView: View {
     }
     
     private func deleteItems(at offsets: IndexSet) {
-        // figure out which FoodItems are being deleted
         let toDelete = offsets.map { filteredFoodItems[$0] }
-        // remove them from the underlying model
         for item in toDelete {
             if let idx = foodModel.items.firstIndex(where: { $0.id == item.id}) {
                 foodModel.items.remove(at: idx)
             }
         }
-        // persist the change
         foodModel.save()
+    }
+}
+
+// MARK: - Food Item Row
+struct FoodItemRow: View {
+    let foodItem: FoodItem
+    let isSelected: Bool
+    let onToggleFavorite: () -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // Header with name and favorite
+            HStack {
+                Text(foodItem.name)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(AppTheme.textPrimary)
+
+                Spacer()
+
+                Button {
+                    onToggleFavorite()
+                } label: {
+                    Image(systemName: foodItem.isFavorite ? "star.fill" : "star")
+                        .font(.system(size: 16))
+                        .foregroundColor(foodItem.isFavorite ? .yellow : AppTheme.textTertiary)
+                }
+                .buttonStyle(.plain)
+            }
+            
+            // Serving info
+            HStack(spacing: 16) {
+                Label("\(foodItem.servings) srv", systemImage: "number.circle")
+                    .font(.system(size: 12))
+                    .foregroundColor(AppTheme.textSecondary)
+                
+                Label("\(foodItem.weightInGrams)\(foodItem.servingUnit.rawValue)", systemImage: foodItem.servingUnit == .grams ? "scalemass" : "drop")
+                    .font(.system(size: 12))
+                    .foregroundColor(AppTheme.textSecondary)
+            }
+            
+            // Macro pills
+            HStack(spacing: 8) {
+                MacroPill(value: "\(foodItem.calories)", label: "cal", color: AppTheme.calorieColor)
+                MacroPill(value: String(format: "%.0f", foodItem.protein), label: "P", color: AppTheme.proteinColor)
+                MacroPill(value: String(format: "%.0f", foodItem.carbs), label: "C", color: AppTheme.carbColor)
+                MacroPill(value: String(format: "%.0f", foodItem.fats), label: "F", color: AppTheme.fatColor)
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(AppTheme.cardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(isSelected ? Color.white.opacity(0.5) : AppTheme.border, lineWidth: isSelected ? 2 : 1)
+                )
+        )
+    }
+}
+
+// MARK: - Macro Pill
+struct MacroPill: View {
+    let value: String
+    let label: String
+    let color: Color
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(value)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(color)
+            Text(label)
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(color.opacity(0.7))
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(color.opacity(0.12))
+        )
     }
 }

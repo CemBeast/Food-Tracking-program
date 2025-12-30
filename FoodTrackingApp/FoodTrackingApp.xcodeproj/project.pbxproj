@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B218C02D2F03C03F007E367C /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218C02C2F03C03F007E367C /* AppTheme.swift */; };
 		B22A49942DE662240073119C /* EditGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A49932DE662240073119C /* EditGoalsView.swift */; };
 		B22A49982DE6682D0073119C /* DailyMacrosDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A49972DE6682D0073119C /* DailyMacrosDisplay.swift */; };
 		B23C6A642DDEDAE6004D770F /* FoodLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23C6A632DDEDAE6004D770F /* FoodLogView.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B218C02C2F03C03F007E367C /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		B22A49932DE662240073119C /* EditGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalsView.swift; sourceTree = "<group>"; };
 		B22A49972DE6682D0073119C /* DailyMacrosDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMacrosDisplay.swift; sourceTree = "<group>"; };
 		B23C6A2E2DD17A34004D770F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		B2DF75F22B36ECDF0069D56C = {
 			isa = PBXGroup;
 			children = (
+				B218C02C2F03C03F007E367C /* AppTheme.swift */,
 				B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */,
 				B2E1FF4A2E19B65A00D1520B /* Frameworks */,
 				B2DF75FC2B36ECDF0069D56C /* Products */,
@@ -222,6 +225,7 @@
 				B23C6A662DDFFA9C004D770F /* EditQuantityView.swift in Sources */,
 				B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */,
 				B22A49942DE662240073119C /* EditGoalsView.swift in Sources */,
+				B218C02D2F03C03F007E367C /* AppTheme.swift in Sources */,
 				B2ECDC2F2D1D20BA00C220DB /* MacroTrackerViewModel.swift in Sources */,
 				B23C6A642DDEDAE6004D770F /* FoodLogView.swift in Sources */,
 				B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */,
