@@ -15,8 +15,19 @@ class FoodModel: ObservableObject {
     }
     
     func add(_ item: FoodItem) {
-        // never add the same food name twice
-        guard !items.contains(where: { $0.name.lowercased() == item.name.lowercased() }) else {
+        if item.isMeal {
+            if let idx = items.firstIndex(where: { $0.id == item.id }) {
+                items[idx] = item
+            } else {
+                items.append(item)
+            }
+            print("💾 FoodModel saved meal:", item.name, "id:", item.id, "ingredients:", item.ingredients?.count ?? -1)
+            save()
+            return
+        }
+        
+        // non-meal: prevent duplicates by name
+        if items.contains(where: { !$0.isMeal && $0.name.lowercased() == item.name.lowercased() }) {
             return
         }
         print("💾 FoodModel.add() called for:", item.name)

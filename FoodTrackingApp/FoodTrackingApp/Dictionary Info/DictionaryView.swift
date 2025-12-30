@@ -18,6 +18,7 @@ struct FoodItem: Identifiable, Codable {
     var servingUnit: ServingUnit
     var isFavorite: Bool = false
     var isMeal: Bool = false
+    var ingredients: [MealIngredient]? = nil
     
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -33,6 +34,7 @@ struct FoodItem: Identifiable, Codable {
         servingUnit = try c.decode(ServingUnit.self, forKey: .servingUnit)
         isFavorite = try c.decodeIfPresent(Bool.self, forKey: .isFavorite) ?? false
         isMeal = try c.decodeIfPresent(Bool.self, forKey: .isMeal) ?? false
+        ingredients = try c.decodeIfPresent([MealIngredient].self, forKey: .ingredients)
     }
     
     init(
@@ -45,7 +47,8 @@ struct FoodItem: Identifiable, Codable {
             fats: Double,
             servingUnit: ServingUnit,
             isFavorite: Bool = false,
-            isMeal: Bool = false
+            isMeal: Bool = false,
+            ingredients: [MealIngredient]? = nil
         ) {
             self.id = UUID()
             self.name = name
@@ -58,10 +61,74 @@ struct FoodItem: Identifiable, Codable {
             self.servingUnit = servingUnit
             self.isFavorite = isFavorite
             self.isMeal = isMeal
+            self.ingredients = ingredients
         }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit, isFavorite, isMeal
+        case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit, isFavorite, isMeal, ingredients
+    }
+}
+
+struct MealIngredient: Identifiable, Codable {
+    var id: UUID
+    var foodId: UUID?
+    var name: String
+    var baseWeightInGrams: Int
+    var baseServings: Int
+    var servingUnit: ServingUnit
+    var calories: Int
+    var protein: Double
+    var carbs: Double
+    var fats: Double
+    var quantity: Double
+    var mode: MeasurementMode
+    
+    init(
+        id: UUID = UUID(),
+        foodId: UUID? = nil,
+        name: String,
+        baseWeightInGrams: Int,
+        baseServings: Int,
+        servingUnit: ServingUnit,
+        calories: Int,
+        protein: Double,
+        carbs: Double,
+        fats: Double,
+        quantity: Double,
+        mode: MeasurementMode
+    ) {
+        self.id = id
+        self.foodId = foodId
+        self.name = name
+        self.baseWeightInGrams = baseWeightInGrams
+        self.baseServings = baseServings
+        self.servingUnit = servingUnit
+        self.calories = calories
+        self.protein = protein
+        self.carbs = carbs
+        self.fats = fats
+        self.quantity = quantity
+        self.mode = mode
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id, foodId, name, baseWeightInGrams, baseServings, servingUnit, calories, protein, carbs, fats, quantity, mode
+    }
+    
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        foodId = try c.decodeIfPresent(UUID.self, forKey: .foodId)
+        name = try c.decode(String.self, forKey: .name)
+        baseWeightInGrams = try c.decode(Int.self, forKey: .baseWeightInGrams)
+        baseServings = try c.decode(Int.self, forKey: .baseServings)
+        servingUnit = try c.decode(ServingUnit.self, forKey: .servingUnit)
+        calories = try c.decode(Int.self, forKey: .calories)
+        protein = try c.decode(Double.self, forKey: .protein)
+        carbs = try c.decode(Double.self, forKey: .carbs)
+        fats = try c.decode(Double.self, forKey: .fats)
+        quantity = try c.decode(Double.self, forKey: .quantity)
+        mode = try c.decode(MeasurementMode.self, forKey: .mode)
     }
 }
 
@@ -97,6 +164,8 @@ struct DictionaryView: View {
     @State private var isEditingFood: Bool = false
     @State private var foodToEdit: FoodItem? = nil
     
+    // Optional external selection handler (e.g., MealBuilder)
+    var onFoodSelected: ((FoodItem) -> Void)? = nil
     var readOnly: Bool = false
 
     let formatter: NumberFormatter = {
@@ -109,124 +178,9 @@ struct DictionaryView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Search Bar
-            HStack(spacing: 12) {
-                Image(systemName: "magnifyingglass")
-                    .font(.system(size: 16))
-                    .foregroundColor(AppTheme.textTertiary)
-                
-                TextField("Search foods...", text: $searchText)
-                    .font(.system(size: 16))
-                    .foregroundColor(AppTheme.textPrimary)
-                
-                if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 16))
-                            .foregroundColor(AppTheme.textTertiary)
-                    }
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.white.opacity(0.06))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(AppTheme.border, lineWidth: 1)
-                    )
-            )
-            .padding(.horizontal, 20)
-            .padding(.top, 16)
-            .padding(.bottom, 12)
-            
-            // Sort Picker
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(SortOption.allCases) { option in
-                        Button {
-                            withAnimation(.easeOut(duration: 0.2)) {
-                                sortOption = option
-                            }
-                        } label: {
-                            Text(option.rawValue)
-                                .font(.system(size: 13, weight: sortOption == option ? .semibold : .medium))
-                                .foregroundColor(sortOption == option ? .black : AppTheme.textSecondary)
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .fill(sortOption == option ? Color.white : Color.white.opacity(0.06))
-                                )
-                        }
-                    }
-                }
-                .padding(.horizontal, 20)
-            }
-            .padding(.bottom, 12)
-            
-            // Food List
-            List {
-                if !readOnly {
-                    ForEach(filteredFoodItems) { foodItem in
-                        Button(action: {}) {
-                            FoodItemRow(foodItem: foodItem, isSelected: foodItem.id == selectedFoodID, onToggleFavorite: {
-                                toggleFavorite(foodItem)
-                            })
-                            .onTapGesture {
-                                selectedFood = foodItem
-                                selectedFoodID = foodItem.id
-                                showMeasurementDialog = true
-                            }
-                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                                Button {
-                                    toggleFavorite(foodItem)
-                                } label: {
-                                    Label(
-                                        foodItem.isFavorite ? "Unfavorite" : "Favorite",
-                                        systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
-                                    )
-                                }
-                                .tint(.yellow)
-                            }
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
-                    }
-                } else {
-                    ForEach(filteredFoodItems) { foodItem in
-                        FoodItemRow(foodItem: foodItem, isSelected: false, onToggleFavorite: {
-                            toggleFavorite(foodItem)
-                        })
-                        .onLongPressGesture {
-                            foodToEdit = foodItem
-                            isEditingFood = true
-                        }
-                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button {
-                                toggleFavorite(foodItem)
-                            } label: {
-                                Label(
-                                    foodItem.isFavorite ? "Unfavorite" : "Favorite",
-                                    systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
-                                )
-                            }
-                            .tint(.yellow)
-                        }
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
-                    }
-                    .onDelete(perform: deleteItems)
-                }
-            }
-            .listStyle(PlainListStyle())
-            .scrollContentBackground(.hidden)
+            searchBar
+            sortChips
+            foodList
         }
         .background(AppTheme.background.ignoresSafeArea())
         .navigationTitle("Food Dictionary")
@@ -252,20 +206,170 @@ struct DictionaryView: View {
             }
         }
         .sheet(item: $foodToEdit) { item in
-            EditFoodItemView(
-                foodItem: item,
-                onSave: { updated in
-                    if let index = foodModel.items.firstIndex(where: { $0.id == updated.id }) {
-                        foodModel.items[index] = updated
-                        foodModel.save()
+            Group {
+                if item.isMeal {
+                    IngredientsView(
+                        foodModel: foodModel,
+                        mealId: item.id,
+                        initialMeal: item
+                    ) { newMeal in
+                        if let index = foodModel.items.firstIndex(where: { $0.id == item.id }) {
+                            foodModel.items[index] = newMeal
+                            foodModel.save()
+                        }
+                        foodToEdit = nil
                     }
-                    foodToEdit = nil
-                },
-                onCancel: {
-                    foodToEdit = nil
+                } else {
+                    EditFoodItemView(
+                        foodItem: item,
+                        onSave: { updated in
+                            if let index = foodModel.items.firstIndex(where: { $0.id == updated.id }) {
+                                foodModel.items[index] = updated
+                                foodModel.save()
+                            }
+                            foodToEdit = nil
+                        },
+                        onCancel: {
+                            foodToEdit = nil
+                        }
+                    )
                 }
-            )
+            }
         }
+    }
+    
+    @ViewBuilder
+    private var searchBar: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 16))
+                .foregroundColor(AppTheme.textTertiary)
+            
+            TextField("Search foods...", text: $searchText)
+                .font(.system(size: 16))
+                .foregroundColor(AppTheme.textPrimary)
+            
+            if !searchText.isEmpty {
+                Button {
+                    searchText = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 16))
+                        .foregroundColor(AppTheme.textTertiary)
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white.opacity(0.06))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(AppTheme.border, lineWidth: 1)
+                )
+        )
+        .padding(.horizontal, 20)
+        .padding(.top, 16)
+        .padding(.bottom, 12)
+    }
+    
+    @ViewBuilder
+    private var sortChips: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(SortOption.allCases) { option in
+                    Button {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            sortOption = option
+                        }
+                    } label: {
+                        Text(option.rawValue)
+                            .font(.system(size: 13, weight: sortOption == option ? .semibold : .medium))
+                            .foregroundColor(sortOption == option ? .black : AppTheme.textSecondary)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(sortOption == option ? Color.white : Color.white.opacity(0.06))
+                            )
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+        .padding(.bottom, 12)
+    }
+    
+    @ViewBuilder
+    private var foodList: some View {
+        List {
+            if !readOnly {
+                ForEach(filteredFoodItems) { foodItem in
+                    Button(action: {}) {
+                        FoodItemRow(foodItem: foodItem, isSelected: foodItem.id == selectedFoodID, onToggleFavorite: {
+                            toggleFavorite(foodItem)
+                        })
+                        .onTapGesture {
+                            if let onFoodSelected = onFoodSelected {
+                                onFoodSelected(foodItem)
+                            } else {
+                                selectedFood = foodItem
+                                selectedFoodID = foodItem.id
+                                showMeasurementDialog = true
+                            }
+                        }
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button {
+                                toggleFavorite(foodItem)
+                            } label: {
+                                Label(
+                                    foodItem.isFavorite ? "Unfavorite" : "Favorite",
+                                    systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
+                                )
+                            }
+                            .tint(.yellow)
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                }
+            } else {
+                ForEach(filteredFoodItems) { foodItem in
+                    FoodItemRow(foodItem: foodItem, isSelected: false, onToggleFavorite: {
+                        toggleFavorite(foodItem)
+                    })
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if let onFoodSelected = onFoodSelected {
+                            onFoodSelected(foodItem)
+                        } else {
+                            foodToEdit = foodItem
+                            isEditingFood = true
+                        }
+                    }
+                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                        Button {
+                            toggleFavorite(foodItem)
+                        } label: {
+                            Label(
+                                foodItem.isFavorite ? "Unfavorite" : "Favorite",
+                                systemImage: foodItem.isFavorite ? "star.slash" : "star.fill"
+                            )
+                        }
+                        .tint(.yellow)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                }
+                .onDelete(perform: deleteItems)
+            }
+        }
+        .listStyle(PlainListStyle())
+        .scrollContentBackground(.hidden)
     }
     
     private var filteredFoodItems: [FoodItem] {
@@ -319,9 +423,17 @@ struct FoodItemRow: View {
         VStack(alignment: .leading, spacing: 10) {
             // Header with name and favorite
             HStack {
-                Text(foodItem.name)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(AppTheme.textPrimary)
+                HStack(spacing: 8) {
+                    Text(foodItem.name)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(AppTheme.textPrimary)
+                    if foodItem.isMeal {
+                        Image(systemName: "square.stack.3d.up.fill")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(AppTheme.textSecondary)
+                            .accessibilityLabel("Meal")
+                    }
+                }
 
                 Spacer()
 

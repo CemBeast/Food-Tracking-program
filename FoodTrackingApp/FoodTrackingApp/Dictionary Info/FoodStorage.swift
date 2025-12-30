@@ -16,8 +16,14 @@ func getDocumentsDirectory() -> URL {
 func saveFoodItems(_ items : [FoodItem]) {
     let url = getDocumentsDirectory().appendingPathComponent(foodDictionaryFileName)
     do {
-        let data = try JSONEncoder().encode(items)
-        try data.write(to: url)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        let data = try encoder.encode(items)
+        try data.write(to: url, options: [.atomic])
+        
+        if let meal = items.first(where: { $0.isMeal }) {
+            print("💾 SAVING MEAL:", meal.name, "id:", meal.id, "ingredients:", meal.ingredients?.count ?? -1)
+        }
     } catch {
         print("Failed to save food items: \(error)")
     }
@@ -32,6 +38,9 @@ func loadFoodItems() -> [FoodItem] {
         do {
             let data = try Data(contentsOf: url)
             let decoded = try JSONDecoder().decode([FoodItem].self, from: data)
+            if let meal = decoded.first(where: { $0.isMeal }) {
+                print("📦 LOADED MEAL:", meal.name, "id:", meal.id, "ingredients:", meal.ingredients?.count ?? -1)
+            }
             
             if decoded.isEmpty {
                 print("📭 user_foods.json is empty. Loading empty.")

@@ -10,13 +10,46 @@ import Combine
 
 // Struct to represent a day's macro data
 struct MacroHistoryEntry: Identifiable, Codable {
-    let id = UUID()
+    let id: UUID
     let date: Date
     let calories: Int
     let protein: Double
     let carbs: Double
     let fats: Double
     let foodsEaten: [LoggedFoodEntry] // Stores food ate within that day
+    
+    init(
+        id: UUID = UUID(),
+        date: Date,
+        calories: Int,
+        protein: Double,
+        carbs: Double,
+        fats: Double,
+        foodsEaten: [LoggedFoodEntry]
+    ) {
+        self.id = id
+        self.date = date
+        self.calories = calories
+        self.protein = protein
+        self.carbs = carbs
+        self.fats = fats
+        self.foodsEaten = foodsEaten
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id, date, calories, protein, carbs, fats, foodsEaten
+    }
+    
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        date = try c.decode(Date.self, forKey: .date)
+        calories = try c.decode(Int.self, forKey: .calories)
+        protein = try c.decode(Double.self, forKey: .protein)
+        carbs = try c.decode(Double.self, forKey: .carbs)
+        fats = try c.decode(Double.self, forKey: .fats)
+        foodsEaten = try c.decode([LoggedFoodEntry].self, forKey: .foodsEaten)
+    }
 }
 
 // Struct to represent a logged food (since foodItem does not have weight/ servings)

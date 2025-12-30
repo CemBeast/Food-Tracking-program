@@ -31,6 +31,14 @@ struct MealComponent: Identifiable {
 struct MealBuilderView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var foodModel: FoodModel
+    var existingMeal: FoodItem? = nil
+    var onSave: ((FoodItem) -> Void)? = nil
+    
+    init(foodModel: FoodModel, existingMeal: FoodItem? = nil, onSave: ((FoodItem) -> Void)? = nil) {
+        self.foodModel = foodModel
+        self.existingMeal = existingMeal
+        self.onSave = onSave
+    }
     
     // Meal data
     @State private var mealName: String = ""
@@ -56,6 +64,11 @@ struct MealBuilderView: View {
     private var totalFats: Double {
         components.reduce(0) { $0 + $1.fats }
     }
+    private var totalWeight: Double {
+        components.reduce(0) { partial, comp in
+            partial + ingredientWeight(comp.food, quantity: comp.quantity, mode: comp.mode)
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -66,7 +79,7 @@ struct MealBuilderView: View {
                     VStack(spacing: 20) {
                         // Header
                         VStack(spacing: 8) {
-                            Text("Create a Meal")
+                            Text(existingMeal == nil ? "Create a Meal" : "Edit Meal")
                                 .font(.system(size: 22, weight: .bold))
                                 .foregroundColor(AppTheme.textPrimary)
                             Text("Combine foods to save as a meal")
@@ -167,12 +180,13 @@ struct MealBuilderView: View {
                                 .foregroundColor(AppTheme.textTertiary)
                                 .tracking(1.1)
                             
-                            HStack(spacing: 8) {
-                                MacroPill(value: "\(totalCalories)", label: "cal", color: AppTheme.calorieColor)
-                                MacroPill(value: String(format: "%.0f", totalProtein), label: "P", color: AppTheme.proteinColor)
-                                MacroPill(value: String(format: "%.0f", totalCarbs), label: "C", color: AppTheme.carbColor)
-                                MacroPill(value: String(format: "%.0f", totalFats), label: "F", color: AppTheme.fatColor)
-                            }
+                        HStack(spacing: 8) {
+                            MacroPill(value: "\(totalCalories)", label: "cal", color: AppTheme.calorieColor)
+                            MacroPill(value: String(format: "%.0f", totalProtein), label: "P", color: AppTheme.proteinColor)
+                            MacroPill(value: String(format: "%.0f", totalCarbs), label: "C", color: AppTheme.carbColor)
+                            MacroPill(value: String(format: "%.0f", totalFats), label: "F", color: AppTheme.fatColor)
+                            MacroPill(value: String(format: "%.0f g", totalWeight), label: "wt", color: AppTheme.textSecondary)
+                        }
                         }
                         .padding()
                         .background(
@@ -229,7 +243,12 @@ struct MealBuilderView: View {
                         selectedFoodID: $selectedFoodID,
                         selectedMeasurementMode: $selectedMeasurementMode,
                         foodModel: foodModel,
-                        readOnly: false
+                        onFoodSelected: { food in
+                            selectedFood = food
+                            selectedMeasurementMode = (food.servingUnit == .grams) ? .weight : .serving
+                            showGramsInput = true
+                        },
+                        readOnly: true
                     )
                     if showGramsInput,
                        let food = selectedFood,
@@ -257,27 +276,86 @@ struct MealBuilderView: View {
                 }
             }
         }
+        .onAppear {
+            if components.isEmpty, let meal = existingMeal {
+                mealName = meal.name
+                if let ingredients = meal.ingredients {
+                    components = ingredients.map { ing in
+                        let baseFood = FoodItem(
+                            name: ing.name,
+                            weightInGrams: ing.baseWeightInGrams,
+                            servings: ing.baseServings,
+                            calories: ing.calories,
+                            protein: ing.protein,
+                            carbs: ing.carbs,
+                            fats: ing.fats,
+                            servingUnit: ing.servingUnit,
+                            isFavorite: false,
+                            isMeal: false,
+                            ingredients: nil
+                        )
+                        return MealComponent(food: baseFood, quantity: ing.quantity, mode: ing.mode)
+                    }
+                }
+            }
+        }
     }
     
     private func saveMeal() {
         guard !components.isEmpty else { return }
         let nameToUse = mealName.isEmpty ? "Custom Meal" : mealName
         
-        let newMeal = FoodItem(
+        var newMeal = FoodItem(
             name: nameToUse,
-            weightInGrams: 0,
+            weightInGrams: Int(totalWeight.rounded()),
             servings: 1,
             calories: totalCalories,
             protein: totalProtein,
             carbs: totalCarbs,
             fats: totalFats,
             servingUnit: .grams,
-            isFavorite: false,
-            isMeal: true
+            isFavorite: existingMeal?.isFavorite ?? false,
+            isMeal: true,
+            ingredients: components.map { comp in
+                MealIngredient(
+                    foodId: comp.food.id,
+                    name: comp.food.name,
+                    baseWeightInGrams: comp.food.weightInGrams,
+                    baseServings: comp.food.servings,
+                    servingUnit: comp.food.servingUnit,
+                    calories: comp.food.calories,
+                    protein: comp.food.protein,
+                    carbs: comp.food.carbs,
+                    fats: comp.food.fats,
+                    quantity: comp.quantity,
+                    mode: comp.mode
+                )
+            }
         )
         
-        foodModel.add(newMeal)
+        print("✅ BUILT MEAL:", newMeal.name, "isMeal:", newMeal.isMeal, "id:", newMeal.id, "ingredients:", newMeal.ingredients?.count ?? -1)
+        
+        if let existingId = existingMeal?.id {
+            newMeal.id = existingId
+        }
+        
+        if let onSave = onSave {
+            onSave(newMeal)
+        } else {
+            foodModel.add(newMeal)
+        }
         dismiss()
+    }
+    
+    private func ingredientWeight(_ food: FoodItem, quantity: Double, mode: MeasurementMode) -> Double {
+        switch mode {
+        case .weight:
+            return quantity
+        case .serving:
+            let base = Double(max(food.weightInGrams, 0))
+            let servings = Double(max(food.servings, 1))
+            return servings > 0 ? (base / servings) * quantity : 0
+        }
     }
 }
 
