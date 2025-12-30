@@ -32,6 +32,7 @@ struct SectionCard<Content: View>: View {
 struct FoodDictionaryTab: View {
     @Binding var showManual: Bool
     @Binding var showScanner: Bool
+    @Binding var showMealBuilder: Bool
     @Binding var selectedFood: FoodItem?
     @Binding var selectedFoodID: UUID?
     @Binding var showGramsInput: Bool
@@ -60,6 +61,17 @@ struct FoodDictionaryTab: View {
                     Image(systemName: "barcode.viewfinder")
                         .font(.system(size: 18))
                     Text("Add Food by Barcode")
+                }
+            }
+            .buttonStyle(SleekButtonStyle())
+            
+            Button {
+                showMealBuilder = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "square.stack.3d.up.fill")
+                        .font(.system(size: 18))
+                    Text("Create a Meal")
                 }
             }
             .buttonStyle(SleekButtonStyle())
@@ -309,6 +321,9 @@ struct MainMenu: View {
     @State private var pendingAction: (() -> Void)? = nil
     
     @State private var showQuickTracking = false
+    
+    // For creating meals from multiple foods
+    @State private var showMealBuilder = false
 
     var body: some View {
         NavigationView {
@@ -332,6 +347,7 @@ struct MainMenu: View {
                         FoodDictionaryTab(
                             showManual: $showManual,
                             showScanner: $showScanner,
+                            showMealBuilder: $showMealBuilder,
                             selectedFood: $selectedFood,
                             selectedFoodID: $selectedFoodID,
                             showGramsInput: $showGramsInput,
@@ -398,6 +414,9 @@ struct MainMenu: View {
             }
             .sheet(isPresented: $showScanner) {
                 BarcodeTrackingWrapperView(viewModel: foodModel)
+            }
+            .sheet(isPresented: $showMealBuilder) {
+                MealBuilderView(foodModel: foodModel)
             }
             .sheet(isPresented: $showScannerTracking) {
                 ScannerViewForTracking { item in

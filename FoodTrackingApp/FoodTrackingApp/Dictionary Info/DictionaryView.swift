@@ -17,6 +17,7 @@ struct FoodItem: Identifiable, Codable {
     var fats: Double
     var servingUnit: ServingUnit
     var isFavorite: Bool = false
+    var isMeal: Bool = false
     
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -31,6 +32,7 @@ struct FoodItem: Identifiable, Codable {
         fats = try c.decode(Double.self, forKey: .fats)
         servingUnit = try c.decode(ServingUnit.self, forKey: .servingUnit)
         isFavorite = try c.decodeIfPresent(Bool.self, forKey: .isFavorite) ?? false
+        isMeal = try c.decodeIfPresent(Bool.self, forKey: .isMeal) ?? false
     }
     
     init(
@@ -42,7 +44,8 @@ struct FoodItem: Identifiable, Codable {
             carbs: Double,
             fats: Double,
             servingUnit: ServingUnit,
-            isFavorite: Bool = false
+            isFavorite: Bool = false,
+            isMeal: Bool = false
         ) {
             self.id = UUID()
             self.name = name
@@ -54,10 +57,11 @@ struct FoodItem: Identifiable, Codable {
             self.fats = fats
             self.servingUnit = servingUnit
             self.isFavorite = isFavorite
+            self.isMeal = isMeal
         }
     
     enum CodingKeys: String, CodingKey {
-        case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit, isFavorite
+        case id, name, weightInGrams, servings, calories, protein, carbs, fats, servingUnit, isFavorite, isMeal
     }
 }
 
@@ -65,6 +69,7 @@ enum SortOption: String, CaseIterable, Identifiable {
     case name = "Name"
     case calories = "Calories"
     case favorites = "Favorites"
+    case meals = "Meals"
     
     var id: String { self.rawValue }
 }
@@ -275,6 +280,10 @@ struct DictionaryView: View {
         case .favorites:
             return base
                 .filter { $0.isFavorite }
+                .sorted { $0.name.lowercased() < $1.name.lowercased() }
+        case .meals:
+            return base
+                .filter { $0.isMeal }
                 .sorted { $0.name.lowercased() < $1.name.lowercased() }
         }
     }
