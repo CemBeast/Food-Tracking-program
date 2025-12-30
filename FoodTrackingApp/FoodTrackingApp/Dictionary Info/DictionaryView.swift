@@ -64,12 +64,9 @@ struct FoodItem: Identifiable, Codable {
 enum SortOption: String, CaseIterable, Identifiable {
     case name = "Name"
     case calories = "Calories"
-    case protein = "Protein"
-    case carbs = "Carbs"
-    case fats = "Fats"
     case favorites = "Favorites"
     
-    var id: String { self.rawValue}
+    var id: String { self.rawValue }
 }
 
 enum ServingUnit: String, Codable, CaseIterable, Identifiable {
@@ -273,18 +270,12 @@ struct DictionaryView: View {
         switch sortOption {
         case .name:
             return base.sorted { $0.name.lowercased() < $1.name.lowercased() }
+        case .calories:
+            return base.sorted { $0.calories > $1.calories }
         case .favorites:
             return base
                 .filter { $0.isFavorite }
                 .sorted { $0.name.lowercased() < $1.name.lowercased() }
-        case .calories:
-            return base.sorted { $0.calories > $1.calories }
-        case .protein:
-            return base.sorted { $0.protein > $1.protein }
-        case .carbs:
-            return base.sorted { $0.carbs > $1.carbs }
-        case .fats:
-            return base.sorted { $0.fats > $1.fats }
         }
     }
     
