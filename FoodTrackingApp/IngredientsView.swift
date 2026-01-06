@@ -100,7 +100,7 @@ struct IngredientsView: View {
             .listRowBackground(Color.clear)
             
             Section {
-                if let ingredients = meal.ingredients, !ingredients.isEmpty {
+                if  !ingredients.isEmpty {
                     ForEach(ingredients) { ing in
                         ingredientRow(ing)
                             .contentShape(Rectangle())
@@ -183,14 +183,14 @@ struct IngredientsView: View {
     }
     
     private func updateIngredient(_ ing: MealIngredient, newQuantity: Double) {
-        guard var meal = meal else { return }
-        guard var list = meal.ingredients else { return }
+        guard var currentMeal = meal else { return }
+        var list = currentMeal.ingredients
         if let idx = list.firstIndex(where: { $0.id == ing.id }) {
             var updated = ing
             updated.quantity = newQuantity
             list[idx] = updated
-            meal.ingredients = list
-            self.meal = meal
+            currentMeal.ingredients = list
+            self.meal = currentMeal
         }
     }
     
@@ -234,7 +234,7 @@ struct IngredientsView: View {
     private func loadLatestMealData() {
         if let found = foodModel.items.first(where: { $0.id == mealId }) {
             meal = found
-            print("🧩 Loaded meal ingredients:", found.ingredients?.count ?? -1)
+            print("🧩 Loaded meal ingredients:", found.ingredients.count)
         } else {
             print("⚠️ Meal not found for id \(mealId)")
         }

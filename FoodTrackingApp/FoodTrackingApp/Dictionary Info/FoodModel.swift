@@ -21,7 +21,7 @@ class FoodModel: ObservableObject {
             } else {
                 items.append(item)
             }
-            print("💾 FoodModel saved meal:", item.name, "id:", item.id, "ingredients:", item.ingredients?.count ?? -1)
+            print("💾 FoodModel saved meal:", item.name, "id:", item.id, "ingredients:", item.ingredients.count)
             save()
             return
         }

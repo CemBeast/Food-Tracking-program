@@ -22,7 +22,7 @@ func saveFoodItems(_ items : [FoodItem]) {
         try data.write(to: url, options: [.atomic])
         
         if let meal = items.first(where: { $0.isMeal }) {
-            print("💾 SAVING MEAL:", meal.name, "id:", meal.id, "ingredients:", meal.ingredients?.count ?? -1)
+            print("💾 SAVING MEAL:", meal.name, "id:", meal.id, "ingredients:", meal.ingredients.count)
         }
     } catch {
         print("Failed to save food items: \(error)")
@@ -39,7 +39,7 @@ func loadFoodItems() -> [FoodItem] {
             let data = try Data(contentsOf: url)
             let decoded = try JSONDecoder().decode([FoodItem].self, from: data)
             if let meal = decoded.first(where: { $0.isMeal }) {
-                print("📦 LOADED MEAL:", meal.name, "id:", meal.id, "ingredients:", meal.ingredients?.count ?? -1)
+                print("📦 LOADED MEAL:", meal.name, "id:", meal.id, "ingredients:", meal.ingredients.count)
             }
             
             if decoded.isEmpty {

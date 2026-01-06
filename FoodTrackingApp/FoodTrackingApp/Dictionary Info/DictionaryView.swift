@@ -18,7 +18,7 @@ struct FoodItem: Identifiable, Codable {
     var servingUnit: ServingUnit
     var isFavorite: Bool = false
     var isMeal: Bool = false
-    var ingredients: [MealIngredient]? = nil
+    var ingredients: [MealIngredient]
     
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -34,7 +34,7 @@ struct FoodItem: Identifiable, Codable {
         servingUnit = try c.decode(ServingUnit.self, forKey: .servingUnit)
         isFavorite = try c.decodeIfPresent(Bool.self, forKey: .isFavorite) ?? false
         isMeal = try c.decodeIfPresent(Bool.self, forKey: .isMeal) ?? false
-        ingredients = try c.decodeIfPresent([MealIngredient].self, forKey: .ingredients)
+        ingredients = try c.decodeIfPresent([MealIngredient].self, forKey: .ingredients) ?? []
     }
     
     init(
@@ -48,7 +48,7 @@ struct FoodItem: Identifiable, Codable {
             servingUnit: ServingUnit,
             isFavorite: Bool = false,
             isMeal: Bool = false,
-            ingredients: [MealIngredient]? = nil
+            ingredients: [MealIngredient] = []
         ) {
             self.id = UUID()
             self.name = name

@@ -279,23 +279,21 @@ struct MealBuilderView: View {
         .onAppear {
             if components.isEmpty, let meal = existingMeal {
                 mealName = meal.name
-                if let ingredients = meal.ingredients {
-                    components = ingredients.map { ing in
-                        let baseFood = FoodItem(
-                            name: ing.name,
-                            weightInGrams: ing.baseWeightInGrams,
-                            servings: ing.baseServings,
-                            calories: ing.calories,
-                            protein: ing.protein,
-                            carbs: ing.carbs,
-                            fats: ing.fats,
-                            servingUnit: ing.servingUnit,
-                            isFavorite: false,
-                            isMeal: false,
-                            ingredients: nil
-                        )
-                        return MealComponent(food: baseFood, quantity: ing.quantity, mode: ing.mode)
-                    }
+                components = meal.ingredients.map { ing in
+                    let baseFood = FoodItem(
+                        name: ing.name,
+                        weightInGrams: ing.baseWeightInGrams,
+                        servings: ing.baseServings,
+                        calories: ing.calories,
+                        protein: ing.protein,
+                        carbs: ing.carbs,
+                        fats: ing.fats,
+                        servingUnit: ing.servingUnit,
+                        isFavorite: false,
+                        isMeal: false,
+                        ingredients: []
+                    )
+                    return MealComponent(food: baseFood, quantity: ing.quantity, mode: ing.mode)
                 }
             }
         }
@@ -333,7 +331,7 @@ struct MealBuilderView: View {
             }
         )
         
-        print("✅ BUILT MEAL:", newMeal.name, "isMeal:", newMeal.isMeal, "id:", newMeal.id, "ingredients:", newMeal.ingredients?.count ?? -1)
+        print("✅ BUILT MEAL:", newMeal.name, "isMeal:", newMeal.isMeal, "id:", newMeal.id, "ingredients:", newMeal.ingredients.count)
         
         if let existingId = existingMeal?.id {
             newMeal.id = existingId
@@ -358,4 +356,3 @@ struct MealBuilderView: View {
         }
     }
 }
-

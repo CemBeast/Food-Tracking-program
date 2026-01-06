@@ -80,7 +80,7 @@ struct LoggedFoodEntry: Identifiable, Codable {
         case .serving:
             // If “servings” (number of grams per serving) is zero, avoid dividing by zero:
             guard food.servings > 0 else { return 0.0 }
-            return Double(quantity)
+            return Double(quantity) / Double(food.servings)
         }
     }
 
@@ -267,7 +267,7 @@ class MacroTrackerViewModel: ObservableObject {
             case .serving:
                 // If servings‐per‐item is zero, avoid dividing by zero:
                 guard item.servings > 0 else { return 0.0 }
-                return gramsOrServings
+                return gramsOrServings / Double(item.servings)
             }
         }()
         
@@ -310,7 +310,7 @@ class MacroTrackerViewModel: ObservableObject {
             case .weight:
                 return Double(entry.quantity) / Double(entry.food.weightInGrams)
             case .serving:
-                return Double(entry.quantity)
+                return Double(entry.quantity) / Double(entry.food.servings)
             }
         }()
         
@@ -355,7 +355,7 @@ class MacroTrackerViewModel: ObservableObject {
                 return quantity / Double(food.weightInGrams)
             case .serving:
                 guard food.servings > 0 else { return 0.0 }
-                return quantity
+            return quantity / Double(food.servings)
         }
     }
     
