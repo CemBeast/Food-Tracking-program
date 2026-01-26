@@ -246,6 +246,11 @@ class MacroTrackerViewModel: ObservableObject {
         lastUpdatedDate = Calendar.current.startOfDay(for: Date())
         saveLastDate()
     }
+
+    func deleteHistoryEntry(_ entry: MacroHistoryEntry) {
+        history.removeAll { $0.id == entry.id }
+        saveHistory()
+    }
     
     func resetMacros() {
         calories = 0

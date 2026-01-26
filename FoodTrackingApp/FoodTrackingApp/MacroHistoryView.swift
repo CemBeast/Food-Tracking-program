@@ -78,6 +78,13 @@ struct MacroHistoryView: View {
                                 } label: {
                                     HistoryDayRow(entry: entry)
                                 }
+                                .swipeActions(edge: .trailing) {
+                                    Button(role: .destructive) {
+                                        viewModel.deleteHistoryEntry(entry)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
                             }
                         }
                         .padding(.horizontal, 20)
