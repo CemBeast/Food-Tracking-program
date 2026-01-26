@@ -16,83 +16,86 @@ struct MacroHistoryView: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
             
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Average Macros Card
-                    VStack(spacing: 16) {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("DAILY AVERAGE")
-                                    .font(.system(size: 11, weight: .bold))
-                                    .tracking(1.2)
-                                    .foregroundColor(AppTheme.textTertiary)
-                                
-                                Text("Based on \(viewModel.history.count) day\(viewModel.history.count == 1 ? "" : "s")")
-                                    .font(.system(size: 13))
-                                    .foregroundColor(AppTheme.textSecondary)
-                            }
-                            Spacer()
-                        }
-                        
-                        HStack(spacing: 12) {
-                            AverageMacroPill(value: "\(avgCal)", label: "cal", color: AppTheme.calorieColor)
-                            AverageMacroPill(value: String(format: "%.0f", avgProtein), label: "protein", color: AppTheme.proteinColor)
-                            AverageMacroPill(value: String(format: "%.0f", avgCarb), label: "carbs", color: AppTheme.carbColor)
-                            AverageMacroPill(value: String(format: "%.0f", avgFat), label: "fats", color: AppTheme.fatColor)
-                        }
-                    }
-                    .padding(20)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(AppTheme.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(AppTheme.border, lineWidth: 1)
-                            )
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 16)
-                    
-                    // History List
-                    if viewModel.history.isEmpty {
-                        VStack(spacing: 16) {
-                            Image(systemName: "calendar.badge.clock")
-                                .font(.system(size: 48, weight: .light))
+            List {
+                VStack(spacing: 16) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("DAILY AVERAGE")
+                                .font(.system(size: 11, weight: .bold))
+                                .tracking(1.2)
                                 .foregroundColor(AppTheme.textTertiary)
-                            
-                            Text("No History Yet")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundColor(AppTheme.textPrimary)
-                            
-                            Text("Your daily macro totals will appear here")
-                                .font(.system(size: 14))
+
+                            Text("Based on \(viewModel.history.count) day\(viewModel.history.count == 1 ? "" : "s")")
+                                .font(.system(size: 13))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 60)
-                    } else {
-                        VStack(spacing: 12) {
-                            ForEach(viewModel.history.sorted(by: { $0.date > $1.date })) { entry in
-                                NavigationLink {
-                                    FoodLogViewForDate(entries: entry.foodsEaten)
-                                } label: {
-                                    HistoryDayRow(entry: entry)
-                                }
-                                .swipeActions(edge: .trailing) {
-                                    Button(role: .destructive) {
-                                        viewModel.deleteHistoryEntry(entry)
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
+                        Spacer()
+                    }
+
+                    HStack(spacing: 12) {
+                        AverageMacroPill(value: "\(avgCal)", label: "cal", color: AppTheme.calorieColor)
+                        AverageMacroPill(value: String(format: "%.0f", avgProtein), label: "protein", color: AppTheme.proteinColor)
+                        AverageMacroPill(value: String(format: "%.0f", avgCarb), label: "carbs", color: AppTheme.carbColor)
+                        AverageMacroPill(value: String(format: "%.0f", avgFat), label: "fats", color: AppTheme.fatColor)
+                    }
+                }
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(AppTheme.cardBackground)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(AppTheme.border, lineWidth: 1)
+                        )
+                )
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 16, leading: 20, bottom: 8, trailing: 20))
+
+                if viewModel.history.isEmpty {
+                    VStack(spacing: 16) {
+                        Image(systemName: "calendar.badge.clock")
+                            .font(.system(size: 48, weight: .light))
+                            .foregroundColor(AppTheme.textTertiary)
+
+                        Text("No History Yet")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(AppTheme.textPrimary)
+
+                        Text("Your daily macro totals will appear here")
+                            .font(.system(size: 14))
+                            .foregroundColor(AppTheme.textSecondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 60)
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                } else {
+                    ForEach(viewModel.history.sorted(by: { $0.date > $1.date })) { entry in
+                        NavigationLink {
+                            FoodLogViewForDate(entries: entry.foodsEaten)
+                        } label: {
+                            HistoryDayRow(entry: entry)
+                        }
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                viewModel.deleteHistoryEntry(entry)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
                             }
                         }
-                        .padding(.horizontal, 20)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
                     }
-                    
-                    Spacer(minLength: 40)
                 }
+
+                Spacer(minLength: 40)
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
         }
         .navigationTitle("History")
         .navigationBarTitleDisplayMode(.large)
