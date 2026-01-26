@@ -72,11 +72,17 @@ struct MacroHistoryView: View {
                     .listRowSeparator(.hidden)
                 } else {
                     ForEach(viewModel.history.sorted(by: { $0.date > $1.date })) { entry in
-                        NavigationLink {
-                            FoodLogViewForDate(entries: entry.foodsEaten)
-                        } label: {
+                        ZStack {
                             HistoryDayRow(entry: entry)
+                            NavigationLink {
+                                FoodLogViewForDate(entries: entry.foodsEaten)
+                            } label: {
+                                EmptyView()
+                            }
+                            .opacity(0)
+                            .buttonStyle(.plain)
                         }
+                        .contentShape(Rectangle())
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
                                 viewModel.deleteHistoryEntry(entry)
@@ -158,9 +164,9 @@ struct HistoryDayRow: View {
                 
                 Spacer()
                 
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(AppTheme.textTertiary)
+                // Image(systemName: "chevron.right")
+                //     .font(.system(size: 12, weight: .semibold))
+                //     .foregroundColor(AppTheme.textTertiary)
             }
             
             HStack(spacing: 8) {
