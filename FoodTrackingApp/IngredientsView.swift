@@ -18,6 +18,8 @@ struct IngredientsView: View {
     @State private var meal: FoodItem? = nil
     @State private var selectedIngredient: MealIngredient? = nil
     @State private var editedQuantity: String = ""
+    @State private var isEditingWeight: Bool = false
+    @State private var editedTotalWeight: String = ""
 
     private var ingredients: [MealIngredient] { meal?.ingredients ?? [] }
 
@@ -73,6 +75,9 @@ struct IngredientsView: View {
             .sheet(item: $selectedIngredient) { ing in
                 quantityEditor(for: ing)
             }
+            .sheet(isPresented: $isEditingWeight) {
+                weightEditor()
+            }
         }
         .onAppear(perform: loadLatestMealData)
     }
@@ -86,7 +91,13 @@ struct IngredientsView: View {
                         MacroPill(value: String(format: "%.0f", totals.protein), label: "P", color: AppTheme.proteinColor)
                         MacroPill(value: String(format: "%.0f", totals.carbs), label: "C", color: AppTheme.carbColor)
                         MacroPill(value: String(format: "%.0f", totals.fats), label: "F", color: AppTheme.fatColor)
-                        MacroPill(value: String(format: "%.0f g", totals.weight), label: "wt", color: AppTheme.textSecondary)
+                        Button {
+                            isEditingWeight = true
+                            editedTotalWeight = String(format: "%.0f", totals.weight)
+                        } label: {
+                            MacroPill(value: String(format: "%.0f g", totals.weight), label: "wt", color: AppTheme.textSecondary)
+                        }
+                        .buttonStyle(.plain)
                     }
                 } else {
                     Text("No ingredients yet. Add or recreate this meal to populate ingredients.")
@@ -182,6 +193,39 @@ struct IngredientsView: View {
         .presentationDetents([.medium])
     }
     
+    private func weightEditor() -> some View {
+        VStack(spacing: 20) {
+            Text("Edit Total Weight")
+                .font(.title3.bold())
+                .padding(.top, 12)
+
+            TextField("Total grams", text: $editedTotalWeight)
+                .keyboardType(.numberPad)
+                .textFieldStyle(.roundedBorder)
+                .padding(.horizontal)
+
+            Text("grams")
+                .foregroundColor(.secondary)
+
+            Button("Save") {
+                if let newWeight = Double(editedTotalWeight), newWeight > 0 {
+                    applyNewTotalWeight(newWeight)
+                    isEditingWeight = false
+                }
+            }
+            .buttonStyle(.borderedProminent)
+
+            Button("Cancel") {
+                isEditingWeight = false
+            }
+            .foregroundColor(.red)
+
+            Spacer()
+        }
+        .padding()
+        .presentationDetents([.medium])
+    }
+    
     private func updateIngredient(_ ing: MealIngredient, newQuantity: Double) {
         guard var currentMeal = meal else { return }
         var list = currentMeal.ingredients
@@ -229,6 +273,28 @@ struct IngredientsView: View {
             let servings = Double(max(ing.baseServings, 1))
             return servings > 0 ? (base / servings) * ing.quantity : 0
         }
+    }
+    
+    private func applyNewTotalWeight(_ newWeight: Double) {
+        guard var currentMeal = meal else { return }
+        let currentWeight = totals?.weight ?? 0
+        guard currentWeight > 0 else { return }
+        let scale = newWeight / currentWeight
+
+        var newIngredients: [MealIngredient] = []
+        newIngredients.reserveCapacity(currentMeal.ingredients.count)
+
+        for var ing in currentMeal.ingredients {
+            // For both serving and weight modes, scale the quantity proportionally so total weight scales.
+            let newQuantity = ing.quantity * scale
+            // Prevent zeroing out due to tiny scale; clamp to a minimal positive value if needed
+            ing.quantity = max(newQuantity, 0.0001)
+            newIngredients.append(ing)
+        }
+
+        currentMeal.ingredients = newIngredients
+        // Update local state; totals will recompute from ingredients
+        self.meal = currentMeal
     }
     
     private func loadLatestMealData() {
