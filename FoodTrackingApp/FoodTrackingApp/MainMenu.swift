@@ -352,65 +352,61 @@ struct MainMenu: View {
                 
                 // Tab View
                 TabView {
-                    ScrollView {
-                        FoodDictionaryTab(
-                            showManual: $showManual,
-                            showScanner: $showScanner,
-                            showMealBuilder: $showMealBuilder,
-                            selectedFood: $selectedFood,
-                            selectedFoodID: $selectedFoodID,
-                            showGramsInput: $showGramsInput,
-                            selectedMeasurementMode: $selectedMeasurementMode,
-                            foodModel: foodModel,
-                            showDietPrompt: $showDietPrompt,
-                            pendingAction: $pendingAction) 
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                    }
+                    FoodDictionaryTab(
+                        showManual: $showManual,
+                        showScanner: $showScanner,
+                        showMealBuilder: $showMealBuilder,
+                        selectedFood: $selectedFood,
+                        selectedFoodID: $selectedFoodID,
+                        showGramsInput: $showGramsInput,
+                        selectedMeasurementMode: $selectedMeasurementMode,
+                        foodModel: foodModel,
+                        showDietPrompt: $showDietPrompt,
+                        pendingAction: $pendingAction)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Dictionary", systemImage: "book.fill")
                     }
 
-                    ScrollView {
-                        TrackFoodTab(
-                            showFoodSelection: $showFoodSelection,
-                            showScannerTracking: $showScannerTracking,
-                            showQuickTracking: $showQuickTracking
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                    }
+                    TrackFoodTab(
+                        showFoodSelection: $showFoodSelection,
+                        showScannerTracking: $showScannerTracking,
+                        showQuickTracking: $showQuickTracking
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Track", systemImage: "fork.knife")
                     }
 
-                    ScrollView {
-                        HistoryTab(
-                            viewModel: viewModel,
-                            showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
-                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                    }
+                    HistoryTab(
+                        viewModel: viewModel,
+                        showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
+                        showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("History", systemImage: "clock.arrow.circlepath")
                     }
 
-                    ScrollView {
-                        SettingsTab(
-                            viewModel: viewModel,
-                            foodModel: foodModel,
-                            showEditGoals: $showEditGoals,
-                            showGoalWizard: $showGoalWizard
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                    }
+                    SettingsTab(
+                        viewModel: viewModel,
+                        foodModel: foodModel,
+                        showEditGoals: $showEditGoals,
+                        showGoalWizard: $showGoalWizard
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
