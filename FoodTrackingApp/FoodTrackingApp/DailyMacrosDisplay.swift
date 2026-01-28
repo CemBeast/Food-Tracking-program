@@ -96,7 +96,7 @@ struct DailyMacrosDisplay: View {
         let overflow = min(max(percent - 1, 0), 1)
         let animatedPercent = animateRings ? clamped : 0
         let animatedOverflow = animateRings ? overflow : 0
-        let overflowColor = Color(red: 0.55, green: 0.08, blue: 0.08)
+        let overflowColor = Color(red: 0.95, green: 0.35, blue: 0.15)
 
         return VStack(spacing: 8) {
             ZStack {
@@ -114,6 +114,7 @@ struct DailyMacrosDisplay: View {
                 // Background ring
                 Circle()
                     .stroke(color.opacity(0.15), lineWidth: 6)
+                    .frame(width: 56, height: 56)
 
                 // Progress ring
                 Circle()
@@ -124,6 +125,7 @@ struct DailyMacrosDisplay: View {
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedPercent)
+                    .frame(width: 56, height: 56)
                 
                 // Value in center
                 Text(value)
@@ -132,7 +134,7 @@ struct DailyMacrosDisplay: View {
                     .minimumScaleFactor(0.6)
                     .lineLimit(1)
             }
-            .frame(width: 56, height: 56)
+            .frame(width: 64, height: 64)
 
             Text(label)
                 .font(.system(size: 10, weight: .medium))
