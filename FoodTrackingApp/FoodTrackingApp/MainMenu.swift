@@ -430,6 +430,7 @@ struct MainMenu: View {
                     mode: food.servingUnit == .grams ? .weight : .serving,
                     gramsOrServings: $gramsOrServings,
                     showGramsInput: .constant(true),
+                    currentMacros: (viewModel.calories, viewModel.protein, viewModel.carbs, viewModel.fats),
                     updateMacros: { _, _, _, _ in
                         let actualQuantity = gramsOrServings ?? 0.0
                         viewModel.logFood(
@@ -470,6 +471,7 @@ struct MainMenu: View {
                             mode: mode,
                             gramsOrServings: $gramsOrServings,
                             showGramsInput: $showGramsInput,
+                            currentMacros: (viewModel.calories, viewModel.protein, viewModel.carbs, viewModel.fats),
                             updateMacros: { _, _, _, _ in
                                 let actualQuantity = gramsOrServings ?? 0.0
                                 viewModel.logFood(food,

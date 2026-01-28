@@ -14,6 +14,7 @@ struct GramsOrServingsInput: View {
     @FocusState private var isTextFieldFocused: Bool
     @Binding var gramsOrServings: Double?
     @Binding var showGramsInput: Bool
+    var currentMacros: (calories: Int, protein: Double, carbs: Double, fats: Double)? = nil
     
     var updateMacros: (Double, Double, Double, Double) -> Void
 
@@ -43,6 +44,23 @@ struct GramsOrServingsInput: View {
         var liveFats: Double { inputRatio * Double(food.fats) }
         var liveProtein: Double { inputRatio * Double(food.protein) }
         var liveCarbs: Double { inputRatio * Double(food.carbs) }
+        
+        var totalCalories: Int? {
+            guard let current = currentMacros else { return nil }
+            return current.calories + Int(liveCalories.rounded())
+        }
+        var totalProtein: Double? {
+            guard let current = currentMacros else { return nil }
+            return current.protein + liveProtein
+        }
+        var totalCarbs: Double? {
+            guard let current = currentMacros else { return nil }
+            return current.carbs + liveCarbs
+        }
+        var totalFats: Double? {
+            guard let current = currentMacros else { return nil }
+            return current.fats + liveFats
+        }
         
         ZStack {
             // Dimmed background
@@ -110,6 +128,39 @@ struct GramsOrServingsInput: View {
                         LiveMacroPill(value: String(format: "%.0f", liveProtein), label: "P", color: AppTheme.proteinColor)
                         LiveMacroPill(value: String(format: "%.0f", liveCarbs), label: "C", color: AppTheme.carbColor)
                         LiveMacroPill(value: String(format: "%.0f", liveFats), label: "F", color: AppTheme.fatColor)
+                    }
+                    
+                    if let current = currentMacros,
+                       let totalCalories,
+                       let totalProtein,
+                       let totalCarbs,
+                       let totalFats {
+                        VStack(spacing: 10) {
+                            Text("CURRENT MACROS")
+                                .font(.system(size: 10, weight: .bold))
+                                .tracking(1.1)
+                                .foregroundColor(AppTheme.textTertiary)
+                            
+                            HStack(spacing: 12) {
+                                LiveMacroPill(value: "\(current.calories)", label: "cal", color: AppTheme.calorieColor)
+                                LiveMacroPill(value: String(format: "%.0f", current.protein), label: "P", color: AppTheme.proteinColor)
+                                LiveMacroPill(value: String(format: "%.0f", current.carbs), label: "C", color: AppTheme.carbColor)
+                                LiveMacroPill(value: String(format: "%.0f", current.fats), label: "F", color: AppTheme.fatColor)
+                            }
+                            
+                            Text("TOTAL IF ADDED")
+                                .font(.system(size: 10, weight: .bold))
+                                .tracking(1.1)
+                                .foregroundColor(AppTheme.textTertiary)
+                            
+                            HStack(spacing: 12) {
+                                LiveMacroPill(value: "\(totalCalories)", label: "cal", color: AppTheme.calorieColor)
+                                LiveMacroPill(value: String(format: "%.0f", totalProtein), label: "P", color: AppTheme.proteinColor)
+                                LiveMacroPill(value: String(format: "%.0f", totalCarbs), label: "C", color: AppTheme.carbColor)
+                                LiveMacroPill(value: String(format: "%.0f", totalFats), label: "F", color: AppTheme.fatColor)
+                            }
+                        }
+                        .padding(.top, 6)
                     }
                 }
                 .padding(.vertical, 20)
