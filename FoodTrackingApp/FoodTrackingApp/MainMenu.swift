@@ -144,11 +144,8 @@ struct TrackFoodTab: View {
 // MARK: - History Tab
 struct HistoryTab: View {
     @ObservedObject var viewModel: MacroTrackerViewModel
-    @ObservedObject var foodModel: FoodModel
-    @Binding var showEditGoals: Bool
     @Binding var showingClearDailyMacrosAlert: Bool
     @Binding var showingClearHistoryMacrosAlert: Bool
-    @Binding var showGoalWizard: Bool
 
     var body: some View {
         VStack(spacing: 24) {
@@ -206,7 +203,19 @@ struct HistoryTab: View {
                     Button("Cancel", role: .cancel) {}
                 }
             }
+        }
+    }
+}
 
+// MARK: - Settings Tab
+struct SettingsTab: View {
+    @ObservedObject var viewModel: MacroTrackerViewModel
+    @ObservedObject var foodModel: FoodModel
+    @Binding var showEditGoals: Bool
+    @Binding var showGoalWizard: Bool
+
+    var body: some View {
+        VStack(spacing: 24) {
             // Personal Section
             SectionCard(title: "Personal") {
                 Button {
@@ -380,10 +389,22 @@ struct MainMenu: View {
                     ScrollView {
                         HistoryTab(
                             viewModel: viewModel,
+                            showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
+                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
+                        )
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
+                    }
+                    .tabItem {
+                        Label("History", systemImage: "clock.arrow.circlepath")
+                    }
+
+                    ScrollView {
+                        SettingsTab(
+                            viewModel: viewModel,
                             foodModel: foodModel,
                             showEditGoals: $showEditGoals,
-                            showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
-                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert,
                             showGoalWizard: $showGoalWizard
                         )
                         .padding(.horizontal, 20)

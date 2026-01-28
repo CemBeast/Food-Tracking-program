@@ -26,38 +26,42 @@ struct DailyMacrosDisplay: View {
             HStack {
                 Spacer()
                 Text(showConsumed ? "CONSUMED" : "REMAINING / OVERFLOW")
-                    .font(.system(size: 11, weight: .bold, design: .default))
-                    .tracking(1.5)
+                    .font(.system(size: 14, weight: .bold, design: .default))
+                    .tracking(1.8)
                     .foregroundColor(AppTheme.textTertiary)
                 Spacer()
             }
             
             // Ring Meters
-            HStack(spacing: 20) {
-                ringMeter(
-                    percent: calorieGoal == 0 ? 0 : Double(calories) / Double(calorieGoal),
-                    color: AppTheme.calorieColor,
-                    label: "Calories",
-                    value: "\(Int(displayedValue(for: calories, goal: calorieGoal)))"
-                )
-                ringMeter(
-                    percent: proteinGoal == 0 ? 0 : protein / proteinGoal,
-                    color: AppTheme.proteinColor,
-                    label: "Protein",
-                    value: "\(Int(displayedValue(for: protein, goal: proteinGoal)))g"
-                )
-                ringMeter(
-                    percent: carbGoal == 0 ? 0 : carbs / carbGoal,
-                    color: AppTheme.carbColor,
-                    label: "Carbs",
-                    value: "\(Int(displayedValue(for: carbs, goal: carbGoal)))g"
-                )
-                ringMeter(
-                    percent: fatGoal == 0 ? 0 : fats / fatGoal,
-                    color: AppTheme.fatColor,
-                    label: "Fats",
-                    value: "\(Int(displayedValue(for: fats, goal: fatGoal)))g"
-                )
+            VStack(spacing: 16) {
+                HStack(spacing: 16) {
+                    ringMeter(
+                        percent: calorieGoal == 0 ? 0 : Double(calories) / Double(calorieGoal),
+                        color: AppTheme.calorieColor,
+                        label: "Calories",
+                        value: "\(Int(displayedValue(for: calories, goal: calorieGoal)))"
+                    )
+                    ringMeter(
+                        percent: proteinGoal == 0 ? 0 : protein / proteinGoal,
+                        color: AppTheme.proteinColor,
+                        label: "Protein",
+                        value: "\(Int(displayedValue(for: protein, goal: proteinGoal)))g"
+                    )
+                }
+                HStack(spacing: 16) {
+                    ringMeter(
+                        percent: carbGoal == 0 ? 0 : carbs / carbGoal,
+                        color: AppTheme.carbColor,
+                        label: "Carbs",
+                        value: "\(Int(displayedValue(for: carbs, goal: carbGoal)))g"
+                    )
+                    ringMeter(
+                        percent: fatGoal == 0 ? 0 : fats / fatGoal,
+                        color: AppTheme.fatColor,
+                        label: "Fats",
+                        value: "\(Int(displayedValue(for: fats, goal: fatGoal)))g"
+                    )
+                }
             }
         }
         .padding(.vertical, 20)
@@ -109,12 +113,12 @@ struct DailyMacrosDisplay: View {
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedOverflow)
-                    .frame(width: 64, height: 64)
+                    .frame(width: 128, height: 128)
 
                 // Background ring
                 Circle()
                     .stroke(color.opacity(0.15), lineWidth: 6)
-                    .frame(width: 56, height: 56)
+                    .frame(width: 112, height: 112)
 
                 // Progress ring
                 Circle()
@@ -125,19 +129,19 @@ struct DailyMacrosDisplay: View {
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedPercent)
-                    .frame(width: 56, height: 56)
+                    .frame(width: 112, height: 112)
                 
                 // Value in center
                 Text(value)
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
                     .foregroundColor(AppTheme.textPrimary)
                     .minimumScaleFactor(0.6)
                     .lineLimit(1)
             }
-            .frame(width: 64, height: 64)
+            .frame(width: 128, height: 128)
 
             Text(label)
-                .font(.system(size: 10, weight: .medium))
+                .font(.system(size: 13, weight: .medium))
                 .foregroundColor(AppTheme.textSecondary)
         }
     }
