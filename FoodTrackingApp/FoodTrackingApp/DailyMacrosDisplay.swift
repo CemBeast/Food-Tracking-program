@@ -25,7 +25,7 @@ struct DailyMacrosDisplay: View {
             // Toggle Label
             HStack {
                 Spacer()
-                Text(showConsumed ? "CONSUMED" : "REMAINING")
+                Text(showConsumed ? "CONSUMED" : "REMAINING / OVERFLOW")
                     .font(.system(size: 11, weight: .bold, design: .default))
                     .tracking(1.5)
                     .foregroundColor(AppTheme.textTertiary)
@@ -84,19 +84,33 @@ struct DailyMacrosDisplay: View {
     }
 
     func displayedValue(for value: Double, goal: Double) -> Double {
-        return showConsumed ? value : max(goal - value, 0)
+        return showConsumed ? value : (goal - value)
     }
 
     func displayedValue(for value: Int, goal: Int) -> Double {
-        return showConsumed ? Double(value) : Double(max(goal - value, 0))
+        return showConsumed ? Double(value) : Double(goal - value)
     }
 
     func ringMeter(percent: Double, color: Color, label: String, value: String) -> some View {
         let clamped = min(max(percent, 0), 1)
+        let overflow = min(max(percent - 1, 0), 1)
         let animatedPercent = animateRings ? clamped : 0
+        let animatedOverflow = animateRings ? overflow : 0
+        let overflowColor = Color(red: 0.55, green: 0.08, blue: 0.08)
 
         return VStack(spacing: 8) {
             ZStack {
+                // Overflow ring (outside)
+                Circle()
+                    .trim(from: 0, to: animatedOverflow)
+                    .stroke(
+                        overflowColor,
+                        style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                    )
+                    .rotationEffect(.degrees(-90))
+                    .animation(.easeOut(duration: 0.8), value: animatedOverflow)
+                    .frame(width: 64, height: 64)
+
                 // Background ring
                 Circle()
                     .stroke(color.opacity(0.15), lineWidth: 6)
