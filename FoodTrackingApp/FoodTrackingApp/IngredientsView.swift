@@ -18,6 +18,8 @@ struct IngredientsView: View {
     @State private var meal: FoodItem? = nil
     @State private var selectedIngredient: MealIngredient? = nil
     @State private var editedQuantity: String = ""
+    @State private var editedMealWeight: String = ""
+    @State private var showMealWeightEditor = false
 
     private var ingredients: [MealIngredient] { meal?.ingredients ?? [] }
 
@@ -62,8 +64,7 @@ struct IngredientsView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         guard let meal else { return }
-                        let updated = updateMealTotals(meal)
-                        onSave(updated)
+                        onSave(meal)
                         dismiss()
                     }
                     .foregroundColor(.white)
@@ -80,13 +81,19 @@ struct IngredientsView: View {
     private func listView(meal: FoodItem) -> some View {
         List {
             Section {
-                if let totals = totals {
+                if !ingredients.isEmpty {
                     HStack(spacing: 8) {
-                        MacroPill(value: "\(totals.cal)", label: "cal", color: AppTheme.calorieColor)
-                        MacroPill(value: String(format: "%.0f", totals.protein), label: "P", color: AppTheme.proteinColor)
-                        MacroPill(value: String(format: "%.0f", totals.carbs), label: "C", color: AppTheme.carbColor)
-                        MacroPill(value: String(format: "%.0f", totals.fats), label: "F", color: AppTheme.fatColor)
-                        MacroPill(value: String(format: "%.0f g", totals.weight), label: "wt", color: AppTheme.textSecondary)
+                        MacroPill(value: "\(meal.calories)", label: "cal", color: AppTheme.calorieColor)
+                        MacroPill(value: String(format: "%.0f", meal.protein), label: "P", color: AppTheme.proteinColor)
+                        MacroPill(value: String(format: "%.0f", meal.carbs), label: "C", color: AppTheme.carbColor)
+                        MacroPill(value: String(format: "%.0f", meal.fats), label: "F", color: AppTheme.fatColor)
+                        Button {
+                            editedMealWeight = "\(meal.weightInGrams)"
+                            showMealWeightEditor = true
+                        } label: {
+                            MacroPill(value: "\(meal.weightInGrams) g", label: "wt", color: AppTheme.textSecondary)
+                        }
+                        .buttonStyle(.plain)
                     }
                 } else {
                     Text("No ingredients yet. Add or recreate this meal to populate ingredients.")
@@ -122,6 +129,47 @@ struct IngredientsView: View {
         }
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
+        .sheet(isPresented: $showMealWeightEditor) {
+            VStack(spacing: 20) {
+                Text("Edit Meal Weight")
+                    .font(.title3.bold())
+                    .padding(.top, 12)
+
+                Text(meal?.name ?? "Meal")
+                    .font(.headline)
+
+                TextField("Weight", text: $editedMealWeight)
+                    .keyboardType(.numberPad)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.horizontal)
+                    .onChange(of: editedMealWeight) { newValue in
+                        let filtered = newValue.filter { $0.isNumber }
+                        if filtered != newValue {
+                            editedMealWeight = filtered
+                        }
+                    }
+
+                Text("grams")
+                    .foregroundColor(.secondary)
+
+                Button("Save") {
+                    if let newWeight = Int(editedMealWeight), newWeight > 0 {
+                        updateMealWeight(newWeight)
+                        showMealWeightEditor = false
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+
+                Button("Cancel") {
+                    showMealWeightEditor = false
+                }
+                .foregroundColor(.red)
+
+                Spacer()
+            }
+            .padding()
+            .presentationDetents([.medium])
+        }
     }
     
     private func ingredientRow(_ ing: MealIngredient) -> some View {
@@ -215,9 +263,18 @@ struct IngredientsView: View {
         updated.protein = totals.protein
         updated.carbs = totals.carbs
         updated.fats = totals.fats
-        updated.weightInGrams = Int(totals.weight.rounded())
         updated.ingredients = ingredients
         return updated
+    }
+
+    private func updateMealWeight(_ newWeight: Int) {
+        guard var meal = meal else { return }
+        meal.weightInGrams = newWeight
+        self.meal = meal
+        if let index = foodModel.items.firstIndex(where: { $0.id == mealId }) {
+            foodModel.items[index] = meal
+            foodModel.save()
+        }
     }
     
     private func ingredientWeight(_ ing: MealIngredient) -> Double {
