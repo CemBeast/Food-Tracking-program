@@ -238,8 +238,40 @@ struct IngredientsView: View {
             updated.quantity = newQuantity
             list[idx] = updated
             meal.ingredients = list
+            
+            // Recalculate totals from updated ingredients
+            let newTotals = computeTotals(from: list)
+            meal.calories = newTotals.cal
+            meal.protein = newTotals.protein
+            meal.carbs = newTotals.carbs
+            meal.fats = newTotals.fats
+            meal.weightInGrams = Int(newTotals.weight.rounded())
+            
             self.meal = meal
+            
+            // Save to food model
+            if let index = foodModel.items.firstIndex(where: { $0.id == mealId }) {
+                foodModel.items[index] = meal
+                foodModel.save()
+            }
         }
+    }
+    
+    private func computeTotals(from list: [MealIngredient]) -> (cal: Int, protein: Double, carbs: Double, fats: Double, weight: Double) {
+        var c = 0
+        var p = 0.0
+        var cb = 0.0
+        var f = 0.0
+        var w = 0.0
+        for ing in list {
+            let ratio = ratioFor(ing)
+            c += Int(Double(ing.calories) * ratio)
+            p += ing.protein * ratio
+            cb += ing.carbs * ratio
+            f += ing.fats * ratio
+            w += ingredientWeight(ing)
+        }
+        return (c, p, cb, f, w)
     }
     
     private func ratioFor(_ ing: MealIngredient) -> Double {
