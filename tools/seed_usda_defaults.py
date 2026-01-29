@@ -27,7 +27,7 @@ import os
 import time
 import uuid
 from dataclasses import dataclass
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -137,6 +137,73 @@ def build_food_item(fdc_food: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         "servingUnit": "g",
     }
 
+def load_existing_items(path: str) -> List[Dict[str, Any]]:
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            return [x for x in data if isinstance(x, dict)]
+        return []
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        return []
+
+
+def merge_items(
+    *,
+    existing: List[Dict[str, Any]],
+    generated: List[Dict[str, Any]],
+    mode: str,
+) -> List[Dict[str, Any]]:
+    """
+    mode:
+      - overwrite: return generated
+      - append: add missing by id; keep existing items
+      - refresh: replace by id if present; also add missing
+    """
+    if mode == "overwrite":
+        return generated
+
+    by_id: Dict[str, Dict[str, Any]] = {}
+    name_to_id: Dict[str, str] = {}
+
+    for item in existing:
+        item_id = str(item.get("id") or "").upper()
+        if not item_id:
+            continue
+        by_id[item_id] = item
+        nm = str(item.get("name") or "").strip().lower()
+        if nm:
+            name_to_id[nm] = item_id
+
+    for item in generated:
+        item_id = str(item.get("id") or "").upper()
+        if not item_id:
+            continue
+
+        if item_id in by_id:
+            if mode == "refresh":
+                by_id[item_id] = item
+            continue
+
+        # In append/refresh, avoid duplicates by name too (non-meals). Defaults file is non-meals.
+        nm = str(item.get("name") or "").strip().lower()
+        if nm and nm in name_to_id:
+            if mode == "refresh":
+                # replace the existing item with the same name
+                existing_id = name_to_id[nm]
+                by_id[existing_id] = item
+            continue
+
+        by_id[item_id] = item
+        if nm:
+            name_to_id[nm] = item_id
+
+    merged = list(by_id.values())
+    merged.sort(key=lambda x: str(x.get("name") or "").lower())
+    return merged
+
 
 def load_queries(path: Optional[str], limit: int) -> List[str]:
     if path is None:
@@ -166,6 +233,12 @@ def main() -> int:
     ap.add_argument("--out", required=True, help="Output JSON path (e.g. FoodTrackingApp/FoodTrackingApp/default_all.json)")
     ap.add_argument("--queries", default=None, help="Optional text file of search queries (one per line)")
     ap.add_argument("--limit", type=int, default=300, help="Max number of foods to include")
+    ap.add_argument(
+        "--mode",
+        choices=["overwrite", "append", "refresh"],
+        default="overwrite",
+        help="Write mode: overwrite file, append missing, or refresh existing by id",
+    )
     ap.add_argument(
         "--data-types",
         default="Foundation,SR Legacy",
@@ -216,12 +289,17 @@ def main() -> int:
             break
 
     out_items.sort(key=lambda x: x["name"].lower())
+
+    # Merge with existing file if requested
+    existing_items = load_existing_items(args.out)
+    final_items = merge_items(existing=existing_items, generated=out_items, mode=args.mode)
+
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
-        json.dump(out_items, f, indent=2, ensure_ascii=False)
+        json.dump(final_items, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
-    print(f"✅ Wrote {len(out_items)} foods to {args.out}")
+    print(f"✅ Wrote {len(final_items)} foods to {args.out} (mode={args.mode})")
     return 0
 
 

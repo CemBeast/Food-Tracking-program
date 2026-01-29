@@ -1,5 +1,5 @@
 # One query per line. The generator will search USDA FoodData Central and pick the first usable result.
-# Keep queries fairly specific (e.g., "raw", "cooked", "roasted") to reduce ambiguity.
+# Keep queries fairly specific (e.g., "raw", "cooked", "roasted") to reduce ambiguity. (after 67 is chatgpt generated)
 
 apple raw
 banana raw
@@ -65,4 +65,265 @@ bacon cooked
 ham sliced
 sausage pork cooked
 protein powder whey
-
+apple raw
+banana raw
+orange raw
+strawberries raw
+blueberries raw
+grapes raw
+avocado raw
+tomato raw
+cucumber raw
+spinach raw
+lettuce romaine raw
+broccoli raw
+cauliflower raw
+carrots raw
+potato baked
+sweet potato baked
+white rice cooked
+brown rice cooked
+oats dry
+quinoa cooked
+pasta cooked
+bread whole wheat
+bagel plain
+tortilla flour
+corn tortilla
+peanut butter
+almonds
+walnuts
+chia seeds
+flax seeds
+olive oil
+butter
+mayonnaise
+honey
+sugar
+salt
+black beans cooked
+chickpeas cooked
+lentils cooked
+tofu firm
+tempeh
+egg whole raw
+egg white raw
+milk whole
+milk 2 percent
+greek yogurt plain nonfat
+yogurt plain whole
+cheddar cheese
+mozzarella cheese
+parmesan cheese
+chicken breast roasted
+chicken thigh roasted
+ground beef 90 lean cooked
+ground turkey cooked
+pork loin roasted
+salmon atlantic cooked
+tuna canned in water
+shrimp cooked
+cod cooked
+turkey breast roasted
+bacon cooked
+ham sliced
+sausage pork cooked
+protein powder whey
+applesauce unsweetened
+tangerine raw
+mandarin raw
+grapefruit raw
+pineapple raw
+mango raw
+papaya raw
+kiwi raw
+pear raw
+peach raw
+nectarine raw
+plum raw
+apricot raw
+cherries sweet raw
+cherries sour raw
+raspberries raw
+blackberries raw
+cranberries raw
+grapes red raw
+grapes green raw
+watermelon raw
+cantaloupe raw
+honeydew raw
+pomegranate raw
+fig raw
+dates dried
+raisins
+prunes
+lemon raw
+lime raw
+guava raw
+passion fruit raw
+broccoli cooked
+beets cooked
+beets raw
+celery raw
+onion raw
+onion cooked
+garlic raw
+bell pepper red raw
+bell pepper green raw
+bell pepper yellow raw
+jalapeno raw
+zucchini raw
+zucchini cooked
+eggplant cooked
+asparagus cooked
+asparagus raw
+green beans cooked
+green beans raw
+peas cooked
+peas raw
+corn cooked
+corn raw
+cabbage raw
+cabbage cooked
+brussels sprouts cooked
+brussels sprouts raw
+kale raw
+kale cooked
+spinach cooked
+arugula raw
+lettuce iceberg raw
+lettuce butter raw
+mushrooms raw
+mushrooms cooked
+pumpkin cooked
+squash butternut cooked
+squash acorn cooked
+sweet corn canned
+tomato cooked
+tomato sauce canned
+tomato paste canned
+tomato salsa
+basmati rice cooked
+jasmine rice cooked
+wild rice cooked
+fried rice
+couscous cooked
+barley cooked
+farro cooked
+bulgur cooked
+oats cooked
+oatmeal cooked
+cream of wheat cooked
+grits cooked
+white bread
+sourdough bread
+rye bread
+french bread
+english muffin
+croissant
+pita bread
+naan
+hamburger bun
+hot dog bun
+crackers plain
+pretzels
+rice cakes
+granola
+granola bar
+cereal corn flakes
+cereal cheerios
+french fries
+potato chips
+hash browns
+mashed potatoes
+sweet potato fries
+tater tots
+chicken breast grilled
+chicken breast baked
+chicken thigh grilled
+chicken wings fried
+turkey ground cooked
+beef steak grilled
+beef sirloin cooked
+beef ribeye grilled
+hamburger patty cooked
+cheeseburger
+hot dog
+sausage beef cooked
+sausage turkey cooked
+ham roasted
+ham deli
+pepperoni
+salami
+pork chops grilled
+pork ribs cooked
+meatballs beef
+meatloaf
+salmon grilled
+salmon smoked
+tilapia cooked
+halibut cooked
+trout cooked
+crab cooked
+lobster cooked
+scallops cooked
+clam chowder
+fish sticks
+egg scrambled
+egg fried
+egg boiled
+egg omelet
+egg yolk raw
+milk skim
+milk almond
+milk soy
+cream heavy
+half and half
+cream cheese
+cottage cheese
+ricotta cheese
+feta cheese
+swiss cheese
+american cheese
+ice cream vanilla
+ice cream chocolate
+frozen yogurt
+taco beef
+burrito beef
+quesadilla cheese
+enchilada chicken
+pizza cheese
+pizza pepperoni
+lasagna beef
+spaghetti meat sauce
+macaroni and cheese
+ramen noodles
+chicken noodle soup
+tomato soup
+grilled cheese sandwich
+peanut butter jelly sandwich
+club sandwich
+chicken sandwich fried
+chicken sandwich grilled
+fish taco
+hamburger
+sloppy joe
+chili beef
+fried chicken
+chicken nuggets
+peanuts
+cashews
+pistachios
+sunflower seeds
+pumpkin seeds
+nutella
+jam strawberry
+jam grape
+maple syrup
+chocolate milk
+dark chocolate
+milk chocolate
+cookies chocolate chip
+brownies
+cake vanilla
+donut glazed

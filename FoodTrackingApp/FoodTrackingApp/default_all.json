@@ -1,5 +1,82 @@
 [
   {
+    "id": "44BB5D98-187D-543C-ADDD-C249E4CA7BF7",
+    "name": "Applebee'S, French Fries",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 290,
+    "protein": 3.31,
+    "carbs": 39.5,
+    "fats": 13.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "2A125442-020F-545D-8226-913E1D0666C9",
+    "name": "Apples, Raw, Without Skin",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 48,
+    "protein": 0.27,
+    "carbs": 12.8,
+    "fats": 0.13,
+    "servingUnit": "g"
+  },
+  {
+    "id": "32C68A85-7C8C-5AA1-9DCE-5FE6A2562167",
+    "name": "Applesauce, Canned, Unsweetened, With Added Ascorbic Acid",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 42,
+    "protein": 0.17,
+    "carbs": 11.3,
+    "fats": 0.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F1030537-7419-55A7-A6C7-6FE688EAB599",
+    "name": "Apricots, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 48,
+    "protein": 1.4,
+    "carbs": 11.1,
+    "fats": 0.39,
+    "servingUnit": "g"
+  },
+  {
+    "id": "025CC1BC-DFE1-5BA4-A6C0-23D0C1BD5E9A",
+    "name": "Arugula, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 25,
+    "protein": 2.58,
+    "carbs": 3.65,
+    "fats": 0.66,
+    "servingUnit": "g"
+  },
+  {
+    "id": "EC523061-6760-50D3-A026-8547B299CB6B",
+    "name": "Asparagus, Cooked, Boiled, Drained",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 22,
+    "protein": 2.4,
+    "carbs": 4.11,
+    "fats": 0.22,
+    "servingUnit": "g"
+  },
+  {
+    "id": "79DDC32C-1794-5C77-BFCB-E36423D86148",
+    "name": "Asparagus, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 20,
+    "protein": 2.2,
+    "carbs": 3.88,
+    "fats": 0.12,
+    "servingUnit": "g"
+  },
+  {
     "id": "59BE639D-E9E1-54D0-A3EF-D90A0134991C",
     "name": "Avocados, Raw, California",
     "weightInGrams": 100,
@@ -8,6 +85,61 @@
     "protein": 1.96,
     "carbs": 8.64,
     "fats": 15.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7BD9BF1D-CD3A-5680-BD20-FD21111A1303",
+    "name": "Avocados, Raw, Florida",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 120,
+    "protein": 2.23,
+    "carbs": 7.82,
+    "fats": 10.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "86503459-8F0B-5DDF-AD11-B516BE655255",
+    "name": "Babyfood, Dinner, Beef Lasagna, Toddler",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 77,
+    "protein": 4.2,
+    "carbs": 10.0,
+    "fats": 2.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A012536D-E036-5FDE-8A8A-2AB6B82B62A9",
+    "name": "Babyfood, Pretzels",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 397,
+    "protein": 10.8,
+    "carbs": 82.2,
+    "fats": 2.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "055C73E3-2235-5354-BABD-7F9137C832A7",
+    "name": "Bagels, Plain, Enriched, With Calcium Propionate (Includes Onion, Poppy, Sesame)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 264,
+    "protein": 10.6,
+    "carbs": 52.4,
+    "fats": 1.32,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A7F9C745-7FA8-539A-AE69-912441FE1B59",
+    "name": "Bananas, Overripe, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 85,
+    "protein": 0.73,
+    "carbs": 20.1,
+    "fats": 0.22,
     "servingUnit": "g"
   },
   {
@@ -22,6 +154,28 @@
     "servingUnit": "g"
   },
   {
+    "id": "0361E8EE-28BB-5C9C-9E75-0055DC0724D4",
+    "name": "Barley, Pearled, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 123,
+    "protein": 2.26,
+    "carbs": 28.2,
+    "fats": 0.44,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E900954E-A387-5A1C-B3AC-4465AB8C7501",
+    "name": "Beans, Black Turtle, Mature Seeds, Cooked, Boiled, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 130,
+    "protein": 8.18,
+    "carbs": 24.4,
+    "fats": 0.35,
+    "servingUnit": "g"
+  },
+  {
     "id": "88FA67E6-8F04-59C1-97AC-BCFFB9AD4F9D",
     "name": "Beans, Black, Mature Seeds, Cooked, Boiled, With Salt",
     "weightInGrams": 100,
@@ -30,6 +184,28 @@
     "protein": 8.86,
     "carbs": 23.7,
     "fats": 0.54,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F2D3FF13-F335-51FF-816E-64B8ABCD4C33",
+    "name": "Beans, Snap, Green, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 35,
+    "protein": 1.89,
+    "carbs": 7.88,
+    "fats": 0.28,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5BA5849B-D8A2-502A-9598-275FF0BC7E2A",
+    "name": "Beans, Snap, Green, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 31,
+    "protein": 1.83,
+    "carbs": 6.97,
+    "fats": 0.22,
     "servingUnit": "g"
   },
   {
@@ -44,6 +220,61 @@
     "servingUnit": "g"
   },
   {
+    "id": "DF9A6764-2902-54D0-8FCF-D06E385CD9EE",
+    "name": "Beef, Ground, 90% Lean Meat / 10% Fat, Patty, Cooked, Broiled",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 217,
+    "protein": 26.1,
+    "carbs": 0.0,
+    "fats": 11.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "0BDF820E-967F-5D7E-8A8B-E029C1B9C8BB",
+    "name": "Beef, Ribeye Filet, Boneless, Separable Lean Only, Trimmed To 0\" Fat, Choice, Cooked, Grilled",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 208,
+    "protein": 28.4,
+    "carbs": 0.51,
+    "fats": 10.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "50E89951-3DB6-54BC-99BB-8FA2B7670CE0",
+    "name": "Beets, Cooked, Boiled, Drained",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 44,
+    "protein": 1.68,
+    "carbs": 9.96,
+    "fats": 0.18,
+    "servingUnit": "g"
+  },
+  {
+    "id": "D4DB5F19-8C35-5CAF-9AA6-562D5EC5B8DD",
+    "name": "Beets, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 43,
+    "protein": 1.61,
+    "carbs": 9.56,
+    "fats": 0.17,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C6748290-6A98-5939-B91F-37876EDC423F",
+    "name": "Beverages, Kiwi Strawberry Juice Drink",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 47,
+    "protein": 0.0,
+    "carbs": 12.3,
+    "fats": 0.0,
+    "servingUnit": "g"
+  },
+  {
     "id": "1EC2D609-B320-507D-B83E-E694CF5481EF",
     "name": "Beverages, Protein Powder Whey Based",
     "weightInGrams": 100,
@@ -52,6 +283,28 @@
     "protein": 78.1,
     "carbs": 6.25,
     "fats": 1.56,
+    "servingUnit": "g"
+  },
+  {
+    "id": "AE8BFD9B-B99A-5898-96F7-D43331F25C2C",
+    "name": "Beverages, Whey Protein Powder Isolate",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 359,
+    "protein": 58.1,
+    "carbs": 29.1,
+    "fats": 1.16,
+    "servingUnit": "g"
+  },
+  {
+    "id": "039166C5-DB50-58ED-B769-3E14C08FBDBE",
+    "name": "Blackberries, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 43,
+    "protein": 1.39,
+    "carbs": 9.61,
+    "fats": 0.49,
     "servingUnit": "g"
   },
   {
@@ -66,6 +319,83 @@
     "servingUnit": "g"
   },
   {
+    "id": "9D93F742-A617-54C1-A9D5-DCBEEEFBDCBA",
+    "name": "Blueberries, Wild, Raw (Alaska Native)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 61,
+    "protein": 1.22,
+    "carbs": 12.3,
+    "fats": 0.76,
+    "servingUnit": "g"
+  },
+  {
+    "id": "B4CAFBBC-CC72-5A9A-98CE-1D037A6E631A",
+    "name": "Bread, French Or Vienna (Includes Sourdough)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 272,
+    "protein": 10.8,
+    "carbs": 51.9,
+    "fats": 2.42,
+    "servingUnit": "g"
+  },
+  {
+    "id": "49C94737-4D39-53D5-9CD5-5A07D8B89FA6",
+    "name": "Bread, French Or Vienna, Toasted (Includes Sourdough)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 319,
+    "protein": 13.0,
+    "carbs": 61.9,
+    "fats": 2.14,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E32B2259-4359-5F40-85C1-B36EBA1DE8D3",
+    "name": "Bread, French Or Vienna, Whole Wheat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 239,
+    "protein": 8.33,
+    "carbs": 49.1,
+    "fats": 1.04,
+    "servingUnit": "g"
+  },
+  {
+    "id": "3FAF9449-48A4-5905-A735-23982350259A",
+    "name": "Bread, Naan, Plain, Commercially Prepared, Refrigerated",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 291,
+    "protein": 9.62,
+    "carbs": 50.4,
+    "fats": 5.65,
+    "servingUnit": "g"
+  },
+  {
+    "id": "26E05629-AC68-5343-8B7A-B13133A4416B",
+    "name": "Bread, Oatmeal",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 269,
+    "protein": 8.4,
+    "carbs": 48.5,
+    "fats": 4.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "038046ED-D049-5086-B565-FEB978859859",
+    "name": "Bread, Pita, White, Enriched",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 275,
+    "protein": 9.1,
+    "carbs": 55.7,
+    "fats": 1.2,
+    "servingUnit": "g"
+  },
+  {
     "id": "09503759-F753-59FB-AA80-472FC49CC97E",
     "name": "Bread, Pita, Whole-Wheat",
     "weightInGrams": 100,
@@ -77,6 +407,50 @@
     "servingUnit": "g"
   },
   {
+    "id": "A906C1DA-21FB-57A4-99C5-1934DF1059E5",
+    "name": "Bread, Rye",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 259,
+    "protein": 8.5,
+    "carbs": 48.3,
+    "fats": 3.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "10A3EA19-694A-574B-ADF0-C6A65F3C52C2",
+    "name": "Bread, White Wheat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 238,
+    "protein": 10.7,
+    "carbs": 43.9,
+    "fats": 2.15,
+    "servingUnit": "g"
+  },
+  {
+    "id": "ACE79773-27A3-5824-BCB8-4B4F2D437A1C",
+    "name": "Broccoli Raab, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 25,
+    "protein": 3.83,
+    "carbs": 3.12,
+    "fats": 0.52,
+    "servingUnit": "g"
+  },
+  {
+    "id": "01938411-40E5-5837-AAAC-FE0713519940",
+    "name": "Broccoli Raab, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 22,
+    "protein": 3.17,
+    "carbs": 2.85,
+    "fats": 0.49,
+    "servingUnit": "g"
+  },
+  {
     "id": "F202645B-C742-5005-9C36-BA88FA75FB8F",
     "name": "Broccoli, Raw",
     "weightInGrams": 100,
@@ -85,6 +459,72 @@
     "protein": 2.57,
     "carbs": 6.27,
     "fats": 0.34,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9BB7705A-C2A1-5CFC-B10C-55285B574355",
+    "name": "Brussels Sprouts, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 36,
+    "protein": 2.55,
+    "carbs": 7.1,
+    "fats": 0.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A29354E6-5CC4-5FC4-9AB5-BFDCE8CB9901",
+    "name": "Brussels Sprouts, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 43,
+    "protein": 3.38,
+    "carbs": 8.95,
+    "fats": 0.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "68D9D398-06BB-5BDF-B7D0-3BA8D736F7AB",
+    "name": "Bulgur, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 83,
+    "protein": 3.08,
+    "carbs": 18.6,
+    "fats": 0.24,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C8C71AD9-7A32-51A0-971D-1B9E0C0F9D4B",
+    "name": "Bulgur, Dry",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 342,
+    "protein": 12.3,
+    "carbs": 75.9,
+    "fats": 1.33,
+    "servingUnit": "g"
+  },
+  {
+    "id": "37EA2C1F-26A9-5C4B-B925-AFB327E3AF90",
+    "name": "Burger King, Hamburger",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 261,
+    "protein": 14.8,
+    "carbs": 26.8,
+    "fats": 10.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "B31D2943-87CE-5F59-9211-8E3F5350D451",
+    "name": "Burrito, Beef And Bean, Frozen",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 239,
+    "protein": 7.26,
+    "carbs": 30.8,
+    "fats": 9.61,
     "servingUnit": "g"
   },
   {
@@ -110,6 +550,160 @@
     "servingUnit": "g"
   },
   {
+    "id": "9322ABA4-640D-5655-BD35-82BBC538BCC9",
+    "name": "Butter, Whipped, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 731,
+    "protein": 0.49,
+    "carbs": 0.0,
+    "fats": 78.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "8CBE91F8-EDD2-5693-8BB5-20A61F10CBB8",
+    "name": "Cabbage, Napa, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 12,
+    "protein": 1.1,
+    "carbs": 2.23,
+    "fats": 0.17,
+    "servingUnit": "g"
+  },
+  {
+    "id": "FA58E40D-8AF3-5D28-BA74-479297E119E2",
+    "name": "Cabbage, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 25,
+    "protein": 1.28,
+    "carbs": 5.8,
+    "fats": 0.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "AB569F4D-7559-5251-AFA7-E5D755A84189",
+    "name": "Cake, Yellow, Commercially Prepared, With Vanilla Frosting",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 391,
+    "protein": 2.99,
+    "carbs": 56.2,
+    "fats": 17.9,
+    "servingUnit": "g"
+  },
+  {
+    "id": "D7AC7560-05BA-501F-AD8C-39C9940F0381",
+    "name": "Campbell'S Chunky, New England Clam Chowder",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 81,
+    "protein": 2.46,
+    "carbs": 9.01,
+    "fats": 3.85,
+    "servingUnit": "g"
+  },
+  {
+    "id": "4ACF8D09-A987-5C3A-B6EF-DF669E636280",
+    "name": "Campbell'S, Chicken Noodle Soup, Condensed",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 47,
+    "protein": 2.37,
+    "carbs": 5.97,
+    "fats": 1.53,
+    "servingUnit": "g"
+  },
+  {
+    "id": "4DB30040-7281-5326-AE19-BEBB454A57FF",
+    "name": "Campbell'S, Tomato Soup, Condensed",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 71,
+    "protein": 1.46,
+    "carbs": 15.2,
+    "fats": 0.44,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5C3202B1-F564-543F-AFFC-6A59951F5DAF",
+    "name": "Canadian Bacon, Cooked, Pan-Fried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 146,
+    "protein": 28.3,
+    "carbs": 1.8,
+    "fats": 2.78,
+    "servingUnit": "g"
+  },
+  {
+    "id": "FCD8C937-8256-5726-B95D-1BBBAA19594F",
+    "name": "Candies, Confectioner'S Coating, Peanut Butter",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 529,
+    "protein": 18.3,
+    "carbs": 46.9,
+    "fats": 29.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "DF761C8A-78BA-5A87-ADDB-91A2DA35A0FC",
+    "name": "Candies, Milk Chocolate",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 535,
+    "protein": 7.65,
+    "carbs": 59.4,
+    "fats": 29.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E43C8358-69B6-5CAF-B6E8-E9ADF99C8FBB",
+    "name": "Candies, Milk Chocolate, With Almonds",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 526,
+    "protein": 9.0,
+    "carbs": 53.4,
+    "fats": 34.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F88FED96-8E07-5F1B-AF84-970EFF066516",
+    "name": "Candies, Peanut Bar",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 522,
+    "protein": 15.5,
+    "carbs": 47.4,
+    "fats": 33.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "05CD5171-8FBA-5BD3-8E27-D6092E97FC6A",
+    "name": "Candies, Special Dark Chocolate Bar",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 556,
+    "protein": 5.54,
+    "carbs": 60.5,
+    "fats": 32.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "767F3F16-B814-5B9C-93B6-28AC6958AE0C",
+    "name": "Carrots, Baby, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 35,
+    "protein": 0.64,
+    "carbs": 8.24,
+    "fats": 0.13,
+    "servingUnit": "g"
+  },
+  {
     "id": "94ADED7B-1529-5073-921D-C64731016C16",
     "name": "Carrots, Raw",
     "weightInGrams": 100,
@@ -121,6 +715,17 @@
     "servingUnit": "g"
   },
   {
+    "id": "002CB6A0-5202-50D3-891B-2870D433FEC6",
+    "name": "Cauliflower, Green, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 31,
+    "protein": 2.95,
+    "carbs": 6.09,
+    "fats": 0.3,
+    "servingUnit": "g"
+  },
+  {
     "id": "EF4A2983-DF43-5FCE-8357-9EB996F6759D",
     "name": "Cauliflower, Raw",
     "weightInGrams": 100,
@@ -129,6 +734,83 @@
     "protein": 1.92,
     "carbs": 4.97,
     "fats": 0.28,
+    "servingUnit": "g"
+  },
+  {
+    "id": "897A012B-7AF4-59FD-9959-09279BB4F673",
+    "name": "Celery, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 14,
+    "protein": 0.69,
+    "carbs": 2.97,
+    "fats": 0.17,
+    "servingUnit": "g"
+  },
+  {
+    "id": "02E7CDC6-1A2C-5428-9902-B78E6BDA421B",
+    "name": "Cereals Ready-To-Eat, General Mills, Cheerios",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 372,
+    "protein": 12.4,
+    "carbs": 73.2,
+    "fats": 6.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "AEA1281F-3DDB-54B1-A59F-278B269FE0D4",
+    "name": "Cereals Ready-To-Eat, Granola, Homemade",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 489,
+    "protein": 13.7,
+    "carbs": 53.9,
+    "fats": 24.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "0B20AB37-0907-5631-9E16-C48E5F10B4DD",
+    "name": "Cereals Ready-To-Eat, Post, Honey Bunches Of Oats, Honey Roasted",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 401,
+    "protein": 7.12,
+    "carbs": 81.2,
+    "fats": 5.46,
+    "servingUnit": "g"
+  },
+  {
+    "id": "923E3116-350B-5D2E-A6FD-107FFFF805DD",
+    "name": "Cereals Ready-To-Eat, Ralston Corn Flakes",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 384,
+    "protein": 5.9,
+    "carbs": 88.0,
+    "fats": 0.91,
+    "servingUnit": "g"
+  },
+  {
+    "id": "CF6683B5-8B7D-5C50-8F2B-ECF1900B38FA",
+    "name": "Cereals, Corn Grits, White, Regular And Quick, Enriched, Cooked With Water, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 71,
+    "protein": 1.71,
+    "carbs": 14.8,
+    "fats": 0.46,
+    "servingUnit": "g"
+  },
+  {
+    "id": "97DA8425-0C79-53AF-9E0B-7D2493AC8604",
+    "name": "Cereals, Oats, Regular And Quick, Not Fortified, Dry",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 379,
+    "protein": 13.2,
+    "carbs": 67.7,
+    "fats": 6.52,
     "servingUnit": "g"
   },
   {
@@ -154,6 +836,28 @@
     "servingUnit": "g"
   },
   {
+    "id": "3B3B14BC-4FA2-5DBE-9967-9ECD0F009FB7",
+    "name": "Cheese, American Cheddar, Imitation",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 239,
+    "protein": 16.7,
+    "carbs": 11.6,
+    "fats": 14.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "23A27EFB-7A9F-5BBC-9338-D5CB7816A486",
+    "name": "Cheese, American, Restaurant",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 375,
+    "protein": 17.5,
+    "carbs": 6.35,
+    "fats": 31.1,
+    "servingUnit": "g"
+  },
+  {
     "id": "2E27E56E-D2C9-5D2A-A705-81DB0EC4127A",
     "name": "Cheese, Cheddar",
     "weightInGrams": 100,
@@ -162,6 +866,50 @@
     "protein": 23.3,
     "carbs": 2.44,
     "fats": 34.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "31E5C0B6-0636-5B77-8F67-A89501672F02",
+    "name": "Cheese, Cottage, With Vegetables",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 95,
+    "protein": 10.9,
+    "carbs": 3.0,
+    "fats": 4.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "D6E8A724-B820-52D0-9A69-D838533201DA",
+    "name": "Cheese, Cream",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 350,
+    "protein": 6.15,
+    "carbs": 5.52,
+    "fats": 34.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7FF4AF6F-4A78-599D-96A2-09A80E81D33A",
+    "name": "Cheese, Feta",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 265,
+    "protein": 14.2,
+    "carbs": 3.88,
+    "fats": 21.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9667486F-189C-554B-8AEB-DC0A340DDDAF",
+    "name": "Cheese, Mozzarella, Nonfat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 141,
+    "protein": 31.7,
+    "carbs": 3.5,
+    "fats": 0.0,
     "servingUnit": "g"
   },
   {
@@ -187,6 +935,94 @@
     "servingUnit": "g"
   },
   {
+    "id": "4BD55C99-CD6E-5B8C-BBA1-FE51F156821D",
+    "name": "Cheese, Parmesan, Hard",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 392,
+    "protein": 35.8,
+    "carbs": 3.22,
+    "fats": 25.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "BA0DA5F8-EB12-5ED8-9B4B-2ECBAB89DE41",
+    "name": "Cheese, Ricotta, Part Skim Milk",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 138,
+    "protein": 11.4,
+    "carbs": 5.14,
+    "fats": 7.91,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A018FD99-E1DF-5522-9EFA-FADFD226C54D",
+    "name": "Cheese, Ricotta, Whole Milk",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 150,
+    "protein": 7.54,
+    "carbs": 7.27,
+    "fats": 10.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A7A5120F-58F2-519B-A19D-42EA0B31BECA",
+    "name": "Cheese, Swiss",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 393,
+    "protein": 27.0,
+    "carbs": 1.44,
+    "fats": 31.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "63937DBD-BDF4-5B78-BA0C-561878309995",
+    "name": "Cherries, Sour, Red, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 50,
+    "protein": 1.0,
+    "carbs": 12.2,
+    "fats": 0.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "6E9F22D0-0533-5201-9711-81A367140570",
+    "name": "Cherries, Sweet, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 63,
+    "protein": 1.06,
+    "carbs": 16.0,
+    "fats": 0.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A6DF1A30-1E43-5F4E-84E4-0C122AE2F677",
+    "name": "Chicken Breast Tenders, Breaded, Uncooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 263,
+    "protein": 14.7,
+    "carbs": 15.0,
+    "fats": 15.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E14D64DE-C04E-56DA-9C44-65740CE0BC9B",
+    "name": "Chicken Breast, Oven-Roasted, Fat-Free, Sliced",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 79,
+    "protein": 16.8,
+    "carbs": 2.17,
+    "fats": 0.39,
+    "servingUnit": "g"
+  },
+  {
     "id": "151C5C99-2129-5E4E-A854-5A5D34C81E3A",
     "name": "Chicken Breast, Roll, Oven-Roasted",
     "weightInGrams": 100,
@@ -195,6 +1031,72 @@
     "protein": 14.6,
     "carbs": 1.79,
     "fats": 7.65,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E2491861-6EC1-59E3-B716-0E353042C79F",
+    "name": "Chicken Patty, Frozen, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 287,
+    "protein": 14.8,
+    "carbs": 12.8,
+    "fats": 19.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "38519687-8C8B-5190-A8E6-C4F5BB6704EE",
+    "name": "Chicken, Broiler Or Fryers, Breast, Skinless, Boneless, Meat Only, Cooked, Grilled",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 151,
+    "protein": 30.5,
+    "carbs": 0.0,
+    "fats": 3.17,
+    "servingUnit": "g"
+  },
+  {
+    "id": "EC32E325-8264-57ED-B14A-F5A21728804F",
+    "name": "Chicken, Broilers Or Fryers, Giblets, Cooked, Fried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 277,
+    "protein": 32.5,
+    "carbs": 4.35,
+    "fats": 13.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9ED706DA-90A8-5D5D-8157-ABE47FB44519",
+    "name": "Chicken, Broilers Or Fryers, Thigh, Meat And Skin, Cooked, Roasted",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 232,
+    "protein": 23.3,
+    "carbs": 0.0,
+    "fats": 14.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "2D38D4D5-D44B-5058-9626-197C2CBD5C46",
+    "name": "Chicken, Broilers Or Fryers, Wing, Meat Only, Cooked, Fried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 211,
+    "protein": 30.2,
+    "carbs": 0.0,
+    "fats": 9.15,
+    "servingUnit": "g"
+  },
+  {
+    "id": "EFDAE797-7799-53EF-8F4F-CEE6ABEA2EA3",
+    "name": "Chicken, Meatless, Breaded, Fried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 234,
+    "protein": 21.3,
+    "carbs": 8.51,
+    "fats": 12.8,
     "servingUnit": "g"
   },
   {
@@ -209,6 +1111,28 @@
     "servingUnit": "g"
   },
   {
+    "id": "1F3B7D12-479A-549F-86EF-B96128CB1CC0",
+    "name": "Chicken, Skin (Drumsticks And Thighs), Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 440,
+    "protein": 9.58,
+    "carbs": 0.79,
+    "fats": 44.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "90EDC0D0-7C26-5034-B817-F6A82DB7FCFD",
+    "name": "Chickpea Flour (Besan)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 387,
+    "protein": 22.4,
+    "carbs": 57.8,
+    "fats": 6.69,
+    "servingUnit": "g"
+  },
+  {
     "id": "FDF34856-4C94-5A4A-A4C5-F410520333A7",
     "name": "Chickpeas (Garbanzo Beans, Bengal Gram), Mature Seeds, Cooked, Boiled, With Salt",
     "weightInGrams": 100,
@@ -217,6 +1141,61 @@
     "protein": 8.86,
     "carbs": 27.4,
     "fats": 2.59,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F8CE58B8-72D6-5C36-A04C-F5BA292E1350",
+    "name": "Cookies, Brownies, Commercially Prepared",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 405,
+    "protein": 4.8,
+    "carbs": 63.9,
+    "fats": 16.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "09FB74AB-C89B-5D64-A4CE-8F85F309141A",
+    "name": "Cookies, Chocolate Chip, Dry Mix",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 497,
+    "protein": 4.6,
+    "carbs": 66.1,
+    "fats": 25.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "69A56661-89A7-504F-B3E1-50D88B61FFDE",
+    "name": "Cookies, Peanut Butter Sandwich, Regular",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 478,
+    "protein": 8.8,
+    "carbs": 65.6,
+    "fats": 21.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "1FA9A573-B09A-5FDB-B234-CF64F3B721C1",
+    "name": "Corn, Sweet, White, Canned, Cream Style, No Salt Added",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 72,
+    "protein": 1.74,
+    "carbs": 18.1,
+    "fats": 0.42,
+    "servingUnit": "g"
+  },
+  {
+    "id": "75D233D8-74C8-5432-B080-EEE83C4A4924",
+    "name": "Corn, Sweet, White, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 86,
+    "protein": 3.22,
+    "carbs": 19.0,
+    "fats": 1.18,
     "servingUnit": "g"
   },
   {
@@ -231,6 +1210,127 @@
     "servingUnit": "g"
   },
   {
+    "id": "2B948E94-D761-5EB8-BC8B-415A215C452D",
+    "name": "Couscous, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 112,
+    "protein": 3.79,
+    "carbs": 23.2,
+    "fats": 0.16,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9A78D11B-0D69-5F78-A4E7-91DDBAEDB3BB",
+    "name": "Cracker Barrel, Grilled Sirloin Steak",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 203,
+    "protein": 31.5,
+    "carbs": 0.0,
+    "fats": 8.52,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E4E6F386-AE2C-51D6-92BF-A8FFFFC38953",
+    "name": "Cracker Barrel, Macaroni N' Cheese",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 194,
+    "protein": 6.49,
+    "carbs": 15.6,
+    "fats": 11.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "8E777684-C756-58EC-ACF9-DE3E44310927",
+    "name": "Crackers, Matzo, Plain",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 395,
+    "protein": 10.0,
+    "carbs": 83.7,
+    "fats": 1.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C266DA04-9ED2-54C4-A6C8-7916371499C7",
+    "name": "Cranberries, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 46,
+    "protein": 0.46,
+    "carbs": 12.0,
+    "fats": 0.13,
+    "servingUnit": "g"
+  },
+  {
+    "id": "16B5BB31-6393-5C42-9C7D-C9C646F3EBC3",
+    "name": "Cream, Fluid, Half And Half",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 131,
+    "protein": 3.13,
+    "carbs": 4.3,
+    "fats": 11.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7B38F36C-2F56-59B4-96B1-960A75ABF3FC",
+    "name": "Cream, Fluid, Heavy Whipping",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 340,
+    "protein": 2.84,
+    "carbs": 2.84,
+    "fats": 36.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C16A4BD2-DB28-5412-BB89-B0701EC8DAD7",
+    "name": "Croissants, Apple",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 254,
+    "protein": 7.4,
+    "carbs": 37.1,
+    "fats": 8.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "3080DFEA-4B88-5562-ABD8-0C4281B63072",
+    "name": "Croissants, Butter",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 406,
+    "protein": 8.2,
+    "carbs": 45.8,
+    "fats": 21.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "8BEE5281-14E3-538B-B472-67831E9E3A73",
+    "name": "Crustaceans, Crab, Blue, Cooked, Moist Heat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 83,
+    "protein": 17.9,
+    "carbs": 0.0,
+    "fats": 0.74,
+    "servingUnit": "g"
+  },
+  {
+    "id": "16A7E0D9-C455-581E-82B0-2BC01AFB0A9D",
+    "name": "Crustaceans, Lobster, Northern, Cooked, Moist Heat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 89,
+    "protein": 19.0,
+    "carbs": 0.0,
+    "fats": 0.86,
+    "servingUnit": "g"
+  },
+  {
     "id": "130C06DA-8A2E-5CFA-81DC-4B4DA7CB0E2A",
     "name": "Crustaceans, Shrimp, Cooked",
     "weightInGrams": 100,
@@ -239,6 +1339,17 @@
     "protein": 24.0,
     "carbs": 0.2,
     "fats": 0.28,
+    "servingUnit": "g"
+  },
+  {
+    "id": "742959B3-30FD-5FE2-941F-EE36F7F483A8",
+    "name": "Crustaceans, Shrimp, Mixed Species, Cooked, Breaded And Fried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 242,
+    "protein": 21.4,
+    "carbs": 11.5,
+    "fats": 12.3,
     "servingUnit": "g"
   },
   {
@@ -253,6 +1364,50 @@
     "servingUnit": "g"
   },
   {
+    "id": "584CE70F-7CE5-5B97-B0A8-5CD27E93064A",
+    "name": "Cucumber, With Peel, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 15,
+    "protein": 0.65,
+    "carbs": 3.63,
+    "fats": 0.11,
+    "servingUnit": "g"
+  },
+  {
+    "id": "056E91EE-24E0-5628-9254-23A48267EAF3",
+    "name": "Dates, Medjool",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 277,
+    "protein": 1.81,
+    "carbs": 75.0,
+    "fats": 0.15,
+    "servingUnit": "g"
+  },
+  {
+    "id": "90043808-DA74-5589-BEC0-B2E6C7A9B53A",
+    "name": "Denny'S, Hash Browns",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 197,
+    "protein": 2.49,
+    "carbs": 26.6,
+    "fats": 8.99,
+    "servingUnit": "g"
+  },
+  {
+    "id": "19FABE19-6A86-5F74-A90E-791A816D313A",
+    "name": "Dip, Salsa Con Queso, Cheese And Salsa- Medium",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 143,
+    "protein": 3.14,
+    "carbs": 11.1,
+    "fats": 9.51,
+    "servingUnit": "g"
+  },
+  {
     "id": "2F459A4F-F816-5D42-8881-75DAF8154A02",
     "name": "Egg Custards, Dry Mix, Prepared With 2% Milk",
     "weightInGrams": 100,
@@ -261,6 +1416,17 @@
     "protein": 4.13,
     "carbs": 17.6,
     "fats": 2.83,
+    "servingUnit": "g"
+  },
+  {
+    "id": "CFB37A12-EF65-51E0-BB47-A0C5A2C703E9",
+    "name": "Egg, Duck, Whole, Fresh, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 185,
+    "protein": 12.8,
+    "carbs": 1.45,
+    "fats": 13.8,
     "servingUnit": "g"
   },
   {
@@ -275,6 +1441,61 @@
     "servingUnit": "g"
   },
   {
+    "id": "66BC98B1-F180-5D2D-82AB-383A6F5A1CA2",
+    "name": "Egg, White, Raw, Frozen, Pasteurized",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 48,
+    "protein": 10.2,
+    "carbs": 1.04,
+    "fats": 0.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9198553B-C69A-5C92-AB2A-BFBFFF25D9AA",
+    "name": "Egg, Whole, Cooked, Fried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 196,
+    "protein": 13.6,
+    "carbs": 0.83,
+    "fats": 14.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "830A36DF-000E-52CB-A7D9-90A6244C1421",
+    "name": "Egg, Whole, Cooked, Hard-Boiled",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 155,
+    "protein": 12.6,
+    "carbs": 1.12,
+    "fats": 10.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "B595D45C-116A-54AB-9122-8E0FD77B9C02",
+    "name": "Egg, Whole, Cooked, Omelet",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 154,
+    "protein": 10.6,
+    "carbs": 0.64,
+    "fats": 11.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A235697E-FD26-5C66-86B9-10B9F6A137D6",
+    "name": "Egg, Whole, Cooked, Scrambled",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 149,
+    "protein": 9.99,
+    "carbs": 1.61,
+    "fats": 11.0,
+    "servingUnit": "g"
+  },
+  {
     "id": "2B33B52A-4962-53E0-9559-621CA9FEDFA9",
     "name": "Egg, Whole, Raw, Fresh",
     "weightInGrams": 100,
@@ -283,6 +1504,94 @@
     "protein": 12.6,
     "carbs": 0.72,
     "fats": 9.51,
+    "servingUnit": "g"
+  },
+  {
+    "id": "07AD773D-62FF-54D1-8BAB-64C1A5356155",
+    "name": "Egg, Yolk, Raw, Fresh",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 322,
+    "protein": 15.9,
+    "carbs": 3.59,
+    "fats": 26.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E4E2C740-9FFC-5C94-8502-68C9BBAD6CFE",
+    "name": "Eggplant, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 33,
+    "protein": 0.83,
+    "carbs": 8.14,
+    "fats": 0.23,
+    "servingUnit": "g"
+  },
+  {
+    "id": "B75A50B3-C7A6-5254-ADD5-39985DCC6F78",
+    "name": "Fast Foods, Crispy Chicken, Bacon, And Tomato Club Sandwich, With Cheese, Lettuce, And Mayonnaise",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 257,
+    "protein": 15.4,
+    "carbs": 22.6,
+    "fats": 11.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "82832731-A577-56A8-93A4-F992A16265EA",
+    "name": "Fast Foods, Grilled Chicken Filet Sandwich, With Lettuce, Tomato And Spread",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 182,
+    "protein": 17.3,
+    "carbs": 16.8,
+    "fats": 4.57,
+    "servingUnit": "g"
+  },
+  {
+    "id": "4806BEF6-7AFC-5BB2-8B40-AFB1B70A7467",
+    "name": "Fast Foods, Potato, Mashed",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 89,
+    "protein": 1.65,
+    "carbs": 14.6,
+    "fats": 2.82,
+    "servingUnit": "g"
+  },
+  {
+    "id": "46F86172-215F-51A1-91BA-7757EA7E26B9",
+    "name": "Figs, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 74,
+    "protein": 0.75,
+    "carbs": 19.2,
+    "fats": 0.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A9AEFC16-C328-5BCA-B9FB-1A116CAC0050",
+    "name": "Fish Oil, Salmon",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 902,
+    "protein": 0.0,
+    "carbs": 0.0,
+    "fats": 100.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F5E5F254-E8EA-5AAA-8969-49E17E03EAA7",
+    "name": "Fish, Cod, Atlantic, Cooked, Dry Heat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 105,
+    "protein": 22.8,
+    "carbs": 0.0,
+    "fats": 0.86,
     "servingUnit": "g"
   },
   {
@@ -297,6 +1606,28 @@
     "servingUnit": "g"
   },
   {
+    "id": "1E879216-E42C-5C73-B10F-B071D10B7CA5",
+    "name": "Fish, Fish Sticks, Frozen, Prepared",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 277,
+    "protein": 11.0,
+    "carbs": 21.7,
+    "fats": 16.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "2EF6DAC0-293A-5082-8114-BBA170BC9D92",
+    "name": "Fish, Halibut, Cooked, With Skin (Alaska Native)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 113,
+    "protein": 22.1,
+    "carbs": 0.0,
+    "fats": 2.73,
+    "servingUnit": "g"
+  },
+  {
     "id": "07E35747-A518-5AB8-8848-1F719041AEFB",
     "name": "Fish, Salmon, Atlantic, Farmed, Cooked, Dry Heat",
     "weightInGrams": 100,
@@ -305,6 +1636,50 @@
     "protein": 22.1,
     "carbs": 0.0,
     "fats": 12.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "01D81B78-E869-58F2-BC16-358CEBA132FD",
+    "name": "Fish, Salmon, Atlantic, Wild, Cooked, Dry Heat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 182,
+    "protein": 25.4,
+    "carbs": 0.0,
+    "fats": 8.13,
+    "servingUnit": "g"
+  },
+  {
+    "id": "928D8F14-DDAD-592B-9ADF-10D7EBF10C4A",
+    "name": "Fish, Salmon, Chinook, Smoked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 117,
+    "protein": 18.3,
+    "carbs": 0.0,
+    "fats": 4.32,
+    "servingUnit": "g"
+  },
+  {
+    "id": "749C447E-C611-5490-9327-155A509D8B9B",
+    "name": "Fish, Tilapia, Cooked, Dry Heat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 128,
+    "protein": 26.2,
+    "carbs": 0.0,
+    "fats": 2.65,
+    "servingUnit": "g"
+  },
+  {
+    "id": "66EEE4E7-E9EF-5344-945B-9AE4C876AD3C",
+    "name": "Fish, Trout, Mixed Species, Cooked, Dry Heat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 190,
+    "protein": 26.6,
+    "carbs": 0.0,
+    "fats": 8.47,
     "servingUnit": "g"
   },
   {
@@ -319,6 +1694,39 @@
     "servingUnit": "g"
   },
   {
+    "id": "15B9AA2D-29FA-525D-8D61-3A616D5FBA46",
+    "name": "Fish, Tuna, White, Canned In Water, Drained Solids",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 128,
+    "protein": 23.6,
+    "carbs": 0.0,
+    "fats": 2.97,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5AFFB3B5-05E8-5B80-8B18-294A0D704FBD",
+    "name": "Frozen Yogurts, Chocolate",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 131,
+    "protein": 3.0,
+    "carbs": 21.6,
+    "fats": 3.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9F556642-9F9A-5F56-8336-D89269EE2556",
+    "name": "Garlic, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 143,
+    "protein": 6.62,
+    "carbs": 28.2,
+    "fats": 0.38,
+    "servingUnit": "g"
+  },
+  {
     "id": "2144D834-ECF2-5634-96E1-4A39ABF3BE40",
     "name": "Grape Leaves, Raw",
     "weightInGrams": 100,
@@ -330,6 +1738,72 @@
     "servingUnit": "g"
   },
   {
+    "id": "11DB4FE7-45EA-530F-B872-9639B3F39D62",
+    "name": "Grapefruit Juice, Pink, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 39,
+    "protein": 0.5,
+    "carbs": 9.2,
+    "fats": 0.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "1E20E9A7-38EB-5E74-B989-17DDFB9EA45E",
+    "name": "Grapes, Muscadine, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 57,
+    "protein": 0.81,
+    "carbs": 13.9,
+    "fats": 0.47,
+    "servingUnit": "g"
+  },
+  {
+    "id": "65E6E886-7264-56E3-ABE8-04E857745046",
+    "name": "Grapes, Red Or Green (European Type, Such As Thompson Seedless), Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 69,
+    "protein": 0.72,
+    "carbs": 18.1,
+    "fats": 0.16,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7BD604E0-7907-52F0-8D2B-EE5F436F2D86",
+    "name": "Guavas, Common, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 68,
+    "protein": 2.55,
+    "carbs": 14.3,
+    "fats": 0.95,
+    "servingUnit": "g"
+  },
+  {
+    "id": "0D51D891-5964-5816-84EB-4A58DA608C25",
+    "name": "Guavas, Strawberry, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 69,
+    "protein": 0.58,
+    "carbs": 17.4,
+    "fats": 0.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "6501DD2B-AE4F-5FEC-9D0A-B420439538A5",
+    "name": "Ham, Sliced, Regular (Approximately 11% Fat)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 164,
+    "protein": 16.6,
+    "carbs": 3.63,
+    "fats": 8.8,
+    "servingUnit": "g"
+  },
+  {
     "id": "B3BBE052-6C70-594A-8DC7-0885C47BCA1B",
     "name": "Ham, Sliced, Restaurant",
     "weightInGrams": 100,
@@ -338,6 +1812,17 @@
     "protein": 19.6,
     "carbs": 2.36,
     "fats": 3.68,
+    "servingUnit": "g"
+  },
+  {
+    "id": "0E148065-D1BF-5811-B7B8-B247C666F72E",
+    "name": "Ham, Turkey, Sliced, Extra Lean, Prepackaged Or Deli",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 134,
+    "protein": 19.6,
+    "carbs": 0.93,
+    "fats": 5.8,
     "servingUnit": "g"
   },
   {
@@ -363,6 +1848,83 @@
     "servingUnit": "g"
   },
   {
+    "id": "6FF4C294-8FDD-5F99-8216-6E85AE7DD6ED",
+    "name": "Ice Creams, Chocolate",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 216,
+    "protein": 3.8,
+    "carbs": 28.2,
+    "fats": 11.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "15518DD1-860D-55B4-8A13-C25BA8EFC96E",
+    "name": "Ice Creams, Vanilla",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 207,
+    "protein": 3.5,
+    "carbs": 23.6,
+    "fats": 11.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "195D17B0-23DD-5566-8B0A-C466AEFD017A",
+    "name": "Jams And Preserves",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 278,
+    "protein": 0.37,
+    "carbs": 68.9,
+    "fats": 0.07,
+    "servingUnit": "g"
+  },
+  {
+    "id": "82212622-5E6F-59C3-B3FC-2F3FD90EBED5",
+    "name": "Jams And Preserves, Apricot",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 242,
+    "protein": 0.7,
+    "carbs": 64.4,
+    "fats": 0.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A7799714-7B85-57A9-AF0E-F41B6ACEE202",
+    "name": "Kale, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 44,
+    "protein": 2.94,
+    "carbs": 5.3,
+    "fats": 1.21,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7EE83FF8-6300-54A5-A2FE-FA6FCDDF91A9",
+    "name": "Kale, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 35,
+    "protein": 2.92,
+    "carbs": 4.42,
+    "fats": 1.49,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9549EA97-6949-581E-8A60-21745C6CB27A",
+    "name": "Lemon Juice, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 22,
+    "protein": 0.35,
+    "carbs": 6.9,
+    "fats": 0.24,
+    "servingUnit": "g"
+  },
+  {
     "id": "DC240D08-AD7B-578D-B5A5-C66C6BA50111",
     "name": "Lentils, Mature Seeds, Cooked, Boiled, With Salt",
     "weightInGrams": 100,
@@ -371,6 +1933,17 @@
     "protein": 9.02,
     "carbs": 19.5,
     "fats": 0.38,
+    "servingUnit": "g"
+  },
+  {
+    "id": "8D76B8DB-0D28-5CE9-A7BC-5371CF272FBC",
+    "name": "Lentils, Sprouted, Cooked, Stir-Fried, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 101,
+    "protein": 8.8,
+    "carbs": 21.2,
+    "fats": 0.45,
     "servingUnit": "g"
   },
   {
@@ -385,6 +1958,226 @@
     "servingUnit": "g"
   },
   {
+    "id": "F78098E5-9BA9-5CDB-A4E7-95AEC1E70B35",
+    "name": "Lettuce, Green Leaf, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 15,
+    "protein": 1.36,
+    "carbs": 2.87,
+    "fats": 0.15,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F7A3677D-0049-5C97-ABBA-9B8247482A0C",
+    "name": "Lettuce, Iceberg (Includes Crisphead Types), Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 14,
+    "protein": 0.9,
+    "carbs": 2.97,
+    "fats": 0.14,
+    "servingUnit": "g"
+  },
+  {
+    "id": "186C10D9-DAC0-5149-9352-E94DA25A27E6",
+    "name": "Limes, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 30,
+    "protein": 0.7,
+    "carbs": 10.5,
+    "fats": 0.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5CB0DB1C-D3B7-5425-BD73-6F23430FED5E",
+    "name": "Malabar Spinach, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 23,
+    "protein": 2.98,
+    "carbs": 2.71,
+    "fats": 0.78,
+    "servingUnit": "g"
+  },
+  {
+    "id": "CE680E15-7577-514D-B463-A7A22D8431AB",
+    "name": "Mangos, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 60,
+    "protein": 0.82,
+    "carbs": 15.0,
+    "fats": 0.38,
+    "servingUnit": "g"
+  },
+  {
+    "id": "82A3B8E3-1BDC-529F-B643-54F0CB6F4F79",
+    "name": "Mayonnaise Dressing, No Cholesterol",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 688,
+    "protein": 0.0,
+    "carbs": 0.3,
+    "fats": 77.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "3C1C00B5-8234-5B1F-87B8-28200C4DA051",
+    "name": "Mcdonald'S, Cheeseburger",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 263,
+    "protein": 13.0,
+    "carbs": 27.8,
+    "fats": 11.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "64F296CD-B8DA-5CDD-9AC7-EA781D63C222",
+    "name": "Mcdonald'S, Hamburger",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 264,
+    "protein": 12.9,
+    "carbs": 30.3,
+    "fats": 10.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "2BFB1C58-3167-5953-861B-63837015CF1B",
+    "name": "Meatballs, Meatless",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 197,
+    "protein": 21.0,
+    "carbs": 8.0,
+    "fats": 9.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "DB43C43B-DB4C-5E2A-AF62-310CA9825107",
+    "name": "Melons, Cantaloupe, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 34,
+    "protein": 0.84,
+    "carbs": 8.16,
+    "fats": 0.19,
+    "servingUnit": "g"
+  },
+  {
+    "id": "60EAD28E-CEF4-51A8-A33A-14DC22561F54",
+    "name": "Melons, Honeydew, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 36,
+    "protein": 0.54,
+    "carbs": 9.09,
+    "fats": 0.14,
+    "servingUnit": "g"
+  },
+  {
+    "id": "51A95B5E-8F75-54A2-BCFC-0360811B6F13",
+    "name": "Milk Shakes, Thick Chocolate",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 119,
+    "protein": 3.05,
+    "carbs": 21.2,
+    "fats": 2.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E0B5F294-297E-58A3-88D7-BE4A6E1222D5",
+    "name": "Milk, Imitation, Non-Soy",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 46,
+    "protein": 1.6,
+    "carbs": 5.3,
+    "fats": 2.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "8D199972-713A-57AA-A9DB-14C8575D40DC",
+    "name": "Mollusks, Scallop, (Bay And Sea), Cooked, Steamed",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 111,
+    "protein": 20.5,
+    "carbs": 5.41,
+    "fats": 0.84,
+    "servingUnit": "g"
+  },
+  {
+    "id": "00175463-0656-5CC1-BC60-274A00DFBC13",
+    "name": "Mori-Nu, Tofu, Silken, Firm",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 62,
+    "protein": 6.9,
+    "carbs": 2.4,
+    "fats": 2.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "877016EC-03C4-59BE-9B2A-66690928A6C4",
+    "name": "Muffins, English, Wheat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 223,
+    "protein": 8.7,
+    "carbs": 44.8,
+    "fats": 2.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9F024117-05C8-5B61-92EE-E1D9FC5F48B5",
+    "name": "Mushrooms, Chanterelle, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 32,
+    "protein": 1.49,
+    "carbs": 6.86,
+    "fats": 0.53,
+    "servingUnit": "g"
+  },
+  {
+    "id": "32055364-936B-5F82-BEF4-3E55037B3C12",
+    "name": "Mushrooms, Shiitake, Cooked, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 56,
+    "protein": 1.56,
+    "carbs": 14.4,
+    "fats": 0.22,
+    "servingUnit": "g"
+  },
+  {
+    "id": "DC94661D-EF4C-5E78-A003-9C8359028DBF",
+    "name": "Mustard Spinach, (Tendergreen), Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 22,
+    "protein": 2.2,
+    "carbs": 3.9,
+    "fats": 0.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "8F46E724-CE22-597B-A3AB-E503E47063CD",
+    "name": "Nectarines, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 44,
+    "protein": 1.06,
+    "carbs": 10.6,
+    "fats": 0.32,
+    "servingUnit": "g"
+  },
+  {
     "id": "E20A1C11-A52A-590E-96E8-D8899C2AB74E",
     "name": "Nuts, Almonds",
     "weightInGrams": 100,
@@ -396,8 +2189,85 @@
     "servingUnit": "g"
   },
   {
+    "id": "FE784552-9F74-5EFB-957F-EA92F2CB532D",
+    "name": "Nuts, Cashew Nuts, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 553,
+    "protein": 18.2,
+    "carbs": 30.2,
+    "fats": 43.8,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C96BCC84-3F30-5F15-B9D9-06E75F929DF4",
+    "name": "Nuts, Pistachio Nuts, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 560,
+    "protein": 20.2,
+    "carbs": 27.2,
+    "fats": 45.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "CF16AE65-1150-544F-B806-ACF44E059D8A",
+    "name": "Nuts, Walnuts, English",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 654,
+    "protein": 15.2,
+    "carbs": 13.7,
+    "fats": 65.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "DBF1A98F-4D08-564F-B9D9-FE4E183203E5",
+    "name": "Nuts, Walnuts, Glazed",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 500,
+    "protein": 8.28,
+    "carbs": 47.6,
+    "fats": 35.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "B65FB0B2-4A32-5834-B2BF-7ABAA4BBC13D",
+    "name": "Oat Bran, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 40,
+    "protein": 3.21,
+    "carbs": 11.4,
+    "fats": 0.86,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7B1DAC32-D14C-5F76-B8EE-54AD0979C605",
+    "name": "Oil, Almond",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 884,
+    "protein": 0.0,
+    "carbs": 0.0,
+    "fats": 100.0,
+    "servingUnit": "g"
+  },
+  {
     "id": "90540698-9B90-51A7-B6D7-EE787CFFCA17",
     "name": "Oil, Corn, Peanut, And Olive",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 884,
+    "protein": 0.0,
+    "carbs": 0.0,
+    "fats": 100.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "90CA1099-26F7-5A5D-9FA9-D0CCCCD29178",
+    "name": "Oil, Olive, Salad Or Cooking",
     "weightInGrams": 100,
     "servings": 1,
     "calories": 884,
@@ -418,6 +2288,61 @@
     "servingUnit": "g"
   },
   {
+    "id": "8417BBE6-42F1-5265-A250-BC7A8C3E4BEF",
+    "name": "Olive Garden, Spaghetti With Meat Sauce",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 121,
+    "protein": 5.8,
+    "carbs": 17.2,
+    "fats": 3.28,
+    "servingUnit": "g"
+  },
+  {
+    "id": "11363B4A-4E60-5ACD-85C2-A578C5085498",
+    "name": "On The Border, Cheese Enchilada",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 271,
+    "protein": 11.7,
+    "carbs": 16.2,
+    "fats": 17.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7D07D61C-326B-55CD-B5D8-6650F4D8A4DB",
+    "name": "On The Border, Cheese Quesadilla",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 394,
+    "protein": 16.9,
+    "carbs": 24.2,
+    "fats": 25.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "606D4163-2B2F-5872-81E5-559AF342B059",
+    "name": "Onions, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 42,
+    "protein": 1.36,
+    "carbs": 9.56,
+    "fats": 0.19,
+    "servingUnit": "g"
+  },
+  {
+    "id": "11609046-F8DF-5A42-BD5E-8D039D7734FC",
+    "name": "Onions, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 40,
+    "protein": 1.1,
+    "carbs": 9.34,
+    "fats": 0.1,
+    "servingUnit": "g"
+  },
+  {
     "id": "F66AC443-EE4B-5D15-9040-A5A269508C5D",
     "name": "Orange Peel, Raw",
     "weightInGrams": 100,
@@ -426,6 +2351,39 @@
     "protein": 1.5,
     "carbs": 25.0,
     "fats": 0.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "924AC90C-3E3D-513B-AADF-585A3628FC94",
+    "name": "Oranges, Raw, Florida",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 46,
+    "protein": 0.7,
+    "carbs": 11.5,
+    "fats": 0.21,
+    "servingUnit": "g"
+  },
+  {
+    "id": "294C637C-1F42-5201-9983-7B84CA0EBF8A",
+    "name": "Papayas, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 43,
+    "protein": 0.47,
+    "carbs": 10.8,
+    "fats": 0.26,
+    "servingUnit": "g"
+  },
+  {
+    "id": "4309E03B-5C4D-5ADA-8548-2866F2BAE089",
+    "name": "Passion-Fruit Juice, Purple, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 51,
+    "protein": 0.39,
+    "carbs": 13.6,
+    "fats": 0.05,
     "servingUnit": "g"
   },
   {
@@ -440,6 +2398,39 @@
     "servingUnit": "g"
   },
   {
+    "id": "DA8C1C77-255C-5FAB-8D8B-EBD630C08B18",
+    "name": "Pasta, Cooked, Unenriched, With Added Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 157,
+    "protein": 5.8,
+    "carbs": 30.6,
+    "fats": 0.93,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F106B2AB-996A-5C00-9888-1DD73792D5A4",
+    "name": "Pasta, Gluten-Free, Corn, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 126,
+    "protein": 2.63,
+    "carbs": 27.9,
+    "fats": 0.73,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5BBA632B-50EA-5FA3-8698-8280AE86C959",
+    "name": "Peaches, Yellow, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 42,
+    "protein": 0.91,
+    "carbs": 10.1,
+    "fats": 0.27,
+    "servingUnit": "g"
+  },
+  {
     "id": "75D204B4-EC00-5A2F-B740-40A10DEB5F79",
     "name": "Peanut Butter, Reduced Sodium",
     "weightInGrams": 100,
@@ -448,6 +2439,171 @@
     "protein": 24.0,
     "carbs": 21.8,
     "fats": 49.9,
+    "servingUnit": "g"
+  },
+  {
+    "id": "83119149-EF89-5AEC-B73D-531C6CD1D277",
+    "name": "Pears, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 57,
+    "protein": 0.36,
+    "carbs": 15.2,
+    "fats": 0.14,
+    "servingUnit": "g"
+  },
+  {
+    "id": "34EE139B-1DE6-58D9-BFD9-70AAD4FE355E",
+    "name": "Peas, Green, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 84,
+    "protein": 5.36,
+    "carbs": 15.6,
+    "fats": 0.22,
+    "servingUnit": "g"
+  },
+  {
+    "id": "13BBD7E0-49C4-500D-AD62-1F79596C2C22",
+    "name": "Peas, Green, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 81,
+    "protein": 5.42,
+    "carbs": 14.4,
+    "fats": 0.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "ECC9C72D-A2CB-54EA-B144-F6CCFAB69BCE",
+    "name": "Pepperoni, Beef And Pork, Sliced",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 504,
+    "protein": 19.2,
+    "carbs": 1.18,
+    "fats": 46.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C56D47FD-D68B-59E8-BE2D-850C963B4BB8",
+    "name": "Peppers, Jalapeno, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 29,
+    "protein": 0.91,
+    "carbs": 6.5,
+    "fats": 0.37,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7D6C16B7-1AF4-58BF-BB90-3CB75DB6F031",
+    "name": "Peppers, Sweet, Green, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 20,
+    "protein": 0.86,
+    "carbs": 4.64,
+    "fats": 0.17,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C07EBF29-27FE-57AE-8AD3-A01AFCE5AFBD",
+    "name": "Peppers, Sweet, Red, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 26,
+    "protein": 0.99,
+    "carbs": 6.03,
+    "fats": 0.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "AC82760F-60C3-5208-B0A0-9380ABD4FB2A",
+    "name": "Peppers, Sweet, Yellow, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 27,
+    "protein": 1.0,
+    "carbs": 6.32,
+    "fats": 0.21,
+    "servingUnit": "g"
+  },
+  {
+    "id": "B9642451-1C4A-5A07-B6F3-B5D24BD54C0F",
+    "name": "Pickle Relish, Hot Dog",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 91,
+    "protein": 1.5,
+    "carbs": 23.4,
+    "fats": 0.46,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7E6E3665-1C7C-51C6-A892-96B2A119C403",
+    "name": "Pineapple, Raw, All Varieties",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 50,
+    "protein": 0.54,
+    "carbs": 13.1,
+    "fats": 0.12,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5381374C-D7E1-5D66-A020-772D5226C483",
+    "name": "Pizza Hut 12\" Cheese Pizza, Pan Crust",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 280,
+    "protein": 11.7,
+    "carbs": 29.9,
+    "fats": 12.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "20E809B5-FE06-5A49-9C4F-A31F0791E7B8",
+    "name": "Pizza Hut 12\" Pepperoni Pizza, Pan Crust",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 298,
+    "protein": 12.0,
+    "carbs": 30.5,
+    "fats": 14.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "046B2D03-D72B-50BB-A06F-5CFA21BBBC1F",
+    "name": "Plums, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 46,
+    "protein": 0.7,
+    "carbs": 11.4,
+    "fats": 0.28,
+    "servingUnit": "g"
+  },
+  {
+    "id": "AB51EE9C-0F4B-5C08-92D4-66F52697BAAF",
+    "name": "Pomegranates, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 83,
+    "protein": 1.67,
+    "carbs": 18.7,
+    "fats": 1.17,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5A1B42B7-E60A-5BF4-A0EB-79DACFC01A57",
+    "name": "Pork Sausage Rice Links, Brown And Serve, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 407,
+    "protein": 13.7,
+    "carbs": 2.36,
+    "fats": 37.6,
     "servingUnit": "g"
   },
   {
@@ -473,6 +2629,28 @@
     "servingUnit": "g"
   },
   {
+    "id": "6DF1535C-E781-5D95-BD97-192339B006A1",
+    "name": "Pork, Cured, Ham, Boneless, Extra Lean And Regular, Roasted",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 165,
+    "protein": 22.0,
+    "carbs": 0.5,
+    "fats": 7.66,
+    "servingUnit": "g"
+  },
+  {
+    "id": "0504C204-144A-59A3-A558-1716DE114932",
+    "name": "Pork, Fresh, Loin, Country-Style Ribs, Separable Lean And Fat, Cooked, Braised",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 273,
+    "protein": 26.5,
+    "carbs": 0.0,
+    "fats": 17.7,
+    "servingUnit": "g"
+  },
+  {
     "id": "4C94DB6E-4B5C-556E-94F5-9F2EA3680A55",
     "name": "Pork, Fresh, Loin, Top Loin (Roasts), Boneless, Separable Lean And Fat, Cooked, Roasted",
     "weightInGrams": 100,
@@ -481,6 +2659,28 @@
     "protein": 26.4,
     "carbs": 0.0,
     "fats": 8.82,
+    "servingUnit": "g"
+  },
+  {
+    "id": "2F147C06-DD8C-5CE0-B89F-EA2DF46591E8",
+    "name": "Pork, Fresh, Loin, Top Loin (Roasts), Boneless, Separable Lean Only, Cooked, Roasted",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 173,
+    "protein": 27.2,
+    "carbs": 0.0,
+    "fats": 6.28,
+    "servingUnit": "g"
+  },
+  {
+    "id": "58688B8E-7BC6-5C5D-9247-D0806CD466D1",
+    "name": "Potatoes, Baked, Flesh And Skin, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 93,
+    "protein": 2.5,
+    "carbs": 21.2,
+    "fats": 0.13,
     "servingUnit": "g"
   },
   {
@@ -495,6 +2695,39 @@
     "servingUnit": "g"
   },
   {
+    "id": "05CDADF7-B549-523A-BBF0-59DE257A1B9B",
+    "name": "Prune Puree",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 257,
+    "protein": 2.1,
+    "carbs": 65.1,
+    "fats": 0.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5F3AB299-76A9-5A44-B6D0-137094F6AA75",
+    "name": "Puddings, Rice, Dry Mix, Prepared With 2% Milk",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 111,
+    "protein": 3.29,
+    "carbs": 20.8,
+    "fats": 1.63,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F0524BFE-5B20-5224-9AFA-4E5AD1FAB603",
+    "name": "Pumpkin, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 18,
+    "protein": 0.72,
+    "carbs": 4.31,
+    "fats": 0.07,
+    "servingUnit": "g"
+  },
+  {
     "id": "CD9C1789-F795-5E46-8559-AB80218F6F8F",
     "name": "Quinoa, Cooked",
     "weightInGrams": 100,
@@ -503,6 +2736,72 @@
     "protein": 4.4,
     "carbs": 21.3,
     "fats": 1.92,
+    "servingUnit": "g"
+  },
+  {
+    "id": "5BFB6654-2174-53FB-A1B6-7F46DEF3FB6E",
+    "name": "Quinoa, Uncooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 368,
+    "protein": 14.1,
+    "carbs": 64.2,
+    "fats": 6.07,
+    "servingUnit": "g"
+  },
+  {
+    "id": "0B7DA863-D366-5B39-9786-CD71DBBFCB6E",
+    "name": "Raisins, Seeded",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 296,
+    "protein": 2.52,
+    "carbs": 78.5,
+    "fats": 0.54,
+    "servingUnit": "g"
+  },
+  {
+    "id": "B5D80795-24B5-5A9B-8FC1-D610CC851E83",
+    "name": "Raspberries, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 52,
+    "protein": 1.2,
+    "carbs": 11.9,
+    "fats": 0.65,
+    "servingUnit": "g"
+  },
+  {
+    "id": "3132DCEE-9AB4-54F4-BF5E-0114CE6302A3",
+    "name": "Restaurant, Chinese, Fried Rice, Without Meat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 174,
+    "protein": 4.05,
+    "carbs": 32.8,
+    "fats": 2.96,
+    "servingUnit": "g"
+  },
+  {
+    "id": "806B82CE-5308-52F6-B00D-D10DF6B5A304",
+    "name": "Rice Cake, Cracker (Include Hain Mini Rice Cakes)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 392,
+    "protein": 7.1,
+    "carbs": 81.1,
+    "fats": 4.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E2191170-DFC9-5066-83AE-C68296F87804",
+    "name": "Rice Noodles, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 108,
+    "protein": 1.79,
+    "carbs": 24.0,
+    "fats": 0.2,
     "servingUnit": "g"
   },
   {
@@ -528,6 +2827,28 @@
     "servingUnit": "g"
   },
   {
+    "id": "2FBA67A0-07A1-55E5-B8E2-4CD7CA3356ED",
+    "name": "Rice, White, Medium-Grain, Cooked, Unenriched",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 130,
+    "protein": 2.38,
+    "carbs": 28.6,
+    "fats": 0.21,
+    "servingUnit": "g"
+  },
+  {
+    "id": "47F44330-9022-5EAA-A4E1-562E8B6C460B",
+    "name": "Rolls, Hamburger Or Hot Dog, Whole Wheat",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 269,
+    "protein": 12.4,
+    "carbs": 44.9,
+    "fats": 4.38,
+    "servingUnit": "g"
+  },
+  {
     "id": "9FD86885-11E7-5941-AFC9-321B57069126",
     "name": "Rose-Apples, Raw",
     "weightInGrams": 100,
@@ -550,6 +2871,61 @@
     "servingUnit": "g"
   },
   {
+    "id": "F90C30E8-6BB6-5C3C-82AC-EB917A70C4D9",
+    "name": "Salami, Cooked, Beef",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 261,
+    "protein": 12.6,
+    "carbs": 1.9,
+    "fats": 22.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "13532813-148F-5A7C-B28C-E672BED083FB",
+    "name": "Salami, Cooked, Turkey",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 172,
+    "protein": 19.2,
+    "carbs": 1.55,
+    "fats": 9.21,
+    "servingUnit": "g"
+  },
+  {
+    "id": "D5C1B6D6-5C23-5BFD-8F9F-9BF170559EBF",
+    "name": "Sausage, Beef, Fresh, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 332,
+    "protein": 18.2,
+    "carbs": 0.35,
+    "fats": 28.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "7A0650F5-4854-5B48-B64C-BFBFDA725A97",
+    "name": "Sausage, Pork And Beef, Fresh, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 396,
+    "protein": 13.8,
+    "carbs": 2.7,
+    "fats": 36.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "CF300C5D-944F-5F19-AFAB-90845B2366E0",
+    "name": "Sausage, Turkey, Fresh, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 196,
+    "protein": 23.9,
+    "carbs": 0.0,
+    "fats": 10.4,
+    "servingUnit": "g"
+  },
+  {
     "id": "FB05B21B-3E4B-577B-B6DF-6364427CBF3E",
     "name": "Seeds, Breadfruit Seeds, Boiled",
     "weightInGrams": 100,
@@ -558,6 +2934,28 @@
     "protein": 5.3,
     "carbs": 32.0,
     "fats": 2.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "83E798D4-97E0-5050-9654-1083E66CD935",
+    "name": "Seeds, Breadfruit Seeds, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 191,
+    "protein": 7.4,
+    "carbs": 29.2,
+    "fats": 5.59,
+    "servingUnit": "g"
+  },
+  {
+    "id": "4A0CF0FC-754F-5AED-B558-D445C6F8790A",
+    "name": "Seeds, Breadfruit Seeds, Roasted",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 207,
+    "protein": 6.2,
+    "carbs": 40.1,
+    "fats": 2.7,
     "servingUnit": "g"
   },
   {
@@ -572,6 +2970,39 @@
     "servingUnit": "g"
   },
   {
+    "id": "F8FB69B8-7161-566B-A118-EAE9CEB4AE9E",
+    "name": "Seeds, Pumpkin And Squash Seed Kernels, Dried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 559,
+    "protein": 30.2,
+    "carbs": 10.7,
+    "fats": 49.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "AEAF397D-60AA-527B-975C-055AB3EDEF58",
+    "name": "Seeds, Sunflower Seed Kernels, Dried",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 584,
+    "protein": 20.8,
+    "carbs": 20.0,
+    "fats": 51.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "3C98B630-8BB6-5A37-8F5F-1658695EE1E1",
+    "name": "Snack, Potato Chips, Made From Dried Potatoes, Plain",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 545,
+    "protein": 4.62,
+    "carbs": 55.4,
+    "fats": 35.3,
+    "servingUnit": "g"
+  },
+  {
     "id": "D93170C1-10ED-5403-B2DF-201061D4A25E",
     "name": "Snacks, Bagel Chips, Plain",
     "weightInGrams": 100,
@@ -583,6 +3014,39 @@
     "servingUnit": "g"
   },
   {
+    "id": "7E38E36B-4E07-5A66-966D-4BFD60A64A33",
+    "name": "Snacks, Granola Bars, Hard, Almond",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 495,
+    "protein": 7.7,
+    "carbs": 62.0,
+    "fats": 25.5,
+    "servingUnit": "g"
+  },
+  {
+    "id": "71E02E6B-4F16-55A4-88C0-BE8EF3254D29",
+    "name": "Soup, Chili Beef, Canned, Condensed",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 117,
+    "protein": 5.09,
+    "carbs": 18.9,
+    "fats": 2.53,
+    "servingUnit": "g"
+  },
+  {
+    "id": "9284D884-8C73-5311-8136-A237F8288C3C",
+    "name": "Soup, Ramen Noodle, Any Flavor, Dry",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 440,
+    "protein": 10.2,
+    "carbs": 60.3,
+    "fats": 17.6,
+    "servingUnit": "g"
+  },
+  {
     "id": "E361D85D-7D58-5D79-8FD7-ABB8A38EA955",
     "name": "Spinach, Raw",
     "weightInGrams": 100,
@@ -591,6 +3055,50 @@
     "protein": 2.86,
     "carbs": 3.63,
     "fats": 0.39,
+    "servingUnit": "g"
+  },
+  {
+    "id": "871127BF-47E7-5C06-8679-D793FB99C8AA",
+    "name": "Squash, Summer, Zucchini, Includes Skin, Cooked, Boiled, Drained, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 15,
+    "protein": 1.14,
+    "carbs": 2.69,
+    "fats": 0.36,
+    "servingUnit": "g"
+  },
+  {
+    "id": "CB1FD620-F7C1-5BD0-B65C-A2A9EC5CB464",
+    "name": "Squash, Winter, Acorn, Cooked, Baked, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 56,
+    "protein": 1.12,
+    "carbs": 14.6,
+    "fats": 0.14,
+    "servingUnit": "g"
+  },
+  {
+    "id": "956AA173-69AD-5DEF-B339-05F1F9947B36",
+    "name": "Squash, Winter, Butternut, Cooked, Baked, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 40,
+    "protein": 0.9,
+    "carbs": 10.5,
+    "fats": 0.09,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E2CF4144-6CED-511F-8B53-FF8DBEE75DF0",
+    "name": "Squash, Zucchini, Baby, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 21,
+    "protein": 2.71,
+    "carbs": 3.11,
+    "fats": 0.4,
     "servingUnit": "g"
   },
   {
@@ -616,6 +3124,28 @@
     "servingUnit": "g"
   },
   {
+    "id": "A6C60705-78E0-5E6B-BCB6-B787E8F0E974",
+    "name": "Sugars, Brown",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 380,
+    "protein": 0.12,
+    "carbs": 98.1,
+    "fats": 0.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A83EA5CD-C51C-5ECA-B835-2623A96DE516",
+    "name": "Sweet Potato, Cooked, Baked In Skin, Flesh, With Salt",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 90,
+    "protein": 2.01,
+    "carbs": 20.7,
+    "fats": 0.15,
+    "servingUnit": "g"
+  },
+  {
     "id": "882A54C8-9B6C-5F28-9728-D32D1BB73E94",
     "name": "Sweet Potato, Frozen, Cooked, Baked, With Salt",
     "weightInGrams": 100,
@@ -624,6 +3154,72 @@
     "protein": 1.71,
     "carbs": 23.4,
     "fats": 0.12,
+    "servingUnit": "g"
+  },
+  {
+    "id": "477C2C3D-BF4E-51D5-9A8B-42F9A1CA01AD",
+    "name": "Sweet Potatoes, French Fried, Crosscut, Frozen, Unprepared",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 209,
+    "protein": 1.7,
+    "carbs": 25.5,
+    "fats": 11.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E6D45C6B-708D-5B49-B41D-A34F743C96F9",
+    "name": "Syrups, Maple",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 260,
+    "protein": 0.04,
+    "carbs": 67.0,
+    "fats": 0.06,
+    "servingUnit": "g"
+  },
+  {
+    "id": "64AB3CEB-B2C4-5CE1-BCBA-5BBCDF8C49B6",
+    "name": "Taco Bell, Original Taco With Beef, Cheese And Lettuce",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 229,
+    "protein": 8.86,
+    "carbs": 19.8,
+    "fats": 12.7,
+    "servingUnit": "g"
+  },
+  {
+    "id": "06CD7FA6-70E2-5992-8250-64A055C81CB2",
+    "name": "Taco Bell, Taco Salad",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 170,
+    "protein": 6.69,
+    "carbs": 15.1,
+    "fats": 9.17,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E8C34E20-C833-5797-A80D-959C34AD0216",
+    "name": "Tangerine Juice, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 43,
+    "protein": 0.5,
+    "carbs": 10.1,
+    "fats": 0.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A01B6809-B776-5475-915F-5AA7B7360115",
+    "name": "Tangerines, (Mandarin Oranges), Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 53,
+    "protein": 0.81,
+    "carbs": 13.3,
+    "fats": 0.31,
     "servingUnit": "g"
   },
   {
@@ -638,6 +3234,39 @@
     "servingUnit": "g"
   },
   {
+    "id": "ADA8F8DB-2A21-52CF-A63D-B664F0457AB8",
+    "name": "Tempeh, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 195,
+    "protein": 19.9,
+    "carbs": 7.62,
+    "fats": 11.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "31476C7C-002B-5185-B4FA-63A9AE849262",
+    "name": "Tomato Products, Canned, Sauce",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 24,
+    "protein": 1.2,
+    "carbs": 5.31,
+    "fats": 0.3,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C8DBA6D6-9D6B-5E5F-B0A8-F5CBE139D721",
+    "name": "Tomatoes, Crushed, Canned",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 32,
+    "protein": 1.64,
+    "carbs": 7.29,
+    "fats": 0.28,
+    "servingUnit": "g"
+  },
+  {
     "id": "3760619D-2745-5F45-8357-7499B4E03101",
     "name": "Tomatoes, Grape, Raw",
     "weightInGrams": 100,
@@ -646,6 +3275,39 @@
     "protein": 0.83,
     "carbs": 5.51,
     "fats": 0.63,
+    "servingUnit": "g"
+  },
+  {
+    "id": "751ED1A4-ABDD-574B-80FF-769C5D2099E0",
+    "name": "Tomatoes, Green, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 23,
+    "protein": 1.2,
+    "carbs": 5.1,
+    "fats": 0.2,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C3718679-5F74-539B-B65C-8BB5955AA3EF",
+    "name": "Tomatoes, Red, Ripe, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 18,
+    "protein": 0.95,
+    "carbs": 4.01,
+    "fats": 0.11,
+    "servingUnit": "g"
+  },
+  {
+    "id": "A351D486-AC78-5267-9CF4-C502247B2423",
+    "name": "Tortilla, Blue Corn, Sakwavikaviki (Hopi)",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 276,
+    "protein": 7.83,
+    "carbs": 58.1,
+    "fats": 1.4,
     "servingUnit": "g"
   },
   {
@@ -660,6 +3322,17 @@
     "servingUnit": "g"
   },
   {
+    "id": "2C48974E-8330-5F2F-B042-4C4F91EFEAEB",
+    "name": "Turkey Breast, Pre-Basted, Meat And Skin, Cooked, Roasted",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 126,
+    "protein": 22.2,
+    "carbs": 0.0,
+    "fats": 3.46,
+    "servingUnit": "g"
+  },
+  {
     "id": "DCA22F7D-9FE2-5BBE-B3A9-982E610377CC",
     "name": "Turkey, Ground, Cooked",
     "weightInGrams": 100,
@@ -668,6 +3341,17 @@
     "protein": 27.4,
     "carbs": 0.0,
     "fats": 10.4,
+    "servingUnit": "g"
+  },
+  {
+    "id": "6F26943B-26FF-592D-845C-28221DB02E64",
+    "name": "Turkey, Ground, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 148,
+    "protein": 19.7,
+    "carbs": 0.0,
+    "fats": 7.66,
     "servingUnit": "g"
   },
   {
@@ -682,6 +3366,127 @@
     "servingUnit": "g"
   },
   {
+    "id": "4851B218-CA58-5151-981F-675E7F2BE651",
+    "name": "Veal, Loin, Chop, Separable Lean And Fat, Cooked, Grilled",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 198,
+    "protein": 28.0,
+    "carbs": 0.16,
+    "fats": 9.48,
+    "servingUnit": "g"
+  },
+  {
+    "id": "D4C63B38-40D1-5E32-B2F5-95B6F26F99E0",
+    "name": "Veal, Sirloin, Separable Lean And Fat, Cooked, Braised",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 252,
+    "protein": 31.3,
+    "carbs": 0.0,
+    "fats": 13.1,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F5F0D226-BF0F-55F1-A2BD-0CF90F4FD4DA",
+    "name": "Vegetarian Meatloaf Or Patties",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 197,
+    "protein": 21.0,
+    "carbs": 8.0,
+    "fats": 9.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "C6E6DACF-86E1-5EBB-939C-156665259504",
+    "name": "Watermelon, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 30,
+    "protein": 0.61,
+    "carbs": 7.55,
+    "fats": 0.15,
+    "servingUnit": "g"
+  },
+  {
+    "id": "2014780C-3187-5D89-9EE1-C20433CE7F16",
+    "name": "Wendy'S, Chicken Nuggets",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 326,
+    "protein": 16.5,
+    "carbs": 14.3,
+    "fats": 22.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "F347B4F2-509E-52AE-A200-A6FED34583F4",
+    "name": "Wendy'S, Ultimate Chicken Grill Sandwich",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 179,
+    "protein": 14.7,
+    "carbs": 18.9,
+    "fats": 5.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "CEEC2910-924E-5CA8-BF80-44E5907D633A",
+    "name": "Wheat Flour, White, Tortilla Mix, Enriched",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 405,
+    "protein": 9.66,
+    "carbs": 67.1,
+    "fats": 10.6,
+    "servingUnit": "g"
+  },
+  {
+    "id": "D1E032C6-5FE3-522E-A920-1174B90927E3",
+    "name": "Wheat, Khorasan, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 132,
+    "protein": 5.71,
+    "carbs": 27.6,
+    "fats": 0.83,
+    "servingUnit": "g"
+  },
+  {
+    "id": "3DAA5A9C-F8B5-5107-BDA1-731D408A066A",
+    "name": "Wild Rice, Cooked",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 101,
+    "protein": 3.99,
+    "carbs": 21.3,
+    "fats": 0.34,
+    "servingUnit": "g"
+  },
+  {
+    "id": "169CD9A1-EFDA-5DF8-88BF-D2C150E36DDB",
+    "name": "Wild Rice, Raw",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 357,
+    "protein": 14.7,
+    "carbs": 74.9,
+    "fats": 1.08,
+    "servingUnit": "g"
+  },
+  {
+    "id": "E1813604-7C88-51C0-9CD9-07EAB40C79F6",
+    "name": "Yogurt, Greek, Nonfat, Plain, Chobani",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 54,
+    "protein": 9.53,
+    "carbs": 3.43,
+    "fats": 0.24,
+    "servingUnit": "g"
+  },
+  {
     "id": "697AC22F-D5CA-5CBF-B012-C0CD10D8A438",
     "name": "Yogurt, Greek, Plain, Nonfat",
     "weightInGrams": 100,
@@ -690,6 +3495,28 @@
     "protein": 10.3,
     "carbs": 3.64,
     "fats": 0.37,
+    "servingUnit": "g"
+  },
+  {
+    "id": "2320C5B8-6AC5-579B-9189-2ADF55AE0BA5",
+    "name": "Yogurt, Greek, Plain, Whole Milk",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 97,
+    "protein": 9.0,
+    "carbs": 3.98,
+    "fats": 5.0,
+    "servingUnit": "g"
+  },
+  {
+    "id": "DAAECF9D-D043-5EAE-AF76-43B31D55EC61",
+    "name": "Yogurt, Plain, Skim Milk",
+    "weightInGrams": 100,
+    "servings": 1,
+    "calories": 56,
+    "protein": 5.73,
+    "carbs": 7.68,
+    "fats": 0.18,
     "servingUnit": "g"
   },
   {

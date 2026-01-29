@@ -13,7 +13,7 @@ This folder contains helper tooling to generate the bundled default food list us
 1. Get a FoodData Central API key and set it in your shell:
 
 ```bash
-export FDC_API_KEY="YOUR KEY HERE"
+export FDC_API_KEY="YOUR_KEY_HERE"
 ```
 
 2. Run the generator:
@@ -23,6 +23,33 @@ python3 tools/seed_usda_defaults.py \
   --queries tools/usda_queries_common.txt \
   --limit 300 \
   --data-types "Foundation,SR Legacy" \
+  --mode overwrite \
+  --out "FoodTrackingApp/FoodTrackingApp/default_all.json"
+```
+
+# To Run with Brands
+```bash
+python3 tools/seed_usda_defaults.py \
+  --queries tools/usda_queries_common.txt \
+  --limit 300 \
+  --data-types "Branded" \
+  --mode overwrite \
+  --out "FoodTrackingApp/FoodTrackingApp/default_all.json"
+```
+
+### Append vs overwrite
+- **overwrite**: replace the output file entirely (default)
+- **append**: keep existing items and add missing ones (by id/name)
+- **refresh**: replace existing items when the id matches (and add missing)
+
+Example (append branded items into your existing defaults):
+
+```bash
+python3 tools/seed_usda_defaults.py \
+  --queries tools/usda_queries_common.txt \
+  --limit 300 \
+  --data-types "Branded" \
+  --mode append \
   --out "FoodTrackingApp/FoodTrackingApp/default_all.json"
 ```
 
