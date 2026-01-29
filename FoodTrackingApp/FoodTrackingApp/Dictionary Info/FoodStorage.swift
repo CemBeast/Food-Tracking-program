@@ -8,6 +8,9 @@
 import Foundation
 
 let foodDictionaryFileName = "user_foods.json"
+let bundledDefaultsFileName = "default_all"
+let bundledDefaultsVersion = 1
+let defaultsMergedVersionKey = "defaults_merged_version"
 
 func getDocumentsDirectory() -> URL {
     FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -43,10 +46,17 @@ func loadFoodItems() -> [FoodItem] {
             }
             
             if decoded.isEmpty {
-                print("📭 user_foods.json is empty. Loading empty.")
-//                let defaultItems = loadDefaultFoodItems(from: "default_all")
-//                saveFoodItems(defaultItems)
-                return []
+                let lastMerged = UserDefaults.standard.integer(forKey: defaultsMergedVersionKey)
+                if lastMerged < bundledDefaultsVersion {
+                    print("📭 user_foods.json is empty. Seeding bundled defaults v\(bundledDefaultsVersion).")
+                    let defaultItems = loadDefaultFoodItems(from: bundledDefaultsFileName)
+                    saveFoodItems(defaultItems)
+                    UserDefaults.standard.set(bundledDefaultsVersion, forKey: defaultsMergedVersionKey)
+                    return defaultItems
+                } else {
+                    print("📭 user_foods.json is empty. Keeping empty (defaults already merged v\(lastMerged)).")
+                    return []
+                }
             }
 
             return decoded
@@ -56,8 +66,9 @@ func loadFoodItems() -> [FoodItem] {
         }
     } else {
         print("📭 user_foods.json does not exist. Loading default.")
-        let defaultItems = loadDefaultFoodItems(from: "default_all")
+        let defaultItems = loadDefaultFoodItems(from: bundledDefaultsFileName)
         saveFoodItems(defaultItems)
+        UserDefaults.standard.set(bundledDefaultsVersion, forKey: defaultsMergedVersionKey)
         return defaultItems
     }
 }

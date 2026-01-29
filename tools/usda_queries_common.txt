@@ -1,0 +1,68 @@
+# One query per line. The generator will search USDA FoodData Central and pick the first usable result.
+# Keep queries fairly specific (e.g., "raw", "cooked", "roasted") to reduce ambiguity.
+
+apple raw
+banana raw
+orange raw
+strawberries raw
+blueberries raw
+grapes raw
+avocado raw
+tomato raw
+cucumber raw
+spinach raw
+lettuce romaine raw
+broccoli raw
+cauliflower raw
+carrots raw
+potato baked
+sweet potato baked
+white rice cooked
+brown rice cooked
+oats dry
+quinoa cooked
+pasta cooked
+bread whole wheat
+bagel plain
+tortilla flour
+corn tortilla
+peanut butter
+almonds
+walnuts
+chia seeds
+flax seeds
+olive oil
+butter
+mayonnaise
+honey
+sugar
+salt
+black beans cooked
+chickpeas cooked
+lentils cooked
+tofu firm
+tempeh
+egg whole raw
+egg white raw
+milk whole
+milk 2 percent
+greek yogurt plain nonfat
+yogurt plain whole
+cheddar cheese
+mozzarella cheese
+parmesan cheese
+chicken breast roasted
+chicken thigh roasted
+ground beef 90 lean cooked
+ground turkey cooked
+pork loin roasted
+salmon atlantic cooked
+tuna canned in water
+shrimp cooked
+cod cooked
+turkey breast roasted
+bacon cooked
+ham sliced
+sausage pork cooked
+protein powder whey
+
