@@ -107,7 +107,7 @@ struct IngredientsView: View {
             .listRowBackground(Color.clear)
             
             Section {
-                if let ingredients = meal.ingredients, !ingredients.isEmpty {
+                if !ingredients.isEmpty {
                     ForEach(ingredients) { ing in
                         ingredientRow(ing)
                             .contentShape(Rectangle())
@@ -135,7 +135,7 @@ struct IngredientsView: View {
                     .font(.title3.bold())
                     .padding(.top, 12)
 
-                Text(meal?.name ?? "Meal")
+                Text(meal.name)
                     .font(.headline)
 
                 TextField("Weight", text: $editedMealWeight)
@@ -232,7 +232,7 @@ struct IngredientsView: View {
     
     private func updateIngredient(_ ing: MealIngredient, newQuantity: Double) {
         guard var meal = meal else { return }
-        guard var list = meal.ingredients else { return }
+        var list = meal.ingredients
         if let idx = list.firstIndex(where: { $0.id == ing.id }) {
             var updated = ing
             updated.quantity = newQuantity
@@ -258,20 +258,20 @@ struct IngredientsView: View {
     }
     
     private func computeTotals(from list: [MealIngredient]) -> (cal: Int, protein: Double, carbs: Double, fats: Double, weight: Double) {
-        var c = 0
-        var p = 0.0
-        var cb = 0.0
-        var f = 0.0
-        var w = 0.0
-        for ing in list {
-            let ratio = ratioFor(ing)
-            c += Int(Double(ing.calories) * ratio)
-            p += ing.protein * ratio
-            cb += ing.carbs * ratio
-            f += ing.fats * ratio
-            w += ingredientWeight(ing)
-        }
-        return (c, p, cb, f, w)
+       var c = 0
+       var p = 0.0
+       var cb = 0.0
+       var f = 0.0
+       var w = 0.0
+       for ing in list {
+           let ratio = ratioFor(ing)
+           c += Int(Double(ing.calories) * ratio)
+           p += ing.protein * ratio
+           cb += ing.carbs * ratio
+           f += ing.fats * ratio
+           w += ingredientWeight(ing)
+       }
+       return (c, p, cb, f, w)
     }
     
     private func ratioFor(_ ing: MealIngredient) -> Double {
@@ -324,7 +324,7 @@ struct IngredientsView: View {
         foodModel.load() // refresh from disk to avoid stale copy
         if let found = foodModel.items.first(where: { $0.id == mealId }) {
             meal = found
-            print("🧩 Loaded meal ingredients:", found.ingredients?.count ?? -1)
+            print("🧩 Loaded meal ingredients:", found.ingredients.count)
         } else {
             print("⚠️ Meal not found for id \(mealId)")
         }

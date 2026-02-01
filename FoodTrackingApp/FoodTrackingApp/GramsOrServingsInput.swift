@@ -135,32 +135,17 @@ struct GramsOrServingsInput: View {
                        let totalProtein,
                        let totalCarbs,
                        let totalFats {
-                        VStack(spacing: 10) {
-                            Text("CURRENT MACROS")
-                                .font(.system(size: 10, weight: .bold))
-                                .tracking(1.1)
-                                .foregroundColor(AppTheme.textTertiary)
-                            
-                            HStack(spacing: 12) {
-                                LiveMacroPill(value: "\(current.calories)", label: "cal", color: AppTheme.calorieColor)
-                                LiveMacroPill(value: String(format: "%.0f", current.protein), label: "P", color: AppTheme.proteinColor)
-                                LiveMacroPill(value: String(format: "%.0f", current.carbs), label: "C", color: AppTheme.carbColor)
-                                LiveMacroPill(value: String(format: "%.0f", current.fats), label: "F", color: AppTheme.fatColor)
-                            }
-                            
-                            Text("TOTAL IF ADDED")
-                                .font(.system(size: 10, weight: .bold))
-                                .tracking(1.1)
-                                .foregroundColor(AppTheme.textTertiary)
-                            
-                            HStack(spacing: 12) {
-                                LiveMacroPill(value: "\(totalCalories)", label: "cal", color: AppTheme.calorieColor)
-                                LiveMacroPill(value: String(format: "%.0f", totalProtein), label: "P", color: AppTheme.proteinColor)
-                                LiveMacroPill(value: String(format: "%.0f", totalCarbs), label: "C", color: AppTheme.carbColor)
-                                LiveMacroPill(value: String(format: "%.0f", totalFats), label: "F", color: AppTheme.fatColor)
-                            }
+                        Text("TOTAL IF ADDED")
+                            .font(.system(size: 10, weight: .bold))
+                            .tracking(1.1)
+                            .foregroundColor(AppTheme.textTertiary)
+                        
+                        HStack(spacing: 12) {
+                            LiveMacroPill(value: "\(totalCalories)", label: "cal", color: AppTheme.calorieColor)
+                            LiveMacroPill(value: String(format: "%.0f", totalProtein), label: "P", color: AppTheme.proteinColor)
+                            LiveMacroPill(value: String(format: "%.0f", totalCarbs), label: "C", color: AppTheme.carbColor)
+                            LiveMacroPill(value: String(format: "%.0f", totalFats), label: "F", color: AppTheme.fatColor)
                         }
-                        .padding(.top, 6)
                     }
                 }
                 .padding(.vertical, 20)
