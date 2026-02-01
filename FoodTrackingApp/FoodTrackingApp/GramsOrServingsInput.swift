@@ -130,8 +130,7 @@ struct GramsOrServingsInput: View {
                         LiveMacroPill(value: String(format: "%.0f", liveFats), label: "F", color: AppTheme.fatColor)
                     }
                     
-                    if let current = currentMacros,
-                       let totalCalories,
+                    if let totalCalories,
                        let totalProtein,
                        let totalCarbs,
                        let totalFats {
