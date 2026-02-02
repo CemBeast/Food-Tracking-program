@@ -109,7 +109,7 @@ struct DailyMacrosDisplay: View {
                     .trim(from: 0, to: animatedOverflow)
                     .stroke(
                         overflowColor,
-                        style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                        style: StrokeStyle(lineWidth: 12, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedOverflow)
@@ -117,7 +117,7 @@ struct DailyMacrosDisplay: View {
 
                 // Background ring
                 Circle()
-                    .stroke(color.opacity(0.15), lineWidth: 6)
+                    .stroke(color.opacity(0.15), lineWidth: 12)
                     .frame(width: 112, height: 112)
 
                 // Progress ring
