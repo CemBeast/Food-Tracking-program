@@ -13,8 +13,9 @@ struct ContentView: View {
     }
     
     var body: some View {
-        ModelImageTestView()
-//        MainMenu()
+        // FOR TESTING ML IMAGE
+        // ModelImageTestView()
+        MainMenu()
             .preferredColorScheme(.dark) // Force dark mode for sleek look
     }
     

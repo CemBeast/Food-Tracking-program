@@ -5,206 +5,9 @@
 //  Created by Cem Beyenal on 10/28/24.
 //
 import SwiftUI
-import PhotosUI
 import CoreML
+import PhotosUI
 import UIKit
-import CoreVideo
-
-// MARK: - Load labels from classes.txt in app bundle
-
-func loadLabels() -> [String] {
-    guard let url = Bundle.main.url(forResource: "classes", withExtension: "txt"),
-          let text = try? String(contentsOf: url) else {
-        return []
-    }
-    return text
-        .split(whereSeparator: \.isNewline)
-        .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-        .filter { !$0.isEmpty }
-}
-
-// MARK: - Math helpers
-
-func argmax(_ a: MLMultiArray) -> Int {
-    var bestIdx = 0
-    var bestVal = -Double.infinity
-    for i in 0..<a.count {
-        let v = a[i].doubleValue
-        if v > bestVal {
-            bestVal = v
-            bestIdx = i
-        }
-    }
-    return bestIdx
-}
-
-func softmax(_ a: MLMultiArray) -> [Double] {
-    // Numerical stability: subtract max
-    var maxVal = -Double.infinity
-    for i in 0..<a.count {
-        maxVal = max(maxVal, a[i].doubleValue)
-    }
-
-    var exps = Array(repeating: 0.0, count: a.count)
-    var sum = 0.0
-    for i in 0..<a.count {
-        let e = Foundation.exp(a[i].doubleValue - maxVal)
-        exps[i] = e
-        sum += e
-    }
-    if sum == 0 { return exps }
-    return exps.map { $0 / sum }
-}
-
-// MARK: - UIImage -> CVPixelBuffer (224x224)
-
-extension UIImage {
-    func toCVPixelBuffer(width: Int = 224, height: Int = 224) -> CVPixelBuffer? {
-        let attrs: [CFString: Any] = [
-            kCVPixelBufferCGImageCompatibilityKey: true,
-            kCVPixelBufferCGBitmapContextCompatibilityKey: true
-        ]
-
-        var pixelBuffer: CVPixelBuffer?
-        let status = CVPixelBufferCreate(
-            kCFAllocatorDefault,
-            width,
-            height,
-            kCVPixelFormatType_32BGRA,
-            attrs as CFDictionary,
-            &pixelBuffer
-        )
-        guard status == kCVReturnSuccess, let pb = pixelBuffer else { return nil }
-
-        CVPixelBufferLockBaseAddress(pb, [])
-        defer { CVPixelBufferUnlockBaseAddress(pb, []) }
-
-        guard let context = CGContext(
-            data: CVPixelBufferGetBaseAddress(pb),
-            width: width,
-            height: height,
-            bitsPerComponent: 8,
-            bytesPerRow: CVPixelBufferGetBytesPerRow(pb),
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
-        ) else { return nil }
-
-        // Draw resized image into the pixel buffer
-        UIGraphicsPushContext(context)
-        context.translateBy(x: 0, y: CGFloat(height))
-        context.scaleBy(x: 1.0, y: -1.0)
-
-        let rect = CGRect(x: 0, y: 0, width: width, height: height)
-        self.draw(in: rect)
-
-        UIGraphicsPopContext()
-        return pb
-    }
-}
-
-// MARK: - SwiftUI test view
-
-struct ModelImageTestView: View {
-    @State private var status = "Tap to pick image + predict"
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedUIImage: UIImage? = nil
-    @State private var labels: [String] = []
-
-    var body: some View {
-        VStack(spacing: 16) {
-            if let img = selectedUIImage {
-                Image(uiImage: img)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 280)
-                    .cornerRadius(12)
-            }
-
-            PhotosPicker(selection: $selectedItem, matching: .images) {
-                Text(status)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(.blue.opacity(0.15))
-                    .cornerRadius(12)
-            }
-            .onChange(of: selectedItem) { newItem in
-                guard let newItem else { return }
-                Task { await predictFromPickerItem(newItem) }
-            }
-        }
-        .padding()
-        .onAppear {
-            labels = loadLabels()
-            if labels.isEmpty {
-                status = "⚠️ classes.txt missing/empty"
-            } else {
-                status = "Tap to pick image + predict"
-            }
-        }
-    }
-
-    private func predictFromPickerItem(_ item: PhotosPickerItem) async {
-        do {
-            await MainActor.run { status = "Loading image..." }
-
-            guard let data = try await item.loadTransferable(type: Data.self),
-                  let uiImage = UIImage(data: data) else {
-                await MainActor.run { status = "❌ Could not load image" }
-                return
-            }
-
-            await MainActor.run {
-                self.selectedUIImage = uiImage
-                self.status = "Running model..."
-            }
-
-            let (label, confidence) = try runCoreMLPrediction(uiImage: uiImage)
-
-            await MainActor.run {
-                let pct = Int((confidence * 100).rounded())
-                self.status = "✅ \(label) (\(pct)%)"
-            }
-        } catch {
-            await MainActor.run {
-                self.status = "❌ Error: \(error.localizedDescription)"
-            }
-        }
-    }
-
-    private func runCoreMLPrediction(uiImage: UIImage) throws -> (String, Double) {
-        guard !labels.isEmpty else {
-            throw NSError(domain: "CoreMLTest", code: 10,
-                          userInfo: [NSLocalizedDescriptionKey: "classes.txt not loaded"])
-        }
-
-        guard let pixelBuffer = uiImage.toCVPixelBuffer(width: 224, height: 224) else {
-            throw NSError(domain: "CoreMLTest", code: 1,
-                          userInfo: [NSLocalizedDescriptionKey: "Failed to create CVPixelBuffer"])
-        }
-
-        let config = MLModelConfiguration()
-        config.computeUnits = .all
-        let model = try FoodClassifier(configuration: config)
-
-        // IMPORTANT:
-        // Use whatever Xcode generated. Most likely:
-        //   let output = try model.prediction(input: pixelBuffer)
-        // If yours differs, change this one line.
-        let output = try model.prediction(input: pixelBuffer)
-
-        // Your model output is: var_331 (1 x 101 Float32)
-        let logits = output.var_331
-
-        let idx = argmax(logits)
-        let probs = softmax(logits)
-        let conf = (idx < probs.count) ? probs[idx] : 0.0
-
-        let label = (idx < labels.count) ? labels[idx] : "class_\(idx)"
-        return (label, conf)
-    }
-}
-
-// Balls
 
 // MARK: - Section Card (Updated)
 struct SectionCard<Content: View>: View {
@@ -297,15 +100,26 @@ struct FoodDictionaryTab: View {
     }
 }
 
-// MARK: - Track Food Tab
 struct TrackFoodTab: View {
     @Binding var showFoodSelection: Bool
     @Binding var showScannerTracking: Bool
     @Binding var showQuickTracking: Bool
-    @State private var status = "Not tested"
+
+    @State private var status = "Track Food with Camera"
+    @State private var selectedUIImage: UIImage? = nil
+
+    @State private var showSourceChooser = false
+    @State private var showCameraPicker = false
+    @State private var showLibraryPicker = false
+    
+    @State private var showConfirmView = false
+    @State private var pendingPrediction: FoodPredictionResult? = nil
+
+    private let predictor = FoodMLPredictor()
 
     var body: some View {
         SectionCard(title: "Track Food") {
+
             Button {
                 showScannerTracking = true
             } label: {
@@ -316,7 +130,7 @@ struct TrackFoodTab: View {
                 }
             }
             .buttonStyle(SleekButtonStyle())
-            
+
             Button {
                 showFoodSelection.toggle()
             } label: {
@@ -327,7 +141,7 @@ struct TrackFoodTab: View {
                 }
             }
             .buttonStyle(SleekButtonStyle())
-            
+
             Button {
                 showQuickTracking.toggle()
             } label: {
@@ -338,18 +152,96 @@ struct TrackFoodTab: View {
                 }
             }
             .buttonStyle(SleekButtonStyle())
-            Button(status) {
-                do {
-                    let _ = try FoodClassifier(configuration: MLModelConfiguration())
-                    status = "✅ Model loaded successfully"
-                } catch {
-                    status = "❌ Failed to load model: \(error.localizedDescription)"
+
+            // New ML button that matches the card style
+            Button {
+                showSourceChooser = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "camera.fill")
+                        .font(.system(size: 18))
+                    Text(status)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
             .buttonStyle(SleekButtonStyle())
+            .confirmationDialog("Track Food", isPresented: $showSourceChooser, titleVisibility: .visible) {
+                if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                    Button("Camera") { showCameraPicker = true }
+                }
+                Button("Photo Library") { showLibraryPicker = true }
+                Button("Cancel", role: .cancel) {}
+            }
+
+            // Preview inside the card (styled like a sub-card)
+            if let img = selectedUIImage {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Selected Photo")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    Image(uiImage: img)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 220)
+                        .cornerRadius(12)
+                }
+                .padding(12)
+                .background(.ultraThinMaterial)
+                .cornerRadius(14)
+            }
+        }
+        // Present camera + library sheets from OUTSIDE the SectionCard content
+        .sheet(isPresented: $showCameraPicker) {
+            ImagePicker(sourceType: .camera) { image in
+                Task { await runPrediction(with: image) }
+            }
+        }
+        .sheet(isPresented: $showLibraryPicker) {
+            ImagePicker(sourceType: .photoLibrary) { image in
+                Task { await runPrediction(with: image) }
+            }
+        }
+        .sheet(isPresented: $showConfirmView) {
+            if let result = pendingPrediction {
+                NavigationStack {
+                    ConfirmFoodNameAndGramsView(result: result) { confirmed in
+                        // For now: just print it.
+                        // Next phase: nutrition lookup API call + log entry creation.
+                        print("CONFIRMED:", confirmed.foodName, confirmed.grams)
+                    }
+                }
+            }
+        }
+    }
+
+    private func runPrediction(with uiImage: UIImage) async {
+        do {
+            await MainActor.run {
+                selectedUIImage = uiImage
+                status = "Running model..."
+            }
+
+            let pred = try predictor.predict(uiImage: uiImage)
+
+            await MainActor.run {
+                pendingPrediction = FoodPredictionResult(
+                    image: uiImage,
+                    predictedName: pred.label,
+                    confidence: pred.confidence
+                )
+                showConfirmView = true
+                status = "Track Food with Camera"
+            }
+        } catch {
+            await MainActor.run {
+                status = "❌ \(error.localizedDescription)"
+            }
         }
     }
 }
+
 
 // MARK: - History Tab
 struct HistoryTab: View {
