@@ -17,6 +17,7 @@
 		B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2569F1C2CCFAE41006532EE /* MainMenu.swift */; };
 		B29497A42DFA3DE2001AC1A0 /* default_all.json in Resources */ = {isa = PBXBuildFile; fileRef = B29497A32DFA3DC1001AC1A0 /* default_all.json */; };
 		B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */; };
+		B2B378102F3113A000C1DABF /* FoodClassifier.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = B2B3780F2F3113A000C1DABF /* FoodClassifier.mlpackage */; };
 		B2BCD32C2DF3B686005FA708 /* MacroGoalWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */; };
 		B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */; };
 		B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */; };
@@ -53,6 +54,7 @@
 		B2569F1C2CCFAE41006532EE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		B29497A32DFA3DC1001AC1A0 /* default_all.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = default_all.json; sourceTree = "<group>"; };
 		B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GramsOrServingsInput.swift; sourceTree = "<group>"; };
+		B2B3780F2F3113A000C1DABF /* FoodClassifier.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = FoodClassifier.mlpackage; sourceTree = "<group>"; };
 		B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroGoalWizardView.swift; sourceTree = "<group>"; };
 		B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogViewForDate.swift; sourceTree = "<group>"; };
 		B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTrackingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 		B2DF75F22B36ECDF0069D56C = {
 			isa = PBXGroup;
 			children = (
+				B2B3780F2F3113A000C1DABF /* FoodClassifier.mlpackage */,
 				B218C0342F045C49007E367C /* MealBuilderView.swift */,
 				B218C0322F045086007E367C /* IngredientsView.swift */,
 				B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */,
@@ -239,6 +242,7 @@
 				B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */,
 				B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */,
 				B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */,
+				B2B378102F3113A000C1DABF /* FoodClassifier.mlpackage in Sources */,
 				B22A49982DE6682D0073119C /* DailyMacrosDisplay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
