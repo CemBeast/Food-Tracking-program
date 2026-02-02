@@ -5,6 +5,7 @@
 //  Created by Cem Beyenal on 10/28/24.
 //
 import SwiftUI
+import CoreML
 
 // MARK: - Section Card (Updated)
 struct SectionCard<Content: View>: View {
@@ -102,6 +103,7 @@ struct TrackFoodTab: View {
     @Binding var showFoodSelection: Bool
     @Binding var showScannerTracking: Bool
     @Binding var showQuickTracking: Bool
+    @State private var status = "Not tested"
 
     var body: some View {
         SectionCard(title: "Track Food") {
@@ -134,6 +136,15 @@ struct TrackFoodTab: View {
                     Image(systemName: "bolt.fill")
                         .font(.system(size: 18))
                     Text("Quick Track")
+                }
+            }
+            .buttonStyle(SleekButtonStyle())
+            Button(status) {
+                do {
+                    let _ = try FoodClassifier(configuration: MLModelConfiguration())
+                    status = "✅ Model loaded successfully"
+                } catch {
+                    status = "❌ Failed to load model: \(error.localizedDescription)"
                 }
             }
             .buttonStyle(SleekButtonStyle())
