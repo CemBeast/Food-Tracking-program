@@ -210,6 +210,16 @@ struct TrackFoodTab: View {
                         // For now: just print it.
                         // Next phase: nutrition lookup API call + log entry creation.
                         print("CONFIRMED:", confirmed.foodName, confirmed.grams)
+                        let type = FoodQueryClassifier.classify(confirmed.foodName)
+
+                        switch type {
+                        case .single:
+                            print("Foudnational Food")
+                            // USDA search with dataType preference: Foundation / SR
+                        case .mixed:
+                            print("Survey food")
+                            // USDA search with dataType preference: Survey
+                        }
                     }
                 }
             }
