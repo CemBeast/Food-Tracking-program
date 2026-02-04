@@ -101,6 +101,7 @@ struct FoodDictionaryTab: View {
 }
 
 struct TrackFoodTab: View {
+    @ObservedObject var viewModel: MacroTrackerViewModel
     @Binding var showFoodSelection: Bool
     @Binding var showScannerTracking: Bool
     @Binding var showQuickTracking: Bool
@@ -210,20 +211,41 @@ struct TrackFoodTab: View {
                     ConfirmFoodNameAndGramsView(result: result) { confirmed in
                         Task {
                             do {
-                                   let (choice, macros100g) = try await usda.fetchSurveyMacrosPer100g(query: confirmed.foodName)
+                                let (queryNormalized, choice, macros100g) = try await usda.fetchSurveyMacrosPer100g(query: confirmed.foodName)
 
-                                   let factor = confirmed.grams / 100.0
-                                   let totalCalories = macros100g.caloriesKcal * factor
-                                   let totalProtein  = macros100g.proteinG * factor
-                                   let totalCarbs    = macros100g.carbsG * factor
-                                   let totalFat      = macros100g.fatG * factor
+                                let factor = confirmed.grams / 100.0
+                                let totalCalories = macros100g.caloriesKcal * factor
+                                let totalProtein  = macros100g.proteinG * factor
+                                let totalCarbs    = macros100g.carbsG * factor
+                                let totalFat      = macros100g.fatG * factor
 
-                                   print("✅ USDA Survey match:", choice.description, "|", choice.dataType, "| id:", choice.fdcId)
-                                   print("Per 100g:", macros100g)
-                                   print("Totals for \(confirmed.grams)g:",
-                                         totalCalories, totalProtein, totalCarbs, totalFat)
+                                print("✅ USDA Survey match:", choice.description, "|", choice.dataType, "| id:", choice.fdcId)
+                                print("Per 100g:", macros100g)
+                                print("Totals for \(confirmed.grams)g:",
+                                     totalCalories, totalProtein, totalCarbs, totalFat)
 
-                                   // Next step: show a ConfirmMacrosView then log it
+                                // Next step: log it
+                                // Build a FoodItem that represents EXACTLY what they ate (already totaled)
+                                let loggedItem = FoodItem(
+                                    name: queryNormalized,
+                                    weightInGrams: max(1, Int(confirmed.grams.rounded())),  // prevent 0
+                                    servings: 1,
+                                    calories: Int(totalCalories.rounded()),
+                                    protein: totalProtein,
+                                    carbs: totalCarbs,
+                                    fats: totalFat,
+                                    servingUnit: .grams,      // adjust to your enum case
+                                    isFavorite: false,
+                                    isMeal: false,
+                                    ingredients: []
+                                )
+
+                                // Log it "as-is" (factor = grams / weightInGrams ≈ 1)
+                                viewModel.logFood(loggedItem,
+                                        gramsOrServings: Double(loggedItem.weightInGrams),
+                                        mode: .weight,
+                                        at: Date())
+                                    
 
                             } catch {
                                 print("❌ USDA Survey lookup failed:", error.localizedDescription)
@@ -499,6 +521,7 @@ struct MainMenu: View {
                     }
 
                     TrackFoodTab(
+                        viewModel: viewModel,
                         showFoodSelection: $showFoodSelection,
                         showScannerTracking: $showScannerTracking,
                         showQuickTracking: $showQuickTracking

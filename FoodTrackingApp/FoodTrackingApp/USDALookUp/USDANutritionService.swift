@@ -49,27 +49,27 @@ final class USDANutritionService {
 
     /// Survey-only: search Survey foods and return macros per 100g.
     /// Throws if no suitable result found.
-    func fetchSurveyMacrosPer100g(query rawQuery: String) async throws -> (choice: USDAFoodChoice, macros: MacrosPer100g) {
+    func fetchSurveyMacrosPer100g(query rawQuery: String) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "USDANutritionService", code: 900,
                           userInfo: [NSLocalizedDescriptionKey: "Missing FDC_API_KEY (check Secrets.xcconfig + Info.plist)."])
         }
 
-        let query = normalizeQuery(rawQuery)
+        let queryNormalized = normalizeQuery(rawQuery)
 
         // Try both strings in case the API expects one or the other
-        if let choice = try await searchBestMatch(query: query, dataTypes: ["Survey (FNDDS)"]) {
+        if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: ["Survey (FNDDS)"]) {
             let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
-            return (choice, macros)
+            return (queryNormalized, choice, macros)
         }
 
-        if let choice = try await searchBestMatch(query: query, dataTypes: ["Survey"]) {
+        if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: ["Survey"]) {
             let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
-            return (choice, macros)
+            return (queryNormalized, choice, macros)
         }
 
         throw NSError(domain: "USDANutritionService", code: 404,
-                      userInfo: [NSLocalizedDescriptionKey: "No Survey (FNDDS) results found for: \(query)"])
+                      userInfo: [NSLocalizedDescriptionKey: "No Survey (FNDDS) results found for: \(queryNormalized)"])
     }
 
     // MARK: - Search
