@@ -105,7 +105,7 @@ struct TrackFoodTab: View {
     @Binding var showScannerTracking: Bool
     @Binding var showQuickTracking: Bool
 
-    @State private var status = "Track Food with Camera"
+    @State private var status = "BETA: Track Food with Camera"
     @State private var selectedUIImage: UIImage? = nil
 
     @State private var showSourceChooser = false
@@ -116,10 +116,11 @@ struct TrackFoodTab: View {
     @State private var pendingPrediction: FoodPredictionResult? = nil
 
     private let predictor = FoodMLPredictor()
+    private let usda = USDANutritionService()
 
     var body: some View {
         SectionCard(title: "Track Food") {
-
+            
             Button {
                 showScannerTracking = true
             } label: {
@@ -207,25 +208,39 @@ struct TrackFoodTab: View {
             if let result = pendingPrediction {
                 NavigationStack {
                     ConfirmFoodNameAndGramsView(result: result) { confirmed in
-                        // For now: just print it.
-                        // Next phase: nutrition lookup API call + log entry creation.
-                        print("CONFIRMED:", confirmed.foodName, confirmed.grams)
-                        let type = FoodQueryClassifier.classify(confirmed.foodName)
+                        Task {
+                            do {
+                                   let (choice, macros100g) = try await usda.fetchSurveyMacrosPer100g(query: confirmed.foodName)
 
-                        switch type {
-                        case .single:
-                            print("Foudnational Food")
-                            // USDA search with dataType preference: Foundation / SR
-                        case .mixed:
-                            print("Survey food")
-                            // USDA search with dataType preference: Survey
+                                   let factor = confirmed.grams / 100.0
+                                   let totalCalories = macros100g.caloriesKcal * factor
+                                   let totalProtein  = macros100g.proteinG * factor
+                                   let totalCarbs    = macros100g.carbsG * factor
+                                   let totalFat      = macros100g.fatG * factor
+
+                                   print("✅ USDA Survey match:", choice.description, "|", choice.dataType, "| id:", choice.fdcId)
+                                   print("Per 100g:", macros100g)
+                                   print("Totals for \(confirmed.grams)g:",
+                                         totalCalories, totalProtein, totalCarbs, totalFat)
+
+                                   // Next step: show a ConfirmMacrosView then log it
+
+                            } catch {
+                                print("❌ USDA Survey lookup failed:", error.localizedDescription)
+                                // Next step: show a “pick from results” UI
+                            }
                         }
                     }
                 }
+            } else {
+                // Safety fallback (shouldn’t happen)
+                Text("No prediction available.")
+                    .padding()
             }
         }
     }
-
+    
+    // ML Model prediction function
     private func runPrediction(with uiImage: UIImage) async {
         do {
             await MainActor.run {

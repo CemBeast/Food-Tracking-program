@@ -19,6 +19,7 @@
 		B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */; };
 		B2B378122F311B8900C1DABF /* FoodClassifier.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = B2B378112F311B8900C1DABF /* FoodClassifier.mlpackage */; };
 		B2B378142F3120A400C1DABF /* classes.txt in Resources */ = {isa = PBXBuildFile; fileRef = B2B378132F3120A400C1DABF /* classes.txt */; };
+		B2BA5E402F33A63200C3F5CF /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */; };
 		B2BCD32C2DF3B686005FA708 /* MacroGoalWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */; };
 		B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */; };
 		B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */; };
@@ -57,6 +58,7 @@
 		B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GramsOrServingsInput.swift; sourceTree = "<group>"; };
 		B2B378112F311B8900C1DABF /* FoodClassifier.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = FoodClassifier.mlpackage; sourceTree = "<group>"; };
 		B2B378132F3120A400C1DABF /* classes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = classes.txt; sourceTree = "<group>"; };
+		B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroGoalWizardView.swift; sourceTree = "<group>"; };
 		B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogViewForDate.swift; sourceTree = "<group>"; };
 		B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTrackingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 				B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */,
 				B2E1FF4A2E19B65A00D1520B /* Frameworks */,
 				B2DF75FC2B36ECDF0069D56C /* Products */,
+				B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -224,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B29497A42DFA3DE2001AC1A0 /* default_all.json in Resources */,
+				B2BA5E402F33A63200C3F5CF /* Secrets.xcconfig in Resources */,
 				B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */,
 				B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */,
 				B2B378142F3120A400C1DABF /* classes.txt in Resources */,
@@ -262,6 +266,7 @@
 /* Begin XCBuildConfiguration section */
 		B2DF76072B36ECE00069D56C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -322,6 +327,7 @@
 		};
 		B2DF76082B36ECE00069D56C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

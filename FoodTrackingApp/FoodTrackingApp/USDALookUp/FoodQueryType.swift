@@ -59,7 +59,7 @@ struct FoodQueryClassifier {
 
     private static func normalize(_ s: String) -> String {
         s.lowercased()
-            .replacingOccurrences(of: "[^a-z0-9\\s,+&-]", with: "", options: .regularExpression)
+            .replacingOccurrences(of: "[^a-z0-9\\s,+&-]", with: " ", options: .regularExpression)
             .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
