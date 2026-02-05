@@ -32,6 +32,12 @@ A feature-rich iOS application for tracking daily macronutrients (calories, prot
 - **Consumed vs Remaining Toggle**: Tap the display to switch between consumed and remaining macros
 - **History View**: Review past days with daily averages and swipe-to-delete functionality
 
+#### AI-Powered Food Recognition
+- **Photo-Based Recognition**: Snap a photo of your food and let ML identify it from 100+ food classes
+- **Confidence Scoring**: See prediction confidence and edit the food name if needed
+- **USDA Integration**: Automatically searches USDA FoodData Central Survey (FNDDS) database using the predicted food name
+- **Smart Workflow**: Photo → ML prediction → confirm/edit name → enter grams → USDA lookup → track macros
+
 #### Food Dictionary
 - **USDA Database**: Bundled with 300+ common foods from USDA FoodData Central
 - **Manual Food Entry**: Add custom foods with full macro information
@@ -116,20 +122,45 @@ See [`tools/README.md`](tools/README.md) for more details on the generator scrip
 ```
 FoodTrackingApp/
 ├── FoodTrackingApp/
+│   ├── AppAndTheme/              # App entry & theming
+│   │   ├── FoodTrackingAppApp.swift  # App entry point
+│   │   ├── AppTheme.swift        # Theme colors & styling
+│   │   └── ContentView.swift     # Root view (deprecated)
 │   ├── Dictionary Info/          # Food dictionary & data models
 │   │   ├── DictionaryView.swift  # Main food browsing interface
 │   │   ├── FoodModel.swift       # Food data state management
-│   │   └── FoodStorage.swift     # Persistence layer
+│   │   ├── FoodStorage.swift     # Persistence layer
+│   │   ├── AddFoodView.swift     # Manual food entry
+│   │   ├── EditFoodItemView.swift # Food editor
+│   │   ├── IngredientsView.swift # Meal ingredient editor
+│   │   ├── MealBuilderView.swift # Meal composition interface
+│   │   └── default_all.json      # Bundled USDA food defaults
 │   ├── BarcodeScanner/           # Barcode scanning functionality
-│   ├── MainMenu.swift            # Main tab navigation
-│   ├── MacroTrackerViewModel.swift  # Daily macro state & persistence
-│   ├── DailyMacrosDisplay.swift  # Visual macro ring display
-│   ├── MacroHistoryView.swift    # History with daily averages
-│   ├── IngredientsView.swift     # Meal ingredient editor
-│   ├── MealBuilderView.swift     # Meal composition interface
-│   ├── GramsOrServingsInput.swift # Quantity input with live preview
-│   ├── MacroGoalWizardView.swift # Goal calculation wizard
-│   └── default_all.json          # Bundled USDA food defaults
+│   │   ├── BarcodeScannerView.swift
+│   │   ├── ScannerViewController.swift
+│   │   └── ...
+│   ├── MachineLearning/          # AI food recognition
+│   │   ├── FoodClassifier.mlpackage  # CoreML model (100+ food classes)
+│   │   ├── FoodMLPredictor.swift     # ML inference wrapper
+│   │   ├── ConfirmFoodNameAndGramsView.swift  # Confirmation UI
+│   │   ├── ImagePicker.swift         # Photo capture
+│   │   └── classes.txt               # Model class labels
+│   ├── USDALookUp/               # USDA FoodData Central integration
+│   │   ├── USDANutritionService.swift  # API client for Survey (FNDDS) lookup
+│   │   └── FoodQueryType.swift
+│   ├── Tracking/                 # Daily macro tracking
+│   │   ├── MacroTrackerViewModel.swift  # Daily macro state & persistence
+│   │   ├── GramsOrServingsInput.swift   # Quantity input with live preview
+│   │   └── QuickTrackView.swift         # Fast macro entry
+│   ├── MacroHistoryAndLogs/      # History & logging
+│   │   ├── DailyMacrosDisplay.swift     # Visual macro ring display
+│   │   ├── MacroHistoryView.swift       # History with daily averages
+│   │   ├── FoodLogView.swift            # Today's food log
+│   │   └── FoodLogViewForDate.swift     # Historical day view
+│   ├── MacroGoals/               # Goal setting
+│   │   ├── MacroGoalWizardView.swift    # Goal calculation wizard
+│   │   └── EditGoalsView.swift          # Manual goal editor
+│   └── MainMenu.swift            # Main tab navigation
 └── tools/                        # USDA generator scripts
     ├── seed_usda_defaults.py     # USDA FoodData Central importer
     ├── usda_queries_common.txt   # Search queries for common foods
@@ -149,10 +180,13 @@ On first launch, the app seeds `user_foods.json` from the bundled `default_all.j
 
 - **SwiftUI**: Declarative UI framework
 - **Combine**: Reactive state management
-- **AVFoundation**: Barcode scanning
-- **UserDefaults**: Lightweight persistence
+- **CoreML**: On-device food image recognition (100+ food classes)
+- **AVFoundation**: Barcode scanning and photo capture
+- **USDA FoodData Central API**: 
+  - Build-time: Bundled defaults generation
+  - Runtime: Live Survey (FNDDS) lookup for ML-recognized foods
+- **UserDefaults**: Lightweight persistence for goals and state
 - **FileManager**: JSON-based food dictionary storage
-- **USDA FoodData Central API**: Nutritional data source (build-time only)
 
 ### Contributing
 
