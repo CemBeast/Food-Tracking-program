@@ -7,28 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B218C02D2F03C03F007E367C /* AppTheme 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218C02C2F03C03F007E367C /* AppTheme 2.swift */; };
-		B218C0332F045086007E367C /* IngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218C0322F045086007E367C /* IngredientsView.swift */; };
-		B218C0352F045C49007E367C /* MealBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218C0342F045C49007E367C /* MealBuilderView.swift */; };
-		B22A49942DE662240073119C /* EditGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A49932DE662240073119C /* EditGoalsView.swift */; };
-		B22A49982DE6682D0073119C /* DailyMacrosDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A49972DE6682D0073119C /* DailyMacrosDisplay.swift */; };
-		B23C6A642DDEDAE6004D770F /* FoodLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23C6A632DDEDAE6004D770F /* FoodLogView.swift */; };
-		B23C6A662DDFFA9C004D770F /* EditQuantityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */; };
 		B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2569F1C2CCFAE41006532EE /* MainMenu.swift */; };
-		B29497A42DFA3DE2001AC1A0 /* default_all.json in Resources */ = {isa = PBXBuildFile; fileRef = B29497A32DFA3DC1001AC1A0 /* default_all.json */; };
-		B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */; };
-		B2B378122F311B8900C1DABF /* FoodClassifier.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = B2B378112F311B8900C1DABF /* FoodClassifier.mlpackage */; };
-		B2B378142F3120A400C1DABF /* classes.txt in Resources */ = {isa = PBXBuildFile; fileRef = B2B378132F3120A400C1DABF /* classes.txt */; };
 		B2BA5E402F33A63200C3F5CF /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */; };
-		B2BCD32C2DF3B686005FA708 /* MacroGoalWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */; };
-		B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */; };
-		B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */; };
-		B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF76002B36ECDF0069D56C /* ContentView.swift */; };
 		B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76022B36ECE00069D56C /* Assets.xcassets */; };
 		B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */; };
-		B2E3799F2E0E342D00CF37C0 /* QuickTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E3799D2E0E342500CF37C0 /* QuickTrackView.swift */; };
-		B2ECDC2F2D1D20BA00C220DB /* MacroTrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */; };
-		B2ECDC312D1D23E200C220DB /* MacroHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,36 +27,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B218C02C2F03C03F007E367C /* AppTheme 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTheme 2.swift"; sourceTree = "<group>"; };
-		B218C0322F045086007E367C /* IngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsView.swift; sourceTree = "<group>"; };
-		B218C0342F045C49007E367C /* MealBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealBuilderView.swift; sourceTree = "<group>"; };
-		B22A49932DE662240073119C /* EditGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalsView.swift; sourceTree = "<group>"; };
-		B22A49972DE6682D0073119C /* DailyMacrosDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMacrosDisplay.swift; sourceTree = "<group>"; };
-		B23C6A2E2DD17A34004D770F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B23C6A632DDEDAE6004D770F /* FoodLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogView.swift; sourceTree = "<group>"; };
-		B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditQuantityView.swift; sourceTree = "<group>"; };
+		B23C6A2E2DD17A34004D770F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2569F1C2CCFAE41006532EE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-		B29497A32DFA3DC1001AC1A0 /* default_all.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = default_all.json; sourceTree = "<group>"; };
-		B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GramsOrServingsInput.swift; sourceTree = "<group>"; };
-		B2B378112F311B8900C1DABF /* FoodClassifier.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = FoodClassifier.mlpackage; sourceTree = "<group>"; };
-		B2B378132F3120A400C1DABF /* classes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = classes.txt; sourceTree = "<group>"; };
 		B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
-		B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroGoalWizardView.swift; sourceTree = "<group>"; };
-		B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogViewForDate.swift; sourceTree = "<group>"; };
 		B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTrackingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackingAppApp.swift; sourceTree = "<group>"; };
-		B2DF76002B36ECDF0069D56C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B2DF76022B36ECE00069D56C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B2E1FF4B2E19B65A00D1520B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B2E1FF4D2E19B65A00D1520B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B2E1FF652E19B8D300D1520B /* FoodTrackingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodTrackingApp.entitlements; sourceTree = "<group>"; };
-		B2E3799D2E0E342500CF37C0 /* QuickTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickTrackView.swift; sourceTree = "<group>"; };
-		B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerViewModel.swift; sourceTree = "<group>"; };
-		B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B224DCDC2F35488900D7A001 /* MacroHistoryAndLogs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MacroHistoryAndLogs; sourceTree = "<group>"; };
+		B224DCDD2F3548B200D7A001 /* Tracking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Tracking; sourceTree = "<group>"; };
+		B224DCDE2F3548F000D7A001 /* MacroGoals */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MacroGoals; sourceTree = "<group>"; };
+		B224DCE12F35493200D7A001 /* AppAndTheme */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppAndTheme; sourceTree = "<group>"; };
 		B23C6A522DD40F50004D770F /* BarcodeScanner */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BarcodeScanner; sourceTree = "<group>"; };
 		B2BA5E302F31654800C3F5CF /* MachineLearning */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = MachineLearning; sourceTree = "<group>"; };
 		B2BA5E372F31752E00C3F5CF /* USDALookUp */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = USDALookUp; sourceTree = "<group>"; };
@@ -95,10 +63,6 @@
 		B2DF75F22B36ECDF0069D56C = {
 			isa = PBXGroup;
 			children = (
-				B2B378132F3120A400C1DABF /* classes.txt */,
-				B2B378112F311B8900C1DABF /* FoodClassifier.mlpackage */,
-				B218C0342F045C49007E367C /* MealBuilderView.swift */,
-				B218C0322F045086007E367C /* IngredientsView.swift */,
 				B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */,
 				B2E1FF4A2E19B65A00D1520B /* Frameworks */,
 				B2DF75FC2B36ECDF0069D56C /* Products */,
@@ -117,29 +81,19 @@
 		B2DF75FD2B36ECDF0069D56C /* FoodTrackingApp */ = {
 			isa = PBXGroup;
 			children = (
+				B224DCE12F35493200D7A001 /* AppAndTheme */,
+				B224DCDE2F3548F000D7A001 /* MacroGoals */,
+				B224DCDD2F3548B200D7A001 /* Tracking */,
+				B224DCDC2F35488900D7A001 /* MacroHistoryAndLogs */,
 				B2BA5E372F31752E00C3F5CF /* USDALookUp */,
 				B2BA5E302F31654800C3F5CF /* MachineLearning */,
 				B2E1FF652E19B8D300D1520B /* FoodTrackingApp.entitlements */,
-				B29497A32DFA3DC1001AC1A0 /* default_all.json */,
-				B23C6A2E2DD17A34004D770F /* Info.plist */,
 				B2DE9D272DCD7FE900FEB006 /* Dictionary Info */,
 				B23C6A522DD40F50004D770F /* BarcodeScanner */,
-				B2DF75FE2B36ECDF0069D56C /* FoodTrackingAppApp.swift */,
-				B23C6A652DDFFA9C004D770F /* EditQuantityView.swift */,
-				B2DF76002B36ECDF0069D56C /* ContentView.swift */,
-				B218C02C2F03C03F007E367C /* AppTheme 2.swift */,
-				B2E3799D2E0E342500CF37C0 /* QuickTrackView.swift */,
 				B2569F1C2CCFAE41006532EE /* MainMenu.swift */,
-				B2BCD32B2DF3B5F6005FA708 /* MacroGoalWizardView.swift */,
-				B2ECDC2E2D1D20BA00C220DB /* MacroTrackerViewModel.swift */,
-				B2AF703C2CF96DDB00E64B5F /* GramsOrServingsInput.swift */,
-				B22A49932DE662240073119C /* EditGoalsView.swift */,
-				B2ECDC302D1D23E200C220DB /* MacroHistoryView.swift */,
-				B23C6A632DDEDAE6004D770F /* FoodLogView.swift */,
-				B2D166092DEFC422007D98D3 /* FoodLogViewForDate.swift */,
-				B22A49972DE6682D0073119C /* DailyMacrosDisplay.swift */,
 				B2DF76022B36ECE00069D56C /* Assets.xcassets */,
 				B2DF76042B36ECE00069D56C /* Preview Content */,
+				B23C6A2E2DD17A34004D770F /* Info.plist */,
 			);
 			path = FoodTrackingApp;
 			sourceTree = "<group>";
@@ -178,6 +132,10 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				B224DCDC2F35488900D7A001 /* MacroHistoryAndLogs */,
+				B224DCDD2F3548B200D7A001 /* Tracking */,
+				B224DCDE2F3548F000D7A001 /* MacroGoals */,
+				B224DCE12F35493200D7A001 /* AppAndTheme */,
 				B23C6A522DD40F50004D770F /* BarcodeScanner */,
 				B2BA5E302F31654800C3F5CF /* MachineLearning */,
 				B2BA5E372F31752E00C3F5CF /* USDALookUp */,
@@ -226,11 +184,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B29497A42DFA3DE2001AC1A0 /* default_all.json in Resources */,
 				B2BA5E402F33A63200C3F5CF /* Secrets.xcconfig in Resources */,
 				B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */,
 				B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */,
-				B2B378142F3120A400C1DABF /* classes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,23 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2E3799F2E0E342D00CF37C0 /* QuickTrackView.swift in Sources */,
-				B2ECDC312D1D23E200C220DB /* MacroHistoryView.swift in Sources */,
-				B2BCD32C2DF3B686005FA708 /* MacroGoalWizardView.swift in Sources */,
-				B2DF76012B36ECDF0069D56C /* ContentView.swift in Sources */,
-				B23C6A662DDFFA9C004D770F /* EditQuantityView.swift in Sources */,
 				B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */,
-				B22A49942DE662240073119C /* EditGoalsView.swift in Sources */,
-				B218C02D2F03C03F007E367C /* AppTheme 2.swift in Sources */,
-				B218C0332F045086007E367C /* IngredientsView.swift in Sources */,
-				B218C0352F045C49007E367C /* MealBuilderView.swift in Sources */,
-				B2ECDC2F2D1D20BA00C220DB /* MacroTrackerViewModel.swift in Sources */,
-				B23C6A642DDEDAE6004D770F /* FoodLogView.swift in Sources */,
-				B2DF75FF2B36ECDF0069D56C /* FoodTrackingAppApp.swift in Sources */,
-				B2AF703D2CF96DE400E64B5F /* GramsOrServingsInput.swift in Sources */,
-				B2D1660A2DEFC4CA007D98D3 /* FoodLogViewForDate.swift in Sources */,
-				B2B378122F311B8900C1DABF /* FoodClassifier.mlpackage in Sources */,
-				B22A49982DE6682D0073119C /* DailyMacrosDisplay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
