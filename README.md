@@ -200,13 +200,6 @@ This is a personal project, but suggestions and feedback are welcome. The codeba
 - Meal planning features
 - Recipe scaling based on servings
 
-### License
-
-[Add license information]
-
-### Contact
-
-[Add contact information]
 
 ---
 
