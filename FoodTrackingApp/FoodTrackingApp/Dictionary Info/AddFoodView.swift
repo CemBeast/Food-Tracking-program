@@ -190,8 +190,6 @@ struct AddFoodView: View {
                         .disabled(!isFormValid)
                         .buttonStyle(SleekButtonStyle())
                         .padding(.top, 8)
-                        Text(isFormValid ? "VALID" : "INVALID")
-                            .foregroundColor(.red)
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 24)
