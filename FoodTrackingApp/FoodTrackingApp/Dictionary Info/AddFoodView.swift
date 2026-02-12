@@ -176,27 +176,10 @@ struct AddFoodView: View {
                         
                         // Add Button
                         Button {
-                            guard let weight = Int(weightInGrams),
-                                  let servingsInt = Int(servings),
-                                  let cal = Int(calories),
-                                  let prot = Double(protein),
-                                  let carb = Double(carbs),
-                                  let fat = Double(fats) else {
-                                return
+                            if let newFood = saveFoodFromMacros(name: name, weightInGrams: weightInGrams, servings: servings, calories: calories, protein: protein, carbs: carbs, fats: fats, servingUnit: selectedUnit){
+                                onAdd(newFood)
+                                presentationMode.wrappedValue.dismiss()
                             }
-                            
-                            let newFood = FoodItem(
-                                name: name,
-                                weightInGrams: weight,
-                                servings: servingsInt,
-                                calories: cal,
-                                protein: prot,
-                                carbs: carb,
-                                fats: fat,
-                                servingUnit: selectedUnit
-                            )
-                            onAdd(newFood)
-                            presentationMode.wrappedValue.dismiss()
                         } label: {
                             HStack(spacing: 8) {
                                 Image(systemName: "plus.circle.fill")
@@ -204,8 +187,11 @@ struct AddFoodView: View {
                                 Text("Add Food")
                             }
                         }
+                        .disabled(!isFormValid)
                         .buttonStyle(SleekButtonStyle())
                         .padding(.top, 8)
+                        Text(isFormValid ? "VALID" : "INVALID")
+                            .foregroundColor(.red)
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 24)
@@ -223,4 +209,37 @@ struct AddFoodView: View {
             }
         }
     }
+    
+    // bool var to check if all the fields are filled and valid
+    var isFormValid: Bool {
+        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              let weight = Int(weightInGrams), weight > 0,
+              let servingsInt = Int(servings), servingsInt > 0,
+              let cal = Int(calories), cal > 0,
+              let prot = Double(protein), prot >= 0,
+              let carb = Double(carbs), carb >= 0,
+              let fat = Double(fats), fat >= 0
+        else { return false }
+
+        return true
+    }
+    
+    // Helper func to save food details into FoodItem
+    func saveFoodFromMacros(name: String, weightInGrams: String, servings: String, calories: String, protein: String, carbs: String, fats: String, servingUnit: ServingUnit) -> FoodItem? {
+            guard !name.trimmingCharacters(in: .whitespaces).isEmpty,
+                  let weight = Int(weightInGrams),
+                  let serving = Int(servings),
+                  let cal = Int(calories),
+                  let pro = Double(protein),
+                  let carb = Double(carbs),
+                  let fat = Double(fats),
+                  cal > 0,
+                  pro >= 0.0,
+                  carb >= 0.0,
+                  fat >= 0.0
+            else {
+                return nil
+            }
+        return FoodItem(name: name, weightInGrams: weight, servings: serving, calories: cal, protein: pro, carbs: carb, fats: fat, servingUnit: servingUnit)
+        }
 }

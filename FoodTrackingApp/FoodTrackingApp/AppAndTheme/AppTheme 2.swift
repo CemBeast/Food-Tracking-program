@@ -41,6 +41,8 @@ struct SleekButtonStyle: ButtonStyle {
     var isDestructive: Bool = false
     var isSecondary: Bool = false
     
+    @Environment(\.isEnabled) private var isEnabled
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.system(size: 15, weight: .semibold, design: .default))
@@ -72,6 +74,7 @@ struct SleekButtonStyle: ButtonStyle {
             )
             .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
             .opacity(configuration.isPressed ? 0.9 : 1.0)
+            .opacity(isEnabled ? 1.0 : 0.45)
             .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
 }
