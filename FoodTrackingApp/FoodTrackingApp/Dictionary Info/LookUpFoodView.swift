@@ -6,6 +6,12 @@
 //
 import SwiftUI
 
+enum LookupMode: String, CaseIterable, Identifiable {
+    case generic = "Generic"
+    case brands = "Brands"
+    case fastFood = "Fast Food"
+    var id: String { rawValue }
+}
 
 struct LookUpFoodView: View {
     @ObservedObject var foodModel: FoodModel
@@ -15,12 +21,23 @@ struct LookUpFoodView: View {
     @State private var isLoading: Bool = false
     @State private var showConfirmSheet: Bool = false
     @State private var proposedFood: FoodItem? = nil
+    @State private var mode: LookupMode = .generic
     
     private let usdaService = USDANutritionService()
     
+    // placeholder text for search string
+    var placeholder : String {
+        switch mode {
+        case .generic: return "Search USDA (generic)…"
+        case .brands: return "Search USDA (branded)"
+        case .fastFood: return "Search Fast Food"
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SearchBar(text: $searchText, placeholder: "Search USDA...", onSubmit: {runUSDASearch()},  showsSearchButton: true)
+            SearchBar(text: $searchText, placeholder: placeholder, onSubmit: {runUSDASearch()},  showsSearchButton: true)
+            modeChips
             if isLoading {
                 ProgressView("Searching...")
                     .padding(.horizontal, 20)
@@ -55,6 +72,35 @@ struct LookUpFoodView: View {
         
     }
     
+
+    
+    @ViewBuilder
+    private var modeChips: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(LookupMode.allCases) { option in
+                    Button {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            mode = option
+                        }
+                    } label: {
+                        Text(option.rawValue)
+                            .font(.system(size: 13, weight: mode == option ? .semibold : .medium))
+                            .foregroundColor(mode == option ? .black : AppTheme.textSecondary)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(mode == option ? Color.white : Color.white.opacity(0.06))
+                            )
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+        .padding(.bottom, 12)
+    }
+    
     private func runUSDASearch() {
         let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else {
@@ -67,7 +113,22 @@ struct LookUpFoodView: View {
         
         Task {
             do {
-                let res = try await usdaService.fetchSurveyMacrosPer100g(query: q)
+                let q = q.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !q.isEmpty else { return }
+                
+                // 1) Decide scope (or return for fastFood)
+                let scope: USDASearchScope
+                switch mode {
+                case .generic: scope = .generic
+                case .brands:  scope = .branded
+                case .fastFood:
+                    // later
+                    await MainActor.run { isLoading = false }
+                    return
+                }
+
+                // 2) Fetch once
+                let res = try await usdaService.fetchSurveyMacrosPer100g(query: q, scope: scope)
                 
                 let output =
                                 """

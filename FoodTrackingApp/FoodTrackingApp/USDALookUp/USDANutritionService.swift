@@ -9,6 +9,11 @@ import Foundation
 
 // MARK: - Public types
 
+enum USDASearchScope {
+    case generic     // Survey (FNDDS)
+    case branded     // Branded
+}
+
 struct MacrosPer100g {
     let caloriesKcal: Double
     let proteinG: Double
@@ -49,27 +54,39 @@ final class USDANutritionService {
 
     /// Survey-only: search Survey foods and return macros per 100g.
     /// Throws if no suitable result found.
-    func fetchSurveyMacrosPer100g(query rawQuery: String) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
+    func fetchSurveyMacrosPer100g(query rawQuery: String, scope: USDASearchScope = .generic) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "USDANutritionService", code: 900,
                           userInfo: [NSLocalizedDescriptionKey: "Missing FDC_API_KEY (check Secrets.xcconfig + Info.plist)."])
         }
 
         let queryNormalized = normalizeQuery(rawQuery)
+        let dataTypes: [String]
+            switch scope {
+            case .generic:
+                dataTypes = ["Survey (FNDDS)"]
+            case .branded:
+                dataTypes = ["Branded"]
+        }
+
 
         // Try both strings in case the API expects one or the other
-        if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: ["Survey (FNDDS)"]) {
+        if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: dataTypes) {
             let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
             return (queryNormalized, choice, macros)
         }
-
-        if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: ["Survey"]) {
-            let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
-            return (queryNormalized, choice, macros)
+        
+        // Fall back to check Survey database
+        if scope == .generic {
+            if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: ["Survey"]) {
+                let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
+                return (queryNormalized, choice, macros)
+            }
         }
 
+        let scopeName = (scope == .generic) ? "Survey (FNDDS)" : "Branded"
         throw NSError(domain: "USDANutritionService", code: 404,
-                      userInfo: [NSLocalizedDescriptionKey: "No Survey (FNDDS) results found for: \(queryNormalized)"])
+                      userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
     }
 
     // MARK: - Search
