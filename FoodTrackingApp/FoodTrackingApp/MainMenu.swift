@@ -86,7 +86,7 @@ struct FoodDictionaryTab: View {
                 HStack(spacing: 12) {
                     Image(systemName: "magnifyingglass.circle.fill")
                         .font(.system(size: 18))
-                    Text("Look up food to add")
+                    Text("Look Up Food to Add")
                 }
             }
             .buttonStyle(SleekButtonStyle())
@@ -700,6 +700,9 @@ struct MainMenu: View {
                 QuickMacroTrackView { quickFood in
                     viewModel.logFood(quickFood, gramsOrServings: 1.0, mode: .serving, at: Date())
                 }
+            }
+            .sheet(isPresented: $showFoodLookUp) {
+                LookUpFoodView()
             }
         }
     }
