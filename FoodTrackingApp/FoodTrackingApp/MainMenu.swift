@@ -36,6 +36,7 @@ struct FoodDictionaryTab: View {
     @Binding var showManual: Bool
     @Binding var showScanner: Bool
     @Binding var showMealBuilder: Bool
+    @Binding var showFoodLookUp: Bool
     @Binding var selectedFood: FoodItem?
     @Binding var selectedFoodID: UUID?
     @Binding var showGramsInput: Bool
@@ -75,6 +76,17 @@ struct FoodDictionaryTab: View {
                     Image(systemName: "square.stack.3d.up.fill")
                         .font(.system(size: 18))
                     Text("Create a Meal")
+                }
+            }
+            .buttonStyle(SleekButtonStyle())
+            
+            Button {
+                showFoodLookUp = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "magnifyingglass.circle.fill")
+                        .font(.system(size: 18))
+                    Text("Look up food to add")
                 }
             }
             .buttonStyle(SleekButtonStyle())
@@ -482,6 +494,8 @@ struct MainMenu: View {
     
     // For creating meals from multiple foods
     @State private var showMealBuilder = false
+    // State to toggle look up food view
+    @State private var showFoodLookUp = false
 
     var body: some View {
         NavigationView {
@@ -505,6 +519,7 @@ struct MainMenu: View {
                         showManual: $showManual,
                         showScanner: $showScanner,
                         showMealBuilder: $showMealBuilder,
+                        showFoodLookUp: $showFoodLookUp,
                         selectedFood: $selectedFood,
                         selectedFoodID: $selectedFoodID,
                         showGramsInput: $showGramsInput,
