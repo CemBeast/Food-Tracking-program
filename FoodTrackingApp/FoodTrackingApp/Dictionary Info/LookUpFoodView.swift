@@ -8,9 +8,13 @@ import SwiftUI
 
 
 struct LookUpFoodView: View {
+    @ObservedObject var foodModel: FoodModel
+    
     @State private var searchText: String = ""
     @State private var debugOutput = "Type something and press Search…"
     @State private var isLoading: Bool = false
+    @State private var showConfirmSheet: Bool = false
+    @State private var proposedFood: FoodItem? = nil
     
     private let usdaService = USDANutritionService()
     
@@ -28,6 +32,22 @@ struct LookUpFoodView: View {
                     .padding(.top, 8)
             }
             Spacer()
+        }
+        .sheet(isPresented: $showConfirmSheet) {
+            if let item = proposedFood {
+                EditFoodItemView(
+                    foodItem: item,
+                    onSave: { updated in
+                        foodModel.add(updated)     //adds + saves
+                        proposedFood = nil
+                        showConfirmSheet = false
+                    },
+                    onCancel: {
+                        proposedFood = nil
+                        showConfirmSheet = false
+                    }
+                )
+            }
         }
         .navigationTitle("USDA Debug")
         .navigationBarTitleDisplayMode(.inline)
@@ -65,11 +85,25 @@ struct LookUpFoodView: View {
                                 carbs:    \(res.macros.carbsG) g
                                 fat:      \(res.macros.fatG) g
                                 """
+                
+                let item = FoodItem(
+                    name: res.choice.description,
+                    weightInGrams: 100,
+                    servings: 1,
+                    calories: Int(res.macros.caloriesKcal.rounded()),
+                    protein: res.macros.proteinG,
+                    carbs: res.macros.carbsG,
+                    fats: res.macros.fatG,
+                    servingUnit: .grams
+                )
+
                 await MainActor.run {
+                    proposedFood = item
+                    showConfirmSheet = true
                     debugOutput = output
                     isLoading = false
-                }
 
+                }
             } catch {
                 await MainActor.run {
                     debugOutput = "Error: \(error.localizedDescription)"
