@@ -702,7 +702,7 @@ struct MainMenu: View {
                 }
             }
             .sheet(isPresented: $showFoodLookUp) {
-                LookUpFoodView()
+                LookUpFoodView(foodModel: foodModel)
             }
         }
     }
