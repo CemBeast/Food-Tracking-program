@@ -54,6 +54,7 @@ struct LookUpFoodView: View {
             if let item = proposedFood {
                 EditFoodItemView(
                     foodItem: item,
+                    isAdding: true,
                     onSave: { updated in
                         foodModel.add(updated)     //adds + saves
                         proposedFood = nil

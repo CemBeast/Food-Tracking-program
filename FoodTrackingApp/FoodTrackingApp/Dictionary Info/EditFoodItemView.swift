@@ -108,6 +108,7 @@ struct SelectableTextFieldDouble: UIViewRepresentable {
 struct EditFoodItemView: View {
     @Environment(\.dismiss) private var dismiss
     @State var foodItem: FoodItem
+    @State var isAdding: Bool = false
     var onSave: (FoodItem) -> Void
     var onCancel: () -> Void
 
@@ -329,7 +330,11 @@ struct EditFoodItemView: View {
                             HStack(spacing: 8) {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.system(size: 18))
-                                Text("Save Changes")
+                                if isAdding == false {
+                                    Text("Save Changes")
+                                } else {
+                                    Text("Add Food")
+                                }
                             }
                         }
                         .buttonStyle(SleekButtonStyle())
