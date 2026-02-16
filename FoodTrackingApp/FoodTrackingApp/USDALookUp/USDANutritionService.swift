@@ -50,10 +50,9 @@ final class USDANutritionService {
         case carbs    = 1005
     }
 
-    // MARK: - Public API (Survey-only)
+    // MARK: - Public API
 
-    /// Survey-only: search Survey foods and return macros per 100g.
-    /// Throws if no suitable result found.
+    /// fetches macros for a given scope.
     func fetchSurveyMacrosPer100g(query rawQuery: String, scope: USDASearchScope = .generic) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "USDANutritionService", code: 900,
@@ -88,9 +87,13 @@ final class USDANutritionService {
         throw NSError(domain: "USDANutritionService", code: 404,
                       userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
     }
+    
+    // fetches exact macros of a food (used for selecting macros from a list)
+    func fetchMacrosPer100gForFood(fdcId: Int) async throws -> MacrosPer100g {
+        try await fetchMacrosForFood(fdcId: fdcId)
+    }
 
     // MARK: - Search
-
     private func searchBestMatch(query: String, dataTypes: [String]) async throws -> USDAFoodChoice? {
         let url = baseURL.appendingPathComponent("foods/search").appending(queryItems: [
             URLQueryItem(name: "api_key", value: apiKey)
@@ -131,6 +134,94 @@ final class USDANutritionService {
             description: bestFood.description,
             dataType: bestFood.dataType
         )
+    }
+    
+    /// Return top N choices (no macros yet). Uses the same scoring.
+    func searchTopChoices(
+        query rawQuery: String,
+        scope: USDASearchScope = .generic,
+        limit: Int = 5
+    ) async throws -> (queryNormalized: String, choices: [USDAFoodChoice]) {
+
+        guard !apiKey.isEmpty else {
+            throw NSError(domain: "USDANutritionService", code: 900,
+                          userInfo: [NSLocalizedDescriptionKey: "Missing FDC_API_KEY (check Secrets.xcconfig + Info.plist)."])
+        }
+
+        let queryNormalized = normalizeQuery(rawQuery)
+
+        let dataTypes: [String]
+        switch scope {
+        case .generic: dataTypes = ["Survey (FNDDS)"]
+        case .branded: dataTypes = ["Branded"]
+        }
+
+        // 1) Try primary dataTypes
+        if let choices = try await searchTopMatches(query: queryNormalized, dataTypes: dataTypes, limit: limit),
+           !choices.isEmpty {
+            return (queryNormalized, choices)
+        }
+
+        // 2) Optional fallback for generic
+        if scope == .generic,
+           let choices = try await searchTopMatches(query: queryNormalized, dataTypes: ["Survey"], limit: limit),
+           !choices.isEmpty {
+            return (queryNormalized, choices)
+        }
+
+        let scopeName = (scope == .generic) ? "Survey (FNDDS)" : "Branded"
+        throw NSError(domain: "USDANutritionService", code: 404,
+                      userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
+    }
+    
+    private func searchTopMatches(
+        query: String,
+        dataTypes: [String],
+        limit: Int
+    ) async throws -> [USDAFoodChoice]? {
+
+        let url = baseURL.appendingPathComponent("foods/search").appending(queryItems: [
+            URLQueryItem(name: "api_key", value: apiKey)
+        ])
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body = FoodSearchRequest(
+            query: query,
+            dataType: dataTypes,
+            pageSize: 25,
+            pageNumber: 1
+        )
+        req.httpBody = try JSONEncoder().encode(body)
+
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        try validateHTTP(resp)
+
+        let decoded = try JSONDecoder().decode(FoodSearchResponse.self, from: data)
+        guard let foods = decoded.foods, !foods.isEmpty else { return nil }
+
+        // Score each result once
+        let scored: [(food: FoodSearchFood, score: Int)] = foods.map {
+            ($0, score(food: $0, query: query))
+        }
+
+        // Filter junk (same threshold you used for best match)
+        let filtered = scored.filter { $0.score >= 5 }
+
+        // Sort by score descending, take top N
+        let top = filtered
+            .sorted { $0.score > $1.score }
+            .prefix(max(1, limit))
+
+        return top.map {
+            USDAFoodChoice(
+                fdcId: $0.food.fdcId,
+                description: $0.food.description,
+                dataType: $0.food.dataType
+            )
+        }
     }
 
     /// Token-based scoring that heavily rewards matching query tokens,
