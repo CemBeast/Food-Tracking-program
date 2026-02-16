@@ -109,7 +109,7 @@ struct DailyMacrosDisplay: View {
                     .trim(from: 0, to: animatedOverflow)
                     .stroke(
                         overflowColor,
-                        style: StrokeStyle(lineWidth: 12, lineCap: .round)
+                        style: StrokeStyle(lineWidth: 10, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedOverflow)
@@ -117,7 +117,7 @@ struct DailyMacrosDisplay: View {
 
                 // Background ring
                 Circle()
-                    .stroke(color.opacity(0.15), lineWidth: 12)
+                    .stroke(color.opacity(0.15), lineWidth: 10)
                     .frame(width: 112, height: 112)
 
                 // Progress ring
@@ -125,7 +125,7 @@ struct DailyMacrosDisplay: View {
                     .trim(from: 0, to: animatedPercent)
                     .stroke(
                         color,
-                        style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                        style: StrokeStyle(lineWidth: 10, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedPercent)
@@ -145,4 +145,8 @@ struct DailyMacrosDisplay: View {
                 .foregroundColor(AppTheme.textSecondary)
         }
     }
+}
+
+#Preview {
+    DailyMacrosDisplay(calories: 2000, protein: 19, carbs: 3, fats: 4, calorieGoal: 1900, proteinGoal: 8, carbGoal: 4, fatGoal: 3)
 }
