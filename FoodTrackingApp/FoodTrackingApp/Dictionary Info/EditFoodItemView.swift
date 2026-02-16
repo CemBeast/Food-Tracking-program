@@ -109,6 +109,15 @@ struct EditFoodItemView: View {
     @Environment(\.dismiss) private var dismiss
     @State var foodItem: FoodItem
     @State var isAdding: Bool = false
+    @State private var scaleWithWeight: Bool = false
+    
+    // Snapshot values used as the “per base weight” reference for scaling macros from weight
+    @State private var baseWeight: Int = 0
+    @State private var baseCalories: Int = 0
+    @State private var baseProtein: Double = 0
+    @State private var baseCarbs: Double = 0
+    @State private var baseFats: Double = 0
+    
     var onSave: (FoodItem) -> Void
     var onCancel: () -> Void
 
@@ -356,4 +365,24 @@ struct EditFoodItemView: View {
         }
         .presentationDragIndicator(.visible)
     }
+}
+
+#Preview {
+    EditFoodItemView(
+        foodItem: FoodItem(
+            name: "Grilled Chicken Breast",
+            weightInGrams: 100,
+            servings: 1,
+            calories: 165,
+            protein: 31.0,
+            carbs: 0.0,
+            fats: 3.6,
+            servingUnit: .grams,
+            isFavorite: true,
+            isMeal: false,
+            ingredients: []
+        ),
+        onSave: { _ in },
+        onCancel: { }
+    )
 }
