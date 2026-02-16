@@ -137,9 +137,6 @@ struct EditFoodItemView: View {
                             .font(.system(size: 22, weight: .bold))
                             .foregroundColor(AppTheme.textPrimary)
                     }
-                    .padding(.top, 24)
-                    .padding(.bottom, 8)
-                    
                     // Food Info
                     VStack(spacing: 0) {
                         // Name
@@ -245,6 +242,35 @@ struct EditFoodItemView: View {
                             )
                     )
                     
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Scale macros with weight")
+                                .font(.system(size: 15))
+                                .foregroundColor(AppTheme.textPrimary)
+                            Text("When pn, macros update automatically when you change weight.")
+                                .font(.system(size: 12))
+                                .foregroundColor(AppTheme.textSecondary)
+                        }
+                        
+                        Spacer()
+                        
+                        Toggle("", isOn: $scaleWithWeight)
+                            .labelsHidden()
+                    }
+                    .padding(.horizontal, 16)
+                    .onChange(of: scaleWithWeight) { isOn in
+                        if isOn {
+                            // freeze current macros as reference
+                            captureBaseSnapshotFromCurrent()
+                            applyScalingFromBase()
+                        }
+                    }
+                    .onChange(of: foodItem.weightInGrams) { _ in
+                        guard scaleWithWeight else {return}
+                        applyScalingFromBase()
+                    }
+
+                    
                     // Nutrition
                     VStack(spacing: 0) {
                         // Calories
@@ -260,6 +286,8 @@ struct EditFoodItemView: View {
                             Spacer()
                             SelectableTextFieldInt(value: $foodItem.calories, formatter: intFormatter, keyboardType: .numberPad)
                                 .frame(width: 80, height: 30)
+                                .allowsHitTesting(!scaleWithWeight)
+                                .opacity(scaleWithWeight ? 0.4 : 1 )
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 14)
@@ -279,6 +307,8 @@ struct EditFoodItemView: View {
                             Spacer()
                             SelectableTextFieldDouble(value: $foodItem.protein, formatter: decimalFormatter, keyboardType: .decimalPad)
                                 .frame(width: 80, height: 30)
+                                .allowsHitTesting(!scaleWithWeight)
+                                .opacity(scaleWithWeight ? 0.4 : 1 )
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 14)
@@ -298,6 +328,8 @@ struct EditFoodItemView: View {
                             Spacer()
                             SelectableTextFieldDouble(value: $foodItem.carbs, formatter: decimalFormatter, keyboardType: .decimalPad)
                                 .frame(width: 80, height: 30)
+                                .allowsHitTesting(!scaleWithWeight)
+                                .opacity(scaleWithWeight ? 0.4 : 1 )
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 14)
@@ -317,6 +349,8 @@ struct EditFoodItemView: View {
                             Spacer()
                             SelectableTextFieldDouble(value: $foodItem.fats, formatter: decimalFormatter, keyboardType: .decimalPad)
                                 .frame(width: 80, height: 30)
+                                .allowsHitTesting(!scaleWithWeight)
+                                .opacity(scaleWithWeight ? 0.4 : 1 )
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 14)
@@ -365,6 +399,26 @@ struct EditFoodItemView: View {
         }
         .presentationDragIndicator(.visible)
     }
+    
+    private func captureBaseSnapshotFromCurrent() {
+        baseWeight = foodItem.weightInGrams
+        baseCalories = foodItem.calories
+        baseProtein = foodItem.protein
+        baseCarbs = foodItem.carbs
+        baseFats = foodItem.fats
+    }
+    
+    private func applyScalingFromBase() {
+        let bw = baseWeight
+        let nw = foodItem.weightInGrams
+        let factor = Double(nw) / Double(bw)
+        
+        foodItem.calories = baseCalories * Int(factor)
+        foodItem.protein = baseProtein * factor
+        foodItem.carbs = baseCarbs * factor
+        foodItem.fats = baseFats * factor
+    }
+    
 }
 
 #Preview {
