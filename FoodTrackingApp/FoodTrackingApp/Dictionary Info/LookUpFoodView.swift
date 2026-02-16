@@ -5,6 +5,15 @@
 //  Created by Cem Beyenal on 2/15/26.
 //
 import SwiftUI
+import UIKit
+
+// for clicking off search bar and clearing keyboard
+extension UIApplication {
+    func dismissKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder),
+                   to: nil, from: nil, for: nil)
+    }
+}
 
 enum LookupMode: String, CaseIterable, Identifiable {
     case generic = "Generic"
@@ -151,6 +160,10 @@ struct LookUpFoodView: View {
                 )
             }
         }
+        .contentShape(Rectangle()) // required for dismissing keyboard
+        .onTapGesture {
+                UIApplication.shared.dismissKeyboard()
+        }
         .background(AppTheme.background.ignoresSafeArea())
         
     }
@@ -185,6 +198,7 @@ struct LookUpFoodView: View {
     }
     
     private func runUSDASearch() {
+        let limitSearches = 5
         let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else {
             debugOutput = "Empty Query"
@@ -213,7 +227,7 @@ struct LookUpFoodView: View {
                 // 2) Fetch once
                 // decide scope like you already do...
 
-                let top = try await usdaService.searchTopChoices(query: q, scope: scope, limit: 5)
+                let top = try await usdaService.searchTopChoices(query: q, scope: scope, limit: limitSearches)
 
                 await MainActor.run {
                     resultQueryNormalized = top.queryNormalized

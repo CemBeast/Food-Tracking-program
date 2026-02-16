@@ -52,13 +52,16 @@ final class USDANutritionService {
 
     // MARK: - Public API
 
-    /// fetches macros for a given scope.
+    /// Parameters: given a raw query and the scope of the searcy, the function normalizes the query and decides which category to search from (survery or brands)
+    /// Function then calls searchBestMatch (which returns one USDA food choice)
+    /// Then calls fetchMacrosForFood to return the normalized string, the best USDAFoodChoice and that foods macros per 100g
     func fetchSurveyMacrosPer100g(query rawQuery: String, scope: USDASearchScope = .generic) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "USDANutritionService", code: 900,
                           userInfo: [NSLocalizedDescriptionKey: "Missing FDC_API_KEY (check Secrets.xcconfig + Info.plist)."])
         }
 
+        // clean query and select scope
         let queryNormalized = normalizeQuery(rawQuery)
         let dataTypes: [String]
             switch scope {
@@ -69,7 +72,6 @@ final class USDANutritionService {
         }
 
 
-        // Try both strings in case the API expects one or the other
         if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: dataTypes) {
             let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
             return (queryNormalized, choice, macros)
@@ -88,55 +90,9 @@ final class USDANutritionService {
                       userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
     }
     
-    // fetches exact macros of a food (used for selecting macros from a list)
-    func fetchMacrosPer100gForFood(fdcId: Int) async throws -> MacrosPer100g {
-        try await fetchMacrosForFood(fdcId: fdcId)
-    }
-
-    // MARK: - Search
-    private func searchBestMatch(query: String, dataTypes: [String]) async throws -> USDAFoodChoice? {
-        let url = baseURL.appendingPathComponent("foods/search").appending(queryItems: [
-            URLQueryItem(name: "api_key", value: apiKey)
-        ])
-
-        var req = URLRequest(url: url)
-        req.httpMethod = "POST"
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let body = FoodSearchRequest(
-            query: query,
-            dataType: dataTypes,
-            pageSize: 25,
-            pageNumber: 1
-        )
-        req.httpBody = try JSONEncoder().encode(body)
-
-        let (data, resp) = try await URLSession.shared.data(for: req)
-        try validateHTTP(resp)
-
-        let decoded = try JSONDecoder().decode(FoodSearchResponse.self, from: data)
-        guard let foods = decoded.foods, !foods.isEmpty else { return nil }
-
-        // Choose best by token match scoring
-        let best = foods
-            .sorted { score(food: $0, query: query) > score(food: $1, query: query) }
-            .first
-
-        guard let bestFood = best else { return nil }
-
-        // Optional: reject extremely low scores (prevents “fries -> fried rice” style jumps)
-        if score(food: bestFood, query: query) < 5 {
-            return nil
-        }
-
-        return USDAFoodChoice(
-            fdcId: bestFood.fdcId,
-            description: bestFood.description,
-            dataType: bestFood.dataType
-        )
-    }
-    
-    /// Return top N choices (no macros yet). Uses the same scoring.
+    /// Same as fetchSurveryMacros100g but returns an array instead
+    /// Takes raw query and scope to call searchTopMatches to return the top 5
+    /// Public func to Return top N choices in USDA FoodChoice (no macros ). Uses the same scoring.
     func searchTopChoices(
         query rawQuery: String,
         scope: USDASearchScope = .generic,
@@ -174,6 +130,51 @@ final class USDANutritionService {
                       userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
     }
     
+    // public function to access the food macros for an already retrieved food
+    // fetches exact macros of a food (used for selecting macros from a list)
+    func fetchMacrosPer100gForFood(fdcId: Int) async throws -> MacrosPer100g {
+        try await fetchMacrosForFood(fdcId: fdcId)
+    }
+
+    // MARK: - Search (helper functions for Public API functions)
+    /// Searches using api for the cleaned query to return the single best food based on score function
+    /// Is called from fetchMacrosPer100g
+    /// Returns  a USDAFoodChoice
+    private func searchBestMatch(query: String, dataTypes: [String]) async throws -> USDAFoodChoice? {
+        let url = baseURL.appendingPathComponent("foods/search").appending(queryItems: [
+            URLQueryItem(name: "api_key", value: apiKey)
+        ])
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body = FoodSearchRequest(
+            query: query,
+            dataType: dataTypes,
+            pageSize: 25,
+            pageNumber: 1
+        )
+        req.httpBody = try JSONEncoder().encode(body)
+
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        try validateHTTP(resp)
+
+        let decoded = try JSONDecoder().decode(FoodSearchResponse.self, from: data)
+        guard let foods = decoded.foods, !foods.isEmpty else { return nil }
+
+        // return the first result from USDA
+        guard let firstFood = foods.first else { return nil }
+        return USDAFoodChoice(
+            fdcId: firstFood.fdcId,
+            description: firstFood.description,
+            dataType: firstFood.dataType
+        )
+       
+    }
+    
+    
+    // Same as above excetpt it returns a list
     private func searchTopMatches(
         query: String,
         dataTypes: [String],
@@ -201,69 +202,24 @@ final class USDANutritionService {
 
         let decoded = try JSONDecoder().decode(FoodSearchResponse.self, from: data)
         guard let foods = decoded.foods, !foods.isEmpty else { return nil }
-
-        // Score each result once
-        let scored: [(food: FoodSearchFood, score: Int)] = foods.map {
-            ($0, score(food: $0, query: query))
-        }
-
-        // Filter junk (same threshold you used for best match)
-        let filtered = scored.filter { $0.score >= 5 }
-
-        // Sort by score descending, take top N
-        let top = filtered
-            .sorted { $0.score > $1.score }
-            .prefix(max(1, limit))
+        
+        // Tjust take first N foods
+        let top = foods.prefix(max(1, limit))
 
         return top.map {
             USDAFoodChoice(
-                fdcId: $0.food.fdcId,
-                description: $0.food.description,
-                dataType: $0.food.dataType
+                fdcId: $0.fdcId,
+                description: $0.description,
+                dataType: $0.dataType
             )
         }
-    }
 
-    /// Token-based scoring that heavily rewards matching query tokens,
-    /// and penalizes missing tokens to avoid unrelated picks.
-    private func score(food: FoodSearchFood, query: String) -> Int {
-        let qNorm = normalizeQuery(query)
-        let dNorm = normalizeQuery(food.description)
-
-        let qTokens = Set(tokenize(qNorm))
-        let dTokens = Set(tokenize(dNorm))
-
-        // count overlaps
-        let overlap = qTokens.intersection(dTokens).count
-        let missing = qTokens.subtracting(dTokens).count
-
-        var s = 0
-
-        // strong rewards
-        if dNorm == qNorm { s += 100 }
-        if dNorm.hasPrefix(qNorm) { s += 40 }
-        if dNorm.contains(qNorm) { s += 20 }
-
-        // token overlap is king
-        s += overlap * 15
-
-        // missing tokens penalty (prevents “french fries” -> “fried rice”)
-        s -= missing * 20
-
-        // small penalty for long noisy descriptions
-        s -= max(0, dTokens.count - 10)
-
-        // penalize obvious brand/restaurant names unless the user typed them
-        let badWords = ["mcdonald", "burger king", "wendy", "domino", "pizza hut", "taco bell", "kfc", "subway"]
-        if badWords.contains(where: { dNorm.contains($0) }) && !badWords.contains(where: { qNorm.contains($0) }) {
-            s -= 30
-        }
-
-        return s
+        
     }
 
     // MARK: - Details (nutrients)
-
+    /// Given the USDA fdcID, this function fetches the maros for the food
+    /// returns macros per 100g
     private func fetchMacrosForFood(fdcId: Int) async throws -> MacrosPer100g {
         let url = baseURL
             .appendingPathComponent("food/\(fdcId)")
@@ -316,6 +272,7 @@ final class USDANutritionService {
                           userInfo: [NSLocalizedDescriptionKey: "USDA API error: HTTP \(http.statusCode)"])
         }
     }
+    
 }
 
 // MARK: - Request/Response models
