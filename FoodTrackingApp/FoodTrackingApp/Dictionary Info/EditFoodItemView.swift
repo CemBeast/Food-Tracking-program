@@ -5,6 +5,13 @@
 //  Created by Cem Beyenal on 5/20/25.
 //
 import SwiftUI
+import UIKit
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
 
 let intFormatter: NumberFormatter = {
     let f = NumberFormatter()
@@ -93,6 +100,7 @@ struct SelectableTextFieldDouble: UIViewRepresentable {
         textField.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         textField.textColor = UIColor(AppTheme.textPrimary)
         textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange(_:)), for: .editingChanged)
+        
         return textField
     }
 
@@ -125,279 +133,282 @@ struct EditFoodItemView: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
-            ScrollView {
-                VStack(spacing: 24) {
-                    // Header
-                    VStack(spacing: 8) {
-                        Image(systemName: "pencil.circle.fill")
-                            .font(.system(size: 40, weight: .light))
-                            .foregroundColor(AppTheme.textPrimary)
-                        
-                        Text("Edit Food")
-                            .font(.system(size: 22, weight: .bold))
-                            .foregroundColor(AppTheme.textPrimary)
-                    }
-                    // Food Info
-                    VStack(spacing: 0) {
-                        // Name
-                        HStack {
-                            Text("Name")
-                                .font(.system(size: 15))
-                                .foregroundColor(AppTheme.textSecondary)
-                            Spacer()
-                            TextField("Food name", text: $foodItem.name)
-                                .font(.system(size: 16, weight: .semibold))
-                                .foregroundColor(AppTheme.textPrimary)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                        
-                        Divider().background(AppTheme.divider).padding(.horizontal, 16)
-                        
-                        // Unit
-                        HStack {
-                            Text("Unit")
-                                .font(.system(size: 15))
-                                .foregroundColor(AppTheme.textSecondary)
-                            Spacer()
-                            HStack(spacing: 8) {
-                                ForEach(ServingUnit.allCases) { unit in
-                                    Button {
-                                        foodItem.servingUnit = unit
-                                    } label: {
-                                        Text(unit.rawValue.uppercased())
-                                            .font(.system(size: 13, weight: .semibold))
-                                            .foregroundColor(foodItem.servingUnit == unit ? .black : AppTheme.textSecondary)
-                                            .padding(.horizontal, 14)
-                                            .padding(.vertical, 8)
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 8)
-                                                    .fill(foodItem.servingUnit == unit ? Color.white : Color.clear)
-                                            )
-                                    }
-                                }
-                            }
-                            .padding(4)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color.white.opacity(0.06))
-                            )
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                        
-                        Divider().background(AppTheme.divider).padding(.horizontal, 16)
-                        
-                        // Servings
-                        HStack {
-                            Text("Servings")
-                                .font(.system(size: 15))
-                                .foregroundColor(AppTheme.textSecondary)
-                            Spacer()
-                            HStack(spacing: 12) {
-                                Button {
-                                    if foodItem.servings > 1 { foodItem.servings -= 1 }
-                                } label: {
-                                    Image(systemName: "minus.circle.fill")
-                                        .font(.system(size: 22))
-                                        .foregroundColor(AppTheme.textSecondary)
-                                }
-                                Text("\(foodItem.servings)")
-                                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                                    .foregroundColor(AppTheme.textPrimary)
-                                    .frame(minWidth: 30)
-                                Button {
-                                    foodItem.servings += 1
-                                } label: {
-                                    Image(systemName: "plus.circle.fill")
-                                        .font(.system(size: 22))
-                                        .foregroundColor(AppTheme.textPrimary)
-                                }
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                        
-                        Divider().background(AppTheme.divider).padding(.horizontal, 16)
-                        
-                        // Weight/Volume
-                        HStack {
-                            Text(foodItem.servingUnit == .grams ? "Weight (g)" : "Volume (ml)")
-                                .font(.system(size: 15))
-                                .foregroundColor(AppTheme.textSecondary)
-                            Spacer()
-                            SelectableTextFieldInt(value: $foodItem.weightInGrams, formatter: intFormatter, keyboardType: .numberPad)
-                                .frame(width: 80, height: 30)
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                    }
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(AppTheme.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(AppTheme.border, lineWidth: 1)
-                            )
-                    )
+            VStack(spacing: 24) {
+                // Header
+                VStack(spacing: 8) {
+                    Image(systemName: "pencil.circle.fill")
+                        .font(.system(size: 40, weight: .light))
+                        .foregroundColor(AppTheme.textPrimary)
                     
+                    Text("Edit Food")
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundColor(AppTheme.textPrimary)
+                }
+                .padding(.top, 16)
+                // Food Info
+                VStack(spacing: 0) {
+                    // Name
                     HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Scale macros with weight")
-                                .font(.system(size: 15))
-                                .foregroundColor(AppTheme.textPrimary)
-                            Text("When pn, macros update automatically when you change weight.")
-                                .font(.system(size: 12))
-                                .foregroundColor(AppTheme.textSecondary)
-                        }
-                        
+                        Text("Name")
+                            .font(.system(size: 15))
+                            .foregroundColor(AppTheme.textSecondary)
                         Spacer()
-                        
-                        Toggle("", isOn: $scaleWithWeight)
-                            .labelsHidden()
+                        TextField("Food name", text: $foodItem.name)
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(AppTheme.textPrimary)
+                            .multilineTextAlignment(.trailing)
                     }
                     .padding(.horizontal, 16)
-                    .onChange(of: scaleWithWeight) { isOn in
-                        if isOn {
-                            // freeze current macros as reference
-                            captureBaseSnapshotFromCurrent()
-                            applyScalingFromBase()
-                        }
-                    }
-                    .onChange(of: foodItem.weightInGrams) { _ in
-                        guard scaleWithWeight else {return}
-                        applyScalingFromBase()
-                    }
-
+                    .padding(.vertical, 14)
                     
-                    // Nutrition
-                    VStack(spacing: 0) {
-                        // Calories
-                        HStack {
-                            HStack(spacing: 10) {
-                                Circle()
-                                    .fill(AppTheme.calorieColor)
-                                    .frame(width: 8, height: 8)
-                                Text("Calories")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(AppTheme.textPrimary)
-                            }
-                            Spacer()
-                            SelectableTextFieldInt(value: $foodItem.calories, formatter: intFormatter, keyboardType: .numberPad)
-                                .frame(width: 80, height: 30)
-                                .allowsHitTesting(!scaleWithWeight)
-                                .opacity(scaleWithWeight ? 0.4 : 1 )
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                        
-                        Divider().background(AppTheme.divider).padding(.horizontal, 16)
-                        
-                        // Protein
-                        HStack {
-                            HStack(spacing: 10) {
-                                Circle()
-                                    .fill(AppTheme.proteinColor)
-                                    .frame(width: 8, height: 8)
-                                Text("Protein (g)")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(AppTheme.textPrimary)
-                            }
-                            Spacer()
-                            SelectableTextFieldDouble(value: $foodItem.protein, formatter: decimalFormatter, keyboardType: .decimalPad)
-                                .frame(width: 80, height: 30)
-                                .allowsHitTesting(!scaleWithWeight)
-                                .opacity(scaleWithWeight ? 0.4 : 1 )
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                        
-                        Divider().background(AppTheme.divider).padding(.horizontal, 16)
-                        
-                        // Carbs
-                        HStack {
-                            HStack(spacing: 10) {
-                                Circle()
-                                    .fill(AppTheme.carbColor)
-                                    .frame(width: 8, height: 8)
-                                Text("Carbs (g)")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(AppTheme.textPrimary)
-                            }
-                            Spacer()
-                            SelectableTextFieldDouble(value: $foodItem.carbs, formatter: decimalFormatter, keyboardType: .decimalPad)
-                                .frame(width: 80, height: 30)
-                                .allowsHitTesting(!scaleWithWeight)
-                                .opacity(scaleWithWeight ? 0.4 : 1 )
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                        
-                        Divider().background(AppTheme.divider).padding(.horizontal, 16)
-                        
-                        // Fats
-                        HStack {
-                            HStack(spacing: 10) {
-                                Circle()
-                                    .fill(AppTheme.fatColor)
-                                    .frame(width: 8, height: 8)
-                                Text("Fats (g)")
-                                    .font(.system(size: 15))
-                                    .foregroundColor(AppTheme.textPrimary)
-                            }
-                            Spacer()
-                            SelectableTextFieldDouble(value: $foodItem.fats, formatter: decimalFormatter, keyboardType: .decimalPad)
-                                .frame(width: 80, height: 30)
-                                .allowsHitTesting(!scaleWithWeight)
-                                .opacity(scaleWithWeight ? 0.4 : 1 )
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 14)
-                    }
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(AppTheme.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(AppTheme.border, lineWidth: 1)
-                            )
-                    )
+                    Divider().background(AppTheme.divider).padding(.horizontal, 16)
                     
-                    // Buttons
-                    VStack(spacing: 12) {
-                        Button {
-                            onSave(foodItem)
-                            dismiss()
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .font(.system(size: 18))
-                                if isAdding == false {
-                                    Text("Save Changes")
-                                } else {
-                                    Text("Add Food")
+                    // Unit
+                    HStack {
+                        Text("Unit")
+                            .font(.system(size: 15))
+                            .foregroundColor(AppTheme.textSecondary)
+                        Spacer()
+                        HStack(spacing: 8) {
+                            ForEach(ServingUnit.allCases) { unit in
+                                Button {
+                                    foodItem.servingUnit = unit
+                                } label: {
+                                    Text(unit.rawValue.uppercased())
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundColor(foodItem.servingUnit == unit ? .black : AppTheme.textSecondary)
+                                        .padding(.horizontal, 14)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .fill(foodItem.servingUnit == unit ? Color.white : Color.clear)
+                                        )
                                 }
                             }
                         }
-                        .buttonStyle(SleekButtonStyle())
-                        
-                        Button {
-                            onCancel()
-                            dismiss()
-                        } label: {
-                            Text("Cancel")
-                                .font(.system(size: 15, weight: .medium))
-                                .foregroundColor(AppTheme.textSecondary)
+                        .padding(4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.06))
+                        )
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    
+                    Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                    
+                    // Servings
+                    HStack {
+                        Text("Servings")
+                            .font(.system(size: 15))
+                            .foregroundColor(AppTheme.textSecondary)
+                        Spacer()
+                        HStack(spacing: 12) {
+                            Button {
+                                if foodItem.servings > 1 { foodItem.servings -= 1 }
+                            } label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(AppTheme.textSecondary)
+                            }
+                            Text("\(foodItem.servings)")
+                                .font(.system(size: 18, weight: .bold, design: .rounded))
+                                .foregroundColor(AppTheme.textPrimary)
+                                .frame(minWidth: 30)
+                            Button {
+                                foodItem.servings += 1
+                            } label: {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(AppTheme.textPrimary)
+                            }
                         }
                     }
-                    .padding(.top, 8)
-                    .padding(.bottom, 32)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    
+                    Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                    
+                    // Weight/Volume
+                    HStack {
+                        Text(foodItem.servingUnit == .grams ? "Weight (g)" : "Volume (ml)")
+                            .font(.system(size: 15))
+                            .foregroundColor(AppTheme.textSecondary)
+                        Spacer()
+                        SelectableTextFieldInt(value: $foodItem.weightInGrams, formatter: intFormatter, keyboardType: .numberPad)
+                            .frame(width: 80, height: 30)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
                 }
-                .padding(.horizontal, 20)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(AppTheme.cardBackground)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(AppTheme.border, lineWidth: 1)
+                        )
+                )
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Scale macros with weight")
+                            .font(.system(size: 15))
+                            .foregroundColor(AppTheme.textPrimary)
+                        Text("When on, macros update automatically when you change weight.")
+                            .font(.system(size: 12))
+                            .foregroundColor(AppTheme.textSecondary)
+                    }
+                    
+                    Spacer()
+                    
+                    Toggle("", isOn: $scaleWithWeight)
+                        .labelsHidden()
+                }
+                .padding(.horizontal, 16)
+                .onChange(of: scaleWithWeight) { isOn in
+                    if isOn {
+                        // freeze current macros as reference
+                        captureBaseSnapshotFromCurrent()
+                        applyScalingFromBase()
+                    }
+                }
+                .onChange(of: foodItem.weightInGrams) { _ in
+                    guard scaleWithWeight else {return}
+                    applyScalingFromBase()
+                }
+
+                
+                // Nutrition
+                VStack(spacing: 0) {
+                    // Calories
+                    HStack {
+                        HStack(spacing: 10) {
+                            Circle()
+                                .fill(AppTheme.calorieColor)
+                                .frame(width: 8, height: 8)
+                            Text("Calories")
+                                .font(.system(size: 15))
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
+                        Spacer()
+                        SelectableTextFieldInt(value: $foodItem.calories, formatter: intFormatter, keyboardType: .numberPad)
+                            .frame(width: 80, height: 30)
+                            .allowsHitTesting(!scaleWithWeight)
+                            .opacity(scaleWithWeight ? 0.4 : 1 )
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    
+                    Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                    
+                    // Protein
+                    HStack {
+                        HStack(spacing: 10) {
+                            Circle()
+                                .fill(AppTheme.proteinColor)
+                                .frame(width: 8, height: 8)
+                            Text("Protein (g)")
+                                .font(.system(size: 15))
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
+                        Spacer()
+                        SelectableTextFieldDouble(value: $foodItem.protein, formatter: decimalFormatter, keyboardType: .decimalPad)
+                            .frame(width: 80, height: 30)
+                            .allowsHitTesting(!scaleWithWeight)
+                            .opacity(scaleWithWeight ? 0.4 : 1 )
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    
+                    Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                    
+                    // Carbs
+                    HStack {
+                        HStack(spacing: 10) {
+                            Circle()
+                                .fill(AppTheme.carbColor)
+                                .frame(width: 8, height: 8)
+                            Text("Carbs (g)")
+                                .font(.system(size: 15))
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
+                        Spacer()
+                        SelectableTextFieldDouble(value: $foodItem.carbs, formatter: decimalFormatter, keyboardType: .decimalPad)
+                            .frame(width: 80, height: 30)
+                            .allowsHitTesting(!scaleWithWeight)
+                            .opacity(scaleWithWeight ? 0.4 : 1 )
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    
+                    Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                    
+                    // Fats
+                    HStack {
+                        HStack(spacing: 10) {
+                            Circle()
+                                .fill(AppTheme.fatColor)
+                                .frame(width: 8, height: 8)
+                            Text("Fats (g)")
+                                .font(.system(size: 15))
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
+                        Spacer()
+                        SelectableTextFieldDouble(value: $foodItem.fats, formatter: decimalFormatter, keyboardType: .decimalPad)
+                            .frame(width: 80, height: 30)
+                            .allowsHitTesting(!scaleWithWeight)
+                            .opacity(scaleWithWeight ? 0.4 : 1 )
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                }
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(AppTheme.cardBackground)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(AppTheme.border, lineWidth: 1)
+                        )
+                )
+                
+                // Buttons
+                VStack(spacing: 12) {
+                    Button {
+                        onSave(foodItem)
+                        dismiss()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 18))
+                            if isAdding == false {
+                                Text("Save Changes")
+                            } else {
+                                Text("Add Food")
+                            }
+                        }
+                    }
+                    .buttonStyle(SleekButtonStyle())
+                    
+                    Button {
+                        onCancel()
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .font(.system(size: 15, weight: .medium))
+                            .foregroundColor(AppTheme.textSecondary)
+                    }
+                }
+                .padding(.top, 8)
+                .padding(.bottom, 32)
             }
+            .padding(.horizontal, 20)
         }
         .presentationDragIndicator(.visible)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
     
     private func captureBaseSnapshotFromCurrent() {
@@ -413,7 +424,7 @@ struct EditFoodItemView: View {
         let nw = foodItem.weightInGrams
         let factor = Double(nw) / Double(bw)
         
-        foodItem.calories = baseCalories * Int(factor)
+        foodItem.calories = Int((Double(baseCalories) * factor).rounded())
         foodItem.protein = baseProtein * factor
         foodItem.carbs = baseCarbs * factor
         foodItem.fats = baseFats * factor
