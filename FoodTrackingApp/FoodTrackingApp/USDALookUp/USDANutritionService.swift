@@ -10,8 +10,9 @@ import Foundation
 // MARK: - Public types
 
 enum USDASearchScope {
-    case generic     // Survey (FNDDS)
+    case foundation     // Foundation
     case branded     // Branded
+    case survey     // Survey (FNDDS)
 }
 
 struct MacrosPer100g {
@@ -55,7 +56,7 @@ final class USDANutritionService {
     /// Parameters: given a raw query and the scope of the searcy, the function normalizes the query and decides which category to search from (survery or brands)
     /// Function then calls searchBestMatch (which returns one USDA food choice)
     /// Then calls fetchMacrosForFood to return the normalized string, the best USDAFoodChoice and that foods macros per 100g
-    func fetchSurveyMacrosPer100g(query rawQuery: String, scope: USDASearchScope = .generic) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
+    func fetchSurveyMacrosPer100g(query rawQuery: String, scope: USDASearchScope = .survey) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "USDANutritionService", code: 900,
                           userInfo: [NSLocalizedDescriptionKey: "Missing FDC_API_KEY (check Secrets.xcconfig + Info.plist)."])
@@ -65,7 +66,9 @@ final class USDANutritionService {
         let queryNormalized = normalizeQuery(rawQuery)
         let dataTypes: [String]
             switch scope {
-            case .generic:
+            case .foundation:
+                dataTypes = ["Foundation"]
+            case .survey:
                 dataTypes = ["Survey (FNDDS)"]
             case .branded:
                 dataTypes = ["Branded"]
@@ -77,15 +80,16 @@ final class USDANutritionService {
             return (queryNormalized, choice, macros)
         }
         
-        // Fall back to check Survey database
-        if scope == .generic {
-            if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: ["Survey"]) {
-                let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
-                return (queryNormalized, choice, macros)
-            }
+        let scopeName: String
+        switch scope {
+            case .survey:
+                scopeName = "Survey (FNDDS)"
+            case .foundation:
+                scopeName = "Foundation"
+            case .branded:
+                scopeName = "Branded"
         }
-
-        let scopeName = (scope == .generic) ? "Survey (FNDDS)" : "Branded"
+        
         throw NSError(domain: "USDANutritionService", code: 404,
                       userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
     }
@@ -95,7 +99,7 @@ final class USDANutritionService {
     /// Public func to Return top N choices in USDA FoodChoice (no macros ). Uses the same scoring.
     func searchTopChoices(
         query rawQuery: String,
-        scope: USDASearchScope = .generic,
+        scope: USDASearchScope = .survey,
         limit: Int = 5
     ) async throws -> (queryNormalized: String, choices: [USDAFoodChoice]) {
 
@@ -108,8 +112,9 @@ final class USDANutritionService {
 
         let dataTypes: [String]
         switch scope {
-        case .generic: dataTypes = ["Survey (FNDDS)"]
+        case .survey: dataTypes = ["Survey (FNDDS)"]
         case .branded: dataTypes = ["Branded"]
+        case .foundation: dataTypes = ["Foundation"]
         }
 
         // 1) Try primary dataTypes
@@ -118,14 +123,16 @@ final class USDANutritionService {
             return (queryNormalized, choices)
         }
 
-        // 2) Optional fallback for generic
-        if scope == .generic,
-           let choices = try await searchTopMatches(query: queryNormalized, dataTypes: ["Survey"], limit: limit),
-           !choices.isEmpty {
-            return (queryNormalized, choices)
+        let scopeName: String
+        switch scope {
+            case .survey:
+                scopeName = "Survey (FNDDS)"
+            case .foundation:
+                scopeName = "Foundation"
+            case .branded:
+                scopeName = "Branded"
         }
-
-        let scopeName = (scope == .generic) ? "Survey (FNDDS)" : "Branded"
+        
         throw NSError(domain: "USDANutritionService", code: 404,
                       userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
     }

@@ -16,9 +16,12 @@ extension UIApplication {
 }
 
 enum LookupMode: String, CaseIterable, Identifiable {
-    case generic = "Generic"
-    case brands = "Brands"
-    case fastFood = "Fast Food"
+    case foundation = "Basic" // USDA Foudnational
+    case survey = "Everyday" // USDA Survery
+    case brands = "Brands" // USDA Brands
+    case fastFood = "Fast Food" // in progress
+    
+    // I think we should switch it to Basic, Everyday, Brands, with the info button explaining each
     var id: String { rawValue }
 }
 
@@ -30,18 +33,22 @@ struct LookUpFoodView: View {
     @State private var isLoading: Bool = false
     @State private var showConfirmSheet: Bool = false
     @State private var proposedFood: FoodItem? = nil
-    @State private var mode: LookupMode = .generic
+    @State private var mode: LookupMode = .foundation
     @State private var results: [USDAFoodChoice] = []
     @State private var resultQueryNormalized: String = ""
     @State private var macrosByFdcId: [Int: MacrosPer100g] = [:] // cache for loading results from USDA
+    @State private var modeInfo: Bool = false
+    
+    @Environment(\.horizontalSizeClass) private var hSizeClass
     
     private let usdaService = USDANutritionService()
     
     // placeholder text for search string
     var placeholder : String {
         switch mode {
-        case .generic: return "Search USDA (generic)…"
-        case .brands: return "Search USDA (branded)"
+        case .foundation: return "Search Whole Foods…"
+        case .brands: return "Search Brands"
+        case .survey: return "Search Common Foods…"
         case .fastFood: return "Search Fast Food"
         }
     }
@@ -146,29 +153,49 @@ struct LookUpFoodView: View {
     
     @ViewBuilder
     private var modeChips: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(LookupMode.allCases) { option in
-                    Button {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            mode = option
-                        }
-                    } label: {
-                        Text(option.rawValue)
-                            .font(.system(size: 13, weight: mode == option ? .semibold : .medium))
-                            .foregroundColor(mode == option ? .black : AppTheme.textSecondary)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(mode == option ? Color.white : Color.white.opacity(0.06))
-                            )
+        HStack(spacing: 8) {
+            ForEach(LookupMode.allCases) { option in
+                Button {
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        mode = option
                     }
+                } label: {
+                    Text(option.rawValue)
+                        .font(.system(size: 13, weight: mode == option ? .semibold : .medium))
+                        .foregroundColor(mode == option ? .black : AppTheme.textSecondary)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(mode == option ? Color.white : Color.white.opacity(0.06))
+                        )
                 }
             }
-            .padding(.horizontal, 20)
+            
+            Button {
+                modeInfo.toggle()
+            } label: {
+                Image(systemName: "questionmark.circle.fill")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(AppTheme.textPrimary)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 8)
+            }
+            .buttonStyle(.plain)
+            .popover(
+                isPresented: $modeInfo,
+                attachmentAnchor: .point(.bottom),
+                arrowEdge: .top
+            ) {
+                if #available(iOS 16.4, *) {
+                    ModeInfoPopover()
+                        .presentationCompactAdaptation(.none)
+                } else {
+                    ModeInfoPopover()
+                }
+            }
         }
-        .padding(.bottom, 12)
+        .padding(.horizontal, 20)
     }
     
     private func runUSDASearch() {
@@ -190,8 +217,9 @@ struct LookUpFoodView: View {
                 // 1) Decide scope (or return for fastFood)
                 let scope: USDASearchScope
                 switch mode {
-                case .generic: scope = .generic
+                case .foundation: scope = .foundation
                 case .brands:  scope = .branded
+                case .survey: scope = .survey
                 case .fastFood:
                     // later
                     await MainActor.run { isLoading = false }
@@ -287,6 +315,37 @@ struct LookUpFoodView: View {
                     isLoading = false
                 }
             }
+        }
+    }
+}
+
+private struct ModeInfoPopover: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
+                row(title: "Basic", desc: "Basic includes whole foods or raw foods. Use this for ingredients or generic foods.")
+                row(title: "Everyday", desc: "Typical foods that you may find anywhere. Includes foods that consist of multiple ingredients.")
+                row(title: "Brands", desc: "Foods from name brands. Use this if you are searching for a specific brands food.")
+                row(title: "Fast Food", desc: "Fast Food - work in progress right now.")
+
+            }
+            Text("Tip: Start with Everyday for most foods.")
+                .font(.system(size: 12))
+                .foregroundStyle(.secondary)
+                .padding(.top, 2)
+        }
+        .padding(35)
+    }
+    
+    private func row(title: String, desc: String) -> some View {
+        HStack( spacing: 3) {
+            Text(title)
+                .font(.system(size: 16, weight: .semibold))
+                .frame(width: 90, alignment: .leading)
+            Text(desc)
+                .font(.system(size: 12))
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }
