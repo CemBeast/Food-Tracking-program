@@ -31,52 +31,9 @@ struct LookUpFoodView: View {
     @State private var showConfirmSheet: Bool = false
     @State private var proposedFood: FoodItem? = nil
     @State private var mode: LookupMode = .generic
-    
-    // @State private var results: [USDAFoodChoice] = []
-    // Temp data for UI design
-    @State private var results: [USDAFoodChoice] = [
-        USDAFoodChoice(
-            fdcId: 111001,
-            description: "Chicken Breast, grilled, skinless",
-            dataType: "Survey (FNDDS)"
-        ),
-        USDAFoodChoice(
-            fdcId: 111002,
-            description: "Chicken Breast, raw, boneless",
-            dataType: "Survey (FNDDS)"
-        ),
-        USDAFoodChoice(
-            fdcId: 222001,
-            description: "Tyson Fully Cooked Grilled Chicken Strips",
-            dataType: "Branded"
-        ),
-        USDAFoodChoice(
-            fdcId: 222002,
-            description: "Perdue Fresh Chicken Breast Tenderloins",
-            dataType: "Branded"
-        ),
-        USDAFoodChoice(
-            fdcId: 333001,
-            description: "McDonald's Grilled Chicken Sandwich",
-            dataType: "Branded"
-        ),
-        USDAFoodChoice(
-            fdcId: 333002,
-            description: "Chick-fil-A Grilled Nuggets",
-            dataType: "Branded"
-        ),
-        USDAFoodChoice(
-            fdcId: 444001,
-            description: "Rice, white, long-grain, cooked",
-            dataType: "Survey (FNDDS)"
-        ),
-        USDAFoodChoice(
-            fdcId: 555001,
-            description: "Oreo Chocolate Sandwich Cookies",
-            dataType: "Branded"
-        )
-    ]
+    @State private var results: [USDAFoodChoice] = []
     @State private var resultQueryNormalized: String = ""
+    @State private var macrosByFdcId: [Int: MacrosPer100g] = [:] // cache for loading results from USDA
     
     private let usdaService = USDANutritionService()
     
@@ -106,14 +63,33 @@ struct LookUpFoodView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     if !results.isEmpty {
                         ForEach(results, id: \.fdcId) { choice in
-                            Button { selectChoice(choice) } label: {
-                                HStack {
-                                    Text(choice.description)
-                                        .foregroundColor(AppTheme.textPrimary)
-                                        .lineLimit(2)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(AppTheme.textTertiary)
+                            Button {
+                                selectChoice(choice)
+                            } label: {
+                                VStack(alignment: .leading, spacing: 10) {
+                                    HStack {
+                                        Text(choice.description)
+                                            .foregroundColor(AppTheme.textPrimary)
+                                            .lineLimit(2)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(AppTheme.textTertiary)
+                                    }
+                                    
+                                    // ✅ Preview macros (if loaded)
+                                    if let m = macrosByFdcId[choice.fdcId] {
+                                        HStack(spacing: 8) {
+                                            MacroPill(value: "\(Int(m.caloriesKcal.rounded()))", label: "cal", color: AppTheme.calorieColor)
+                                            MacroPill(value: String(format: "%.0f", m.proteinG), label: "P", color: AppTheme.proteinColor)
+                                            MacroPill(value: String(format: "%.0f", m.carbsG), label: "C", color: AppTheme.carbColor)
+                                            MacroPill(value: String(format: "%.0f", m.fatG), label: "F", color: AppTheme.fatColor)
+                                        }
+                                    } else {
+                                        // optional tiny placeholder so it doesn’t feel empty
+                                        Text("Loading macros…")
+                                            .font(.system(size: 12, weight: .medium))
+                                            .foregroundColor(AppTheme.textTertiary)
+                                    }
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 12)
@@ -129,13 +105,8 @@ struct LookUpFoodView: View {
                             }
                             .buttonStyle(.plain)
                         }
-                    } else {
-                        Text(debugOutput) // if you still want it
-                            .foregroundColor(AppTheme.textSecondary)
-                            .padding(.horizontal, 20)
-                            .padding(.top, 12)
                     }
-                    
+    
                     Spacer(minLength: 24)
                 }
                 .padding(.top, 8)
@@ -198,7 +169,7 @@ struct LookUpFoodView: View {
     }
     
     private func runUSDASearch() {
-        let limitSearches = 5
+        let limitSearches = 8 // how many searches return
         let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else {
             debugOutput = "Empty Query"
@@ -236,12 +207,45 @@ struct LookUpFoodView: View {
                     isLoading = false
                 }
                 
+                // kick off preview macro fetch AFTER results show
+                fetchPreviewMacros(for: top.choices)
+                
             } catch {
                 await MainActor.run {
                     debugOutput = "Error: \(error.localizedDescription)"
                     isLoading = false
                 }
                 
+            }
+        }
+    }
+        
+    // Fetches the macros for the list results provided
+    private func fetchPreviewMacros(for choices: [USDAFoodChoice]) {
+        Task {
+            await withTaskGroup(of: (Int, MacrosPer100g)?.self) { group in
+                for c in choices {
+                    // cache hit -> don’t fetch
+                    if macrosByFdcId[c.fdcId] != nil { continue }
+
+                    group.addTask {
+                        do {
+                            let macros = try await usdaService.fetchMacrosPer100gForFood(fdcId: c.fdcId)
+                            return (c.fdcId, macros)
+                        } catch {
+                            // ignore failures for previews (optional: log)
+                            return nil
+                        }
+                    }
+                }
+
+                // update incrementally as results arrive
+                for await result in group {
+                    guard let (fdcId, macros) = result else { continue }
+                    await MainActor.run {
+                        macrosByFdcId[fdcId] = macros
+                    }
+                }
             }
         }
     }
