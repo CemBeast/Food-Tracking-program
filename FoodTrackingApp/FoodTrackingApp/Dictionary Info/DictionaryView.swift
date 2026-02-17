@@ -239,42 +239,6 @@ struct DictionaryView: View {
         }
     }
     
-//    @ViewBuilder
-//    private var searchBar: some View {
-//        HStack(spacing: 12) {
-//            Image(systemName: "magnifyingglass")
-//                .font(.system(size: 16))
-//                .foregroundColor(AppTheme.textTertiary)
-//            
-//            TextField("Search foods...", text: $searchText)
-//                .font(.system(size: 16))
-//                .foregroundColor(AppTheme.textPrimary)
-//            
-//            if !searchText.isEmpty {
-//                Button {
-//                    searchText = ""
-//                } label: {
-//                    Image(systemName: "xmark.circle.fill")
-//                        .font(.system(size: 16))
-//                        .foregroundColor(AppTheme.textTertiary)
-//                }
-//            }
-//        }
-//        .padding(.horizontal, 16)
-//        .padding(.vertical, 12)
-//        .background(
-//            RoundedRectangle(cornerRadius: 12)
-//                .fill(Color.white.opacity(0.06))
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 12)
-//                        .stroke(AppTheme.border, lineWidth: 1)
-//                )
-//        )
-//        .padding(.horizontal, 20)
-//        .padding(.top, 16)
-//        .padding(.bottom, 12)
-//    }
-    
     @ViewBuilder
     private var sortChips: some View {
         ScrollView(.horizontal, showsIndicators: false) {

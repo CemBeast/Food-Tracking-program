@@ -75,8 +75,11 @@ struct LookUpFoodView: View {
                                         Image(systemName: "chevron.right")
                                             .foregroundColor(AppTheme.textTertiary)
                                     }
+                                    Label("100g", systemImage: "scalemass")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(AppTheme.textSecondary)
                                     
-                                    // ✅ Preview macros (if loaded)
+                                    // Preview macros (if loaded)
                                     if let m = macrosByFdcId[choice.fdcId] {
                                         HStack(spacing: 8) {
                                             MacroPill(value: "\(Int(m.caloriesKcal.rounded()))", label: "cal", color: AppTheme.calorieColor)
