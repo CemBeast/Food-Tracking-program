@@ -260,6 +260,7 @@ struct DictionaryView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 20)
     }
     
@@ -330,6 +331,7 @@ struct DictionaryView: View {
                 .onDelete(perform: deleteItems)
             }
         }
+        .padding(.top, 8)
         .listStyle(PlainListStyle())
         .scrollContentBackground(.hidden)
     }
@@ -461,5 +463,32 @@ struct MacroPill: View {
             RoundedRectangle(cornerRadius: 8)
                 .fill(color.opacity(0.12))
         )
+    }
+}
+
+#Preview {
+    DictionaryViewPreviewWrapper()
+}
+
+private struct DictionaryViewPreviewWrapper: View {
+    @State private var selectedFood: FoodItem? = nil
+    @State private var showGramsInput: Bool = false
+    @State private var selectedFoodID: UUID? = nil
+    @State private var selectedMeasurementMode: MeasurementMode? = nil
+    
+    @StateObject private var foodModel = FoodModel()
+
+    var body: some View {
+        NavigationStack {
+            DictionaryView(
+                selectedFood: $selectedFood,
+                showGramsInput: $showGramsInput,
+                selectedFoodID: $selectedFoodID,
+                selectedMeasurementMode: $selectedMeasurementMode,
+                foodModel: foodModel,
+                onFoodSelected: nil,
+                readOnly: true
+            )
+        }
     }
 }
