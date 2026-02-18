@@ -241,29 +241,26 @@ struct DictionaryView: View {
     
     @ViewBuilder
     private var sortChips: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(SortOption.allCases) { option in
-                    Button {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            sortOption = option
-                        }
-                    } label: {
-                        Text(option.rawValue)
-                            .font(.system(size: 13, weight: sortOption == option ? .semibold : .medium))
-                            .foregroundColor(sortOption == option ? .black : AppTheme.textSecondary)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(sortOption == option ? Color.white : Color.white.opacity(0.06))
-                            )
+        HStack(spacing: 8) {
+            ForEach(SortOption.allCases) { option in
+                Button {
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        sortOption = option
                     }
+                } label: {
+                    Text(option.rawValue)
+                        .font(.system(size: 12, weight: sortOption == option ? .semibold : .medium))
+                        .foregroundColor(sortOption == option ? .black : AppTheme.textSecondary)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(sortOption == option ? Color.white : Color.white.opacity(0.06))
+                        )
                 }
             }
-            .padding(.horizontal, 20)
         }
-        .padding(.bottom, 12)
+        .padding(.horizontal, 20)
     }
     
     @ViewBuilder

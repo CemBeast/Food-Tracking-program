@@ -161,7 +161,7 @@ struct LookUpFoodView: View {
                     }
                 } label: {
                     Text(option.rawValue)
-                        .font(.system(size: 13, weight: mode == option ? .semibold : .medium))
+                        .font(.system(size: 12, weight: mode == option ? .semibold : .medium))
                         .foregroundColor(mode == option ? .black : AppTheme.textSecondary)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 8)
