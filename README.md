@@ -40,6 +40,10 @@ A feature-rich iOS application for tracking daily macronutrients (calories, prot
 
 #### Food Dictionary
 - **USDA Database**: Bundled with 300+ common foods from USDA FoodData Central
+- **Live USDA Lookup**: Search the complete USDA FoodData Central database in real-time
+  - Foundation Foods: High-quality reference foods
+  - Survey (FNDDS): Research-grade foods from dietary surveys
+  - Branded Foods: Commercial products and restaurant items
 - **Manual Food Entry**: Add custom foods with full macro information
 - **Barcode Scanner**: Scan product barcodes to add foods automatically
 - **Meal Builder**: Combine multiple foods into reusable meals with automatic macro calculation
