@@ -27,6 +27,7 @@ struct BarcodeTrackingWrapperView: View {
                 
                 EditFoodItemView(
                     foodItem: food,
+                    isAdding: true,
                     onSave: { updated in
                         viewModel.add(updated)
                         showEdit = false
