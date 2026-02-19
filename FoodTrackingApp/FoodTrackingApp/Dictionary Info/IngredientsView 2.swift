@@ -82,16 +82,41 @@ struct IngredientsView: View {
         List {
             Section {
                 if !ingredients.isEmpty {
-                    HStack(spacing: 8) {
-                        MacroPill(value: "\(meal.calories)", label: "cal", color: AppTheme.calorieColor)
-                        MacroPill(value: String(format: "%.0f", meal.protein), label: "P", color: AppTheme.proteinColor)
-                        MacroPill(value: String(format: "%.0f", meal.carbs), label: "C", color: AppTheme.carbColor)
-                        MacroPill(value: String(format: "%.0f", meal.fats), label: "F", color: AppTheme.fatColor)
+                    HStack(spacing: 10) {
+                        metricTile(
+                            title: "Calories",
+                            value: "\(meal.calories)",
+                            icon: "flame.fill",
+                            color: AppTheme.calorieColor
+                        )
+                        metricTile(
+                            title: "Protein",
+                            value: String(format: "%.0f", meal.protein),
+                            icon: "bolt.circle.fill",
+                            color: AppTheme.proteinColor
+                        )
+                        metricTile(
+                            title: "Carbs",
+                            value: String(format: "%.0f", meal.carbs),
+                            icon: "leaf.circle.fill",
+                            color: AppTheme.carbColor
+                        )
+                        metricTile(
+                            title: "Fats",
+                            value: String(format: "%.0f", meal.fats),
+                            icon: "drop.circle.fill",
+                            color: AppTheme.fatColor
+                        )
                         Button {
                             editedMealWeight = "\(meal.weightInGrams)"
                             showMealWeightEditor = true
                         } label: {
-                            MacroPill(value: "\(meal.weightInGrams) g", label: "wt", color: AppTheme.textSecondary)
+                            metricTile(
+                                title: "Weight",
+                                value: "\(meal.weightInGrams) g",
+                                icon: "scalemass.fill",
+                                color: AppTheme.textSecondary
+                            )
                         }
                         .buttonStyle(.plain)
                     }
@@ -328,6 +353,35 @@ struct IngredientsView: View {
         } else {
             print("⚠️ Meal not found for id \(mealId)")
         }
+    }
+    
+    private func metricTile(title: String, value: String, icon: String, color: Color) -> some View {
+        VStack(spacing: 6) {
+            Text(value)
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundColor(color)
+                .minimumScaleFactor(0.8)
+                .lineLimit(1)
+            
+            Text(title.uppercased())
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundColor(AppTheme.textSecondary)
+                .tracking(0.8)
+            
+            Image(systemName: icon)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundColor(color)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(color.opacity(0.08))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(color.opacity(0.15), lineWidth: 1)
+                )
+        )
     }
 }
 
