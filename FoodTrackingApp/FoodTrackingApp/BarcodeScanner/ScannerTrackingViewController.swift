@@ -7,10 +7,41 @@
 import SwiftUI
 import AVFoundation
 
+enum BarcodeLookupError: Error {
+    case network
+    case notFound
+    case missingNutrition
+
+    var message: String {
+        switch self {
+        case .network:
+            return "Couldn't reach the food database. Check your connection and try again."
+        case .notFound:
+            return "No product found for that barcode."
+        case .missingNutrition:
+            return "We found this product, but it has no nutrition info."
+        }
+    }
+}
+
 class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var onScanned: ((FoodItem) -> Void)?
+    var onError: ((BarcodeLookupError) -> Void)?
+    var onLookupStarted: (() -> Void)?
+
+    private var isProcessing = false
+    private var lastScannedCode: String?
+    private var lastScannedAt: Date?
+    private static let rescanInterval: TimeInterval = 3.0
+
+    private lazy var lookupSession: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 15
+        return URLSession(configuration: config)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,23 +79,61 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
     func metadataOutput(_ output: AVCaptureMetadataOutput,
                         didOutput metadataObjects: [AVMetadataObject],
                         from connection: AVCaptureConnection) {
-        if let metadataObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
-           let code = metadataObject.stringValue {
-            captureSession.stopRunning()
-            lookupAndReturnFood(barcode: code)
+        guard !isProcessing,
+              let metadataObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
+              let code = metadataObject.stringValue else { return }
+
+        if let last = lastScannedCode, last == code,
+           let lastAt = lastScannedAt,
+           Date().timeIntervalSince(lastAt) < Self.rescanInterval {
+            return
         }
+
+        lastScannedCode = code
+        lastScannedAt = Date()
+        isProcessing = true
+        onLookupStarted?()
+        lookupAndReturnFood(barcode: code)
     }
 
     func lookupAndReturnFood(barcode: String) {
         let urlString = "https://world.openfoodfacts.org/api/v0/product/\(barcode).json"
-        guard let url = URL(string: urlString) else { return }
+        guard let url = URL(string: urlString) else {
+            finish(error: .network)
+            return
+        }
 
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        lookupSession.dataTask(with: url) { [weak self] data, _, error in
+            guard let self = self else { return }
+
+            if error != nil {
+                self.finish(error: .network)
+                return
+            }
+
             guard let data = data,
-                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let product = json["product"] as? [String: Any],
-                  let name = product["product_name"] as? String,
-                  let nutriments = product["nutriments"] as? [String: Any] else { return }
+                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                self.finish(error: .network)
+                return
+            }
+
+            // OpenFoodFacts returns status: 0 when the product isn't in their DB.
+            if let status = json["status"] as? Int, status == 0 {
+                self.finish(error: .notFound)
+                return
+            }
+
+            guard let product = json["product"] as? [String: Any] else {
+                self.finish(error: .notFound)
+                return
+            }
+
+            guard let rawName = product["product_name"] as? String,
+                  !rawName.isEmpty,
+                  let nutriments = product["nutriments"] as? [String: Any] else {
+                self.finish(error: .missingNutrition)
+                return
+            }
 
             let servingString = product["serving_size"] as? String ?? ""
 
@@ -78,7 +147,7 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
                     .components(separatedBy: CharacterSet.letters)
                     .joined()
                     .trimmingCharacters(in: .whitespaces)
-                
+
                 if let value = Double(numberPart) {
                     servingAmount = Int(value)
                     if matchedText.contains("ml") {
@@ -90,21 +159,6 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
             }
 
             let useServingBased = (servingAmount != nil)
-
-            // Print serving string
-            print("🔍 Serving size string: \(product["serving_size"] ?? "N/A")")
-            print("📦 Nutrients per serving:")
-            print("  - Calories: \(nutriments["energy-kcal_serving"] ?? "N/A")")
-            print("  - Energy (kJ): \(nutriments["energy_serving"] ?? "N/A")")
-            print("  - Protein (g): \(nutriments["proteins_serving"] ?? "N/A")")
-            print("  - Carbs (g): \(nutriments["carbohydrates_serving"] ?? "N/A")")
-            print("  - Fat (g): \(nutriments["fat_serving"] ?? "N/A")")
-
-            print("📊 Nutrients per 100g:")
-            print("  - Calories (kcal_100g): \(nutriments["energy-kcal_100g"] ?? "N/A")")
-            print("  - Protein (g): \(nutriments["proteins_100g"] ?? "N/A")")
-            print("  - Carbs (g): \(nutriments["carbohydrates_100g"] ?? "N/A")")
-            print("  - Fat (g): \(nutriments["fat_100g"] ?? "N/A")")
 
             // Macronutrient extraction
             let calories: Int = {
@@ -129,8 +183,9 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
             let fats = useServingBased
                 ? (nutriments["fat_serving"] as? Double ?? 0)
                 : (nutriments["fat_100g"] as? Double ?? 0)
+
             let item = FoodItem(
-                name: name,
+                name: rawName,
                 weightInGrams: servingAmount ?? 100,
                 servings: 1,
                 calories: calories,
@@ -141,9 +196,16 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
             )
 
             DispatchQueue.main.async {
+                self.isProcessing = false
                 self.onScanned?(item)
-                //self.dismiss(animated: true)
             }
         }.resume()
+    }
+
+    private func finish(error: BarcodeLookupError) {
+        DispatchQueue.main.async {
+            self.isProcessing = false
+            self.onError?(error)
+        }
     }
 }

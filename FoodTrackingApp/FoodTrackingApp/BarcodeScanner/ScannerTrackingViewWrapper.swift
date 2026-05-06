@@ -10,10 +10,14 @@ import SwiftUI
 
 struct ScannerTrackingViewWrapper: UIViewControllerRepresentable {
     var onScanned: (FoodItem) -> Void
+    var onError: (BarcodeLookupError) -> Void
+    var onLookupStarted: () -> Void
 
     func makeUIViewController(context: Context) -> ScannerTrackingViewController {
         let vc = ScannerTrackingViewController()
         vc.onScanned = onScanned
+        vc.onError = onError
+        vc.onLookupStarted = onLookupStarted
         return vc
     }
 

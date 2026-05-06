@@ -10,13 +10,27 @@ import SwiftUI
 struct ScannerTrackingViewWithOverlay: View {
     @Environment(\.dismiss) private var dismiss
     var onScanned: (FoodItem) -> Void
+    var onError: (BarcodeLookupError) -> Void
+    @State private var isLooking = false
 
     var body: some View {
         ZStack {
             // Camera view
-            ScannerTrackingViewWrapper(onScanned: onScanned)
-                .edgesIgnoringSafeArea(.all)
-            
+            ScannerTrackingViewWrapper(
+                onScanned: { food in
+                    isLooking = false
+                    onScanned(food)
+                },
+                onError: { err in
+                    isLooking = false
+                    onError(err)
+                },
+                onLookupStarted: {
+                    isLooking = true
+                }
+            )
+            .edgesIgnoringSafeArea(.all)
+
             // Overlay UI
             VStack {
                 // Top bar
@@ -33,35 +47,58 @@ struct ScannerTrackingViewWithOverlay: View {
                                     .fill(Color.black.opacity(0.5))
                             )
                     }
-                    
+
                     Spacer()
-                    
+
                     Text("Add by Barcode")
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundColor(.white)
-                    
+
                     Spacer()
-                    
+
                     Color.clear
                         .frame(width: 40, height: 40)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 60)
-                
+
                 Spacer()
-                
+
                 // Barcode overlay
                 BarcodeOverlay()
                     .frame(width: 280, height: 180)
-                
+
                 Spacer()
-                
+
                 // Bottom hint
                 Text("Position barcode within the frame")
                     .font(.system(size: 14))
                     .foregroundColor(.white.opacity(0.7))
                     .padding(.bottom, 40)
             }
+
+            if isLooking {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+
+                VStack(spacing: 12) {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.white)
+                        .scaleEffect(1.4)
+                    Text("Looking up…")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.white)
+                }
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.black.opacity(0.7))
+                )
+                .transition(.opacity)
+            }
         }
+        .animation(.easeOut(duration: 0.15), value: isLooking)
     }
 }

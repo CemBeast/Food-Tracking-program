@@ -10,21 +10,27 @@ struct BarcodeTrackingWrapperView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var scannedFood: FoodItem? = nil
     @State private var showEdit = false
+    @State private var lookupError: BarcodeLookupError? = nil
 
     let viewModel: FoodModel
 
     var body: some View {
         ZStack {
-            ScannerTrackingViewWithOverlay { food in
-                scannedFood = food
-                showEdit = true
-            }
+            ScannerTrackingViewWithOverlay(
+                onScanned: { food in
+                    scannedFood = food
+                    showEdit = true
+                },
+                onError: { err in
+                    lookupError = err
+                }
+            )
 
             if let food = scannedFood, showEdit {
                 Color.black.opacity(0.85)
                     .ignoresSafeArea()
                     .transition(.opacity)
-                
+
                 EditFoodItemView(
                     foodItem: food,
                     isAdding: true,
@@ -42,5 +48,23 @@ struct BarcodeTrackingWrapperView: View {
             }
         }
         .animation(.easeOut(duration: 0.25), value: showEdit)
+        .alert(
+            "Couldn't add food",
+            isPresented: Binding(
+                get: { lookupError != nil },
+                set: { if !$0 { lookupError = nil } }
+            ),
+            presenting: lookupError
+        ) { _ in
+            Button("Try again", role: .cancel) {
+                lookupError = nil
+            }
+            Button("Cancel", role: .destructive) {
+                lookupError = nil
+                dismiss()
+            }
+        } message: { err in
+            Text(err.message)
+        }
     }
 }
