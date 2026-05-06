@@ -167,110 +167,110 @@ struct TrackFoodTab: View {
             }
             .buttonStyle(SleekButtonStyle())
 
-            // New ML button that matches the card style
-            Button {
-                showSourceChooser = true
-            } label: {
-                HStack(spacing: 12) {
-                    Image(systemName: "camera.fill")
-                        .font(.system(size: 18))
-                    Text(status)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                }
-            }
-            .buttonStyle(SleekButtonStyle())
-            .confirmationDialog("Track Food", isPresented: $showSourceChooser, titleVisibility: .visible) {
-                if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                    Button("Camera") { showCameraPicker = true }
-                }
-                Button("Photo Library") { showLibraryPicker = true }
-                Button("Cancel", role: .cancel) {}
-            }
-
-            // Preview inside the card (styled like a sub-card)
-            if let img = selectedUIImage {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Selected Photo")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-
-                    Image(uiImage: img)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxHeight: 220)
-                        .cornerRadius(12)
-                }
-                .padding(12)
-                .background(.ultraThinMaterial)
-                .cornerRadius(14)
-            }
-        }
-        // Present camera + library sheets from OUTSIDE the SectionCard content
-        .sheet(isPresented: $showCameraPicker) {
-            ImagePicker(sourceType: .camera) { image in
-                Task { await runPrediction(with: image) }
-            }
-        }
-        .sheet(isPresented: $showLibraryPicker) {
-            ImagePicker(sourceType: .photoLibrary) { image in
-                Task { await runPrediction(with: image) }
-            }
-        }
-        .sheet(isPresented: $showConfirmView) {
-            if let result = pendingPrediction {
-                NavigationStack {
-                    ConfirmFoodNameAndGramsView(result: result) { confirmed in
-                        Task {
-                            do {
-                                let (queryNormalized, choice, macros100g) = try await usda.fetchSurveyMacrosPer100g(query: confirmed.foodName)
-
-                                let factor = confirmed.grams / 100.0
-                                let totalCalories = macros100g.caloriesKcal * factor
-                                let totalProtein  = macros100g.proteinG * factor
-                                let totalCarbs    = macros100g.carbsG * factor
-                                let totalFat      = macros100g.fatG * factor
-
-                                print("✅ USDA Survey match:", choice.description, "|", choice.dataType, "| id:", choice.fdcId)
-                                print("Per 100g:", macros100g)
-                                print("Totals for \(confirmed.grams)g:",
-                                     totalCalories, totalProtein, totalCarbs, totalFat)
-
-                                // Next step: log it
-                                // Build a FoodItem that represents EXACTLY what they ate (already totaled)
-                                let loggedItem = FoodItem(
-                                    name: queryNormalized,
-                                    weightInGrams: max(1, Int(confirmed.grams.rounded())),  // prevent 0
-                                    servings: 1,
-                                    calories: Int(totalCalories.rounded()),
-                                    protein: totalProtein,
-                                    carbs: totalCarbs,
-                                    fats: totalFat,
-                                    servingUnit: .grams,      // adjust to your enum case
-                                    isFavorite: false,
-                                    isMeal: false,
-                                    ingredients: []
-                                )
-
-                                // Log it "as-is" (factor = grams / weightInGrams ≈ 1)
-                                viewModel.logFood(loggedItem,
-                                        gramsOrServings: Double(loggedItem.weightInGrams),
-                                        mode: .weight,
-                                        at: Date())
-                                    
-
-                            } catch {
-                                print("❌ USDA Survey lookup failed:", error.localizedDescription)
-                                // Next step: show a “pick from results” UI
-                            }
-                        }
-                    }
-                }
-            } else {
-                // Safety fallback (shouldn’t happen)
-                Text("No prediction available.")
-                    .padding()
-            }
+            /// New ML button that matches the card style - ML model is not good so we scrap for app launch
+//            Button {
+//                showSourceChooser = true
+//            } label: {
+//                HStack(spacing: 12) {
+//                    Image(systemName: "camera.fill")
+//                        .font(.system(size: 18))
+//                    Text(status)
+//                        .lineLimit(1)
+//                        .minimumScaleFactor(0.85)
+//                }
+//            }
+//            .buttonStyle(SleekButtonStyle())
+//            .confirmationDialog("Track Food", isPresented: $showSourceChooser, titleVisibility: .visible) {
+//                if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//                    Button("Camera") { showCameraPicker = true }
+//                }
+//                Button("Photo Library") { showLibraryPicker = true }
+//                Button("Cancel", role: .cancel) {}
+//            }
+//
+//            // Preview inside the card (styled like a sub-card)
+//            if let img = selectedUIImage {
+//                VStack(alignment: .leading, spacing: 8) {
+//                    Text("Selected Photo")
+//                        .font(.footnote)
+//                        .foregroundStyle(.secondary)
+//
+//                    Image(uiImage: img)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(maxHeight: 220)
+//                        .cornerRadius(12)
+//                }
+//                .padding(12)
+//                .background(.ultraThinMaterial)
+//                .cornerRadius(14)
+//            }
+//        }
+//        // Present camera + library sheets from OUTSIDE the SectionCard content
+//        .sheet(isPresented: $showCameraPicker) {
+//            ImagePicker(sourceType: .camera) { image in
+//                Task { await runPrediction(with: image) }
+//            }
+//        }
+//        .sheet(isPresented: $showLibraryPicker) {
+//            ImagePicker(sourceType: .photoLibrary) { image in
+//                Task { await runPrediction(with: image) }
+//            }
+//        }
+//        .sheet(isPresented: $showConfirmView) {
+//            if let result = pendingPrediction {
+//                NavigationStack {
+//                    ConfirmFoodNameAndGramsView(result: result) { confirmed in
+//                        Task {
+//                            do {
+//                                let (queryNormalized, choice, macros100g) = try await usda.fetchSurveyMacrosPer100g(query: confirmed.foodName)
+//
+//                                let factor = confirmed.grams / 100.0
+//                                let totalCalories = macros100g.caloriesKcal * factor
+//                                let totalProtein  = macros100g.proteinG * factor
+//                                let totalCarbs    = macros100g.carbsG * factor
+//                                let totalFat      = macros100g.fatG * factor
+//
+//                                print("✅ USDA Survey match:", choice.description, "|", choice.dataType, "| id:", choice.fdcId)
+//                                print("Per 100g:", macros100g)
+//                                print("Totals for \(confirmed.grams)g:",
+//                                     totalCalories, totalProtein, totalCarbs, totalFat)
+//
+//                                // Next step: log it
+//                                // Build a FoodItem that represents EXACTLY what they ate (already totaled)
+//                                let loggedItem = FoodItem(
+//                                    name: queryNormalized,
+//                                    weightInGrams: max(1, Int(confirmed.grams.rounded())),  // prevent 0
+//                                    servings: 1,
+//                                    calories: Int(totalCalories.rounded()),
+//                                    protein: totalProtein,
+//                                    carbs: totalCarbs,
+//                                    fats: totalFat,
+//                                    servingUnit: .grams,      // adjust to your enum case
+//                                    isFavorite: false,
+//                                    isMeal: false,
+//                                    ingredients: []
+//                                )
+//
+//                                // Log it "as-is" (factor = grams / weightInGrams ≈ 1)
+//                                viewModel.logFood(loggedItem,
+//                                        gramsOrServings: Double(loggedItem.weightInGrams),
+//                                        mode: .weight,
+//                                        at: Date())
+//                                    
+//
+//                            } catch {
+//                                print("❌ USDA Survey lookup failed:", error.localizedDescription)
+//                                // Next step: show a “pick from results” UI
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {
+//                // Safety fallback (shouldn’t happen)
+//                Text("No prediction available.")
+//                    .padding()
+//            }
         }
     }
     
