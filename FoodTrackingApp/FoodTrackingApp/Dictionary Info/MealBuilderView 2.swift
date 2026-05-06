@@ -51,7 +51,7 @@ struct MealBuilderView: View {
     @State private var selectedMeasurementMode: MeasurementMode?
     @State private var showGramsInput = false
     @State private var gramsOrServings: Double? = nil
-    @State private var showModePicker = false // serrvings or weight
+    @State private var showMeasurementDialog = false
     
     private var totalCalories: Int {
         Int(components.reduce(0) { $0 + $1.calories }.rounded())
@@ -250,37 +250,13 @@ struct MealBuilderView: View {
                         foodModel: foodModel,
                         onFoodSelected: { food in
                             selectedFood = food
-                            showModePicker = true
-                            showGramsInput = false
+                            selectedFoodID = food.id
                             selectedMeasurementMode = nil
+                            showGramsInput = false
+                            showMeasurementDialog = true
                         },
                         readOnly: true
                     )
-                    if showModePicker, let food = selectedFood {
-                        Color.black.opacity(0.2).ignoresSafeArea()
-                            .onTapGesture { showModePicker = false }
-                        VStack(spacing: 12) {
-                            Text("Track \(food.name) by:")
-                                .font(.headline)
-
-                            HStack(spacing: 12) {
-                                Button("Weight") {
-                                    selectedMeasurementMode = .weight
-                                    showModePicker = false
-                                    showGramsInput = true
-                                }
-
-                                Button("Servings") {
-                                    selectedMeasurementMode = .serving
-                                    showModePicker = false
-                                    showGramsInput = true
-                                }
-                            }
-                        }
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(14)
-                    } 
                     if showGramsInput,
                        let food = selectedFood,
                        let mode = selectedMeasurementMode
@@ -303,7 +279,32 @@ struct MealBuilderView: View {
                         selectedFood = nil
                         selectedFoodID = nil
                         selectedMeasurementMode = nil
-                        showModePicker = false
+                    }
+                }
+                .confirmationDialog(
+                    "Track by",
+                    isPresented: $showMeasurementDialog,
+                    titleVisibility: .visible
+                ) {
+                    if let food = selectedFood {
+                        Button(food.servingUnit == .milliliters ? "Volume" : "Weight") {
+                            showMeasurementDialog = false
+                            selectedMeasurementMode = .weight
+                            DispatchQueue.main.async {
+                                    showGramsInput = true
+                        }                        }
+                        Button("Servings") {
+                            showMeasurementDialog = false
+                            selectedMeasurementMode = .serving
+                            DispatchQueue.main.async {
+                                    showGramsInput = true
+                                }                        }
+                        Button("Cancel", role: .cancel) {
+                            showMeasurementDialog = false
+                            selectedFood = nil
+                            selectedFoodID = nil
+                            selectedMeasurementMode = nil
+                        }
                     }
                 }
             }
