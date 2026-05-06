@@ -462,6 +462,13 @@ struct SettingsTab: View {
     }
 }
 
+// MARK: - Scanned tracking pair
+private struct ScannedTracking: Identifiable {
+    let id = UUID()
+    let food: FoodItem
+    let mode: MeasurementMode
+}
+
 // MARK: - Main Menu
 struct MainMenu: View {
     @StateObject private var viewModel = MacroTrackerViewModel()
@@ -482,6 +489,8 @@ struct MainMenu: View {
     
     @State private var scannedItem: FoodItem? = nil
     @State private var showScannerTracking = false
+    @State private var showScannedTrackByDialog = false
+    @State private var scannedTracking: ScannedTracking? = nil
     @State private var showEditGoals = false
     
     @State private var showingClearDailyMacrosAlert = false
@@ -604,24 +613,44 @@ struct MainMenu: View {
                 ScannerViewForTracking { item in
                     showScannerTracking = false
                     scannedItem = item
+                    showScannedTrackByDialog = true
                 }
             }
-            .sheet(item: $scannedItem) { food in
+            .confirmationDialog(
+                "Track by",
+                isPresented: $showScannedTrackByDialog,
+                titleVisibility: .visible,
+                presenting: scannedItem
+            ) { food in
+                Button(food.servingUnit == .milliliters ? "Volume" : "Weight") {
+                    scannedTracking = ScannedTracking(food: food, mode: .weight)
+                    scannedItem = nil
+                }
+                Button("Servings") {
+                    scannedTracking = ScannedTracking(food: food, mode: .serving)
+                    scannedItem = nil
+                }
+                Button("Cancel", role: .cancel) {
+                    scannedItem = nil
+                }
+            }
+            .sheet(item: $scannedTracking) { pair in
                 GramsOrServingsInput(
-                    food: food,
-                    mode: food.servingUnit == .grams ? .weight : .serving,
+                    food: pair.food,
+                    mode: pair.mode,
                     gramsOrServings: $gramsOrServings,
                     showGramsInput: .constant(true),
                     currentMacros: (viewModel.calories, viewModel.protein, viewModel.carbs, viewModel.fats),
                     updateMacros: { _, _, _, _ in
                         let actualQuantity = gramsOrServings ?? 0.0
                         viewModel.logFood(
-                            food,
+                            pair.food,
                             gramsOrServings: actualQuantity,
-                            mode: food.servingUnit == .grams ? .weight : .serving,
+                            mode: pair.mode,
                             at: Date()
                         )
-                        scannedItem = nil
+                        scannedTracking = nil
+                        gramsOrServings = nil
                     }
                 )
             }
