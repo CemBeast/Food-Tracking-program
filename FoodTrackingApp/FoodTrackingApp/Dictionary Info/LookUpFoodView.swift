@@ -19,7 +19,7 @@ enum LookupMode: String, CaseIterable, Identifiable {
     case foundation = "Basic" // USDA Foudnational
     case survey = "Everyday" // USDA Survery
     case brands = "Brands" // USDA Brands
-    case fastFood = "Fast Food" // in progress
+    // case fastFood = "Fast Food" // in progress
     
     // I think we should switch it to Basic, Everyday, Brands, with the info button explaining each
     var id: String { rawValue }
@@ -49,7 +49,7 @@ struct LookUpFoodView: View {
         case .foundation: return "Search Whole Foods…"
         case .brands: return "Search Brands"
         case .survey: return "Search Common Foods…"
-        case .fastFood: return "Search Fast Food"
+        // case .fastFood: return "Search Fast Food"
         }
     }
     
@@ -220,7 +220,7 @@ struct LookUpFoodView: View {
                 case .foundation: scope = .foundation
                 case .brands:  scope = .branded
                 case .survey: scope = .survey
-                case .fastFood:
+                // case .fastFood:
                     // later
                     await MainActor.run { isLoading = false }
                     return
@@ -326,7 +326,7 @@ private struct ModeInfoPopover: View {
                 row(title: "Basic", desc: "Basic includes whole foods or raw foods. Use this for ingredients or generic foods.")
                 row(title: "Everyday", desc: "Typical foods that you may find anywhere. Includes foods that consist of multiple ingredients.")
                 row(title: "Brands", desc: "Foods from name brands. Use this if you are searching for a specific brands food.")
-                row(title: "Fast Food", desc: "Fast Food - work in progress right now.")
+                // row(title: "Fast Food", desc: "Fast Food - work in progress right now.")
 
             }
             Text("Tip: Start with Everyday for most foods.")

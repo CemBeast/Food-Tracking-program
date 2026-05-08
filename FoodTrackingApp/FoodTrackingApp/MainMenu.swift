@@ -46,68 +46,70 @@ struct FoodDictionaryTab: View {
     @Binding var pendingAction: (() -> Void)?
 
     var body: some View {
-        SectionCard(title: "Food Dictionary") {
-            Button {
-                showManual = true
-            } label: {
-                HStack(spacing: 12) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 18))
-                    Text("Add Food Manually")
+        VStack(spacing: 24) {
+            SectionCard(title: "Food Dictionary") {
+                Button {
+                    showManual = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 18))
+                        Text("Add Food Manually")
+                    }
                 }
-            }
-            .buttonStyle(SleekButtonStyle())
-            
-            Button {
-                showScanner = true
-            } label: {
-                HStack(spacing: 12) {
-                    Image(systemName: "barcode.viewfinder")
-                        .font(.system(size: 18))
-                    Text("Add Food by Barcode")
+                .buttonStyle(SleekButtonStyle())
+
+                Button {
+                    showScanner = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "barcode.viewfinder")
+                            .font(.system(size: 18))
+                        Text("Add Food by Barcode")
+                    }
                 }
-            }
-            .buttonStyle(SleekButtonStyle())
-            
-            Button {
-                showMealBuilder = true
-            } label: {
-                HStack(spacing: 12) {
-                    Image(systemName: "square.stack.3d.up.fill")
-                        .font(.system(size: 18))
-                    Text("Create a Meal")
+                .buttonStyle(SleekButtonStyle())
+
+                Button {
+                    showMealBuilder = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "square.stack.3d.up.fill")
+                            .font(.system(size: 18))
+                        Text("Create a Meal")
+                    }
                 }
-            }
-            .buttonStyle(SleekButtonStyle())
-            
-            Button {
-                showFoodLookUp = true
-            } label: {
-                HStack(spacing: 12) {
-                    Image(systemName: "magnifyingglass.circle.fill")
-                        .font(.system(size: 18))
-                    Text("Look Up Food to Add")
+                .buttonStyle(SleekButtonStyle())
+
+                Button {
+                    showFoodLookUp = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "magnifyingglass.circle.fill")
+                            .font(.system(size: 18))
+                        Text("Look Up Food to Add")
+                    }
                 }
-            }
-            .buttonStyle(SleekButtonStyle())
-            
-            NavigationLink(destination:
-                DictionaryView(
-                    selectedFood: $selectedFood,
-                    showGramsInput: $showGramsInput,
-                    selectedFoodID: $selectedFoodID,
-                    selectedMeasurementMode: $selectedMeasurementMode,
-                    foodModel: foodModel,
-                    readOnly: true
-                )
-            ) {
-                HStack(spacing: 12) {
-                    Image(systemName: "book.fill")
-                        .font(.system(size: 18))
-                Text("View Food Dictionary")
+                .buttonStyle(SleekButtonStyle())
+
+                NavigationLink(destination:
+                    DictionaryView(
+                        selectedFood: $selectedFood,
+                        showGramsInput: $showGramsInput,
+                        selectedFoodID: $selectedFoodID,
+                        selectedMeasurementMode: $selectedMeasurementMode,
+                        foodModel: foodModel,
+                        readOnly: true
+                    )
+                ) {
+                    HStack(spacing: 12) {
+                        Image(systemName: "book.fill")
+                            .font(.system(size: 18))
+                        Text("View Food Dictionary")
+                    }
                 }
+                .buttonStyle(SleekButtonStyle())
             }
-            .buttonStyle(SleekButtonStyle())
         }
     }
 }
@@ -132,8 +134,9 @@ struct TrackFoodTab: View {
     private let usda = USDANutritionService()
 
     var body: some View {
-        SectionCard(title: "Track Food") {
-            
+        VStack(spacing: 24) {
+            SectionCard(title: "Track Food") {
+
             Button {
                 showScannerTracking = true
             } label: {
@@ -271,9 +274,10 @@ struct TrackFoodTab: View {
 //                Text("No prediction available.")
 //                    .padding()
 //            }
+            }
         }
     }
-    
+
     // ML Model prediction function
     private func runPrediction(with uiImage: UIImage) async {
         do {
@@ -524,62 +528,74 @@ struct MainMenu: View {
                 
                 // Tab View
                 TabView {
-                    FoodDictionaryTab(
-                        showManual: $showManual,
-                        showScanner: $showScanner,
-                        showMealBuilder: $showMealBuilder,
-                        showFoodLookUp: $showFoodLookUp,
-                        selectedFood: $selectedFood,
-                        selectedFoodID: $selectedFoodID,
-                        showGramsInput: $showGramsInput,
-                        selectedMeasurementMode: $selectedMeasurementMode,
-                        foodModel: foodModel,
-                        showDietPrompt: $showDietPrompt,
-                        pendingAction: $pendingAction)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
+                    ScrollView(showsIndicators: false) {
+                        FoodDictionaryTab(
+                            showManual: $showManual,
+                            showScanner: $showScanner,
+                            showMealBuilder: $showMealBuilder,
+                            showFoodLookUp: $showFoodLookUp,
+                            selectedFood: $selectedFood,
+                            selectedFoodID: $selectedFoodID,
+                            showGramsInput: $showGramsInput,
+                            selectedMeasurementMode: $selectedMeasurementMode,
+                            foodModel: foodModel,
+                            showDietPrompt: $showDietPrompt,
+                            pendingAction: $pendingAction)
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
+                        .frame(maxWidth: .infinity, alignment: .top)
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Dictionary", systemImage: "book.fill")
                     }
 
-                    TrackFoodTab(
-                        viewModel: viewModel,
-                        showFoodSelection: $showFoodSelection,
-                        showScannerTracking: $showScannerTracking,
-                        showQuickTracking: $showQuickTracking
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
+                    ScrollView(showsIndicators: false) {
+                        TrackFoodTab(
+                            viewModel: viewModel,
+                            showFoodSelection: $showFoodSelection,
+                            showScannerTracking: $showScannerTracking,
+                            showQuickTracking: $showQuickTracking
+                        )
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
+                        .frame(maxWidth: .infinity, alignment: .top)
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Track", systemImage: "fork.knife")
                     }
 
-                    HistoryTab(
-                        viewModel: viewModel,
-                        showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
-                        showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
+                    ScrollView(showsIndicators: false) {
+                        HistoryTab(
+                            viewModel: viewModel,
+                            showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
+                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
+                        )
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
+                        .frame(maxWidth: .infinity, alignment: .top)
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("History", systemImage: "clock.arrow.circlepath")
                     }
 
-                    SettingsTab(
-                        viewModel: viewModel,
-                        foodModel: foodModel,
-                        showEditGoals: $showEditGoals,
-                        showGoalWizard: $showGoalWizard
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
+                    ScrollView(showsIndicators: false) {
+                        SettingsTab(
+                            viewModel: viewModel,
+                            foodModel: foodModel,
+                            showEditGoals: $showEditGoals,
+                            showGoalWizard: $showGoalWizard
+                        )
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
+                        .frame(maxWidth: .infinity, alignment: .top)
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")

@@ -138,7 +138,7 @@ struct IngredientsView: View {
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 selectedIngredient = ing
-                                editedQuantity = String(format: "%.1f", ing.quantity)
+                                editedQuantity = String(format: "%.0f", ing.quantity)
                             }
                     }
                 } else {
@@ -155,45 +155,16 @@ struct IngredientsView: View {
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
         .sheet(isPresented: $showMealWeightEditor) {
-            VStack(spacing: 20) {
-                Text("Edit Meal Weight")
-                    .font(.title3.bold())
-                    .padding(.top, 12)
-
-                Text(meal.name)
-                    .font(.headline)
-
-                TextField("Weight", text: $editedMealWeight)
-                    .keyboardType(.numberPad)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.horizontal)
-                    .onChange(of: editedMealWeight) { newValue in
-                        let filtered = newValue.filter { $0.isNumber }
-                        if filtered != newValue {
-                            editedMealWeight = filtered
-                        }
-                    }
-
-                Text("grams")
-                    .foregroundColor(.secondary)
-
-                Button("Save") {
-                    if let newWeight = Int(editedMealWeight), newWeight > 0 {
-                        updateMealWeight(newWeight)
-                        showMealWeightEditor = false
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-
-                Button("Cancel") {
+            MealWeightEditor(
+                mealName: meal.name,
+                originalWeightInGrams: meal.weightInGrams,
+                weightText: $editedMealWeight,
+                onSave: { newWeight in
+                    updateMealWeight(newWeight)
                     showMealWeightEditor = false
-                }
-                .foregroundColor(.red)
-
-                Spacer()
-            }
-            .padding()
-            .presentationDetents([.medium])
+                },
+                onCancel: { showMealWeightEditor = false }
+            )
         }
     }
     
@@ -220,39 +191,15 @@ struct IngredientsView: View {
     }
     
     private func quantityEditor(for ing: MealIngredient) -> some View {
-        VStack(spacing: 20) {
-            Text("Edit Quantity")
-                .font(.title3.bold())
-                .padding(.top, 12)
-            
-            Text(ing.name)
-                .font(.headline)
-            
-            TextField("Quantity", text: $editedQuantity)
-                .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
-                .padding(.horizontal)
-            
-            Text(ing.mode == .serving ? "servings" : ing.servingUnit.rawValue)
-                .foregroundColor(.secondary)
-            
-            Button("Save") {
-                if let val = Double(editedQuantity), val > 0 {
-                    updateIngredient(ing, newQuantity: val)
-                    selectedIngredient = nil
-                }
-            }
-            .buttonStyle(.borderedProminent)
-            
-            Button("Cancel") {
+        IngredientQuantityEditor(
+            ingredient: ing,
+            quantityText: $editedQuantity,
+            onSave: { newQuantity in
+                updateIngredient(ing, newQuantity: newQuantity)
                 selectedIngredient = nil
-            }
-            .foregroundColor(.red)
-            
-            Spacer()
-        }
-        .padding()
-        .presentationDetents([.medium])
+            },
+            onCancel: { selectedIngredient = nil }
+        )
     }
     
     private func updateIngredient(_ ing: MealIngredient, newQuantity: Double) {
@@ -385,3 +332,330 @@ struct IngredientsView: View {
     }
 }
 
+// MARK: - Ingredient quantity editor
+
+/// Professional quantity-edit sheet for a single ingredient.
+///
+/// Mirrors the visual language of `GramsOrServingsInput`: a large bold
+/// centered numeric field, a live "Nutrition Preview" of the recalculated
+/// macros, and a sleek primary save button matching the rest of the app.
+private struct IngredientQuantityEditor: View {
+    let ingredient: MealIngredient
+    @Binding var quantityText: String
+    let onSave: (Double) -> Void
+    let onCancel: () -> Void
+
+    @FocusState private var isFocused: Bool
+
+    private var parsedQuantity: Double { Double(quantityText) ?? 0 }
+    private var canSave: Bool { parsedQuantity > 0 }
+
+    private var unitLabel: String {
+        ingredient.mode == .serving ? "srv" : ingredient.servingUnit.rawValue
+    }
+
+    private var subtitle: String {
+        ingredient.mode == .serving ? "Servings" : "Quantity"
+    }
+
+    private var headerIcon: String {
+        ingredient.mode == .serving ? "fork.knife" : "scalemass.fill"
+    }
+
+    // Live macro recomputation as the user types.
+    private var liveRatio: Double {
+        let divisor: Double
+        switch ingredient.mode {
+        case .serving: divisor = Double(max(ingredient.baseServings, 1))
+        case .weight:  divisor = Double(max(ingredient.baseWeightInGrams, 1))
+        }
+        guard divisor > 0 else { return 0 }
+        return parsedQuantity / divisor
+    }
+    private var liveCalories: Int { Int((Double(ingredient.calories) * liveRatio).rounded()) }
+    private var liveProtein: Double { ingredient.protein * liveRatio }
+    private var liveCarbs:   Double { ingredient.carbs   * liveRatio }
+    private var liveFats:    Double { ingredient.fats    * liveRatio }
+
+    var body: some View {
+        ZStack {
+            AppTheme.background.ignoresSafeArea()
+
+            VStack(spacing: 24) {
+                EditorHeader(
+                    icon: headerIcon,
+                    accent: AppTheme.calorieColor,
+                    title: "Edit Quantity",
+                    subtitle: ingredient.name
+                )
+
+                LargeNumberField(
+                    text: $quantityText,
+                    unit: unitLabel,
+                    placeholder: "0",
+                    caption: subtitle,
+                    keyboard: .decimalPad,
+                    isFocused: $isFocused
+                )
+
+                NutritionPreview(
+                    calories: liveCalories,
+                    protein: liveProtein,
+                    carbs: liveCarbs,
+                    fats: liveFats
+                )
+
+                Spacer(minLength: 0)
+
+                EditorActions(
+                    saveTitle: "Save Changes",
+                    canSave: canSave,
+                    onSave: { onSave(parsedQuantity) },
+                    onCancel: onCancel
+                )
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 28)
+            .padding(.bottom, 20)
+        }
+        .presentationDetents([.medium])
+        .presentationDragIndicator(.visible)
+        .task { isFocused = true }
+    }
+}
+
+// MARK: - Meal weight editor
+
+/// Professional weight-edit sheet for the parent meal. Same chrome as the
+/// ingredient editor, but with a delta-aware caption that tells the user how
+/// much the new value moves the meal versus its current weight.
+private struct MealWeightEditor: View {
+    let mealName: String
+    let originalWeightInGrams: Int
+    @Binding var weightText: String
+    let onSave: (Int) -> Void
+    let onCancel: () -> Void
+
+    @FocusState private var isFocused: Bool
+
+    private var parsedWeight: Int? {
+        guard let n = Int(weightText), n > 0 else { return nil }
+        return n
+    }
+    private var canSave: Bool { parsedWeight != nil }
+
+    private var deltaCaption: String {
+        guard let new = parsedWeight else {
+            return "Enter the meal's total weight in grams."
+        }
+        let delta = new - originalWeightInGrams
+        if delta == 0 { return "Same as the current weight." }
+        let direction = delta > 0 ? "heavier" : "lighter"
+        return "\(abs(delta)) g \(direction) than the current \(originalWeightInGrams) g."
+    }
+
+    var body: some View {
+        ZStack {
+            AppTheme.background.ignoresSafeArea()
+
+            VStack(spacing: 24) {
+                EditorHeader(
+                    icon: "scalemass.fill",
+                    accent: AppTheme.textPrimary,
+                    title: "Edit Meal Weight",
+                    subtitle: mealName
+                )
+
+                LargeNumberField(
+                    text: $weightText,
+                    unit: "g",
+                    placeholder: "0",
+                    caption: "Total weight",
+                    keyboard: .numberPad,
+                    isFocused: $isFocused
+                )
+                .onChange(of: weightText) { newValue in
+                    // Strip any non-digit characters defensively (number pad
+                    // can still receive paste/dictation input).
+                    let filtered = newValue.filter(\.isNumber)
+                    if filtered != newValue { weightText = filtered }
+                }
+
+                Text(deltaCaption)
+                    .font(.system(size: 13))
+                    .foregroundColor(AppTheme.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+
+                Spacer(minLength: 0)
+
+                EditorActions(
+                    saveTitle: "Save Weight",
+                    canSave: canSave,
+                    onSave: {
+                        if let new = parsedWeight { onSave(new) }
+                    },
+                    onCancel: onCancel
+                )
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 28)
+            .padding(.bottom, 20)
+        }
+        .presentationDetents([.medium])
+        .presentationDragIndicator(.visible)
+        .task { isFocused = true }
+    }
+}
+
+// MARK: - Shared editor chrome
+
+/// Icon badge + title + subtitle stacked at the top of an editor sheet.
+private struct EditorHeader: View {
+    let icon: String
+    let accent: Color
+    let title: String
+    let subtitle: String
+
+    var body: some View {
+        VStack(spacing: 14) {
+            ZStack {
+                Circle()
+                    .fill(accent.opacity(0.15))
+                    .frame(width: 56, height: 56)
+                Image(systemName: icon)
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundColor(accent)
+            }
+
+            VStack(spacing: 4) {
+                Text(title)
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(AppTheme.textPrimary)
+                Text(subtitle)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(AppTheme.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
+        }
+    }
+}
+
+/// The bold centered numeric input used by both editors.
+private struct LargeNumberField: View {
+    @Binding var text: String
+    let unit: String
+    let placeholder: String
+    let caption: String
+    let keyboard: UIKeyboardType
+    @FocusState.Binding var isFocused: Bool
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Text(caption.uppercased())
+                .font(.system(size: 11, weight: .semibold))
+                .tracking(1.2)
+                .foregroundColor(AppTheme.textTertiary)
+
+            HStack(alignment: .firstTextBaseline, spacing: 10) {
+                TextField(placeholder, text: $text)
+                    .keyboardType(keyboard)
+                    .focused($isFocused)
+                    .multilineTextAlignment(.trailing)
+                    .font(.system(size: 44, weight: .bold, design: .rounded))
+                    .foregroundColor(AppTheme.textPrimary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+
+                Text(unit)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(AppTheme.textTertiary)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 18)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(AppTheme.cardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(
+                                isFocused ? AppTheme.accent.opacity(0.35) : AppTheme.border,
+                                lineWidth: 1
+                            )
+                    )
+            )
+            .animation(.easeOut(duration: 0.15), value: isFocused)
+        }
+    }
+}
+
+/// Inline live preview of macros while the user types a new quantity.
+private struct NutritionPreview: View {
+    let calories: Int
+    let protein: Double
+    let carbs: Double
+    let fats: Double
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Text("Nutrition Preview".uppercased())
+                .font(.system(size: 11, weight: .semibold))
+                .tracking(1.2)
+                .foregroundColor(AppTheme.textTertiary)
+
+            HStack(spacing: 10) {
+                MacroPill(value: "\(calories)",
+                          label: "cal",
+                          color: AppTheme.calorieColor)
+                MacroPill(value: String(format: "%.0f", protein),
+                          label: "P",
+                          color: AppTheme.proteinColor)
+                MacroPill(value: String(format: "%.0f", carbs),
+                          label: "C",
+                          color: AppTheme.carbColor)
+                MacroPill(value: String(format: "%.0f", fats),
+                          label: "F",
+                          color: AppTheme.fatColor)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+        .padding(.horizontal, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color.white.opacity(0.04))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(AppTheme.border, lineWidth: 1)
+                )
+        )
+    }
+}
+
+/// Save / cancel button stack used at the bottom of every editor sheet.
+private struct EditorActions: View {
+    let saveTitle: String
+    let canSave: Bool
+    let onSave: () -> Void
+    let onCancel: () -> Void
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Button(action: onSave) {
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 17))
+                    Text(saveTitle)
+                }
+            }
+            .buttonStyle(SleekButtonStyle())
+            .disabled(!canSave)
+            .opacity(canSave ? 1.0 : 0.5)
+
+            Button("Cancel", action: onCancel)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(AppTheme.textSecondary)
+                .padding(.top, 2)
+        }
+    }
+}
