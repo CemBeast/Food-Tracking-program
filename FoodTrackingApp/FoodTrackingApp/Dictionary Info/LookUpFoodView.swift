@@ -29,6 +29,7 @@ struct LookUpFoodView: View {
     @ObservedObject var foodModel: FoodModel
     
     @State private var searchText: String = ""
+    @State private var lastSubmittedQuery: String = ""
     @State private var debugOutput = "Type something and press Search…"
     @State private var isLoading: Bool = false
     @State private var showConfirmSheet: Bool = false
@@ -58,6 +59,11 @@ struct LookUpFoodView: View {
             VStack(alignment: .leading, spacing: 12) {
                 SearchBar(text: $searchText, placeholder: placeholder, onSubmit: {runUSDASearch()},  showsSearchButton: true)
                 modeChips
+                    .onChange(of: mode) { _ in
+                        let q = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+                        guard !q.isEmpty, q == lastSubmittedQuery else { return }
+                        runUSDASearch()
+                    }
                 if isLoading {
                     ProgressView("Searching...")
                         .padding(.horizontal, 20)
@@ -207,23 +213,20 @@ struct LookUpFoodView: View {
         }
         
         isLoading = true
+        lastSubmittedQuery = q
         debugOutput = "Searching for: \"\(q)\" ..."
-        
+
         Task {
             do {
                 let q = q.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !q.isEmpty else { return }
                 
-                // 1) Decide scope (or return for fastFood)
+                // 1) Decide scope
                 let scope: USDASearchScope
                 switch mode {
                 case .foundation: scope = .foundation
                 case .brands:  scope = .branded
                 case .survey: scope = .survey
-                // case .fastFood:
-                    // later
-                    await MainActor.run { isLoading = false }
-                    return
                 }
 
                 // 2) Fetch once
