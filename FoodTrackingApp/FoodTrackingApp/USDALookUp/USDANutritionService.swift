@@ -10,9 +10,9 @@ import Foundation
 // MARK: - Public types
 
 enum USDASearchScope {
-    case foundation     // Foundation
+    case standard    // SR Legacy → Foundation fallback (whole/raw foods)
     case branded     // Branded
-    case survey     // Survey (FNDDS)
+    case survey      // Survey (FNDDS)
 }
 
 struct MacrosPer100g {
@@ -56,47 +56,36 @@ final class USDANutritionService {
     /// Parameters: given a raw query and the scope of the searcy, the function normalizes the query and decides which category to search from (survery or brands)
     /// Function then calls searchBestMatch (which returns one USDA food choice)
     /// Then calls fetchMacrosForFood to return the normalized string, the best USDAFoodChoice and that foods macros per 100g
+    /// For .standard scope, tries SR Legacy first then falls back to Foundation; also falls back if a result has kcal==0 with nonzero macros (the lettuce bug).
     func fetchSurveyMacrosPer100g(query rawQuery: String, scope: USDASearchScope = .survey) async throws -> (queryNormalized: String, choice: USDAFoodChoice, macros: MacrosPer100g) {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "USDANutritionService", code: 900,
                           userInfo: [NSLocalizedDescriptionKey: "Missing FDC_API_KEY (check Secrets.xcconfig + Info.plist)."])
         }
 
-        // clean query and select scope
         let queryNormalized = normalizeQuery(rawQuery)
-        let dataTypes: [String]
-            switch scope {
-            case .foundation:
-                dataTypes = ["Foundation"]
-            case .survey:
-                dataTypes = ["Survey (FNDDS)"]
-            case .branded:
-                dataTypes = ["Branded"]
-        }
+        let chain = dataTypeChain(for: scope)
 
-
-        if let choice = try await searchBestMatch(query: queryNormalized, dataTypes: dataTypes) {
+        for (i, dataType) in chain.enumerated() {
+            guard let choice = try await searchBestMatch(query: queryNormalized, dataTypes: [dataType]) else {
+                continue
+            }
             let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
+            // Foundation sometimes returns kcal==0 while protein/carbs/fat are populated; skip it if a fallback exists.
+            if isLikelyMissingKcal(macros) && i < chain.count - 1 {
+                continue
+            }
             return (queryNormalized, choice, macros)
         }
-        
-        let scopeName: String
-        switch scope {
-            case .survey:
-                scopeName = "Survey (FNDDS)"
-            case .foundation:
-                scopeName = "Foundation"
-            case .branded:
-                scopeName = "Branded"
-        }
-        
+
         throw NSError(domain: "USDANutritionService", code: 404,
-                      userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
+                      userInfo: [NSLocalizedDescriptionKey: "No \(scopeDisplayName(scope)) results found for: \(queryNormalized)"])
     }
     
     /// Same as fetchSurveryMacros100g but returns an array instead
     /// Takes raw query and scope to call searchTopMatches to return the top 5
     /// Public func to Return top N choices in USDA FoodChoice (no macros ). Uses the same scoring.
+    /// For .standard scope, tries SR Legacy first then falls back to Foundation if no results.
     func searchTopChoices(
         query rawQuery: String,
         scope: USDASearchScope = .survey,
@@ -110,31 +99,15 @@ final class USDANutritionService {
 
         let queryNormalized = normalizeQuery(rawQuery)
 
-        let dataTypes: [String]
-        switch scope {
-        case .survey: dataTypes = ["Survey (FNDDS)"]
-        case .branded: dataTypes = ["Branded"]
-        case .foundation: dataTypes = ["Foundation"]
+        for dataType in dataTypeChain(for: scope) {
+            if let choices = try await searchTopMatches(query: queryNormalized, dataTypes: [dataType], limit: limit),
+               !choices.isEmpty {
+                return (queryNormalized, choices)
+            }
         }
 
-        // 1) Try primary dataTypes
-        if let choices = try await searchTopMatches(query: queryNormalized, dataTypes: dataTypes, limit: limit),
-           !choices.isEmpty {
-            return (queryNormalized, choices)
-        }
-
-        let scopeName: String
-        switch scope {
-            case .survey:
-                scopeName = "Survey (FNDDS)"
-            case .foundation:
-                scopeName = "Foundation"
-            case .branded:
-                scopeName = "Branded"
-        }
-        
         throw NSError(domain: "USDANutritionService", code: 404,
-                      userInfo: [NSLocalizedDescriptionKey: "No \(scopeName) results found for: \(queryNormalized)"])
+                      userInfo: [NSLocalizedDescriptionKey: "No \(scopeDisplayName(scope)) results found for: \(queryNormalized)"])
     }
     
     // public function to access the food macros for an already retrieved food
@@ -259,6 +232,28 @@ final class USDANutritionService {
     }
 
     // MARK: - Helpers
+
+    private func dataTypeChain(for scope: USDASearchScope) -> [String] {
+        switch scope {
+        case .standard: return ["SR Legacy", "Foundation"]
+        case .branded: return ["Branded"]
+        case .survey: return ["Survey (FNDDS)"]
+        }
+    }
+
+    private func scopeDisplayName(_ scope: USDASearchScope) -> String {
+        switch scope {
+        case .standard: return "Standard (SR Legacy/Foundation)"
+        case .branded: return "Branded"
+        case .survey: return "Survey (FNDDS)"
+        }
+    }
+
+    // Foundation occasionally returns kcal==0 with nonzero protein/carbs/fat (no Atwater calc).
+    // Treat that as bad data so callers can fall back to the next source.
+    private func isLikelyMissingKcal(_ m: MacrosPer100g) -> Bool {
+        return m.caloriesKcal == 0 && (m.proteinG > 0 || m.carbsG > 0 || m.fatG > 0)
+    }
 
     private func normalizeQuery(_ s: String) -> String {
         s.lowercased()

@@ -52,20 +52,23 @@ class FoodModel: ObservableObject {
         print("🧹 Cleared user food dictionary.")
     }
 
-    /// Merge newer bundled defaults into the user's dictionary without overwriting user edits.
-    /// - Only adds missing items.
-    /// - Matches by `id` first, then by case-insensitive name for non-meals.
+    /// Reseed the dictionary from bundled defaults when the bundled version advances.
+    /// v2 wipes the entire user dictionary (including meals) and replaces it with the bundled set.
+    /// Earlier versions only added missing items.
     private func mergeBundledDefaultsIfNeeded() {
         let lastMerged = UserDefaults.standard.integer(forKey: defaultsMergedVersionKey)
         guard lastMerged < bundledDefaultsVersion else { return }
 
         let bundled = loadDefaultFoodItems(from: bundledDefaultsFileName)
-        let didChange = mergeDefaultsAddMissing(bundled)
-        if didChange {
-            save()
+        guard !bundled.isEmpty else {
+            print("⚠️ Bundled defaults empty, skipping reseed (was v\(lastMerged))")
+            return
         }
+
+        items = bundled
+        save()
         UserDefaults.standard.set(bundledDefaultsVersion, forKey: defaultsMergedVersionKey)
-        print("✅ Merged bundled defaults v\(bundledDefaultsVersion) (was v\(lastMerged))")
+        print("♻️ Wiped and reseeded bundled defaults v\(bundledDefaultsVersion) (was v\(lastMerged)) — \(bundled.count) items")
     }
 
     private func mergeDefaultsAddMissing(_ defaults: [FoodItem]) -> Bool {

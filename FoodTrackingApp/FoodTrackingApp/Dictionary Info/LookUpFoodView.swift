@@ -224,7 +224,7 @@ struct LookUpFoodView: View {
                 // 1) Decide scope
                 let scope: USDASearchScope
                 switch mode {
-                case .foundation: scope = .foundation
+                case .foundation: scope = .standard
                 case .brands:  scope = .branded
                 case .survey: scope = .survey
                 }
