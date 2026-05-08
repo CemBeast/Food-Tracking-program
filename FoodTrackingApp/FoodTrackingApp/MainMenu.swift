@@ -387,6 +387,7 @@ struct SettingsTab: View {
     @ObservedObject var foodModel: FoodModel
     @Binding var showEditGoals: Bool
     @Binding var showGoalWizard: Bool
+    @Binding var showTipsAndTricks: Bool
 
     var body: some View {
         VStack(spacing: 24) {
@@ -422,7 +423,21 @@ struct SettingsTab: View {
                     )
                 }
             }
-            
+
+            // Help Section
+            SectionCard(title: "Help") {
+                Button {
+                    showTipsAndTricks = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 18))
+                        Text("Tips & Tricks")
+                    }
+                }
+                .buttonStyle(SleekButtonStyle())
+            }
+
             // Developer Section (collapsed)
             DisclosureGroup {
                 VStack(spacing: 10) {
@@ -520,6 +535,11 @@ struct MainMenu: View {
     // State to toggle look up food view
     @State private var showFoodLookUp = false
 
+    // Tips & Tricks: shown automatically on the very first launch,
+    // also openable any time from Settings.
+    @AppStorage("hasSeenTipsAndTricks") private var hasSeenTipsAndTricks = false
+    @State private var showTipsAndTricks = false
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -589,7 +609,8 @@ struct MainMenu: View {
                         viewModel: viewModel,
                         foodModel: foodModel,
                         showEditGoals: $showEditGoals,
-                        showGoalWizard: $showGoalWizard
+                        showGoalWizard: $showGoalWizard,
+                        showTipsAndTricks: $showTipsAndTricks
                     )
                     .padding(.horizontal, 20)
                     .padding(.top, 20)
@@ -604,7 +625,9 @@ struct MainMenu: View {
             .setupNavigationAppearance()
             .setupTabBarAppearance()
             .onAppear {
-                if viewModel.caloriesGoal == 0 &&
+                if !hasSeenTipsAndTricks {
+                    showTipsAndTricks = true
+                } else if viewModel.caloriesGoal == 0 &&
                    viewModel.proteinGoal == 0 &&
                    viewModel.carbGoal == 0 &&
                    viewModel.fatGoal == 0 {
@@ -730,6 +753,19 @@ struct MainMenu: View {
                     showGoalWizard: $showGoalWizard,
                     viewModel: viewModel
                 )
+            }
+            .sheet(isPresented: $showTipsAndTricks, onDismiss: {
+                let wasFirstLaunch = !hasSeenTipsAndTricks
+                hasSeenTipsAndTricks = true
+                if wasFirstLaunch &&
+                   viewModel.caloriesGoal == 0 &&
+                   viewModel.proteinGoal == 0 &&
+                   viewModel.carbGoal == 0 &&
+                   viewModel.fatGoal == 0 {
+                    showInitialGoalPrompt = true
+                }
+            }) {
+                TipsAndTricksView()
             }
             .sheet(isPresented: $showGoalWizard) {
                 MacroGoalWizardView(
