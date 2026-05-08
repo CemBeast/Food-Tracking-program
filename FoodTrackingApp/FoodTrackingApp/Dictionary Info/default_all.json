@@ -638,6 +638,17 @@
     "servingUnit": "g"
   },
   {
+    "id": "FBD7DB7E-2DB5-45DA-BB65-509F05739CBB",
+    "name": "Egg",
+    "weightInGrams": 50,
+    "servings": 1,
+    "calories": 72,
+    "protein": 6,
+    "carbs": 0.4,
+    "fats": 5,
+    "servingUnit": "g"
+  },
+  {
     "id": "41538736-BFE3-506B-8F58-54ED58F92CED",
     "name": "Egg Whites, Raw",
     "weightInGrams": 100,

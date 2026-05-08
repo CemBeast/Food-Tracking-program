@@ -220,12 +220,6 @@ struct IngredientsView: View {
             meal.weightInGrams = Int(newTotals.weight.rounded())
             
             self.meal = meal
-            
-            // Save to food model
-            if let index = foodModel.items.firstIndex(where: { $0.id == mealId }) {
-                foodModel.items[index] = meal
-                foodModel.save()
-            }
         }
     }
     
@@ -275,10 +269,6 @@ struct IngredientsView: View {
         guard var meal = meal else { return }
         meal.weightInGrams = newWeight
         self.meal = meal
-        if let index = foodModel.items.firstIndex(where: { $0.id == mealId }) {
-            foodModel.items[index] = meal
-            foodModel.save()
-        }
     }
     
     private func ingredientWeight(_ ing: MealIngredient) -> Double {

@@ -9,7 +9,7 @@ import Foundation
 
 let foodDictionaryFileName = "user_foods.json"
 let bundledDefaultsFileName = "default_all"
-let bundledDefaultsVersion = 2
+let bundledDefaultsVersion = 3
 let defaultsMergedVersionKey = "defaults_merged_version"
 
 func getDocumentsDirectory() -> URL {
