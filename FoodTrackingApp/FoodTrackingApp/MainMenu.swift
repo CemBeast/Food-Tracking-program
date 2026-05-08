@@ -9,6 +9,12 @@ import CoreML
 import PhotosUI
 import UIKit
 
+// Shared minimum content height so every tab claims the same vertical space
+// as the Food Dictionary tab (the tallest, with 5 buttons). This makes
+// SwiftUI lay out all four tabs identically — same top spacing, same
+// compression behavior — instead of giving shorter tabs more breathing room.
+fileprivate let tabContentMinHeight: CGFloat = 340
+
 // MARK: - Section Card (Updated)
 struct SectionCard<Content: View>: View {
     let title: String
@@ -111,6 +117,7 @@ struct FoodDictionaryTab: View {
                 .buttonStyle(SleekButtonStyle())
             }
         }
+        .frame(minHeight: tabContentMinHeight, alignment: .top)
     }
 }
 
@@ -276,6 +283,7 @@ struct TrackFoodTab: View {
 //            }
             }
         }
+        .frame(minHeight: tabContentMinHeight, alignment: .top)
     }
 
     // ML Model prediction function
@@ -369,6 +377,7 @@ struct HistoryTab: View {
                 }
             }
         }
+        .frame(minHeight: tabContentMinHeight, alignment: .top)
     }
 }
 
@@ -463,6 +472,7 @@ struct SettingsTab: View {
             .accentColor(AppTheme.textTertiary)
             .padding(.horizontal, 4)
         }
+        .frame(minHeight: tabContentMinHeight, alignment: .top)
     }
 }
 
@@ -528,74 +538,62 @@ struct MainMenu: View {
                 
                 // Tab View
                 TabView {
-                    ScrollView(showsIndicators: false) {
-                        FoodDictionaryTab(
-                            showManual: $showManual,
-                            showScanner: $showScanner,
-                            showMealBuilder: $showMealBuilder,
-                            showFoodLookUp: $showFoodLookUp,
-                            selectedFood: $selectedFood,
-                            selectedFoodID: $selectedFoodID,
-                            showGramsInput: $showGramsInput,
-                            selectedMeasurementMode: $selectedMeasurementMode,
-                            foodModel: foodModel,
-                            showDietPrompt: $showDietPrompt,
-                            pendingAction: $pendingAction)
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                        .frame(maxWidth: .infinity, alignment: .top)
-                    }
+                    FoodDictionaryTab(
+                        showManual: $showManual,
+                        showScanner: $showScanner,
+                        showMealBuilder: $showMealBuilder,
+                        showFoodLookUp: $showFoodLookUp,
+                        selectedFood: $selectedFood,
+                        selectedFoodID: $selectedFoodID,
+                        showGramsInput: $showGramsInput,
+                        selectedMeasurementMode: $selectedMeasurementMode,
+                        foodModel: foodModel,
+                        showDietPrompt: $showDietPrompt,
+                        pendingAction: $pendingAction)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Dictionary", systemImage: "book.fill")
                     }
 
-                    ScrollView(showsIndicators: false) {
-                        TrackFoodTab(
-                            viewModel: viewModel,
-                            showFoodSelection: $showFoodSelection,
-                            showScannerTracking: $showScannerTracking,
-                            showQuickTracking: $showQuickTracking
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                        .frame(maxWidth: .infinity, alignment: .top)
-                    }
+                    TrackFoodTab(
+                        viewModel: viewModel,
+                        showFoodSelection: $showFoodSelection,
+                        showScannerTracking: $showScannerTracking,
+                        showQuickTracking: $showQuickTracking
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Track", systemImage: "fork.knife")
                     }
 
-                    ScrollView(showsIndicators: false) {
-                        HistoryTab(
-                            viewModel: viewModel,
-                            showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
-                            showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                        .frame(maxWidth: .infinity, alignment: .top)
-                    }
+                    HistoryTab(
+                        viewModel: viewModel,
+                        showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
+                        showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("History", systemImage: "clock.arrow.circlepath")
                     }
 
-                    ScrollView(showsIndicators: false) {
-                        SettingsTab(
-                            viewModel: viewModel,
-                            foodModel: foodModel,
-                            showEditGoals: $showEditGoals,
-                            showGoalWizard: $showGoalWizard
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
-                        .padding(.bottom, 40)
-                        .frame(maxWidth: .infinity, alignment: .top)
-                    }
+                    SettingsTab(
+                        viewModel: viewModel,
+                        foodModel: foodModel,
+                        showEditGoals: $showEditGoals,
+                        showGoalWizard: $showGoalWizard
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .padding(.bottom, 40)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
