@@ -1,212 +1,218 @@
 # Meal Tracker
 
-A comprehensive macro tracking application available in two versions: a legacy C++ implementation and a modern SwiftUI iOS app.
+A macro-tracking application maintained in two implementations:
 
-## Overview
+- **`FoodTrackingApp/`** — SwiftUI iOS app (active, shipping on TestFlight).
+- **`Meal Tracker/`** — Original C++ terminal prototype (frozen, kept for reference).
 
-This repository contains two implementations of the Meal Tracker application:
-
-- **`Meal Tracker/`** - Original C++ version (legacy, fully functional terminal-based tracker)
-- **`FoodTrackingApp/`** - Modern SwiftUI iOS application (active development)
+The iOS app is the supported product. Everything below describes it unless otherwise noted.
 
 ---
 
-## C++ Version (Legacy)
+## FoodTrackingApp (iOS)
 
-The original terminal-based meal tracker implemented in C++. This version is fully functional and was used as the foundation for feature development before transitioning to iOS.
-
-**Status**: Functional but no longer actively maintained. Kept for reference.
-
----
-
-## SwiftUI Version (iOS)
-
-A feature-rich iOS application for tracking daily macronutrients (calories, protein, carbs, and fats) with a beautiful, modern interface.
-
-### Features
-
-#### Core Tracking
-- **Daily Macro Tracking**: Track calories, protein, carbs, and fats with visual ring indicators
-- **Goal Management**: Set custom macro goals manually or use the built-in macro calculator wizard
-- **Overflow Visualization**: See when you exceed your goals with a distinct outer ring indicator
-- **Consumed vs Remaining Toggle**: Tap the display to switch between consumed and remaining macros
-- **History View**: Review past days with daily averages and swipe-to-delete functionality
-
-#### AI-Powered Food Recognition
-- **Photo-Based Recognition**: Snap a photo of your food and let ML identify it from 100+ food classes
-- **Confidence Scoring**: See prediction confidence and edit the food name if needed
-- **USDA Integration**: Automatically searches USDA FoodData Central Survey (FNDDS) database using the predicted food name
-- **Smart Workflow**: Photo → ML prediction → confirm/edit name → enter grams → USDA lookup → track macros
-
-#### Food Dictionary
-- **USDA Database**: Bundled with 300+ common foods from USDA FoodData Central
-- **Live USDA Lookup**: Search the complete USDA FoodData Central database in real-time
-  - Foundation Foods: High-quality reference foods
-  - Survey (FNDDS): Research-grade foods from dietary surveys
-  - Branded Foods: Commercial products and restaurant items
-- **Manual Food Entry**: Add custom foods with full macro information
-- **Barcode Scanner**: Scan product barcodes to add foods automatically
-- **Meal Builder**: Combine multiple foods into reusable meals with automatic macro calculation
-- **Ingredient Editor**: View and edit individual ingredients within saved meals
-- **Favorites System**: Mark frequently used foods for quick access
-- **Smart Search**: Filter by name, calories, favorites, or meals
-
-#### Advanced Tracking
-- **Flexible Serving Sizes**: Track by weight (grams/ml) or servings
-- **Live Macro Preview**: See macros update in real-time as you adjust quantities
-- **Hypothetical Tracking**: View what your totals would be before actually logging
-- **Quick Track**: Rapidly log meals without detailed input
-- **Food Log**: Review everything you've eaten today with edit/delete functionality
-
-#### Meal Management
-- **Weight Adjustment**: Manually adjust meal weight (e.g., after cooking reduces volume)
-- **Ingredient Quantity Editing**: Modify ingredient amounts and see totals recalculate
-- **Persistent Meal Updates**: Changes to meals are saved and reflected in future tracking
-- **Meal History**: View foods eaten on any historical day
+A SwiftUI app for tracking daily calories, protein, carbs, and fats. Foods come from a bundled USDA-derived seed, the live USDA FoodData Central API, manual entry, or barcode scanning. Meals can be composed from multiple foods and logged as a single unit.
 
 ### Requirements
 
-- **iOS**: 16.0+
-- **Xcode**: 15.0+
-- **macOS**: Monterey 12.0+ (for development)
+- iOS 16.0+
+- Xcode 15.0+ / macOS Monterey+
+- A USDA FoodData Central API key (only needed at build time to regenerate bundled defaults, and at runtime for live lookup — see [Configuration](#configuration))
 
-### Installation & Setup
+### TestFlight
 
-#### For Development
-
-1. **Clone the repository**:
-   ```bash
-   cd "/Users/YOUR_USERNAME/Documents"
-   git clone <repository-url> "Meal Tracker code"
-   cd "Meal Tracker code"
-   ```
-
-2. **Open the Xcode project**:
-   ```bash
-   open FoodTrackingApp/FoodTrackingApp.xcodeproj
-   ```
-
-3. **Select your target device** (simulator or connected iPhone) in Xcode
-
-4. **Build and run** (⌘R)
-
-#### For TestFlight Beta
-
-**TestFlight Link**
 https://testflight.apple.com/join/1gzU61Ck
 
-### USDA Food Database
+---
 
-The app includes a bundled default food library sourced from USDA FoodData Central. To regenerate or update the bundled defaults:
+### Features
 
-1. Get a [FoodData Central API key](https://fdc.nal.usda.gov/api-key-signup.html)
+#### Daily tracking
+- Daily totals for calories, protein, carbs, and fats with ringed visual display.
+- Goal overflow renders a distinct outer ring once a target is exceeded.
+- Tap the display to toggle between **consumed** and **remaining** views.
+- Per-food log for the current day, with edit and delete.
+- Automatic midnight rollover. The app re-checks on `UIApplication.didBecomeActiveNotification`, so leaving the app open across days still rolls correctly.
 
-2. Set the API key in your terminal:
-   ```bash
-   export FDC_API_KEY="YOUR_KEY_HERE"
-   ```
+#### Goals
+- Manual goal editor for calories/P/C/F.
+- Macro Goal Wizard: estimates targets from sex, age, height, weight, activity level, and weight-change goal (sedentary → very active; ±2 lb/week range).
+- Initial-goal prompt on first launch with three paths: edit manually, run the wizard, or accept defaults (2000/150/250/70).
 
-3. Run the generator script:
-   ```bash
-   cd "/Users/YOUR_USERNAME/Documents/Meal Tracker code"
-   python3 tools/seed_usda_defaults.py \
-     --queries tools/usda_queries_common.txt \
-     --limit 300 \
-     --data-types "Foundation,SR Legacy" \
-     --mode overwrite \
-     --out "FoodTrackingApp/FoodTrackingApp/default_all.json"
-   ```
+#### Food dictionary
+- Bundled USDA-derived seed (`default_all.json`) installed on first launch.
+- Versioned wipe-and-reseed migration controlled by `bundledDefaultsVersion` in `FoodStorage.swift`. Bumping the version replaces the user's dictionary on next launch (FoodTrackingApp is single-user; preserving local edits across reseeds is intentionally not supported).
+- Manual add/edit/delete for individual foods.
+- Favorites and search filters (name / calories / favorites / meals).
+- Per-food serving unit (grams or milliliters) and per-food serving size.
 
-4. Rebuild the app to use the updated defaults
+#### USDA live lookup
+- Three search scopes exposed as **Basic** (SR Legacy → Foundation fallback), **Everyday** (Survey/FNDDS), and **Brands** (Branded). Implemented in `USDANutritionService.swift`.
+- Top-N results fetched up front; per-result macro previews stream in concurrently via a `TaskGroup` and cache by `fdcId` for the session.
+- Handles the Foundation "kcal=0 with nonzero macros" case (the lettuce bug) by walking the fallback chain when the primary hit looks unusable.
 
-See [`tools/README.md`](tools/README.md) for more details on the generator script, including append/refresh modes and branded food support.
+#### Barcode scanning
+- AVFoundation-based scanner used in two places:
+  - **Dictionary**: scan to add a product to your library.
+  - **Track**: scan to log a product directly to today's totals; a confirmation dialog asks whether to track by weight/volume or by serving.
 
-### Project Structure
+#### Meal builder
+- Compose a meal from multiple dictionary foods. Macros are summed automatically as ingredients and quantities change.
+- Saved meals are first-class dictionary entries: log them like any other food.
+- Ingredients are individually editable after save (quantity changes propagate to the meal totals).
+- Cooked-weight adjustment: override the parent meal's total weight without touching ingredients (e.g., when liquid loss changes the per-gram density of the finished dish).
+
+#### Quick Track
+- One-shot logging of a calorie/macro entry without committing it to the dictionary. Useful for one-off meals you don't want polluting your library.
+
+#### History
+- Per-day history list with daily averages computed across all stored entries.
+- Tap a day to see the foods eaten on that date.
+- Swipe-to-delete on individual history entries; "Clear History" wipes the whole archive.
+
+#### Onboarding
+- Tips & Tricks sheet auto-presented on first launch and reachable any time from Settings. First-launch flow chains into the goal prompt once dismissed.
+
+---
+
+### Architecture
 
 ```
 FoodTrackingApp/
 ├── FoodTrackingApp/
-│   ├── AppAndTheme/              # App entry & theming
-│   │   ├── FoodTrackingAppApp.swift  # App entry point
-│   │   ├── AppTheme.swift        # Theme colors & styling
-│   │   └── ContentView.swift     # Root view (deprecated)
-│   ├── Dictionary Info/          # Food dictionary & data models
-│   │   ├── DictionaryView.swift  # Main food browsing interface
-│   │   ├── FoodModel.swift       # Food data state management
-│   │   ├── FoodStorage.swift     # Persistence layer
-│   │   ├── AddFoodView.swift     # Manual food entry
-│   │   ├── EditFoodItemView.swift # Food editor
-│   │   ├── IngredientsView.swift # Meal ingredient editor
-│   │   ├── MealBuilderView.swift # Meal composition interface
-│   │   └── default_all.json      # Bundled USDA food defaults
-│   ├── BarcodeScanner/           # Barcode scanning functionality
-│   │   ├── BarcodeScannerView.swift
-│   │   ├── ScannerViewController.swift
-│   │   └── ...
-│   ├── MachineLearning/          # AI food recognition
-│   │   ├── FoodClassifier.mlpackage  # CoreML model (100+ food classes)
-│   │   ├── FoodMLPredictor.swift     # ML inference wrapper
-│   │   ├── ConfirmFoodNameAndGramsView.swift  # Confirmation UI
-│   │   ├── ImagePicker.swift         # Photo capture
-│   │   └── classes.txt               # Model class labels
-│   ├── USDALookUp/               # USDA FoodData Central integration
-│   │   ├── USDANutritionService.swift  # API client for Survey (FNDDS) lookup
+│   ├── AppAndTheme/                  # App entry, theme, onboarding
+│   │   ├── FoodTrackingAppApp.swift  # @main
+│   │   ├── AppTheme.swift            # Colors, typography, button styles
+│   │   ├── TipsAndTricksView.swift   # First-launch / settings tour
+│   │   └── Utils/                    # Shared view helpers
+│   ├── MainMenu.swift                # Root NavigationView + 4-tab TabView
+│   ├── Dictionary Info/              # Food dictionary + USDA UI
+│   │   ├── DictionaryView.swift      # Browsing / search / filters
+│   │   ├── FoodModel.swift           # ObservableObject; in-memory dictionary
+│   │   ├── FoodStorage.swift         # JSON persistence + seed/migration
+│   │   ├── AddFoodView.swift         # Manual entry
+│   │   ├── EditFoodItemView.swift    # Field-level editor (also used for USDA confirm)
+│   │   ├── EditQuantityView.swift    # Quantity tweak surface
+│   │   ├── IngredientsView.swift     # Inspect/edit a saved meal's ingredients
+│   │   ├── MealBuilderView.swift     # Compose new meals
+│   │   ├── LookUpFoodView.swift      # USDA search UI (3 scopes)
+│   │   └── default_all.json          # Bundled seed (per 100g, deterministic UUIDs)
+│   ├── USDALookUp/
+│   │   ├── USDANutritionService.swift # FoodData Central client
 │   │   └── FoodQueryType.swift
-│   ├── Tracking/                 # Daily macro tracking
-│   │   ├── MacroTrackerViewModel.swift  # Daily macro state & persistence
-│   │   ├── GramsOrServingsInput.swift   # Quantity input with live preview
-│   │   └── QuickTrackView.swift         # Fast macro entry
-│   ├── MacroHistoryAndLogs/      # History & logging
-│   │   ├── DailyMacrosDisplay.swift     # Visual macro ring display
-│   │   ├── MacroHistoryView.swift       # History with daily averages
-│   │   ├── FoodLogView.swift            # Today's food log
-│   │   └── FoodLogViewForDate.swift     # Historical day view
-│   ├── MacroGoals/               # Goal setting
-│   │   ├── MacroGoalWizardView.swift    # Goal calculation wizard
-│   │   └── EditGoalsView.swift          # Manual goal editor
-│   └── MainMenu.swift            # Main tab navigation
-└── tools/                        # USDA generator scripts
-    ├── seed_usda_defaults.py     # USDA FoodData Central importer
-    ├── usda_queries_common.txt   # Search queries for common foods
-    └── README.md                 # Generator documentation
+│   ├── BarcodeScanner/               # AVFoundation barcode pipeline
+│   │   ├── ScannerViewController.swift          # Dictionary-add path
+│   │   ├── ScannerTrackingViewController.swift  # Tracking path
+│   │   ├── BarcodeOverlay.swift                 # Reticle / hit feedback
+│   │   └── Wrapper / SwiftUI bridges
+│   ├── Tracking/
+│   │   ├── MacroTrackerViewModel.swift # Daily totals, food log, goal state
+│   │   ├── GramsOrServingsInput.swift  # Quantity input with live preview
+│   │   └── QuickTrackView.swift        # One-shot calorie/macro entry
+│   ├── MacroHistoryAndLogs/
+│   │   ├── DailyMacrosDisplay.swift    # Header rings (consumed vs remaining)
+│   │   ├── FoodLogView.swift           # Today's log
+│   │   ├── FoodLogViewForDate.swift    # Historical day view
+│   │   └── MacroHistoryView.swift      # Daily averages + history list
+│   ├── MacroGoals/
+│   │   ├── EditGoalsView.swift         # Manual goal edit
+│   │   └── MacroGoalWizardView.swift   # Sex/age/activity → kcal + macro split
+│   └── Info.plist / *.entitlements
+└── tools/
+    ├── seed_usda_defaults.py         # Curated-list builder against USDA FDC
+    ├── build_log.csv                 # Per-food source/fdcId/macros audit log
+    └── README.md
 ```
 
-### Data Persistence
+The four tabs (`Dictionary`, `Track`, `History`, `Settings`) all share a fixed minimum content height (`tabContentMinHeight` in `MainMenu.swift`) so SwiftUI doesn't stretch shorter tabs to fill the available vertical space.
 
-- **User Foods**: Stored in `user_foods.json` in the app's Documents directory
-- **Daily Macros**: Persisted via `UserDefaults` and rolled over at midnight
-- **History**: JSON-encoded array of daily macro entries with food logs
-- **Goals**: Stored in `UserDefaults` (calories, protein, carbs, fats)
+### State and persistence
 
-On first launch, the app seeds `user_foods.json` from the bundled `default_all.json`. Subsequent launches merge any updated bundled defaults without overwriting user-added foods.
+| State | Mechanism |
+|---|---|
+| Food dictionary (foods + meals) | `user_foods.json` in the app's Documents directory, written via `FoodStorage.swift` |
+| Bundled seed | `default_all.json` in the app bundle, gated by `bundledDefaultsVersion` |
+| Daily totals (cal/P/C/F) | `UserDefaults` keys, persisted reactively via Combine `sink` on each `@Published` |
+| Today's food log | `UserDefaults` (JSON-encoded `[LoggedFoodEntry]`) |
+| Macro history | `UserDefaults` (JSON-encoded `[MacroHistoryEntry]`) |
+| Goals | `UserDefaults` |
+| Last-updated date (rollover) | `UserDefaults`, normalized to `startOfDay` |
+| First-launch tips flag | `@AppStorage("hasSeenTipsAndTricks")` |
 
-### Key Technologies
+`MacroTrackerViewModel` initializes by hydrating all of the above, then wires Combine `sink`s so any `@Published` mutation is mirrored to `UserDefaults` without explicit save calls. Day-rollover is checked once at init and again on every foreground transition.
 
-- **SwiftUI**: Declarative UI framework
-- **Combine**: Reactive state management
-- **CoreML**: On-device food image recognition (100+ food classes)
-- **AVFoundation**: Barcode scanning and photo capture
-- **USDA FoodData Central API**: 
-  - Build-time: Bundled defaults generation
-  - Runtime: Live Survey (FNDDS) lookup for ML-recognized foods
-- **UserDefaults**: Lightweight persistence for goals and state
-- **FileManager**: JSON-based food dictionary storage
+### Configuration
 
-### Contributing
+The USDA API key is read from the `FDC_API_KEY` Info.plist value (sourced from `Secrets.xcconfig`). Without it, live USDA lookup throws a 900 error; the rest of the app continues to work against the bundled seed and manually-added foods.
 
-This is a personal project, but suggestions and feedback are welcome. The codebase is structured for maintainability with clear separation between data models, views, and business logic.
+To set up the key locally, create `Secrets.xcconfig` (gitignored) at the project root with:
 
-### Known Issues & Future Enhancements
+```
+FDC_API_KEY = your_key_here
+```
 
-- Widget support for glanceable macro tracking (in progress)
-- Cloud sync for multi-device support
-- Export/import functionality for data portability
-- Meal planning features
-- Recipe scaling based on servings
+Get a key at https://fdc.nal.usda.gov/api-key-signup.html.
 
+### Regenerating the bundled food seed
+
+The seed lives in `FoodTrackingApp/FoodTrackingApp/Dictionary Info/default_all.json` and is generated from `tools/seed_usda_defaults.py`. The curated list (`CURATED_FOODS`) and the per-food preferred source (`sr_legacy` vs `survey`) live inline in that script.
+
+```bash
+export FDC_API_KEY="YOUR_KEY_HERE"
+python3 tools/seed_usda_defaults.py \
+  --out "FoodTrackingApp/FoodTrackingApp/Dictionary Info/default_all.json" \
+  --log tools/build_log.csv
+```
+
+Each run:
+- Walks the source-specific fallback chain (`SR Legacy → Foundation → Survey` for `sr_legacy`; `Survey → SR Legacy → Foundation` for `survey`), with the lettuce-bug guard.
+- Writes deterministic UUIDs derived from the friendly name (re-runs produce stable IDs).
+- Normalizes everything to per-100g (`weightInGrams=100`, `servings=1`, `servingUnit="g"`).
+- Appends an audit row per food to `build_log.csv` so you can spot non-preferred-source fallbacks before shipping.
+
+After regenerating, **bump `bundledDefaultsVersion` in `FoodStorage.swift`** and rebuild. On next launch, the app will wipe `user_foods.json` and reseed from the new bundle.
+
+See [`tools/README.md`](tools/README.md) for the full flag set.
+
+### Tech stack
+
+- **SwiftUI** + **Combine** for UI and reactive state.
+- **AVFoundation** (`AVCaptureSession`, `AVCaptureMetadataOutput`) for barcode scanning.
+- **URLSession** + structured concurrency (`async`/`await`, `TaskGroup`) for USDA calls.
+- **UserDefaults** + `FileManager`-backed JSON for persistence (no Core Data, no CloudKit).
+- **USDA FoodData Central API** at build time (seed generation) and runtime (live lookup).
+
+### Build
+
+```bash
+open FoodTrackingApp/FoodTrackingApp.xcodeproj
+# select a simulator or device, then ⌘R
+```
+
+---
+
+### Roadmap
+
+- Home Screen widget (group container `group.com.yourname.FoodTrackingApp` is already wired in `MacroTrackerViewModel.saveDailyMacrosToDefaults`).
+- iCloud sync for multi-device.
+- Data export / import.
+- Recipe scaling by serving count.
+- Fast-food category in USDA lookup (mode placeholder is present; disabled).
+
+### Known caveats
+
+- USDA Foundation entries occasionally report `kcal=0` with non-zero P/C/F. Both the iOS service and the seed generator detect this and fall back to the next data source.
+- The reseed migration is intentionally destructive — it replaces the user's dictionary, including saved meals, when `bundledDefaultsVersion` advances. Acceptable for a single-user app; revisit if multi-user state ever lands.
+- An on-device CoreML food classifier was prototyped (`FoodClassifier.mlpackage`, 100+ classes). Accuracy wasn't shippable, so the entry point in `MainMenu.swift` is commented out and the model is not bundled into the active build. The supporting Swift files (`FoodMLPredictor`, `ConfirmFoodNameAndGramsView`, `ImagePicker`) remain in the tree pending a future replacement.
+
+---
+
+## C++ version (legacy)
+
+Original terminal-based meal tracker in `Meal Tracker/`. Functional but no longer maintained — kept for reference. Use the iOS app for everything new.
 
 ---
 
 ## Support
 
-For bug reports or feature requests, please [open an issue](link-to-issues) or contact via TestFlight feedback.
+Bug reports and feature requests via TestFlight feedback or by opening an issue.
