@@ -462,6 +462,8 @@ private struct FoodPickerSheet: View {
                 onFoodSelected: handleFoodTapped,
                 readOnly: true
             )
+            .blur(radius: isModeDialogPresented ? 10 : 0)
+            .animation(.easeInOut(duration: 0.2), value: isModeDialogPresented)
 
             if isQuantityInputPresented,
                let food = selectedFood,

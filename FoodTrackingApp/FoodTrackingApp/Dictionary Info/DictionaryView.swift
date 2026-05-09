@@ -186,6 +186,8 @@ struct DictionaryView: View {
         .background(AppTheme.background.ignoresSafeArea())
         .navigationTitle("Food Dictionary")
         .navigationBarTitleDisplayMode(.large)
+        .blur(radius: showMeasurementDialog ? 10 : 0)
+        .animation(.easeInOut(duration: 0.2), value: showMeasurementDialog)
         .confirmationDialog(
             "Track by",
             isPresented: $showMeasurementDialog,
