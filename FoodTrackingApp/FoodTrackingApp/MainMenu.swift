@@ -653,6 +653,8 @@ struct MainMenu: View {
                     showScannedTrackByDialog = true
                 }
             }
+            .blur(radius: showScannedTrackByDialog ? 10 : 0)
+            .animation(.easeInOut(duration: 0.2), value: showScannedTrackByDialog)
             .confirmationDialog(
                 "Track by",
                 isPresented: $showScannedTrackByDialog,
