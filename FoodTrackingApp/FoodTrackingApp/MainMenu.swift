@@ -438,7 +438,8 @@ struct SettingsTab: View {
                 .buttonStyle(SleekButtonStyle())
             }
 
-            // Developer Section (collapsed)
+            // Developer Section (collapsed) — debug builds only
+            #if DEBUG
             DisclosureGroup {
                 VStack(spacing: 10) {
                     Button {
@@ -486,6 +487,7 @@ struct SettingsTab: View {
             }
             .accentColor(AppTheme.textTertiary)
             .padding(.horizontal, 4)
+            #endif
         }
         .frame(minHeight: tabContentMinHeight, alignment: .top)
     }

@@ -7,9 +7,15 @@ The script tries the preferred source first, then walks a fallback chain. It
 also detects the "lettuce bug" — Foundation entries that report kcal=0 with
 nonzero protein/carbs/fat — and falls back when it sees that.
 
-Output JSON matches the app's FoodItem Codable shape, normalized per 100g:
-  id, name, weightInGrams=100, servings=1, calories, protein, carbs, fats,
-  servingUnit="g"
+Serving sizes: after finding the best search match, the script fetches the
+food's detail record to extract a real serving size from servingSize/
+servingSizeUnit (Branded) or foodPortions[0].gramWeight (SR Legacy / Survey).
+Macros are then scaled from per-100g to that serving size. Falls back to 100g
+if no serving data is available.
+
+Output JSON matches the app's FoodItem Codable shape:
+  id, name, weightInGrams, servings=1, calories, protein, carbs, fats,
+  servingUnit ("g" or "ml")
 
 Usage:
   FDC_API_KEY="..." python3 tools/seed_usda_defaults.py \
@@ -280,6 +286,116 @@ CURATED_FOODS: List[Tuple[str, str, str]] = [
     ("Cola", "beverages carbonated cola regular", "sr_legacy"),
 ]
 
+# Override serving sizes where USDA returns bulk/package portions instead of
+# a realistic single-serving size. Format: friendly_name -> (grams_or_ml, is_liquid)
+SERVING_OVERRIDES: Dict[str, Tuple[float, bool]] = {
+    # Fruits — 1 cup or 1 piece
+    "Pineapple, Raw":           (165, False),
+    "Watermelon, Raw":          (152, False),
+    "Cantaloupe, Raw":          (160, False),
+    "Honeydew Melon, Raw":      (160, False),
+    "Mango, Raw":               (165, False),
+    "Raspberries, Raw":         (123, False),
+    "Strawberries, Raw":        (152, False),
+    "Pomegranate, Raw":          (87, False),
+    "Raisins":                   (43, False),
+    "Lemon, Raw":                (58, False),
+    "Avocado, Raw":             (150, False),
+
+    # Vegetables — 1 cup or 1 piece
+    "Broccoli, Raw":             (91, False),
+    "Broccoli, Steamed":         (91, False),
+    "Spinach, Raw":              (30, False),
+    "Kale, Raw":                 (67, False),
+    "Cauliflower, Raw":         (100, False),
+    "Cucumber, Raw":            (100, False),
+    "Zucchini, Raw":            (124, False),
+    "Eggplant, Raw":             (82, False),
+    "White Mushrooms, Raw":      (70, False),
+    "Cherry Tomato, Raw":        (85, False),
+    "Cabbage, Raw":              (70, False),
+    "Celery, Raw":               (40, False),
+    "Pinto Beans, Cooked":      (130, False),
+    "Refried Beans, Canned":    (130, False),
+    "Kimchi":                   (150, False),
+    "Pickles, Dill":             (28, False),
+
+    # Grains
+    "Oatmeal, Cooked":          (240, False),
+
+    # Poultry & Meat
+    "Rotisserie Chicken":        (85, False),
+    "Ground Turkey, Raw":       (113, False),
+    "Turkey Breast, Deli":       (56, False),
+    "Hot Dog, Beef":             (57, False),
+    "Pork Tenderloin, Cooked":  (113, False),
+    "Pepperoni":                 (28, False),
+    "Pork Sausage, Cooked":      (57, False),
+    "Bacon, Cooked":             (28, False),
+    "Chicken Wing, Cooked":      (34, False),
+    "Sirloin Steak, Cooked":    (113, False),
+    "Tuna, Canned in Water":     (85, False),
+    "Sardines, Canned in Oil":   (92, False),
+
+    # Eggs
+    "Egg, Whole, Raw":           (50, False),
+    "Egg, Whole, Hard-Boiled":   (50, False),
+    "Egg, Whole, Scrambled":    (100, False),
+    "Egg Whites, Raw":           (30, False),
+
+    # Dairy
+    "Whole Milk":               (244, True),
+    "2% Milk":                  (244, True),
+    "Skim Milk":                (244, True),
+    "Heavy Cream":               (15, True),
+    "Butter, Salted":            (14, False),
+    "Swiss Cheese":              (28, False),
+    "Feta Cheese":               (28, False),
+    "Provolone Cheese":          (28, False),
+    "American Cheese":           (28, False),
+    "Cheddar Cheese":            (28, False),
+    "Cream Cheese":              (30, False),
+    "Almond Butter":             (32, False),
+
+    # Nuts & Seeds
+    "Walnuts":                   (28, False),
+    "Sunflower Seeds":           (28, False),
+    "Pumpkin Seeds":             (28, False),
+    "Flax Seeds":                (10, False),
+
+    # Oils & Spreads
+    "Avocado Oil":               (14, False),
+    "Canola Oil":                (14, False),
+    "Honey":                     (21, False),
+    "Peanut Butter":             (32, False),
+
+    # Condiments
+    "Ketchup":                   (17, False),
+    "Yellow Mustard":             (5, False),
+    "Worcestershire Sauce":      (17, False),
+    "Italian Dressing":          (30, False),
+    "Guacamole":                 (30, False),
+    "Hummus":                    (30, False),
+
+    # Snacks
+    "Potato Chips":              (28, False),
+    "Tortilla Chips":            (28, False),
+    "Saltine Crackers":          (14, False),
+    "Milk Chocolate":            (28, False),
+    "Popcorn, Air-Popped":       (24, False),
+    "Rice Cake, Plain":           (9, False),
+
+    # Beverages — all marked as liquid
+    "Orange Juice":             (240, True),
+    "Cola":                     (355, True),
+    "Black Tea, Brewed":        (240, True),
+    "Green Tea, Brewed":        (240, True),
+    "Brewed Coffee, Black":     (240, True),
+    "Almond Milk, Unsweetened": (240, True),
+    "Soy Milk, Unsweetened":    (240, True),
+    "Whey Protein Powder":       (30, False),
+}
+
 
 @dataclass(frozen=True)
 class Macros:
@@ -294,7 +410,9 @@ class FetchResult:
     fdc_id: int
     usda_description: str
     data_type: str
-    macros: Macros
+    macros: Macros          # always per 100 g
+    serving_g: float = 100.0
+    is_liquid: bool = False
 
 
 def _http_json(method: str, url: str, body: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -307,6 +425,35 @@ def _http_json(method: str, url: str, body: Optional[Dict[str, Any]] = None) -> 
     with urlopen(req, timeout=30) as resp:
         raw = resp.read()
     return json.loads(raw.decode("utf-8"))
+
+
+def fetch_food_details(api_key: str, fdc_id: int) -> Dict[str, Any]:
+    """GET /food/{fdcId} — for serving size only. Returns {} on any error."""
+    url = f"{FDC_BASE}/food/{fdc_id}?api_key={api_key}"
+    try:
+        return _http_json("GET", url)
+    except Exception:
+        return {}
+
+
+def get_serving_size_g(details: Dict[str, Any]) -> Tuple[float, bool]:
+    """
+    Returns (serving_size_grams, is_liquid).
+    Checks servingSize/servingSizeUnit first (Branded), then
+    foodPortions[0].gramWeight (SR Legacy / Survey / Foundation).
+    Falls back to 100g if nothing is found.
+    """
+    sz   = details.get("servingSize")
+    unit = (details.get("servingSizeUnit") or "").lower().strip()
+    if sz and float(sz) > 0 and unit in ("g", "ml"):
+        return float(sz), unit == "ml"
+
+    for portion in details.get("foodPortions") or []:
+        gw = portion.get("gramWeight") or 0
+        if float(gw) > 0:
+            return float(gw), False
+
+    return 100.0, False
 
 
 def fdc_search(api_key: str, query: str, data_type: str, page_size: int = 5) -> List[Dict[str, Any]]:
@@ -356,25 +503,34 @@ def fetch_with_fallback(api_key: str, query: str, source: str, sleep_ms: int) ->
         try:
             foods = fdc_search(api_key, query, data_type, page_size=5)
         except (HTTPError, URLError) as e:
-            print(f"  [WARN] {data_type} search failed: {e}", file=sys.stderr)
+            time.sleep(max(0, sleep_ms) / 1000.0)
             continue
 
         for cand in foods:
             macros = extract_macros(cand)
             if macros is None:
                 continue
-            result = FetchResult(
-                fdc_id=int(cand.get("fdcId") or 0),
+            if is_likely_missing_kcal(macros):
+                last_resort = last_resort or FetchResult(
+                    fdc_id=int(cand.get("fdcId") or 0),
+                    usda_description=str(cand.get("description") or ""),
+                    data_type=data_type,
+                    macros=macros,
+                )
+                continue
+            fdc_id = int(cand.get("fdcId") or 0)
+            time.sleep(max(0, sleep_ms) / 1000.0)
+            details = fetch_food_details(api_key, fdc_id)
+            serving_g, is_liquid = get_serving_size_g(details)
+            time.sleep(max(0, sleep_ms) / 1000.0)
+            return FetchResult(
+                fdc_id=fdc_id,
                 usda_description=str(cand.get("description") or ""),
                 data_type=data_type,
                 macros=macros,
+                serving_g=serving_g,
+                is_liquid=is_liquid,
             )
-            if is_likely_missing_kcal(macros):
-                # Save as last resort and try next source
-                last_resort = last_resort or result
-                continue
-            time.sleep(max(0, sleep_ms) / 1000.0)
-            return result
 
         time.sleep(max(0, sleep_ms) / 1000.0)
 
@@ -386,16 +542,17 @@ def stable_uuid_for_friendly_name(name: str) -> str:
 
 
 def build_food_item(friendly_name: str, result: FetchResult) -> Dict[str, Any]:
+    f = result.serving_g / 100.0
     return {
         "id": stable_uuid_for_friendly_name(friendly_name),
         "name": friendly_name,
-        "weightInGrams": 100,
+        "weightInGrams": int(round(result.serving_g)),
         "servings": 1,
-        "calories": result.macros.calories,
-        "protein": round(result.macros.protein, 2),
-        "carbs": round(result.macros.carbs, 2),
-        "fats": round(result.macros.fats, 2),
-        "servingUnit": "g",
+        "calories": int(round(result.macros.calories * f)),
+        "protein": round(result.macros.protein * f, 2),
+        "carbs": round(result.macros.carbs * f, 2),
+        "fats": round(result.macros.fats * f, 2),
+        "servingUnit": "ml" if result.is_liquid else "g",
     }
 
 
@@ -430,13 +587,27 @@ def main() -> int:
             })
             continue
 
+        override = SERVING_OVERRIDES.get(friendly_name)
+        if override is not None:
+            serving_g_ov, is_liquid_ov = override
+            result = FetchResult(
+                fdc_id=result.fdc_id,
+                usda_description=result.usda_description,
+                data_type=result.data_type,
+                macros=result.macros,
+                serving_g=serving_g_ov,
+                is_liquid=is_liquid_ov,
+            )
+
         item = build_food_item(friendly_name, result)
         items.append(item)
         warnings = []
         if is_likely_missing_kcal(result.macros):
             warnings.append("kcal=0 lettuce-bug (used as last resort)")
-        print(f"  [OK] {result.data_type} fdc={result.fdc_id}  {item['calories']} kcal | "
-              f"P{item['protein']} C{item['carbs']} F{item['fats']}")
+        unit_label = "ml" if result.is_liquid else "g"
+        print(f"  [OK] {result.data_type} fdc={result.fdc_id}  "
+              f"serving={int(round(result.serving_g))}{unit_label}  "
+              f"{item['calories']} kcal | P{item['protein']} C{item['carbs']} F{item['fats']}")
         log_rows.append({
             "friendly_name": friendly_name, "query": query, "preferred_source": source,
             "source_used": result.data_type, "fdc_id": result.fdc_id,
