@@ -290,21 +290,20 @@ struct LookUpFoodView: View {
 
         Task {
             do {
-                // Reuse your existing fetchMacrosForFood by adding a small public wrapper,
-                // OR simplest: use your existing fetchSurveyMacrosPer100g by querying description again.
-                // Better: add a public method that fetches macros by fdcId (shown below).
-
-                let macros = try await usdaService.fetchMacrosPer100gForFood(fdcId: choice.fdcId)
+                let details = try await usdaService.fetchFoodDetailsForFood(fdcId: choice.fdcId)
+                let macros = details.macrosPer100g
+                let servingG = details.servingSizeG ?? 100.0
+                let factor = servingG / 100.0
 
                 let item = FoodItem(
                     name: choice.description,
-                    weightInGrams: 100,
+                    weightInGrams: Int(servingG.rounded()),
                     servings: 1,
-                    calories: Int(macros.caloriesKcal.rounded()),
-                    protein: macros.proteinG,
-                    carbs: macros.carbsG,
-                    fats: macros.fatG,
-                    servingUnit: .grams
+                    calories: Int((macros.caloriesKcal * factor).rounded()),
+                    protein: macros.proteinG * factor,
+                    carbs: macros.carbsG * factor,
+                    fats: macros.fatG * factor,
+                    servingUnit: details.isLiquid ? .milliliters : .grams
                 )
 
                 await MainActor.run {

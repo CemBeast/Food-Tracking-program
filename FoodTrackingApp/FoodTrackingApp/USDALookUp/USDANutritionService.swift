@@ -22,6 +22,14 @@ struct MacrosPer100g {
     let fatG: Double
 }
 
+struct USDAFoodDetails {
+    let macrosPer100g: MacrosPer100g
+    /// Actual serving size in grams (or ml treated as g). nil → fall back to 100 g.
+    let servingSizeG: Double?
+    /// True when USDA reports the unit as "ml" (liquids like milk, juice).
+    let isLiquid: Bool
+}
+
 struct USDAFoodChoice {
     let fdcId: Int
     let description: String
@@ -70,7 +78,7 @@ final class USDANutritionService {
             guard let choice = try await searchBestMatch(query: queryNormalized, dataTypes: [dataType]) else {
                 continue
             }
-            let macros = try await fetchMacrosForFood(fdcId: choice.fdcId)
+            let macros = try await fetchFoodData(fdcId: choice.fdcId).macrosPer100g
             // Foundation sometimes returns kcal==0 while protein/carbs/fat are populated; skip it if a fallback exists.
             if isLikelyMissingKcal(macros) && i < chain.count - 1 {
                 continue
@@ -110,10 +118,14 @@ final class USDANutritionService {
                       userInfo: [NSLocalizedDescriptionKey: "No \(scopeDisplayName(scope)) results found for: \(queryNormalized)"])
     }
     
-    // public function to access the food macros for an already retrieved food
-    // fetches exact macros of a food (used for selecting macros from a list)
+    // fetches macros only (per 100g), used for search result previews
     func fetchMacrosPer100gForFood(fdcId: Int) async throws -> MacrosPer100g {
-        try await fetchMacrosForFood(fdcId: fdcId)
+        try await fetchFoodData(fdcId: fdcId).macrosPer100g
+    }
+
+    // fetches macros + actual serving size — use this when creating a FoodItem
+    func fetchFoodDetailsForFood(fdcId: Int) async throws -> USDAFoodDetails {
+        try await fetchFoodData(fdcId: fdcId)
     }
 
     // MARK: - Search (helper functions for Public API functions)
@@ -197,10 +209,8 @@ final class USDANutritionService {
         
     }
 
-    // MARK: - Details (nutrients)
-    /// Given the USDA fdcID, this function fetches the maros for the food
-    /// returns macros per 100g
-    private func fetchMacrosForFood(fdcId: Int) async throws -> MacrosPer100g {
+    // MARK: - Details (nutrients + serving size)
+    private func fetchFoodData(fdcId: Int) async throws -> USDAFoodDetails {
         let url = baseURL
             .appendingPathComponent("food/\(fdcId)")
             .appending(queryItems: [
@@ -223,12 +233,27 @@ final class USDANutritionService {
             return 0
         }
 
-        return MacrosPer100g(
+        let macros = MacrosPer100g(
             caloriesKcal: value(.calories),
             proteinG: value(.protein),
             carbsG: value(.carbs),
             fatG: value(.fat)
         )
+
+        var servingSizeG: Double? = nil
+        var isLiquid = false
+        if let size = decoded.servingSize, let unit = decoded.servingSizeUnit, size > 0 {
+            let u = unit.lowercased().trimmingCharacters(in: .whitespaces)
+            if u == "g" {
+                servingSizeG = size
+            } else if u == "ml" {
+                servingSizeG = size
+                isLiquid = true
+            }
+            // any other unit → nil (fall back to 100 g)
+        }
+
+        return USDAFoodDetails(macrosPer100g: macros, servingSizeG: servingSizeG, isLiquid: isLiquid)
     }
 
     // MARK: - Helpers
@@ -298,6 +323,8 @@ private struct FoodSearchFood: Codable {
 
 private struct FoodDetailsResponse: Codable {
     let foodNutrients: [FoodNutrient]?
+    let servingSize: Double?
+    let servingSizeUnit: String?
 }
 
 private struct FoodNutrient: Codable {
