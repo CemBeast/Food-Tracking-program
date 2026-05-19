@@ -9,9 +9,17 @@ import Foundation
 
 class FoodModel: ObservableObject {
     @Published var items: [FoodItem] = []
-    
+
+    lazy var bundledDefaultIDs: Set<UUID> = Set(
+        loadDefaultFoodItems(from: bundledDefaultsFileName).map { $0.id }
+    )
+
     init() {
         load()
+    }
+
+    func isUserAdded(_ item: FoodItem) -> Bool {
+        !bundledDefaultIDs.contains(item.id)
     }
     
     func add(_ item: FoodItem) {
@@ -67,6 +75,7 @@ class FoodModel: ObservableObject {
 
         items = bundled
         save()
+        bundledDefaultIDs = Set(bundled.map { $0.id })
         UserDefaults.standard.set(bundledDefaultsVersion, forKey: defaultsMergedVersionKey)
         print("♻️ Wiped and reseeded bundled defaults v\(bundledDefaultsVersion) (was v\(lastMerged)) — \(bundled.count) items")
     }

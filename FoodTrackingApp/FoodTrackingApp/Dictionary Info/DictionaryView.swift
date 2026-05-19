@@ -137,6 +137,7 @@ enum SortOption: String, CaseIterable, Identifiable {
     case calories = "Calories"
     case favorites = "Favorites"
     case meals = "Meals"
+    case added = "Added"
     
     var id: String { self.rawValue }
 }
@@ -356,6 +357,10 @@ struct DictionaryView: View {
         case .meals:
             return base
                 .filter { $0.isMeal }
+                .sorted { $0.name.lowercased() < $1.name.lowercased() }
+        case .added:
+            return base
+                .filter { !foodModel.bundledDefaultIDs.contains($0.id) }
                 .sorted { $0.name.lowercased() < $1.name.lowercased() }
         }
     }
