@@ -485,6 +485,8 @@ private struct FoodPickerSheet: View {
             // overlay can't reappear with stale data.
             if !isShowing { resetSelection() }
         }
+        .blur(radius: isModeDialogPresented ? 10 : 0)
+        .animation(.easeInOut(duration: 0.2), value: isModeDialogPresented)
         .confirmationDialog(
             "Track by",
             isPresented: $isModeDialogPresented,

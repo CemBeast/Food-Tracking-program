@@ -21,6 +21,18 @@ struct IngredientsView: View {
     @State private var editedMealWeight: String = ""
     @State private var showMealWeightEditor = false
 
+    // Delete confirmation (tap-trash only; swipe-delete is immediate)
+    @State private var ingredientPendingDelete: MealIngredient? = nil
+
+    // Add-ingredient flow (mirrors MealBuilderView)
+    @State private var showFoodSelection = false
+    @State private var selectedFood: FoodItem? = nil
+    @State private var selectedFoodID: UUID? = nil
+    @State private var selectedMeasurementMode: MeasurementMode? = nil
+    @State private var showGramsInput = false
+    @State private var gramsOrServings: Double? = nil
+    @State private var showMeasurementChoice = false
+
     private var ingredients: [MealIngredient] { meal?.ingredients ?? [] }
 
     private var totals: (cal: Int, protein: Double, carbs: Double, fats: Double, weight: Double)? {
@@ -74,8 +86,109 @@ struct IngredientsView: View {
             .sheet(item: $selectedIngredient) { ing in
                 quantityEditor(for: ing)
             }
+            .sheet(
+                isPresented: $showFoodSelection,
+                onDismiss: resetFoodSelectionState
+            ) {
+                foodSelectionSheet
+            }
+            .alert(
+                "Remove \(ingredientPendingDelete?.name ?? "ingredient")?",
+                isPresented: deletePromptBinding
+            ) {
+                Button("Remove", role: .destructive) {
+                    if let ing = ingredientPendingDelete {
+                        removeIngredient(ing)
+                    }
+                    ingredientPendingDelete = nil
+                }
+                Button("Cancel", role: .cancel) {
+                    ingredientPendingDelete = nil
+                }
+            } message: {
+                Text("This ingredient will be removed from the meal.")
+            }
         }
         .onAppear(perform: loadLatestMealData)
+    }
+
+    private var deletePromptBinding: Binding<Bool> {
+        Binding(
+            get: { ingredientPendingDelete != nil },
+            set: { if !$0 { ingredientPendingDelete = nil } }
+        )
+    }
+
+    @ViewBuilder
+    private var foodSelectionSheet: some View {
+        ZStack {
+            DictionaryView(
+                selectedFood: $selectedFood,
+                showGramsInput: $showGramsInput,
+                selectedFoodID: $selectedFoodID,
+                selectedMeasurementMode: $selectedMeasurementMode,
+                foodModel: foodModel,
+                onFoodSelected: { food in
+                    selectedFood = food
+                    selectedFoodID = food.id
+                    showMeasurementChoice = true
+                },
+                readOnly: true
+            )
+            if showGramsInput,
+               let food = selectedFood,
+               let mode = selectedMeasurementMode
+            {
+                GramsOrServingsInput(
+                    food: food,
+                    mode: mode,
+                    gramsOrServings: $gramsOrServings,
+                    showGramsInput: $showGramsInput,
+                    updateMacros: { _, _, _, _ in
+                        let actualQuantity = gramsOrServings ?? 0.0
+                        addIngredient(food: food, quantity: actualQuantity, mode: mode)
+                    }
+                )
+            }
+        }
+        .blur(radius: showMeasurementChoice ? 10 : 0)
+        .animation(.easeInOut(duration: 0.2), value: showMeasurementChoice)
+        .confirmationDialog(
+            "Track by",
+            isPresented: $showMeasurementChoice,
+            titleVisibility: .visible
+        ) {
+            if let unit = selectedFood?.servingUnit {
+                Button(unit == .milliliters ? "Volume" : "Weight") {
+                    selectedMeasurementMode = .weight
+                    showGramsInput = true
+                }
+            }
+            Button("Servings") {
+                selectedMeasurementMode = .serving
+                showGramsInput = true
+            }
+            Button("Cancel", role: .cancel) {
+                selectedFood = nil
+                selectedFoodID = nil
+            }
+        }
+        .onChange(of: showGramsInput) { done in
+            if done == false {
+                selectedFood = nil
+                selectedFoodID = nil
+                selectedMeasurementMode = nil
+            }
+        }
+    }
+
+    private func resetFoodSelectionState() {
+        selectedFood = nil
+        selectedFoodID = nil
+        selectedMeasurementMode = nil
+        showGramsInput = false
+        gramsOrServings = nil
+        showMeasurementChoice = false
     }
     
     private func listView(meal: FoodItem) -> some View {
@@ -140,6 +253,13 @@ struct IngredientsView: View {
                                 selectedIngredient = ing
                                 editedQuantity = String(format: "%.0f", ing.quantity)
                             }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    removeIngredient(ing)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                     }
                 } else {
                     Text("No ingredients saved for this meal.")
@@ -147,6 +267,19 @@ struct IngredientsView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.vertical, 12)
                 }
+
+                Button {
+                    showFoodSelection = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 18))
+                        Text("Add Ingredient")
+                    }
+                }
+                .buttonStyle(SleekButtonStyle())
+                .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                .listRowSeparator(.hidden)
             } header: {
                 Text("Ingredients").foregroundColor(AppTheme.textSecondary)
             }
@@ -169,24 +302,44 @@ struct IngredientsView: View {
     }
     
     private func ingredientRow(_ ing: MealIngredient) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(ing.name)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(AppTheme.textPrimary)
-            
-            Text(ing.mode == .serving ?
-                 String(format: "%.1f serving%@", ing.quantity, ing.quantity > 1 ? "s" : "") :
-                 String(format: "%.0f %@", ing.quantity, ing.servingUnit.rawValue))
-            .font(.system(size: 12))
-            .foregroundColor(AppTheme.textSecondary)
-            
-            HStack(spacing: 6) {
-                let ratio = ratioFor(ing)
-                MacroPill(value: "\(Int(Double(ing.calories) * ratio))", label: "cal", color: AppTheme.calorieColor)
-                MacroPill(value: String(format: "%.0f", ing.protein * ratio), label: "P", color: AppTheme.proteinColor)
-                MacroPill(value: String(format: "%.0f", ing.carbs * ratio), label: "C", color: AppTheme.carbColor)
-                MacroPill(value: String(format: "%.0f", ing.fats * ratio), label: "F", color: AppTheme.fatColor)
+        HStack(alignment: .top, spacing: 12) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(ing.name)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(AppTheme.textPrimary)
+
+                HStack(spacing: 6) {
+                    Text(ing.mode == .serving ?
+                         String(format: "%.1f serving%@", ing.quantity, ing.quantity > 1 ? "s" : "") :
+                         String(format: "%.0f %@", ing.quantity, ing.servingUnit.rawValue))
+                    .font(.system(size: 12))
+                    .foregroundColor(AppTheme.textSecondary)
+                    Image(systemName: "pencil.circle.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(AppTheme.textSecondary)
+                }
+
+                HStack(spacing: 6) {
+                    let ratio = ratioFor(ing)
+                    MacroPill(value: "\(Int(Double(ing.calories) * ratio))", label: "cal", color: AppTheme.calorieColor)
+                    MacroPill(value: String(format: "%.0f", ing.protein * ratio), label: "P", color: AppTheme.proteinColor)
+                    MacroPill(value: String(format: "%.0f", ing.carbs * ratio), label: "C", color: AppTheme.carbColor)
+                    MacroPill(value: String(format: "%.0f", ing.fats * ratio), label: "F", color: AppTheme.fatColor)
+                }
             }
+
+            Spacer()
+
+            Button {
+                ingredientPendingDelete = ing
+            } label: {
+                Image(systemName: "trash")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.red)
+                    .padding(8)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.borderless)
         }
     }
     
@@ -202,6 +355,46 @@ struct IngredientsView: View {
         )
     }
     
+    private func addIngredient(food: FoodItem, quantity: Double, mode: MeasurementMode) {
+        guard var meal = meal, quantity > 0 else { return }
+        let newIngredient = MealIngredient(
+            foodId: food.id,
+            name: food.name,
+            baseWeightInGrams: food.weightInGrams,
+            baseServings: food.servings,
+            servingUnit: food.servingUnit,
+            calories: food.calories,
+            protein: food.protein,
+            carbs: food.carbs,
+            fats: food.fats,
+            quantity: quantity,
+            mode: mode
+        )
+        var list = meal.ingredients
+        list.append(newIngredient)
+        meal.ingredients = list
+        applyTotals(to: &meal, from: list)
+        self.meal = meal
+    }
+
+    private func removeIngredient(_ ing: MealIngredient) {
+        guard var meal = meal else { return }
+        var list = meal.ingredients
+        list.removeAll { $0.id == ing.id }
+        meal.ingredients = list
+        applyTotals(to: &meal, from: list)
+        self.meal = meal
+    }
+
+    private func applyTotals(to meal: inout FoodItem, from list: [MealIngredient]) {
+        let totals = computeTotals(from: list)
+        meal.calories = totals.cal
+        meal.protein = totals.protein
+        meal.carbs = totals.carbs
+        meal.fats = totals.fats
+        meal.weightInGrams = Int(totals.weight.rounded())
+    }
+
     private func updateIngredient(_ ing: MealIngredient, newQuantity: Double) {
         guard var meal = meal else { return }
         var list = meal.ingredients
