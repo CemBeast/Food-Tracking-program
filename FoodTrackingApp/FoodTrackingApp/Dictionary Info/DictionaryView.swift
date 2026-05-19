@@ -167,6 +167,7 @@ struct DictionaryView: View {
     // Optional external selection handler (e.g., MealBuilder)
     var onFoodSelected: ((FoodItem) -> Void)? = nil
     var readOnly: Bool = false
+    var mealsOnly: Bool = false
 
     let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -340,7 +341,8 @@ struct DictionaryView: View {
     
     private var filteredFoodItems: [FoodItem] {
         let base = foodModel.items.filter { foodItem in
-            searchText.isEmpty || foodItem.name.localizedCaseInsensitiveContains(searchText)
+            (!mealsOnly || foodItem.isMeal) &&
+            (searchText.isEmpty || foodItem.name.localizedCaseInsensitiveContains(searchText))
         }
         switch sortOption {
         case .name:

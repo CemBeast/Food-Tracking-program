@@ -126,6 +126,7 @@ struct TrackFoodTab: View {
     @Binding var showFoodSelection: Bool
     @Binding var showScannerTracking: Bool
     @Binding var showQuickTracking: Bool
+    @Binding var showQuickTrackMeal: Bool
 
     @State private var status = "BETA: Track Food with Camera"
     @State private var selectedUIImage: UIImage? = nil
@@ -173,6 +174,17 @@ struct TrackFoodTab: View {
                     Image(systemName: "bolt.fill")
                         .font(.system(size: 18))
                     Text("Quick Track")
+                }
+            }
+            .buttonStyle(SleekButtonStyle())
+
+            Button {
+                showQuickTrackMeal.toggle()
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "square.stack.3d.up.fill")
+                        .font(.system(size: 18))
+                    Text("Quick Track Meal")
                 }
             }
             .buttonStyle(SleekButtonStyle())
@@ -531,6 +543,7 @@ struct MainMenu: View {
     @State private var pendingAction: (() -> Void)? = nil
     
     @State private var showQuickTracking = false
+    @State private var showQuickTrackMeal = false
     
     // For creating meals from multiple foods
     @State private var showMealBuilder = false
@@ -584,7 +597,8 @@ struct MainMenu: View {
                         viewModel: viewModel,
                         showFoodSelection: $showFoodSelection,
                         showScannerTracking: $showScannerTracking,
-                        showQuickTracking: $showQuickTracking
+                        showQuickTracking: $showQuickTracking,
+                        showQuickTrackMeal: $showQuickTrackMeal
                     )
                     .padding(.horizontal, 20)
                     .padding(.top, 20)
@@ -782,6 +796,54 @@ struct MainMenu: View {
             .sheet(isPresented: $showQuickTracking) {
                 QuickMacroTrackView { quickFood in
                     viewModel.logFood(quickFood, gramsOrServings: 1.0, mode: .serving, at: Date())
+                }
+            }
+            .sheet(
+                isPresented: $showQuickTrackMeal,
+                onDismiss: {
+                    selectedFood = nil
+                    selectedFoodID = nil
+                    selectedMeasurementMode = nil
+                    showGramsInput = false
+                    gramsOrServings = nil
+                }
+            ) {
+                ZStack {
+                    DictionaryView(
+                        selectedFood: $selectedFood,
+                        showGramsInput: $showGramsInput,
+                        selectedFoodID: $selectedFoodID,
+                        selectedMeasurementMode: $selectedMeasurementMode,
+                        foodModel: foodModel,
+                        readOnly: false,
+                        mealsOnly: true
+                    )
+                    if showGramsInput,
+                       let food = selectedFood,
+                       let mode = selectedMeasurementMode
+                    {
+                        GramsOrServingsInput(
+                            food: food,
+                            mode: mode,
+                            gramsOrServings: $gramsOrServings,
+                            showGramsInput: $showGramsInput,
+                            currentMacros: (viewModel.calories, viewModel.protein, viewModel.carbs, viewModel.fats),
+                            updateMacros: { _, _, _, _ in
+                                let actualQuantity = gramsOrServings ?? 0.0
+                                viewModel.logFood(food,
+                                                  gramsOrServings: actualQuantity,
+                                                  mode: mode,
+                                                  at: Date())
+                            }
+                        )
+                    }
+                }
+                .onChange(of: showGramsInput) { done in
+                    if done == false {
+                        selectedFood = nil
+                        selectedFoodID = nil
+                        selectedMeasurementMode = nil
+                    }
                 }
             }
             .sheet(isPresented: $showFoodLookUp) {
