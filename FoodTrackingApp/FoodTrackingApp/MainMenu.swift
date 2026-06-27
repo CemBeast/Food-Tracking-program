@@ -426,14 +426,11 @@ struct SettingsTab: View {
                     }
                 }
                 .buttonStyle(SleekButtonStyle())
-                .sheet(isPresented: $showGoalWizard) {
-                    MacroGoalWizardView(
-                        calorieGoal: $viewModel.caloriesGoal,
-                        proteinGoal: $viewModel.proteinGoal,
-                        carbGoal: $viewModel.carbGoal,
-                        fatGoal: $viewModel.fatGoal
-                    )
-                }
+                // NOTE: the wizard sheet is presented once via the
+                // .sheet(isPresented: $showGoalWizard) below (shared with the
+                // InitialGoalPrompt flow). A second sheet bound to the same
+                // boolean here caused a double-presentation that immediately
+                // self-dismissed on the first tap.
             }
 
             // Help Section

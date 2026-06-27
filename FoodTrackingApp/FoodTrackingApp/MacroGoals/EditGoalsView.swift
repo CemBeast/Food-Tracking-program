@@ -140,10 +140,11 @@ struct EditGoalsView: View {
     }
     
     private func saveGoals() {
-        if let cal = Int(calorieText) { calorieGoal = cal }
-        if let prot = Double(proteinText) { proteinGoal = prot }
-        if let carb = Double(carbText) { carbGoal = carb }
-        if let fat = Double(fatText) { fatGoal = fat }
+        // Reject negative goals; clamp each to zero or above.
+        if let cal = Int(calorieText) { calorieGoal = max(0, cal) }
+        if let prot = Double(proteinText) { proteinGoal = max(0, prot) }
+        if let carb = Double(carbText) { carbGoal = max(0, carb) }
+        if let fat = Double(fatText) { fatGoal = max(0, fat) }
     }
 }
 

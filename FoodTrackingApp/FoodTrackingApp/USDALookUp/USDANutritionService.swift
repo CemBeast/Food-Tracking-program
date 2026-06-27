@@ -40,6 +40,7 @@ struct USDAFoodChoice {
 
 final class USDANutritionService {
 
+    // Hardcoded, always-valid literal — force-unwrap is safe (can never be nil).
     private let baseURL = URL(string: "https://api.nal.usda.gov/fdc/v1")!
 
     // Loaded via Info.plist key "FDC_API_KEY" -> $(FDC_API_KEY) from Secrets.xcconfig
@@ -341,10 +342,11 @@ private struct NutrientInfo: Codable {
 
 private extension URL {
     func appending(queryItems: [URLQueryItem]) -> URL {
-        var comps = URLComponents(url: self, resolvingAgainstBaseURL: false)!
+        guard var comps = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         var existing = comps.queryItems ?? []
         existing.append(contentsOf: queryItems)
         comps.queryItems = existing
-        return comps.url!
+        // Fall back to the original URL rather than crashing if recomposition fails.
+        return comps.url ?? self
     }
 }

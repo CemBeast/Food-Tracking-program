@@ -350,7 +350,10 @@ struct MacroGoalWizardView: View {
             }
         }()
 
-        let totalCalories = Int(bmr * activityMultiplier) + goalCalorieAdjustment
+        let rawCalories = Int(bmr * activityMultiplier) + goalCalorieAdjustment
+        // Clamp to a safe floor: never recommend eating below BMR, and never below 1200 kcal/day.
+        let calorieFloor = max(1200, Int(bmr))
+        let totalCalories = max(calorieFloor, rawCalories)
         calorieGoal = totalCalories
 
         proteinGoal = Double(weight) * 2.0
@@ -358,6 +361,7 @@ struct MacroGoalWizardView: View {
         let proteinCals = proteinGoal * 4
         let fatCals = fatGoal * 9
         let remainingCals = Double(totalCalories) - proteinCals - fatCals
-        carbGoal = remainingCals / 4
+        // Carbs fill the remaining calories, but never let the goal go negative.
+        carbGoal = max(0, remainingCals / 4)
     }
 }

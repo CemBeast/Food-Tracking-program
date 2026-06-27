@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B2569F1D2CCFAE48006532EE /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2569F1C2CCFAE41006532EE /* MainMenu.swift */; };
+		B2A0F1012F35490000000001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B2A0F1002F35490000000001 /* PrivacyInfo.xcprivacy */; };
 		B2BA5E402F33A63200C3F5CF /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */; };
 		B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76022B36ECE00069D56C /* Assets.xcassets */; };
 		B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DF76052B36ECE00069D56C /* Preview Assets.xcassets */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		B23C6A2E2DD17A34004D770F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2569F1C2CCFAE41006532EE /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		B2A0F1002F35490000000001 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B2BA5E3F2F33A63200C3F5CF /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		B2DF75FB2B36ECDF0069D56C /* FoodTrackingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodTrackingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DF76022B36ECE00069D56C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				B2DF76022B36ECE00069D56C /* Assets.xcassets */,
 				B2DF76042B36ECE00069D56C /* Preview Content */,
 				B23C6A2E2DD17A34004D770F /* Info.plist */,
+				B2A0F1002F35490000000001 /* PrivacyInfo.xcprivacy */,
 			);
 			path = FoodTrackingApp;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				B2BA5E402F33A63200C3F5CF /* Secrets.xcconfig in Resources */,
 				B2DF76062B36ECE00069D56C /* Preview Assets.xcassets in Resources */,
 				B2DF76032B36ECE00069D56C /* Assets.xcassets in Resources */,
+				B2A0F1012F35490000000001 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,7 +259,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -310,7 +314,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

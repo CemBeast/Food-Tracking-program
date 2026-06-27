@@ -6,6 +6,11 @@
 //
 import SwiftUI
 
+/// Upper bound for a single logged quantity (grams or servings). Keeps absurd
+/// inputs from overflowing `Int(...)` conversions in the macro math (and in the
+/// live nutrition preview). 100,000 is far above any real food portion.
+let maxLoggableQuantity: Double = 100_000
+
 struct GramsOrServingsInput: View {
     @Environment(\.dismiss) private var dismiss
     var food: FoodItem
@@ -28,7 +33,7 @@ struct GramsOrServingsInput: View {
     
     var body: some View {
         var parsedInput: Double {
-            Double(numberInput) ?? 0
+            min(Double(numberInput) ?? 0, maxLoggableQuantity)
         }
         
         var inputRatio: Double {
@@ -104,7 +109,7 @@ struct GramsOrServingsInput: View {
                             }
                             
                             if let parsed = Double(numberInput) {
-                                gramsOrServings = parsed
+                                gramsOrServings = min(parsed, maxLoggableQuantity)
                             } else {
                                 gramsOrServings = nil
                             }
@@ -194,7 +199,8 @@ struct GramsOrServingsInput: View {
     }
 
     func updateFoodTracking() {
-        guard let value = gramsOrServings, value > 0 else { return }
+        guard let rawValue = gramsOrServings, rawValue > 0 else { return }
+        let value = min(rawValue, maxLoggableQuantity)
 
         let ratio: Double
         switch mode {

@@ -349,7 +349,7 @@ struct MealBuilderView: View {
             newMeal.id = existingId
         }
 
-        print("✅ BUILT MEAL:", newMeal.name,
+        debugLog("✅ BUILT MEAL:", newMeal.name,
               "isMeal:", newMeal.isMeal,
               "id:", newMeal.id,
               "ingredients:", newMeal.ingredients.count)

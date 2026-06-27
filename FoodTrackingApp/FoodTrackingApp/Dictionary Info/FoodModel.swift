@@ -29,7 +29,7 @@ class FoodModel: ObservableObject {
             } else {
                 items.append(item)
             }
-            print("💾 FoodModel saved meal:", item.name, "id:", item.id, "ingredients:", item.ingredients.count)
+            debugLog("💾 FoodModel saved meal:", item.name, "id:", item.id, "ingredients:", item.ingredients.count)
             save()
             return
         }
@@ -38,7 +38,7 @@ class FoodModel: ObservableObject {
         if items.contains(where: { !$0.isMeal && $0.name.lowercased() == item.name.lowercased() }) {
             return
         }
-        print("💾 FoodModel.add() called for:", item.name)
+        debugLog("💾 FoodModel.add() called for:", item.name)
         items.append(item)
         save()
     }
@@ -48,7 +48,7 @@ class FoodModel: ObservableObject {
     }
     
     func load() {
-        print("🛠 Documents Directory:", getDocumentsDirectory().path)
+        debugLog("🛠 Documents Directory:", getDocumentsDirectory().path)
         items = loadFoodItems()
         mergeBundledDefaultsIfNeeded()
     }
@@ -57,7 +57,7 @@ class FoodModel: ObservableObject {
     func clearUserFoodDictionary() {
         items = []
         save() // This will overwrite the file with an empty array []
-        print("🧹 Cleared user food dictionary.")
+        debugLog("🧹 Cleared user food dictionary.")
     }
 
     /// Reseed the dictionary from bundled defaults when the bundled version advances.
@@ -69,7 +69,7 @@ class FoodModel: ObservableObject {
 
         let bundled = loadDefaultFoodItems(from: bundledDefaultsFileName)
         guard !bundled.isEmpty else {
-            print("⚠️ Bundled defaults empty, skipping reseed (was v\(lastMerged))")
+            debugLog("⚠️ Bundled defaults empty, skipping reseed (was v\(lastMerged))")
             return
         }
 
@@ -77,7 +77,7 @@ class FoodModel: ObservableObject {
         save()
         bundledDefaultIDs = Set(bundled.map { $0.id })
         UserDefaults.standard.set(bundledDefaultsVersion, forKey: defaultsMergedVersionKey)
-        print("♻️ Wiped and reseeded bundled defaults v\(bundledDefaultsVersion) (was v\(lastMerged)) — \(bundled.count) items")
+        debugLog("♻️ Wiped and reseeded bundled defaults v\(bundledDefaultsVersion) (was v\(lastMerged)) — \(bundled.count) items")
     }
 
     private func mergeDefaultsAddMissing(_ defaults: [FoodItem]) -> Bool {

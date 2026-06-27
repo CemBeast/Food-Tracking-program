@@ -97,8 +97,10 @@ class ScannerTrackingViewController: UIViewController, AVCaptureMetadataOutputOb
     }
 
     func lookupAndReturnFood(barcode: String) {
-        let urlString = "https://world.openfoodfacts.org/api/v0/product/\(barcode).json"
-        guard let url = URL(string: urlString) else {
+        // The barcode is untrusted scanner input — percent-encode it so any
+        // unexpected character can't break the URL or be read as a delimiter.
+        guard let encodedBarcode = barcode.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+              let url = URL(string: "https://world.openfoodfacts.org/api/v0/product/\(encodedBarcode).json") else {
             finish(error: .network)
             return
         }

@@ -479,9 +479,9 @@ struct IngredientsView: View {
         foodModel.load() // refresh from disk to avoid stale copy
         if let found = foodModel.items.first(where: { $0.id == mealId }) {
             meal = found
-            print("🧩 Loaded meal ingredients:", found.ingredients.count)
+            debugLog("🧩 Loaded meal ingredients:", found.ingredients.count)
         } else {
-            print("⚠️ Meal not found for id \(mealId)")
+            debugLog("⚠️ Meal not found for id \(mealId)")
         }
     }
     

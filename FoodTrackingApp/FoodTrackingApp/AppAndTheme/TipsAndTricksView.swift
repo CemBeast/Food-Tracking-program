@@ -18,19 +18,19 @@ struct TipsAndTricksView: View {
     private let tips: [Tip] = [
         Tip(icon: "target",
             title: "Set Your Macro Goals",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Head to Settings to enter goals manually or let the wizard calculate them for you."),
+            body: "Head to Settings to enter your macro goals manually, or tap Calculate My Macros to get recommended targets based on your current age, height, weight, and goals."),
         Tip(icon: "book.fill",
             title: "Build Your Food Dictionary",
-            body: "Lorem ipsum dolor sit amet. Add foods manually, scan barcodes, or look them up in the USDA database to grow your personal library."),
+            body: "Add foods manually, scan barcodes, or look them up in the USDA database to grow your personal library. This app runs mainly on your food dictionary, so it's important to fill it with foods you eat consistently."),
         Tip(icon: "bolt.fill",
             title: "Quick Track Frequent Foods",
-            body: "Lorem ipsum dolor sit amet. Use Quick Track on the Track tab to log meals you eat often in just a couple of taps."),
+            body: "Use Quick Track to quickly log any food or drink by entering its macros. Use Quick Track Meal to log a meal you've already saved to your dictionary. This is especially useful if you eat the same meals every day and have already added them."),
         Tip(icon: "square.stack.3d.up.fill",
             title: "Create Reusable Meals",
-            body: "Lorem ipsum dolor sit amet. Combine multiple foods into a single meal template so you can log a full plate at once."),
+            body: "Combine multiple foods into a single meal template so you can log a full plate at once. This greatly reduces repetition: instead of tracking many individual foods every time, you save them as one meal and track it in a single step. For example, rather than logging 2 eggs, 1 cup of milk, and 200 grams of tomatoes each morning, you can create a meal called 'Breakfast' and simply track 'Breakfast' every day."),
         Tip(icon: "chart.line.uptrend.xyaxis",
             title: "Review Your History",
-            body: "Lorem ipsum dolor sit amet. The History tab shows what you ate today and your macro trends over time."),
+            body: "The History tab has two views. Tap View Foods Eaten Today to see everything you've logged today; from there, tap any food to edit its quantity, and your macros will update automatically. Tap View Macro History to scroll through your logs from previous days and see what you ate."),
     ]
 
     var body: some View {

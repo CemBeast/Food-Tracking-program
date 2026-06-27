@@ -153,31 +153,31 @@ class MacroTrackerViewModel: ObservableObject {
         
         // Persist Dailymacros/foodLog/macrogoals whenever they change
         $calories
-            .sink { val in defaults.set(val, forKey: self.caloriesKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.caloriesKey) }
             .store(in: &cancellables)
         $protein
-            .sink { val in defaults.set(val, forKey: self.proteinKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.proteinKey) }
             .store(in: &cancellables)
         $carbs
-            .sink { val in defaults.set(val, forKey: self.carbsKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.carbsKey) }
             .store(in: &cancellables)
         $fats
-            .sink { val in defaults.set(val, forKey: self.fatsKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.fatsKey) }
             .store(in: &cancellables)
         $foodLog
-            .sink {_ in self.saveFoodLog()}
+            .sink { [weak self] _ in self?.saveFoodLog() }
             .store(in: &cancellables)
         $caloriesGoal
-            .sink { val in defaults.set(val, forKey: self.caloriesGoalKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.caloriesGoalKey) }
             .store(in: &cancellables)
         $proteinGoal
-            .sink { val in defaults.set(val, forKey: self.proteinGoalKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.proteinGoalKey) }
             .store(in: &cancellables)
         $carbGoal
-            .sink { val in defaults.set(val, forKey: self.carbsGoalKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.carbsGoalKey) }
             .store(in: &cancellables)
         $fatGoal
-            .sink { val in defaults.set(val, forKey: self.fatsGoalKey) }
+            .sink { [weak self] val in guard let self else { return }; defaults.set(val, forKey: self.fatsGoalKey) }
             .store(in: &cancellables)
         
         checkForNewDay()
@@ -263,7 +263,7 @@ class MacroTrackerViewModel: ObservableObject {
     
     // Function to increase macros from logging and put it in food log to track what was ate
     func logFood(_ item: FoodItem, gramsOrServings: Double, mode: MeasurementMode, at time: Date = Date()) {
-        print("🍽 Logging food: \(item.name), qty: \(gramsOrServings), mode: \(mode)")
+        debugLog("🍽 Logging food: \(item.name), qty: \(gramsOrServings), mode: \(mode)")
         let factor: Double = {
             switch mode {
             case .weight:
@@ -291,9 +291,9 @@ class MacroTrackerViewModel: ObservableObject {
     private func saveFoodLog() {
         if let encoded = try? JSONEncoder().encode(foodLog) {
             UserDefaults.standard.set(encoded, forKey: foodLogKey)
-            print("✅ Food log saved: \(foodLog.count) entries")
+            debugLog("✅ Food log saved: \(foodLog.count) entries")
         } else {
-            print("❌ Failed to encode foodLog")
+            debugLog("❌ Failed to encode foodLog")
         }
     }
     
@@ -302,23 +302,16 @@ class MacroTrackerViewModel: ObservableObject {
         if let data = UserDefaults.standard.data(forKey: foodLogKey),
            let decoded = try? JSONDecoder().decode([LoggedFoodEntry].self, from: data) {
             foodLog = decoded
-            print("✅ Loaded foodLog with \(foodLog.count) items")
+            debugLog("✅ Loaded foodLog with \(foodLog.count) items")
         } else {
-            print("❌ No food log found or decoding failed")
+            debugLog("❌ No food log found or decoding failed")
         }
     }
     
     // Delete a food from the log
     func deleteFoodLogEntry(_ entry: LoggedFoodEntry) {
-        let factor: Double = {
-            switch entry.mode {
-            case .weight:
-                return Double(entry.quantity) / Double(entry.food.weightInGrams)
-            case .serving:
-                return Double(entry.quantity) / Double(entry.food.servings)
-            }
-        }()
-        
+        let factor = computeFactor(entry.quantity, entry.food, entry.mode)
+
         // Subtract macros
         calories -= Int(Double(entry.food.calories) * factor)
         protein  -= entry.food.protein * factor
@@ -366,7 +359,7 @@ class MacroTrackerViewModel: ObservableObject {
     
     // For saving macros to be seen on widget
     func saveDailyMacrosToDefaults() {
-        let defaults = UserDefaults(suiteName: "group.com.yourname.FoodTrackingApp")
+        let defaults = UserDefaults(suiteName: "group.com.cem.FoodTrackingApp")
         defaults?.set(calories, forKey: "calories")
         defaults?.set(protein, forKey: "protein")
         defaults?.set(carbs, forKey: "carbs")

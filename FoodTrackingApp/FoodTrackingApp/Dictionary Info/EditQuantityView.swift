@@ -81,7 +81,8 @@ struct EditQuantityView: View {
                 // Buttons
                 VStack(spacing: 12) {
                     Button {
-                        if let newQty = Double(quantityInput), newQty > 0 {
+                        if let parsed = Double(quantityInput), parsed > 0 {
+                            let newQty = min(parsed, maxLoggableQuantity)
                             onSave(newQty)
                             dismiss()
                         }

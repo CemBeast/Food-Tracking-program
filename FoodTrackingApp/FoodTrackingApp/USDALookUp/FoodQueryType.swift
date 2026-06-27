@@ -29,7 +29,7 @@ struct FoodQueryClassifier {
 
     static func classify(_ raw: String) -> FoodQueryType {
         let s = normalize(raw)
-        print("Food normalized:", s)
+        debugLog("Food normalized:", s)
         let tokens = tokenize(s)
 
         var dishScore = 0
