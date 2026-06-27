@@ -3,6 +3,7 @@ Secrets.xcconfig
 
 # Internal pre-launch review notes (not for the repo)
 PRE_LAUNCH_CODE_REVIEW.md
+APP_STORE_SUBMISSION_CHECKLIST.md
 
 # Xcode per-user state (machine/user specific, should never be tracked)
 xcuserdata/
