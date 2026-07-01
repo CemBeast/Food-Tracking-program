@@ -37,7 +37,7 @@ struct LookUpFoodView: View {
     @State private var mode: LookupMode = .foundation
     @State private var results: [USDAFoodChoice] = []
     @State private var resultQueryNormalized: String = ""
-    @State private var macrosByFdcId: [Int: MacrosPer100g] = [:] // cache for loading results from USDA
+    @State private var detailsByFdcId: [Int: USDAFoodDetails] = [:] // cache for loading results from USDA (macros + serving size)
     @State private var modeInfo: Bool = false
     
     @Environment(\.horizontalSizeClass) private var hSizeClass
@@ -88,12 +88,13 @@ struct LookUpFoodView: View {
                                         Image(systemName: "chevron.right")
                                             .foregroundColor(AppTheme.textTertiary)
                                     }
-                                    Label("100g", systemImage: "scalemass")
+                                    Label(servingLabel(for: choice), systemImage: "scalemass")
                                         .font(.system(size: 12))
                                         .foregroundColor(AppTheme.textSecondary)
-                                    
-                                    // Preview macros (if loaded)
-                                    if let m = macrosByFdcId[choice.fdcId] {
+
+                                    // Preview macros (if loaded), scaled to the serving size
+                                    if let details = detailsByFdcId[choice.fdcId] {
+                                        let m = servingMacros(for: details)
                                         HStack(spacing: 8) {
                                             MacroPill(value: "\(Int(m.caloriesKcal.rounded()))", label: "cal", color: AppTheme.calorieColor)
                                             MacroPill(value: String(format: "%.0f", m.proteinG), label: "P", color: AppTheme.proteinColor)
@@ -254,18 +255,18 @@ struct LookUpFoodView: View {
         }
     }
         
-    // Fetches the macros for the list results provided
+    // Fetches the macros + serving size for the list results provided
     private func fetchPreviewMacros(for choices: [USDAFoodChoice]) {
         Task {
-            await withTaskGroup(of: (Int, MacrosPer100g)?.self) { group in
+            await withTaskGroup(of: (Int, USDAFoodDetails)?.self) { group in
                 for c in choices {
                     // cache hit -> don’t fetch
-                    if macrosByFdcId[c.fdcId] != nil { continue }
+                    if detailsByFdcId[c.fdcId] != nil { continue }
 
                     group.addTask {
                         do {
-                            let macros = try await usdaService.fetchMacrosPer100gForFood(fdcId: c.fdcId)
-                            return (c.fdcId, macros)
+                            let details = try await usdaService.fetchFoodDetailsForFood(fdcId: c.fdcId)
+                            return (c.fdcId, details)
                         } catch {
                             // ignore failures for previews (optional: log)
                             return nil
@@ -275,13 +276,34 @@ struct LookUpFoodView: View {
 
                 // update incrementally as results arrive
                 for await result in group {
-                    guard let (fdcId, macros) = result else { continue }
+                    guard let (fdcId, details) = result else { continue }
                     await MainActor.run {
-                        macrosByFdcId[fdcId] = macros
+                        detailsByFdcId[fdcId] = details
                     }
                 }
             }
         }
+    }
+
+    // Serving size label for a result row: real serving if USDA reports one, else "100g".
+    private func servingLabel(for choice: USDAFoodChoice) -> String {
+        guard let details = detailsByFdcId[choice.fdcId], let servingG = details.servingSizeG else {
+            return "100g"
+        }
+        let unit = details.isLiquid ? "ml" : "g"
+        return "\(Int(servingG.rounded()))\(unit)"
+    }
+
+    // Macros scaled to the reported serving size (falls back to per-100g when none).
+    private func servingMacros(for details: USDAFoodDetails) -> MacrosPer100g {
+        let factor = (details.servingSizeG ?? 100.0) / 100.0
+        let m = details.macrosPer100g
+        return MacrosPer100g(
+            caloriesKcal: m.caloriesKcal * factor,
+            proteinG: m.proteinG * factor,
+            carbsG: m.carbsG * factor,
+            fatG: m.fatG * factor
+        )
     }
     
     private func selectChoice(_ choice: USDAFoodChoice) {
@@ -290,7 +312,13 @@ struct LookUpFoodView: View {
 
         Task {
             do {
-                let details = try await usdaService.fetchFoodDetailsForFood(fdcId: choice.fdcId)
+                // Reuse the cached preview details when available to avoid a duplicate fetch.
+                let details: USDAFoodDetails
+                if let cached = detailsByFdcId[choice.fdcId] {
+                    details = cached
+                } else {
+                    details = try await usdaService.fetchFoodDetailsForFood(fdcId: choice.fdcId)
+                }
                 let macros = details.macrosPer100g
                 let servingG = details.servingSizeG ?? 100.0
                 let factor = servingG / 100.0
