@@ -283,6 +283,15 @@ struct MacroGoalWizardView: View {
                             }
                         }
                         
+                        // Not-medical-advice disclaimer (App Store Guideline 1.4.1)
+                        Text("These targets are estimates for general wellness and are not medical or nutritional advice. Consult a healthcare professional before making dietary changes.")
+                            .font(.system(size: 12))
+                            .foregroundColor(AppTheme.textSecondary)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.horizontal, 8)
+                            .padding(.top, 4)
+
                         // Calculate Button
                         Button {
                             calculateMacros()
