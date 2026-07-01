@@ -1,16 +1,8 @@
 
 Secrets.xcconfig
 
-# Internal pre-launch review notes (not for the repo)
-PRE_LAUNCH_CODE_REVIEW.md
-APP_STORE_SUBMISSION_CHECKLIST.md
-APP_STORE_COPY.md
-
-# Marketing site — lives in its own public repo, not the app source
-site/
-
-# App Store screenshots (uploaded via App Store Connect, not tracked)
-Screenshot Examples/
+# Publishing/App Store prep — internal notes, marketing site, screenshots (not for the repo)
+Publishing/
 
 # Xcode per-user state (machine/user specific, should never be tracked)
 xcuserdata/
