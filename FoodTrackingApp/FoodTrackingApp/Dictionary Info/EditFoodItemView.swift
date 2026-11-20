@@ -30,15 +30,6 @@ private let decimalFormatter: NumberFormatter = {
     return formatter
 }()
 
-private func makeKeyboardDoneToolbar(target: Any?, action: Selector) -> UIToolbar {
-    let toolbar = UIToolbar()
-    toolbar.sizeToFit()
-    let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    let done = UIBarButtonItem(barButtonSystemItem: .done, target: target, action: action)
-    toolbar.items = [flexible, done]
-    return toolbar
-}
-
 struct SelectableTextFieldInt: UIViewRepresentable {
     @Binding var value: Int
     var formatter: NumberFormatter
@@ -58,10 +49,6 @@ struct SelectableTextFieldInt: UIViewRepresentable {
                 parent.value = number.intValue
             }
         }
-
-        @objc func dismissKeyboard() {
-            UIApplication.shared.endEditing()
-        }
     }
 
     func makeUIView(context: Context) -> UITextField {
@@ -72,10 +59,6 @@ struct SelectableTextFieldInt: UIViewRepresentable {
         textField.autocorrectionType = .no
         textField.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         textField.textColor = UIColor(AppTheme.textPrimary)
-        textField.inputAccessoryView = makeKeyboardDoneToolbar(
-            target: context.coordinator,
-            action: #selector(Coordinator.dismissKeyboard)
-        )
         textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange(_:)), for: .editingChanged)
         return textField
     }
@@ -108,10 +91,6 @@ struct SelectableTextFieldDouble: UIViewRepresentable {
                 parent.value = number.doubleValue
             }
         }
-
-        @objc func dismissKeyboard() {
-            UIApplication.shared.endEditing()
-        }
     }
 
     func makeUIView(context: Context) -> UITextField {
@@ -122,10 +101,6 @@ struct SelectableTextFieldDouble: UIViewRepresentable {
         textField.autocorrectionType = .no
         textField.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         textField.textColor = UIColor(AppTheme.textPrimary)
-        textField.inputAccessoryView = makeKeyboardDoneToolbar(
-            target: context.coordinator,
-            action: #selector(Coordinator.dismissKeyboard)
-        )
         textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange(_:)), for: .editingChanged)
 
         return textField
@@ -157,9 +132,14 @@ struct EditFoodItemView: View {
     var onCancel: () -> Void
 
     var body: some View {
+        mainContent.keyboardSwipeToDismiss()
+    }
+
+    @ViewBuilder private var mainContent: some View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
+            ScrollView {
             VStack(spacing: 24) {
                 // Header
                 VStack(spacing: 8) {
@@ -430,12 +410,9 @@ struct EditFoodItemView: View {
                 .padding(.bottom, 32)
             }
             .padding(.horizontal, 20)
+            }
         }
         .presentationDragIndicator(.visible)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
     }
     
     private func captureBaseSnapshotFromCurrent() {
