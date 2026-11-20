@@ -146,6 +146,11 @@ struct MacroHistoryView: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
         }
+        // The search bar hides when history is empty; drop its text too so an
+        // old query doesn't come back pre-filled once a new day rolls in.
+        .onChange(of: viewModel.history.isEmpty) { isEmpty in
+            if isEmpty { searchText = "" }
+        }
         .navigationTitle("History")
         .navigationBarTitleDisplayMode(.large)
     }
