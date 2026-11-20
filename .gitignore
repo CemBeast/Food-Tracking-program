@@ -14,3 +14,6 @@ tools/build_log.csv
 
 # Claude Code project instructions (local only)
 CLAUDE.md
+
+# Superpowers design docs / plans (local only)
+docs/superpowers/
