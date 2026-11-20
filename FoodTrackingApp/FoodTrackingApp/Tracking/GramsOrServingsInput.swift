@@ -32,10 +32,6 @@ struct GramsOrServingsInput: View {
     }()
     
     var body: some View {
-        mainContent.keyboardSwipeToDismiss(usesDragGesture: true)
-    }
-
-    @ViewBuilder private var mainContent: some View {
         var parsedInput: Double {
             min(Double(numberInput) ?? 0, maxLoggableQuantity)
         }

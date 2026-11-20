@@ -9,6 +9,10 @@ import SwiftUI
 
 @main
 struct FoodTrackingAppApp: App {
+    init() {
+        KeyboardSwipeDismiss.shared.start()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

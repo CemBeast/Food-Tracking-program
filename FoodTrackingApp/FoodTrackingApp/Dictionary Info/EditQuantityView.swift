@@ -20,10 +20,6 @@ struct EditQuantityView: View {
     }
 
     var body: some View {
-        mainContent.keyboardSwipeToDismiss(usesDragGesture: true)
-    }
-
-    @ViewBuilder private var mainContent: some View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
             

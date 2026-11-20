@@ -163,10 +163,6 @@ struct MealBuilderView: View {
     private var canSave: Bool { !components.isEmpty }
 
     var body: some View {
-        mainContent.keyboardSwipeToDismiss()
-    }
-
-    @ViewBuilder private var mainContent: some View {
         NavigationView {
             ZStack {
                 AppTheme.background.ignoresSafeArea()

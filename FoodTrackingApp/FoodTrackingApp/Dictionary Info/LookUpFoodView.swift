@@ -55,10 +55,6 @@ struct LookUpFoodView: View {
     }
     
     var body: some View {
-        mainContent.keyboardSwipeToDismiss()
-    }
-
-    @ViewBuilder private var mainContent: some View {
         VStack(spacing: 0){
             VStack(alignment: .leading, spacing: 12) {
                 SearchBar(text: $searchText, placeholder: placeholder, onSubmit: {runUSDASearch()},  showsSearchButton: true)

@@ -179,10 +179,6 @@ struct DictionaryView: View {
     }()
     
     var body: some View {
-        mainContent.keyboardSwipeToDismiss()
-    }
-
-    @ViewBuilder private var mainContent: some View {
         VStack(spacing: 0) {
             //searchBar
             SearchBar(text: $searchText, placeholder: "Search foods...")

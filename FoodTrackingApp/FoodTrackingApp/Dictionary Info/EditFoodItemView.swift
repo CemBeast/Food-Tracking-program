@@ -132,10 +132,6 @@ struct EditFoodItemView: View {
     var onCancel: () -> Void
 
     var body: some View {
-        mainContent.keyboardSwipeToDismiss()
-    }
-
-    @ViewBuilder private var mainContent: some View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 

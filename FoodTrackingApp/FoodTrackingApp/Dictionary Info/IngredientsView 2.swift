@@ -561,10 +561,6 @@ private struct IngredientQuantityEditor: View {
     private var liveFats:    Double { ingredient.fats    * liveRatio }
 
     var body: some View {
-        mainContent.keyboardSwipeToDismiss(usesDragGesture: true)
-    }
-
-    @ViewBuilder private var mainContent: some View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
@@ -642,10 +638,6 @@ private struct MealWeightEditor: View {
     }
 
     var body: some View {
-        mainContent.keyboardSwipeToDismiss(usesDragGesture: true)
-    }
-
-    @ViewBuilder private var mainContent: some View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 

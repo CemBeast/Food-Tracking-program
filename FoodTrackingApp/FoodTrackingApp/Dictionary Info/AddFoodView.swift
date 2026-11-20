@@ -23,10 +23,6 @@ struct AddFoodView: View {
     @State private var selectedUnit: ServingUnit = .grams
 
     var body: some View {
-        mainContent.keyboardSwipeToDismiss()
-    }
-
-    @ViewBuilder private var mainContent: some View {
         NavigationView {
             ZStack {
                 AppTheme.background.ignoresSafeArea()

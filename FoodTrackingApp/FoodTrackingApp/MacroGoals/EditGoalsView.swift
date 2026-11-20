@@ -19,10 +19,6 @@ struct EditGoalsView: View {
     @State private var fatText: String = ""
     
     var body: some View {
-        mainContent.keyboardSwipeToDismiss()
-    }
-
-    @ViewBuilder private var mainContent: some View {
         NavigationView {
             ZStack {
                 AppTheme.background.ignoresSafeArea()
