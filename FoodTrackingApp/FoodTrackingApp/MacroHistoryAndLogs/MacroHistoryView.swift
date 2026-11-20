@@ -10,6 +10,24 @@ import SwiftUI
 struct MacroHistoryView: View {
     @ObservedObject var viewModel: MacroTrackerViewModel
     @ObservedObject var foodModel: FoodModel
+    @State private var searchText = ""
+
+    private var trimmedQuery: String {
+        searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// Foods in this day whose name contains the query (empty when no query).
+    private func matches(in entry: MacroHistoryEntry) -> [LoggedFoodEntry] {
+        guard !trimmedQuery.isEmpty else { return [] }
+        return entry.foodsEaten.filter { $0.food.name.localizedCaseInsensitiveContains(trimmedQuery) }
+    }
+
+    /// Newest first; when searching, only days containing a match.
+    private var visibleDays: [MacroHistoryEntry] {
+        let sorted = viewModel.history.sorted(by: { $0.date > $1.date })
+        guard !trimmedQuery.isEmpty else { return sorted }
+        return sorted.filter { !matches(in: $0).isEmpty }
+    }
 
     var body: some View {
         let (avgCal, avgProtein, avgCarb, avgFat) = getAvgMacros()
@@ -72,9 +90,33 @@ struct MacroHistoryView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                 } else {
-                    ForEach(viewModel.history.sorted(by: { $0.date > $1.date })) { entry in
+                    SearchBar(text: $searchText, placeholder: "Search foods in history...")
+                        // Keeps the clear (x) button from acting as a row tap.
+                        .buttonStyle(.borderless)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+
+                    if visibleDays.isEmpty {
+                        VStack(spacing: 16.scaled) {
+                            Image(systemName: "magnifyingglass")
+                                .font(.system(size: 48.scaled, weight: .light))
+                                .foregroundColor(AppTheme.textTertiary)
+
+                            Text("No days with \"\(trimmedQuery)\"")
+                                .font(.system(size: 18.scaled, weight: .semibold))
+                                .foregroundColor(AppTheme.textPrimary)
+                                .multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 60.scaled)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                    }
+
+                    ForEach(visibleDays) { entry in
                         ZStack {
-                            HistoryDayRow(entry: entry)
+                            HistoryDayRow(entry: entry, matches: matches(in: entry))
                             NavigationLink {
                                 FoodLogViewForDate(entries: entry.foodsEaten, foodModel: foodModel)
                             } label: {
@@ -155,7 +197,9 @@ struct AverageMacroPill: View {
 // MARK: - History Day Row
 struct HistoryDayRow: View {
     let entry: MacroHistoryEntry
-    
+    /// Foods matching the current history search; shown under the pills.
+    var matches: [LoggedFoodEntry] = []
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12.scaled) {
             HStack {
@@ -177,6 +221,27 @@ struct HistoryDayRow: View {
                 MacroPill(value: "\(Int(entry.protein.rounded()))", label: "P", color: AppTheme.proteinColor)
                 MacroPill(value: "\(Int(entry.carbs.rounded()))", label: "C", color: AppTheme.carbColor)
                 MacroPill(value: "\(Int(entry.fats.rounded()))", label: "F", color: AppTheme.fatColor)
+            }
+
+            if !matches.isEmpty {
+                VStack(alignment: .leading, spacing: 4.scaled) {
+                    ForEach(matches.prefix(3)) { match in
+                        HStack(spacing: 6.scaled) {
+                            Image(systemName: "magnifyingglass")
+                                .font(.system(size: 11.scaled))
+                                .foregroundColor(AppTheme.textTertiary)
+                            Text("\(match.food.name) · \(match.quantityLabel)")
+                                .font(.system(size: 13.scaled))
+                                .foregroundColor(AppTheme.textSecondary)
+                                .lineLimit(1)
+                        }
+                    }
+                    if matches.count > 3 {
+                        Text("+\(matches.count - 3) more")
+                            .font(.system(size: 12.scaled))
+                            .foregroundColor(AppTheme.textTertiary)
+                    }
+                }
             }
         }
         .padding(16.scaled)
