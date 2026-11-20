@@ -40,129 +40,129 @@ struct QuickMacroTrackView: View {
                 AppTheme.background.ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 24.scaled) {
                         // Header
-                        VStack(spacing: 8) {
+                        VStack(spacing: 8.scaled) {
                             Image(systemName: "bolt.fill")
-                                .font(.system(size: 40, weight: .light))
+                                .font(.system(size: 40.scaled, weight: .light))
                                 .foregroundColor(AppTheme.textPrimary)
                             
                             Text(isEditing ? "Edit Quick Entry" : "Quick Track")
-                                .font(.system(size: 22, weight: .bold))
+                                .font(.system(size: 22.scaled, weight: .bold))
                                 .foregroundColor(AppTheme.textPrimary)
                             
                             Text(isEditing ? "Update this entry's name and macros" : "Log macros without saving to dictionary")
-                                .font(.system(size: 14))
+                                .font(.system(size: 14.scaled))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
-                        .padding(.top, 20)
-                        .padding(.bottom, 8)
+                        .padding(.top, 20.scaled)
+                        .padding(.bottom, 8.scaled)
                         
                         // Food Name
-                        VStack(alignment: .leading, spacing: 6) {
+                        VStack(alignment: .leading, spacing: 6.scaled) {
                             Text("Food Name (optional)")
-                                .font(.system(size: 13, weight: .medium))
+                                .font(.system(size: 13.scaled, weight: .medium))
                                 .foregroundColor(AppTheme.textSecondary)
                             ThemedTextField(placeholder: "e.g., Lunch", text: $name)
                         }
                         
                         // Nutrition
-                        VStack(spacing: 0) {
+                        VStack(spacing: 0.scaled) {
                             // Calories
                             HStack {
-                                HStack(spacing: 12) {
+                                HStack(spacing: 12.scaled) {
                                     Circle()
                                         .fill(AppTheme.calorieColor)
-                                        .frame(width: 10, height: 10)
+                                        .frame(width: 10.scaled, height: 10.scaled)
                                     Text("Calories")
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 16.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                 }
                                 Spacer()
                                 TextField("0", text: $calories)
                                     .keyboardType(.numberPad)
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                    .font(.system(size: 20.scaled, weight: .bold, design: .rounded))
                                     .foregroundColor(AppTheme.textPrimary)
                                     .multilineTextAlignment(.trailing)
-                                    .frame(width: 100)
+                                    .frame(width: 100.scaled)
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
+                            .padding(.horizontal, 16.scaled)
+                            .padding(.vertical, 16.scaled)
                             
-                            Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                            Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                             
                             // Protein
                             HStack {
-                                HStack(spacing: 12) {
+                                HStack(spacing: 12.scaled) {
                                     Circle()
                                         .fill(AppTheme.proteinColor)
-                                        .frame(width: 10, height: 10)
+                                        .frame(width: 10.scaled, height: 10.scaled)
                                     Text("Protein (g)")
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 16.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                 }
                                 Spacer()
                                 TextField("0", text: $protein)
                                     .keyboardType(.decimalPad)
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                    .font(.system(size: 20.scaled, weight: .bold, design: .rounded))
                                     .foregroundColor(AppTheme.textPrimary)
                                     .multilineTextAlignment(.trailing)
-                                    .frame(width: 100)
+                                    .frame(width: 100.scaled)
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
+                            .padding(.horizontal, 16.scaled)
+                            .padding(.vertical, 16.scaled)
                             
-                            Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                            Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                             
                             // Carbs
                             HStack {
-                                HStack(spacing: 12) {
+                                HStack(spacing: 12.scaled) {
                                     Circle()
                                         .fill(AppTheme.carbColor)
-                                        .frame(width: 10, height: 10)
+                                        .frame(width: 10.scaled, height: 10.scaled)
                                     Text("Carbs (g)")
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 16.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                 }
                                 Spacer()
                                 TextField("0", text: $carbs)
                                     .keyboardType(.decimalPad)
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                    .font(.system(size: 20.scaled, weight: .bold, design: .rounded))
                                     .foregroundColor(AppTheme.textPrimary)
                                     .multilineTextAlignment(.trailing)
-                                    .frame(width: 100)
+                                    .frame(width: 100.scaled)
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
+                            .padding(.horizontal, 16.scaled)
+                            .padding(.vertical, 16.scaled)
                             
-                            Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                            Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                             
                             // Fats
                             HStack {
-                                HStack(spacing: 12) {
+                                HStack(spacing: 12.scaled) {
                                     Circle()
                                         .fill(AppTheme.fatColor)
-                                        .frame(width: 10, height: 10)
+                                        .frame(width: 10.scaled, height: 10.scaled)
                                     Text("Fats (g)")
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 16.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                 }
                                 Spacer()
                                 TextField("0", text: $fats)
                                     .keyboardType(.decimalPad)
-                                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                                    .font(.system(size: 20.scaled, weight: .bold, design: .rounded))
                                     .foregroundColor(AppTheme.textPrimary)
                                     .multilineTextAlignment(.trailing)
-                                    .frame(width: 100)
+                                    .frame(width: 100.scaled)
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
+                            .padding(.horizontal, 16.scaled)
+                            .padding(.vertical, 16.scaled)
                         }
                         .background(
-                            RoundedRectangle(cornerRadius: 16)
+                            RoundedRectangle(cornerRadius: 16.scaled)
                                 .fill(AppTheme.cardBackground)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
+                                    RoundedRectangle(cornerRadius: 16.scaled)
                                         .stroke(AppTheme.border, lineWidth: 1)
                                 )
                         )
@@ -190,17 +190,17 @@ struct QuickMacroTrackView: View {
                             onLog(quickFood)
                             presentationMode.wrappedValue.dismiss()
                         } label: {
-                            HStack(spacing: 8) {
+                            HStack(spacing: 8.scaled) {
                                 Image(systemName: isEditing ? "checkmark.circle.fill" : "plus.circle.fill")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 18.scaled))
                                 Text(isEditing ? "Save Changes" : "Log Macros")
                             }
                         }
                         .buttonStyle(SleekButtonStyle())
-                        .padding(.top, 8)
+                        .padding(.top, 8.scaled)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 40)
+                    .padding(.horizontal, 20.scaled)
+                    .padding(.bottom, 40.scaled)
                 }
             }
             .navigationTitle(isEditing ? "Edit Quick Entry" : "Quick Track")

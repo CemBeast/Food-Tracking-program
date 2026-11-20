@@ -24,26 +24,26 @@ struct EditGoalsView: View {
                 AppTheme.background.ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 24.scaled) {
                         // Header
-                        VStack(spacing: 8) {
+                        VStack(spacing: 8.scaled) {
                             Image(systemName: "target")
-                                .font(.system(size: 40, weight: .light))
+                                .font(.system(size: 40.scaled, weight: .light))
                                 .foregroundColor(AppTheme.textPrimary)
                             
                             Text("Set Your Daily Goals")
-                                .font(.system(size: 22, weight: .bold))
+                                .font(.system(size: 22.scaled, weight: .bold))
                                 .foregroundColor(AppTheme.textPrimary)
                             
                             Text("Adjust your daily macro targets")
-                                .font(.system(size: 14))
+                                .font(.system(size: 14.scaled))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
-                        .padding(.top, 20)
-                        .padding(.bottom, 8)
+                        .padding(.top, 20.scaled)
+                        .padding(.bottom, 8.scaled)
                         
                         // Macro Goals Card
-                        VStack(spacing: 0) {
+                        VStack(spacing: 0.scaled) {
                             // Calories
                             GoalRow(
                                 label: "Calories",
@@ -52,7 +52,7 @@ struct EditGoalsView: View {
                                 keyboardType: .numberPad
                             )
                             
-                            Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                            Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                             
                             // Protein
                             GoalRow(
@@ -62,7 +62,7 @@ struct EditGoalsView: View {
                                 keyboardType: .decimalPad
                             )
                             
-                            Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                            Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                             
                             // Carbs
                             GoalRow(
@@ -72,7 +72,7 @@ struct EditGoalsView: View {
                                 keyboardType: .decimalPad
                             )
                             
-                            Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                            Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                             
                             // Fats
                             GoalRow(
@@ -83,33 +83,33 @@ struct EditGoalsView: View {
                             )
                         }
                         .background(
-                            RoundedRectangle(cornerRadius: 16)
+                            RoundedRectangle(cornerRadius: 16.scaled)
                                 .fill(AppTheme.cardBackground)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
+                                    RoundedRectangle(cornerRadius: 16.scaled)
                                         .stroke(AppTheme.border, lineWidth: 1)
                                 )
                         )
                         
                         // Summary
-                        VStack(spacing: 8) {
+                        VStack(spacing: 8.scaled) {
                             Text("Daily Summary")
-                                .font(.system(size: 12, weight: .semibold))
+                                .font(.system(size: 12.scaled, weight: .semibold))
                                 .foregroundColor(AppTheme.textTertiary)
-                                .tracking(1)
+                                .tracking(1.scaled)
                             
-                            HStack(spacing: 16) {
+                            HStack(spacing: 16.scaled) {
                                 SummaryPill(value: calorieText.isEmpty ? "0" : calorieText, label: "cal", color: AppTheme.calorieColor)
                                 SummaryPill(value: proteinText.isEmpty ? "0" : proteinText, label: "P", color: AppTheme.proteinColor)
                                 SummaryPill(value: carbText.isEmpty ? "0" : carbText, label: "C", color: AppTheme.carbColor)
                                 SummaryPill(value: fatText.isEmpty ? "0" : fatText, label: "F", color: AppTheme.fatColor)
                             }
                         }
-                        .padding(.top, 8)
+                        .padding(.top, 8.scaled)
                         
-                        Spacer(minLength: 40)
+                        Spacer(minLength: 40.scaled)
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 20.scaled)
                 }
             }
             .navigationTitle("Edit Goals")
@@ -120,7 +120,7 @@ struct EditGoalsView: View {
                         saveGoals()
                         dismiss()
                     }
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.system(size: 16.scaled, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -157,13 +157,13 @@ struct GoalRow: View {
     
     var body: some View {
         HStack {
-            HStack(spacing: 12) {
+            HStack(spacing: 12.scaled) {
                 Circle()
                     .fill(color)
-                    .frame(width: 10, height: 10)
+                    .frame(width: 10.scaled, height: 10.scaled)
                 
                 Text(label)
-                    .font(.system(size: 16))
+                    .font(.system(size: 16.scaled))
                     .foregroundColor(AppTheme.textPrimary)
             }
             
@@ -171,13 +171,13 @@ struct GoalRow: View {
             
             TextField("0", text: $value)
                 .keyboardType(keyboardType)
-                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .font(.system(size: 20.scaled, weight: .bold, design: .rounded))
                 .foregroundColor(AppTheme.textPrimary)
                 .multilineTextAlignment(.trailing)
-                .frame(width: 100)
+                .frame(width: 100.scaled)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 16)
+        .padding(.horizontal, 16.scaled)
+        .padding(.vertical, 16.scaled)
     }
 }
 
@@ -188,19 +188,19 @@ struct SummaryPill: View {
     let color: Color
     
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 2.scaled) {
             Text(value)
-                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .font(.system(size: 14.scaled, weight: .bold, design: .rounded))
                 .foregroundColor(color)
             Text(label)
-                .font(.system(size: 10, weight: .medium))
+                .font(.system(size: 10.scaled, weight: .medium))
                 .foregroundColor(color.opacity(0.7))
         }
-        .frame(minWidth: 50)
-        .padding(.vertical, 8)
-        .padding(.horizontal, 12)
+        .frame(minWidth: 50.scaled)
+        .padding(.vertical, 8.scaled)
+        .padding(.horizontal, 12.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 10.scaled)
                 .fill(color.opacity(0.1))
         )
     }

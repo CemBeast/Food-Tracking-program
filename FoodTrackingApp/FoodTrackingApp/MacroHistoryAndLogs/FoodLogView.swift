@@ -19,17 +19,17 @@ struct FoodLogView: View {
             
             if viewModel.foodLog.isEmpty {
                 // Empty State
-                VStack(spacing: 16) {
+                VStack(spacing: 16.scaled) {
                     Image(systemName: "fork.knife.circle")
-                        .font(.system(size: 56, weight: .light))
+                        .font(.system(size: 56.scaled, weight: .light))
                         .foregroundColor(AppTheme.textTertiary)
                     
                     Text("No Foods Logged")
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(.system(size: 20.scaled, weight: .semibold))
                         .foregroundColor(AppTheme.textPrimary)
                     
                     Text("Start tracking your meals to see them here")
-                        .font(.system(size: 14))
+                        .font(.system(size: 14.scaled))
                         .foregroundColor(AppTheme.textSecondary)
                 }
             } else {
@@ -40,7 +40,7 @@ struct FoodLogView: View {
                         }
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                            .listRowInsets(EdgeInsets(top: 6.scaled, leading: 20.scaled, bottom: 6.scaled, trailing: 20.scaled))
                             .onLongPressGesture {
                                 if entry.isQuickEntry {
                                     quickEntryToEdit = entry
@@ -84,26 +84,26 @@ struct FoodLogEntryRow: View {
     var onAddToDictionary: (() -> Void)? = nil
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 12.scaled) {
             // Header
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 4.scaled) {
                     Text(entry.food.name)
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 16.scaled, weight: .semibold))
                         .foregroundColor(AppTheme.textPrimary)
                     
-                    HStack(spacing: 8) {
+                    HStack(spacing: 8.scaled) {
                         if entry.isQuickEntry {
                             // Quick Track entries have no real quantity, so show a badge instead.
-                            HStack(spacing: 4) {
+                            HStack(spacing: 4.scaled) {
                                 Image(systemName: "bolt.fill")
-                                    .font(.system(size: 10, weight: .semibold))
+                                    .font(.system(size: 10.scaled, weight: .semibold))
                                 Text("Quick")
-                                    .font(.system(size: 12, weight: .semibold))
+                                    .font(.system(size: 12.scaled, weight: .semibold))
                             }
                             .foregroundColor(AppTheme.textPrimary)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
+                            .padding(.horizontal, 8.scaled)
+                            .padding(.vertical, 3.scaled)
                             .background(
                                 Capsule().fill(Color.white.opacity(0.12))
                             )
@@ -111,15 +111,15 @@ struct FoodLogEntryRow: View {
 
                             if let onAddToDictionary {
                                 Button(action: onAddToDictionary) {
-                                    HStack(spacing: 3) {
+                                    HStack(spacing: 3.scaled) {
                                         Image(systemName: "plus")
-                                            .font(.system(size: 10, weight: .bold))
+                                            .font(.system(size: 10.scaled, weight: .bold))
                                         Text("Dictionary")
-                                            .font(.system(size: 12, weight: .semibold))
+                                            .font(.system(size: 12.scaled, weight: .semibold))
                                     }
                                     .foregroundColor(AppTheme.textSecondary)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 3)
+                                    .padding(.horizontal, 8.scaled)
+                                    .padding(.vertical, 3.scaled)
                                     .overlay(
                                         Capsule().stroke(AppTheme.border, lineWidth: 1)
                                     )
@@ -130,11 +130,11 @@ struct FoodLogEntryRow: View {
                             }
                         } else if entry.mode == .weight {
                             Text(String(format: "%.0f %@", entry.quantity, entry.servingUnit.rawValue))
-                                .font(.system(size: 13))
+                                .font(.system(size: 13.scaled))
                                 .foregroundColor(AppTheme.textSecondary)
                         } else {
                             Text(String(format: "%.1f serving%@", entry.quantity, entry.quantity > 1 ? "s" : ""))
-                                .font(.system(size: 13))
+                                .font(.system(size: 13.scaled))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
                     }
@@ -143,30 +143,30 @@ struct FoodLogEntryRow: View {
                 Spacer()
                 
                 Text(entry.timestamp.formatted(date: .omitted, time: .shortened))
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.system(size: 12.scaled, weight: .medium))
                     .foregroundColor(AppTheme.textTertiary)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
+                    .padding(.horizontal, 10.scaled)
+                    .padding(.vertical, 6.scaled)
                     .background(
-                        RoundedRectangle(cornerRadius: 6)
+                        RoundedRectangle(cornerRadius: 6.scaled)
                             .fill(Color.white.opacity(0.06))
                     )
             }
             
             // Macro Pills
-            HStack(spacing: 8) {
+            HStack(spacing: 8.scaled) {
                 MacroPill(value: "\(entry.scaledCalories)", label: "cal", color: AppTheme.calorieColor)
                 MacroPill(value: String(format: "%.0f", entry.scaledProtein), label: "P", color: AppTheme.proteinColor)
                 MacroPill(value: String(format: "%.0f", entry.scaledCarbs), label: "C", color: AppTheme.carbColor)
                 MacroPill(value: String(format: "%.0f", entry.scaledFats), label: "F", color: AppTheme.fatColor)
             }
         }
-        .padding(16)
+        .padding(16.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 14)
+            RoundedRectangle(cornerRadius: 14.scaled)
                 .fill(AppTheme.cardBackground)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 14)
+                    RoundedRectangle(cornerRadius: 14.scaled)
                         .stroke(AppTheme.border, lineWidth: 1)
                 )
         )

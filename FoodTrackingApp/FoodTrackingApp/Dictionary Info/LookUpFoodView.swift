@@ -55,8 +55,8 @@ struct LookUpFoodView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0){
-            VStack(alignment: .leading, spacing: 12) {
+        VStack(spacing: 0.scaled){
+            VStack(alignment: .leading, spacing: 12.scaled) {
                 SearchBar(text: $searchText, placeholder: placeholder, onSubmit: {runUSDASearch()},  showsSearchButton: true)
                 modeChips
                     .onChange(of: mode) { _ in
@@ -66,36 +66,38 @@ struct LookUpFoodView: View {
                     }
                 if isLoading {
                     ProgressView("Searching...")
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, 20.scaled)
                 }
             }
             .background(AppTheme.background)
             
             // Results (scrolls)
             ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 8.scaled) {
                     if !results.isEmpty {
                         ForEach(results, id: \.fdcId) { choice in
                             Button {
                                 selectChoice(choice)
                             } label: {
-                                VStack(alignment: .leading, spacing: 10) {
+                                VStack(alignment: .leading, spacing: 10.scaled) {
                                     HStack {
                                         Text(choice.description)
+                                            .font(.system(size: 17.scaled))
                                             .foregroundColor(AppTheme.textPrimary)
                                             .lineLimit(2)
                                         Spacer()
                                         Image(systemName: "chevron.right")
+                                            .font(.system(size: 17.scaled))
                                             .foregroundColor(AppTheme.textTertiary)
                                     }
                                     Label(servingLabel(for: choice), systemImage: "scalemass")
-                                        .font(.system(size: 12))
+                                        .font(.system(size: 12.scaled))
                                         .foregroundColor(AppTheme.textSecondary)
 
                                     // Preview macros (if loaded), scaled to the serving size
                                     if let details = detailsByFdcId[choice.fdcId] {
                                         let m = servingMacros(for: details)
-                                        HStack(spacing: 8) {
+                                        HStack(spacing: 8.scaled) {
                                             MacroPill(value: "\(Int(m.caloriesKcal.rounded()))", label: "cal", color: AppTheme.calorieColor)
                                             MacroPill(value: String(format: "%.0f", m.proteinG), label: "P", color: AppTheme.proteinColor)
                                             MacroPill(value: String(format: "%.0f", m.carbsG), label: "C", color: AppTheme.carbColor)
@@ -104,29 +106,29 @@ struct LookUpFoodView: View {
                                     } else {
                                         // optional tiny placeholder so it doesn’t feel empty
                                         Text("Loading macros…")
-                                            .font(.system(size: 12, weight: .medium))
+                                            .font(.system(size: 12.scaled, weight: .medium))
                                             .foregroundColor(AppTheme.textTertiary)
                                     }
                                 }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 12)
+                                .padding(.horizontal, 20.scaled)
+                                .padding(.vertical, 12.scaled)
                                 .background(
-                                    RoundedRectangle(cornerRadius: 12)
+                                    RoundedRectangle(cornerRadius: 12.scaled)
                                         .fill(AppTheme.cardBackground)
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 12)
+                                            RoundedRectangle(cornerRadius: 12.scaled)
                                                 .stroke(AppTheme.border, lineWidth: 1)
                                         )
                                 )
-                                .padding(.horizontal, 20)
+                                .padding(.horizontal, 20.scaled)
                             }
                             .buttonStyle(.plain)
                         }
                     }
     
-                    Spacer(minLength: 24)
+                    Spacer(minLength: 24.scaled)
                 }
-                .padding(.top, 8)
+                .padding(.top, 8.scaled)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -160,7 +162,7 @@ struct LookUpFoodView: View {
     
     @ViewBuilder
     private var modeChips: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 8.scaled) {
             ForEach(LookupMode.allCases) { option in
                 Button {
                     withAnimation(.easeOut(duration: 0.2)) {
@@ -168,12 +170,12 @@ struct LookUpFoodView: View {
                     }
                 } label: {
                     Text(option.rawValue)
-                        .font(.system(size: 12, weight: mode == option ? .semibold : .medium))
+                        .font(.system(size: 12.scaled, weight: mode == option ? .semibold : .medium))
                         .foregroundColor(mode == option ? .black : AppTheme.textSecondary)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 8)
+                        .padding(.horizontal, 14.scaled)
+                        .padding(.vertical, 8.scaled)
                         .background(
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: 8.scaled)
                                 .fill(mode == option ? Color.white : Color.white.opacity(0.06))
                         )
                 }
@@ -183,10 +185,10 @@ struct LookUpFoodView: View {
                 modeInfo.toggle()
             } label: {
                 Image(systemName: "questionmark.circle.fill")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: 18.scaled, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10.scaled)
+                    .padding(.vertical, 8.scaled)
             }
             .buttonStyle(.plain)
             .popover(
@@ -202,7 +204,7 @@ struct LookUpFoodView: View {
                 }
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 20.scaled)
     }
     
     private func runUSDASearch() {
@@ -351,8 +353,8 @@ struct LookUpFoodView: View {
 
 private struct ModeInfoPopover: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 12.scaled) {
+            VStack(alignment: .leading, spacing: 12.scaled) {
                 row(title: "Basic", desc: "Basic includes whole foods or raw foods. Use this for ingredients or generic foods.")
                 row(title: "Everyday", desc: "Typical foods that you may find anywhere. Includes foods that consist of multiple ingredients.")
                 row(title: "Brands", desc: "Foods from name brands. Use this if you are searching for a specific brands food.")
@@ -360,20 +362,20 @@ private struct ModeInfoPopover: View {
 
             }
             Text("Tip: Start with Everyday for most foods.")
-                .font(.system(size: 12))
+                .font(.system(size: 12.scaled))
                 .foregroundStyle(.secondary)
-                .padding(.top, 2)
+                .padding(.top, 2.scaled)
         }
-        .padding(35)
+        .padding(35.scaled)
     }
     
     private func row(title: String, desc: String) -> some View {
-        HStack( spacing: 3) {
+        HStack( spacing: 3.scaled) {
             Text(title)
-                .font(.system(size: 16, weight: .semibold))
-                .frame(width: 90, alignment: .leading)
+                .font(.system(size: 16.scaled, weight: .semibold))
+                .frame(width: 90.scaled, alignment: .leading)
             Text(desc)
-                .font(.system(size: 12))
+                .font(.system(size: 12.scaled))
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }

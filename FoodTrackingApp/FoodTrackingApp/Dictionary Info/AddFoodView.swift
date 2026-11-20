@@ -27,38 +27,38 @@ struct AddFoodView: View {
             ZStack {
                 AppTheme.background.ignoresSafeArea()
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 24.scaled) {
                         // Food Info Section
-                        VStack(alignment: .leading, spacing: 16) {
+                        VStack(alignment: .leading, spacing: 16.scaled) {
                             SectionHeader(title: "Food Info")
                             
-                            VStack(spacing: 12) {
+                            VStack(spacing: 12.scaled) {
                                 // Name
-                                VStack(alignment: .leading, spacing: 6) {
+                                VStack(alignment: .leading, spacing: 6.scaled) {
                                     Text("Name")
-                                        .font(.system(size: 13, weight: .medium))
+                                        .font(.system(size: 13.scaled, weight: .medium))
                                         .foregroundColor(AppTheme.textSecondary)
                                     ThemedTextField(placeholder: "Enter food name", text: $name)
                                 }
                                 
                                 // Unit Picker
-                                VStack(alignment: .leading, spacing: 6) {
+                                VStack(alignment: .leading, spacing: 6.scaled) {
                                     Text("Measurement Unit")
-                                        .font(.system(size: 13, weight: .medium))
+                                        .font(.system(size: 13.scaled, weight: .medium))
                                         .foregroundColor(AppTheme.textSecondary)
                                     
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         ForEach(ServingUnit.allCases) { unit in
                                             Button {
                                                 selectedUnit = unit
                                             } label: {
                                                 Text(unit.rawValue.uppercased())
-                                                    .font(.system(size: 14, weight: .semibold))
+                                                    .font(.system(size: 14.scaled, weight: .semibold))
                                                     .foregroundColor(selectedUnit == unit ? .black : AppTheme.textSecondary)
                                                     .frame(maxWidth: .infinity)
-                                                    .padding(.vertical, 12)
+                                                    .padding(.vertical, 12.scaled)
                                                     .background(
-                                                        RoundedRectangle(cornerRadius: 10)
+                                                        RoundedRectangle(cornerRadius: 10.scaled)
                                                             .fill(selectedUnit == unit ? Color.white : Color.white.opacity(0.06))
                                                     )
                                             }
@@ -67,17 +67,17 @@ struct AddFoodView: View {
                                 }
                                 
                                 // Weight/Volume
-                                VStack(alignment: .leading, spacing: 6) {
+                                VStack(alignment: .leading, spacing: 6.scaled) {
                                     Text(selectedUnit == .grams ? "Weight (g)" : "Volume (ml)")
-                                        .font(.system(size: 13, weight: .medium))
+                                        .font(.system(size: 13.scaled, weight: .medium))
                                         .foregroundColor(AppTheme.textSecondary)
                                     ThemedTextField(placeholder: "0", text: $weightInGrams, keyboardType: .numberPad)
                                 }
                                 
                                 // Servings
-                                VStack(alignment: .leading, spacing: 6) {
+                                VStack(alignment: .leading, spacing: 6.scaled) {
                                     Text("Servings")
-                                        .font(.system(size: 13, weight: .medium))
+                                        .font(.system(size: 13.scaled, weight: .medium))
                                         .foregroundColor(AppTheme.textSecondary)
                                     ThemedTextField(placeholder: "0", text: $servings, keyboardType: .numberPad)
                                 }
@@ -86,90 +86,90 @@ struct AddFoodView: View {
                         }
                         
                         // Nutrition Section
-                        VStack(alignment: .leading, spacing: 16) {
+                        VStack(alignment: .leading, spacing: 16.scaled) {
                             SectionHeader(title: "Nutrition")
                             
-                            VStack(spacing: 12) {
+                            VStack(spacing: 12.scaled) {
                                 // Calories
                                 HStack {
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         Circle()
                                             .fill(AppTheme.calorieColor)
-                                            .frame(width: 8, height: 8)
+                                            .frame(width: 8.scaled, height: 8.scaled)
                                         Text("Calories")
-                                            .font(.system(size: 15))
+                                            .font(.system(size: 15.scaled))
                                             .foregroundColor(AppTheme.textPrimary)
                                     }
                                     Spacer()
                                     TextField("0", text: $calories)
                                         .keyboardType(.numberPad)
-                                        .font(.system(size: 16, weight: .semibold))
+                                        .font(.system(size: 16.scaled, weight: .semibold))
                                         .foregroundColor(AppTheme.textPrimary)
                                         .multilineTextAlignment(.trailing)
-                                        .frame(width: 100)
+                                        .frame(width: 100.scaled)
                                 }
                                 
                                 Divider().background(AppTheme.divider)
                                 
                                 // Protein
                                 HStack {
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         Circle()
                                             .fill(AppTheme.proteinColor)
-                                            .frame(width: 8, height: 8)
+                                            .frame(width: 8.scaled, height: 8.scaled)
                                         Text("Protein (g)")
-                                            .font(.system(size: 15))
+                                            .font(.system(size: 15.scaled))
                                             .foregroundColor(AppTheme.textPrimary)
                                     }
                                     Spacer()
                                     TextField("0", text: $protein)
                                         .keyboardType(.decimalPad)
-                                        .font(.system(size: 16, weight: .semibold))
+                                        .font(.system(size: 16.scaled, weight: .semibold))
                                         .foregroundColor(AppTheme.textPrimary)
                                         .multilineTextAlignment(.trailing)
-                                        .frame(width: 100)
+                                        .frame(width: 100.scaled)
                                 }
                                 
                                 Divider().background(AppTheme.divider)
                                 
                                 // Carbs
                                 HStack {
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         Circle()
                                             .fill(AppTheme.carbColor)
-                                            .frame(width: 8, height: 8)
+                                            .frame(width: 8.scaled, height: 8.scaled)
                                         Text("Carbs (g)")
-                                            .font(.system(size: 15))
+                                            .font(.system(size: 15.scaled))
                                             .foregroundColor(AppTheme.textPrimary)
                                     }
                                     Spacer()
                                     TextField("0", text: $carbs)
                                         .keyboardType(.decimalPad)
-                                        .font(.system(size: 16, weight: .semibold))
+                                        .font(.system(size: 16.scaled, weight: .semibold))
                                         .foregroundColor(AppTheme.textPrimary)
                                         .multilineTextAlignment(.trailing)
-                                        .frame(width: 100)
+                                        .frame(width: 100.scaled)
                                 }
                                 
                                 Divider().background(AppTheme.divider)
                                 
                                 // Fats
                                 HStack {
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         Circle()
                                             .fill(AppTheme.fatColor)
-                                            .frame(width: 8, height: 8)
+                                            .frame(width: 8.scaled, height: 8.scaled)
                                         Text("Fats (g)")
-                                            .font(.system(size: 15))
+                                            .font(.system(size: 15.scaled))
                                             .foregroundColor(AppTheme.textPrimary)
                                     }
                                     Spacer()
                                     TextField("0", text: $fats)
                                         .keyboardType(.decimalPad)
-                                        .font(.system(size: 16, weight: .semibold))
+                                        .font(.system(size: 16.scaled, weight: .semibold))
                                         .foregroundColor(AppTheme.textPrimary)
                                         .multilineTextAlignment(.trailing)
-                                        .frame(width: 100)
+                                        .frame(width: 100.scaled)
                                 }
                             }
                             .cardStyle()
@@ -182,18 +182,18 @@ struct AddFoodView: View {
                                 presentationMode.wrappedValue.dismiss()
                             }
                         } label: {
-                            HStack(spacing: 8) {
+                            HStack(spacing: 8.scaled) {
                                 Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 18.scaled))
                                 Text("Add Food")
                             }
                         }
                         .disabled(!isFormValid)
                         .buttonStyle(SleekButtonStyle())
-                        .padding(.top, 8)
+                        .padding(.top, 8.scaled)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 24)
+                    .padding(.horizontal, 20.scaled)
+                    .padding(.vertical, 24.scaled)
                 }
             }
             .navigationTitle("Add Food")

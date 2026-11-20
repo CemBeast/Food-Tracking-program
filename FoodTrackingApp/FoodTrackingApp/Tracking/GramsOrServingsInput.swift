@@ -79,15 +79,15 @@ struct GramsOrServingsInput: View {
                     dismiss()
                 }
 
-            VStack(spacing: 24) {
+            VStack(spacing: 24.scaled) {
                 // Header
-                VStack(spacing: 8) {
+                VStack(spacing: 8.scaled) {
                     Text(food.name)
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.system(size: 20.scaled, weight: .bold))
                         .foregroundColor(AppTheme.textPrimary)
                     
                     Text(mode == .serving ? "Enter Servings" : "Enter \(food.servingUnit == .grams ? "Grams" : "Milliliters")")
-                        .font(.system(size: 14))
+                        .font(.system(size: 14.scaled))
                         .foregroundColor(AppTheme.textSecondary)
                 }
                 
@@ -96,7 +96,7 @@ struct GramsOrServingsInput: View {
                     TextField("0", text: $numberInput)
                         .keyboardType(.decimalPad)
                         .focused($isTextFieldFocused)
-                        .font(.system(size: 48, weight: .bold, design: .rounded))
+                        .font(.system(size: 48.scaled, weight: .bold, design: .rounded))
                         .foregroundColor(AppTheme.textPrimary)
                         .multilineTextAlignment(.center)
                         .onChange(of: numberInput) { newValue in
@@ -120,19 +120,19 @@ struct GramsOrServingsInput: View {
                         }
                     
                     Text(mode == .serving ? "srv" : food.servingUnit.rawValue)
-                        .font(.system(size: 20, weight: .medium))
+                        .font(.system(size: 20.scaled, weight: .medium))
                         .foregroundColor(AppTheme.textTertiary)
                 }
-                .padding(.horizontal, 32)
+                .padding(.horizontal, 32.scaled)
                 
                 // Live Preview
-                VStack(spacing: 16) {
+                VStack(spacing: 16.scaled) {
                     Text("NUTRITION PREVIEW")
-                        .font(.system(size: 11, weight: .bold))
-                        .tracking(1.2)
+                        .font(.system(size: 11.scaled, weight: .bold))
+                        .tracking(1.2.scaled)
                         .foregroundColor(AppTheme.textTertiary)
                     
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         LiveMacroPill(value: "\(Int(liveCalories))", label: "cal", color: AppTheme.calorieColor)
                         LiveMacroPill(value: String(format: "%.0f", liveProtein), label: "P", color: AppTheme.proteinColor)
                         LiveMacroPill(value: String(format: "%.0f", liveCarbs), label: "C", color: AppTheme.carbColor)
@@ -144,11 +144,11 @@ struct GramsOrServingsInput: View {
                        let totalCarbs,
                        let totalFats {
                         Text("TOTAL IF ADDED")
-                            .font(.system(size: 10, weight: .bold))
-                            .tracking(1.1)
+                            .font(.system(size: 10.scaled, weight: .bold))
+                            .tracking(1.1.scaled)
                             .foregroundColor(AppTheme.textTertiary)
                         
-                        HStack(spacing: 12) {
+                        HStack(spacing: 12.scaled) {
                             LiveMacroPill(value: "\(totalCalories)", label: "cal", color: AppTheme.calorieColor)
                             LiveMacroPill(value: String(format: "%.0f", totalProtein), label: "P", color: AppTheme.proteinColor)
                             LiveMacroPill(value: String(format: "%.0f", totalCarbs), label: "C", color: AppTheme.carbColor)
@@ -156,10 +156,10 @@ struct GramsOrServingsInput: View {
                         }
                     }
                 }
-                .padding(.vertical, 20)
-                .padding(.horizontal, 16)
+                .padding(.vertical, 20.scaled)
+                .padding(.horizontal, 16.scaled)
                 .background(
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(cornerRadius: 16.scaled)
                         .fill(Color.white.opacity(0.05))
                 )
                 
@@ -167,35 +167,35 @@ struct GramsOrServingsInput: View {
                 Button {
                     updateFoodTracking()
                 } label: {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 8.scaled) {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Add to Log")
                     }
                 }
                 .buttonStyle(SleekButtonStyle())
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 20.scaled)
                 
                 // Cancel Button
                 Button {
                     dismiss()
                 } label: {
                     Text("Cancel")
-                        .font(.system(size: 15, weight: .medium))
+                        .font(.system(size: 15.scaled, weight: .medium))
                         .foregroundColor(AppTheme.textSecondary)
                 }
-                .padding(.top, 4)
+                .padding(.top, 4.scaled)
             }
-            .padding(24)
+            .padding(24.scaled)
             .background(
-                RoundedRectangle(cornerRadius: 24)
+                RoundedRectangle(cornerRadius: 24.scaled)
                     .fill(AppTheme.cardBackground)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 24)
+                        RoundedRectangle(cornerRadius: 24.scaled)
                             .stroke(AppTheme.border, lineWidth: 1)
                     )
             )
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 24.scaled)
         }
         .task {
             isTextFieldFocused = true
@@ -231,18 +231,18 @@ struct LiveMacroPill: View {
     let color: Color
     
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 4.scaled) {
             Text(value)
-                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .font(.system(size: 18.scaled, weight: .bold, design: .rounded))
                 .foregroundColor(color)
             Text(label)
-                .font(.system(size: 11, weight: .medium))
+                .font(.system(size: 11.scaled, weight: .medium))
                 .foregroundColor(color.opacity(0.7))
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
+        .padding(.vertical, 10.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 10.scaled)
                 .fill(color.opacity(0.12))
         )
     }

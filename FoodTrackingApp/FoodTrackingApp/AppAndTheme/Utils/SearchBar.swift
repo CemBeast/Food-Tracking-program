@@ -13,13 +13,13 @@ struct SearchBar: View {
     var showsSearchButton: Bool = false
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 12.scaled) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 16))
+                .font(.system(size: 16.scaled))
                 .foregroundColor(AppTheme.textTertiary)
 
             TextField(placeholder, text: $text)
-                .font(.system(size: 16))
+                .font(.system(size: 16.scaled))
                 .foregroundColor(AppTheme.textPrimary)
                 .submitLabel(.search)
                 .onSubmit { onSubmit?() }
@@ -29,7 +29,7 @@ struct SearchBar: View {
                     text = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 16))
+                        .font(.system(size: 16.scaled))
                         .foregroundColor(AppTheme.textTertiary)
                 }
             }
@@ -39,24 +39,24 @@ struct SearchBar: View {
                     onSubmit?()
                 } label: {
                     Image(systemName: "arrow.right.circle.fill")
-                        .font(.system(size: 18))
+                        .font(.system(size: 18.scaled))
                         .foregroundColor(AppTheme.textPrimary)
                 }
                 .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.horizontal, 16.scaled)
+        .padding(.vertical, 12.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 12.scaled)
                 .fill(Color.white.opacity(0.06))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: 12.scaled)
                         .stroke(AppTheme.border, lineWidth: 1)
                 )
         )
-        .padding(.horizontal, 20)
-        .padding(.top, 16)
-        .padding(.bottom, 12)
+        .padding(.horizontal, 20.scaled)
+        .padding(.top, 16.scaled)
+        .padding(.bottom, 12.scaled)
     }
 }

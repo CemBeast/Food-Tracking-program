@@ -17,13 +17,13 @@ struct FoodLogViewForDate: View {
             AppTheme.background.ignoresSafeArea()
             
             if entries.isEmpty {
-                VStack(spacing: 16) {
+                VStack(spacing: 16.scaled) {
                     Image(systemName: "tray")
-                        .font(.system(size: 48, weight: .light))
+                        .font(.system(size: 48.scaled, weight: .light))
                         .foregroundColor(AppTheme.textTertiary)
                     
                     Text("No Foods Logged")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 18.scaled, weight: .semibold))
                         .foregroundColor(AppTheme.textPrimary)
                 }
             } else {
@@ -34,7 +34,7 @@ struct FoodLogViewForDate: View {
                         }
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                            .listRowInsets(EdgeInsets(top: 6.scaled, leading: 20.scaled, bottom: 6.scaled, trailing: 20.scaled))
                     }
                 }
                 .listStyle(PlainListStyle())

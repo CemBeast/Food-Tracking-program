@@ -37,65 +37,65 @@ struct TipsAndTricksView: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                VStack(spacing: 12) {
+            VStack(spacing: 0.scaled) {
+                VStack(spacing: 12.scaled) {
                     Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 44, weight: .light))
+                        .font(.system(size: 44.scaled, weight: .light))
                         .foregroundColor(AppTheme.textPrimary)
 
                     Text("Tips & Tricks")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.system(size: 28.scaled, weight: .bold))
                         .foregroundColor(AppTheme.textPrimary)
 
                     Text("A quick tour to help you get the most out of the app.")
-                        .font(.system(size: 15))
+                        .font(.system(size: 15.scaled))
                         .foregroundColor(AppTheme.textSecondary)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
+                        .padding(.horizontal, 24.scaled)
                 }
-                .padding(.top, 32)
-                .padding(.bottom, 24)
+                .padding(.top, 32.scaled)
+                .padding(.bottom, 24.scaled)
 
                 ScrollView {
-                    VStack(spacing: 12) {
+                    VStack(spacing: 12.scaled) {
                         ForEach(tips) { tip in
-                            HStack(alignment: .top, spacing: 14) {
+                            HStack(alignment: .top, spacing: 14.scaled) {
                                 Image(systemName: tip.icon)
-                                    .font(.system(size: 20))
+                                    .font(.system(size: 20.scaled))
                                     .foregroundColor(AppTheme.textPrimary)
-                                    .frame(width: 28, alignment: .center)
-                                    .padding(.top, 2)
-                                VStack(alignment: .leading, spacing: 4) {
+                                    .frame(width: 28.scaled, alignment: .center)
+                                    .padding(.top, 2.scaled)
+                                VStack(alignment: .leading, spacing: 4.scaled) {
                                     Text(tip.title)
-                                        .font(.system(size: 16, weight: .semibold))
+                                        .font(.system(size: 16.scaled, weight: .semibold))
                                         .foregroundColor(AppTheme.textPrimary)
                                     Text(tip.body)
-                                        .font(.system(size: 14))
+                                        .font(.system(size: 14.scaled))
                                         .foregroundColor(AppTheme.textSecondary)
                                         .fixedSize(horizontal: false, vertical: true)
                                 }
-                                Spacer(minLength: 0)
+                                Spacer(minLength: 0.scaled)
                             }
                             .cardStyle()
                         }
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 8)
+                    .padding(.horizontal, 20.scaled)
+                    .padding(.bottom, 8.scaled)
                 }
 
                 Button {
                     dismiss()
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Got it")
                     }
                 }
                 .buttonStyle(SleekButtonStyle())
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-                .padding(.bottom, 24)
+                .padding(.horizontal, 24.scaled)
+                .padding(.top, 16.scaled)
+                .padding(.bottom, 24.scaled)
             }
         }
         .presentationDragIndicator(.visible)

@@ -21,20 +21,20 @@ struct DailyMacrosDisplay: View {
     @State private var animateRings = false
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 16.scaled) {
             // Toggle Label
             HStack {
                 Spacer()
                 Text(showConsumed ? "CONSUMED" : "REMAINING / OVERFLOW")
-                    .font(.system(size: 14, weight: .bold, design: .default))
-                    .tracking(1.8)
+                    .font(.system(size: 14.scaled, weight: .bold, design: .default))
+                    .tracking(1.8.scaled)
                     .foregroundColor(AppTheme.textTertiary)
                 Spacer()
             }
             
             // Ring Meters
-            VStack(spacing: 16) {
-                HStack(spacing: 16) {
+            VStack(spacing: 16.scaled) {
+                HStack(spacing: 16.scaled) {
                     ringMeter(
                         percent: calorieGoal == 0 ? 0 : Double(calories) / Double(calorieGoal),
                         color: AppTheme.calorieColor,
@@ -48,7 +48,7 @@ struct DailyMacrosDisplay: View {
                         value: "\(Int(displayedValue(for: protein, goal: proteinGoal)))g"
                     )
                 }
-                HStack(spacing: 16) {
+                HStack(spacing: 16.scaled) {
                     ringMeter(
                         percent: carbGoal == 0 ? 0 : carbs / carbGoal,
                         color: AppTheme.carbColor,
@@ -64,17 +64,17 @@ struct DailyMacrosDisplay: View {
                 }
             }
         }
-        .padding(.vertical, 20)
-        .padding(.horizontal, 16)
+        .padding(.vertical, 20.scaled)
+        .padding(.horizontal, 16.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 20.scaled)
                 .fill(AppTheme.cardBackground)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: 20.scaled)
                         .stroke(AppTheme.border, lineWidth: 1)
                 )
         )
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 20.scaled)
         .onTapGesture {
             withAnimation(.easeInOut(duration: 0.25)) {
                 showConsumed.toggle()
@@ -102,46 +102,46 @@ struct DailyMacrosDisplay: View {
         let animatedOverflow = animateRings ? overflow : 0
         let overflowColor = Color(red: 0.95, green: 0.35, blue: 0.15)
 
-        return VStack(spacing: 8) {
+        return VStack(spacing: 8.scaled) {
             ZStack {
                 // Overflow ring (outside)
                 Circle()
                     .trim(from: 0, to: animatedOverflow)
                     .stroke(
                         overflowColor,
-                        style: StrokeStyle(lineWidth: 10, lineCap: .round)
+                        style: StrokeStyle(lineWidth: 10.scaled, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedOverflow)
-                    .frame(width: 128, height: 128)
+                    .frame(width: 128.scaled, height: 128.scaled)
 
                 // Background ring
                 Circle()
-                    .stroke(color.opacity(0.15), lineWidth: 10)
-                    .frame(width: 112, height: 112)
+                    .stroke(color.opacity(0.15), lineWidth: 10.scaled)
+                    .frame(width: 112.scaled, height: 112.scaled)
 
                 // Progress ring
                 Circle()
                     .trim(from: 0, to: animatedPercent)
                     .stroke(
                         color,
-                        style: StrokeStyle(lineWidth: 10, lineCap: .round)
+                        style: StrokeStyle(lineWidth: 10.scaled, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
                     .animation(.easeOut(duration: 0.8), value: animatedPercent)
-                    .frame(width: 112, height: 112)
+                    .frame(width: 112.scaled, height: 112.scaled)
                 
                 // Value in center
                 Text(value)
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .font(.system(size: 16.scaled, weight: .bold, design: .rounded))
                     .foregroundColor(AppTheme.textPrimary)
                     .minimumScaleFactor(0.6)
                     .lineLimit(1)
             }
-            .frame(width: 128, height: 128)
+            .frame(width: 128.scaled, height: 128.scaled)
 
             Text(label)
-                .font(.system(size: 13, weight: .medium))
+                .font(.system(size: 13.scaled, weight: .medium))
                 .foregroundColor(AppTheme.textSecondary)
         }
     }

@@ -168,15 +168,15 @@ struct MealBuilderView: View {
                 AppTheme.background.ignoresSafeArea()
 
                 ScrollView {
-                    VStack(spacing: 20) {
+                    VStack(spacing: 20.scaled) {
                         header
                         mealNameField
                         componentsSection
                         totalsCard
                         saveButton
-                        Spacer(minLength: 24)
+                        Spacer(minLength: 24.scaled)
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 20.scaled)
                     .contentShape(Rectangle())
                     .onTapGesture { UIApplication.shared.endEditing() }
                 }
@@ -198,34 +198,34 @@ struct MealBuilderView: View {
     // MARK: - Sections
 
     private var header: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 8.scaled) {
             Text(isEditingExistingMeal ? "Edit Meal" : "Create a Meal")
-                .font(.system(size: 22, weight: .bold))
+                .font(.system(size: 22.scaled, weight: .bold))
                 .foregroundColor(AppTheme.textPrimary)
             Text("Combine foods to save as a meal")
-                .font(.system(size: 14))
+                .font(.system(size: 14.scaled))
                 .foregroundColor(AppTheme.textSecondary)
         }
-        .padding(.top, 16)
+        .padding(.top, 16.scaled)
     }
 
     private var mealNameField: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 8.scaled) {
             Text("Meal Name")
-                .font(.system(size: 13, weight: .medium))
+                .font(.system(size: 13.scaled, weight: .medium))
                 .foregroundColor(AppTheme.textSecondary)
             ThemedTextField(placeholder: "e.g., Chicken & Rice Bowl", text: $mealName)
         }
     }
 
     private var componentsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 12.scaled) {
             SectionHeader(title: "Foods in Meal")
 
             if components.isEmpty {
                 emptyComponentsCard
             } else {
-                VStack(spacing: 10) {
+                VStack(spacing: 10.scaled) {
                     ForEach(components) { component in
                         ComponentRow(component: component) {
                             remove(component)
@@ -240,20 +240,20 @@ struct MealBuilderView: View {
 
     private var emptyComponentsCard: some View {
         Text("No foods added yet")
-            .font(.system(size: 14))
+            .font(.system(size: 14.scaled))
             .foregroundColor(AppTheme.textSecondary)
             .frame(maxWidth: .infinity, alignment: .center)
-            .padding()
-            .modifier(CardBackground(cornerRadius: 14))
+            .padding(16.scaled) // was .padding() (system default 16pt)
+            .modifier(CardBackground(cornerRadius: 14.scaled))
     }
 
     private var addFoodButton: some View {
         Button {
             isPickerPresented = true
         } label: {
-            HStack(spacing: 12) {
+            HStack(spacing: 12.scaled) {
                 Image(systemName: "plus.circle.fill")
-                    .font(.system(size: 18))
+                    .font(.system(size: 18.scaled))
                 Text("Add Food from Dictionary")
             }
         }
@@ -261,13 +261,13 @@ struct MealBuilderView: View {
     }
 
     private var totalsCard: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 8.scaled) {
             Text("Meal Totals")
-                .font(.system(size: 12, weight: .semibold))
+                .font(.system(size: 12.scaled, weight: .semibold))
                 .foregroundColor(AppTheme.textTertiary)
-                .tracking(1.1)
+                .tracking(1.1.scaled)
 
-            HStack(spacing: 8) {
+            HStack(spacing: 8.scaled) {
                 MacroPill(value: "\(totals.calories)",
                           label: "cal",
                           color: AppTheme.calorieColor)
@@ -286,15 +286,15 @@ struct MealBuilderView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .modifier(CardBackground(cornerRadius: 16))
+        .padding(16.scaled) // was .padding() (system default 16pt)
+        .modifier(CardBackground(cornerRadius: 16.scaled))
     }
 
     private var saveButton: some View {
         Button(action: saveMeal) {
-            HStack(spacing: 12) {
+            HStack(spacing: 12.scaled) {
                 Image(systemName: "square.and.arrow.down")
-                    .font(.system(size: 18))
+                    .font(.system(size: 18.scaled))
                 Text("Save Meal to Dictionary")
             }
         }
@@ -371,17 +371,17 @@ private struct ComponentRow: View {
     let onDelete: () -> Void
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            VStack(alignment: .leading, spacing: 6) {
+        HStack(alignment: .top, spacing: 12.scaled) {
+            VStack(alignment: .leading, spacing: 6.scaled) {
                 Text(component.food.name)
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 15.scaled, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
 
                 Text(component.quantityDescription)
-                    .font(.system(size: 12))
+                    .font(.system(size: 12.scaled))
                     .foregroundColor(AppTheme.textSecondary)
 
-                HStack(spacing: 6) {
+                HStack(spacing: 6.scaled) {
                     MacroPill(value: "\(Int(component.calories.rounded()))",
                               label: "cal",
                               color: AppTheme.calorieColor)
@@ -401,11 +401,12 @@ private struct ComponentRow: View {
 
             Button(action: onDelete) {
                 Image(systemName: "trash")
+                    .font(.system(size: 17.scaled))
                     .foregroundColor(.red)
             }
         }
-        .padding()
-        .modifier(CardBackground(cornerRadius: 14))
+        .padding(16.scaled) // was .padding() (system default 16pt)
+        .modifier(CardBackground(cornerRadius: 14.scaled))
     }
 }
 

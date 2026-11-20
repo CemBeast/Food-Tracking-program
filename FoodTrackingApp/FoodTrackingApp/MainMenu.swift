@@ -13,7 +13,7 @@ import UIKit
 // as the Food Dictionary tab (the tallest, with 5 buttons). This makes
 // SwiftUI lay out all four tabs identically — same top spacing, same
 // compression behavior — instead of giving shorter tabs more breathing room.
-fileprivate let tabContentMinHeight: CGFloat = 340
+fileprivate let tabContentMinHeight: CGFloat = 340.scaled
 
 // MARK: - Section Card (Updated)
 struct SectionCard<Content: View>: View {
@@ -26,10 +26,10 @@ struct SectionCard<Content: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 12.scaled) {
             SectionHeader(title: title)
 
-            VStack(spacing: 10) {
+            VStack(spacing: 10.scaled) {
                 content
             }
             .cardStyle()
@@ -52,14 +52,14 @@ struct FoodDictionaryTab: View {
     @Binding var pendingAction: (() -> Void)?
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 24.scaled) {
             SectionCard(title: "Food Dictionary") {
                 Button {
                     showManual = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Add Food Manually")
                     }
                 }
@@ -68,9 +68,9 @@ struct FoodDictionaryTab: View {
                 Button {
                     showScanner = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "barcode.viewfinder")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Add Food by Barcode")
                     }
                 }
@@ -79,9 +79,9 @@ struct FoodDictionaryTab: View {
                 Button {
                     showMealBuilder = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "square.stack.3d.up.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Create a Meal")
                     }
                 }
@@ -90,9 +90,9 @@ struct FoodDictionaryTab: View {
                 Button {
                     showFoodLookUp = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "magnifyingglass.circle.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Look Up Food to Add")
                     }
                 }
@@ -108,9 +108,9 @@ struct FoodDictionaryTab: View {
                         readOnly: true
                     )
                 ) {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "book.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("View Food Dictionary")
                     }
                 }
@@ -142,15 +142,15 @@ struct TrackFoodTab: View {
     private let usda = USDANutritionService()
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 24.scaled) {
             SectionCard(title: "Track Food") {
 
             Button {
                 showScannerTracking = true
             } label: {
-                HStack(spacing: 12) {
+                HStack(spacing: 12.scaled) {
                     Image(systemName: "barcode.viewfinder")
-                        .font(.system(size: 18))
+                        .font(.system(size: 18.scaled))
                     Text("Track from Barcode")
                 }
             }
@@ -159,9 +159,9 @@ struct TrackFoodTab: View {
             Button {
                 showFoodSelection.toggle()
             } label: {
-                HStack(spacing: 12) {
+                HStack(spacing: 12.scaled) {
                     Image(systemName: "list.bullet.circle.fill")
-                        .font(.system(size: 18))
+                        .font(.system(size: 18.scaled))
                     Text("Select Food to Track")
                 }
             }
@@ -170,9 +170,9 @@ struct TrackFoodTab: View {
             Button {
                 showQuickTracking.toggle()
             } label: {
-                HStack(spacing: 12) {
+                HStack(spacing: 12.scaled) {
                     Image(systemName: "bolt.fill")
-                        .font(.system(size: 18))
+                        .font(.system(size: 18.scaled))
                     Text("Quick Track")
                 }
             }
@@ -181,9 +181,9 @@ struct TrackFoodTab: View {
             Button {
                 showQuickTrackMeal.toggle()
             } label: {
-                HStack(spacing: 12) {
+                HStack(spacing: 12.scaled) {
                     Image(systemName: "square.stack.3d.up.fill")
-                        .font(.system(size: 18))
+                        .font(.system(size: 18.scaled))
                     Text("Quick Track Meal")
                 }
             }
@@ -334,22 +334,22 @@ struct HistoryTab: View {
     @Binding var showingClearHistoryMacrosAlert: Bool
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 24.scaled) {
             // History Section
             SectionCard(title: "History") {
                 NavigationLink(destination: FoodLogView(viewModel: viewModel, foodModel: foodModel)) {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "list.clipboard.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                     Text("View Foods Eaten Today")
                     }
                 }
                 .buttonStyle(SleekButtonStyle())
                 
                 NavigationLink(destination: MacroHistoryView(viewModel: viewModel, foodModel: foodModel)) {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "chart.line.uptrend.xyaxis")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                     Text("View Macro History")
                     }
                 }
@@ -358,9 +358,9 @@ struct HistoryTab: View {
                 Button {
                     showingClearDailyMacrosAlert = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "arrow.counterclockwise")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Clear Daily Macros")
                     }
                 }
@@ -375,9 +375,9 @@ struct HistoryTab: View {
                 Button {
                     showingClearHistoryMacrosAlert = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "trash")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Clear History")
                     }
                 }
@@ -403,15 +403,15 @@ struct SettingsTab: View {
     @Binding var showTipsAndTricks: Bool
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 24.scaled) {
             // Personal Section
             SectionCard(title: "Personal") {
                 Button {
                     showEditGoals = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "slider.horizontal.3")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Edit Macro Goals")
                     }
                 }
@@ -420,9 +420,9 @@ struct SettingsTab: View {
                 Button {
                     showGoalWizard = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "sparkles")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Calculate My Macros")
                     }
                 }
@@ -439,9 +439,9 @@ struct SettingsTab: View {
                 Button {
                     showTipsAndTricks = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "lightbulb.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Tips & Tricks")
                     }
                 }
@@ -451,7 +451,7 @@ struct SettingsTab: View {
             // Developer Section (collapsed) — debug builds only
             #if DEBUG
             DisclosureGroup {
-                VStack(spacing: 10) {
+                VStack(spacing: 10.scaled) {
                     Button {
                     let defaults = UserDefaults.standard
                         defaults.removeObject(forKey: "macro_calorie_goal")
@@ -463,11 +463,11 @@ struct SettingsTab: View {
                         viewModel.carbGoal = 0
                         viewModel.fatGoal = 0
                     } label: {
-                        HStack(spacing: 12) {
+                        HStack(spacing: 12.scaled) {
                             Image(systemName: "arrow.triangle.2.circlepath")
-                                .font(.system(size: 16))
+                                .font(.system(size: 16.scaled))
                             Text("Reset Macro Goals")
-                                .font(.system(size: 14))
+                                .font(.system(size: 14.scaled))
                         }
                     }
                     .buttonStyle(SleekButtonStyle(isSecondary: true))
@@ -476,27 +476,27 @@ struct SettingsTab: View {
                         foodModel.clearUserFoodDictionary()
                         foodModel.load()
                     } label: {
-                        HStack(spacing: 12) {
+                        HStack(spacing: 12.scaled) {
                             Image(systemName: "trash.circle")
-                                .font(.system(size: 16))
+                                .font(.system(size: 16.scaled))
                             Text("Delete Food Dictionary")
-                                .font(.system(size: 14))
+                                .font(.system(size: 14.scaled))
                         }
                     }
                     .buttonStyle(SleekButtonStyle(isSecondary: true))
                 }
-                .padding(.top, 8)
+                .padding(.top, 8.scaled)
             } label: {
-                HStack(spacing: 8) {
+                HStack(spacing: 8.scaled) {
                     Image(systemName: "hammer.fill")
-                        .font(.system(size: 14))
+                        .font(.system(size: 14.scaled))
                     Text("Developer Tools")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: 14.scaled, weight: .medium))
                 }
                 .foregroundColor(AppTheme.textTertiary)
             }
             .accentColor(AppTheme.textTertiary)
-            .padding(.horizontal, 4)
+            .padding(.horizontal, 4.scaled)
             #endif
         }
         .frame(minHeight: tabContentMinHeight, alignment: .top)
@@ -555,7 +555,7 @@ struct MainMenu: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
+            VStack(spacing: 0.scaled) {
                 // Macro Display at top
                 DailyMacrosDisplay(
                     calories: viewModel.calories,
@@ -567,7 +567,7 @@ struct MainMenu: View {
                     carbGoal: viewModel.carbGoal,
                     fatGoal: viewModel.fatGoal
                 )
-                .padding(.top, 8)
+                .padding(.top, 8.scaled)
                 
                 // Tab View
                 TabView {
@@ -583,10 +583,12 @@ struct MainMenu: View {
                         foodModel: foodModel,
                         showDietPrompt: $showDietPrompt,
                         pendingAction: $pendingAction)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .padding(.horizontal, 20.scaled)
+                    .padding(.top, 20.scaled)
+                    .padding(.bottom, 40.scaled)
+                    // May overlap its bottom margin (as on the 13 Pro Max);
+                    // scrolls only when it overflows by more than that.
+                    .scrollsIfNeeded(tolerance: 40.scaled)
                     .tabItem {
                         Label("Dictionary", systemImage: "book.fill")
                     }
@@ -598,10 +600,12 @@ struct MainMenu: View {
                         showQuickTracking: $showQuickTracking,
                         showQuickTrackMeal: $showQuickTrackMeal
                     )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .padding(.horizontal, 20.scaled)
+                    .padding(.top, 20.scaled)
+                    .padding(.bottom, 40.scaled)
+                    // May overlap its bottom margin (as on the 13 Pro Max);
+                    // scrolls only when it overflows by more than that.
+                    .scrollsIfNeeded(tolerance: 40.scaled)
                     .tabItem {
                         Label("Track", systemImage: "fork.knife")
                     }
@@ -612,10 +616,12 @@ struct MainMenu: View {
                         showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
                         showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
                     )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .padding(.horizontal, 20.scaled)
+                    .padding(.top, 20.scaled)
+                    .padding(.bottom, 40.scaled)
+                    // May overlap its bottom margin (as on the 13 Pro Max);
+                    // scrolls only when it overflows by more than that.
+                    .scrollsIfNeeded(tolerance: 40.scaled)
                     .tabItem {
                         Label("History", systemImage: "clock.arrow.circlepath")
                     }
@@ -627,10 +633,12 @@ struct MainMenu: View {
                         showGoalWizard: $showGoalWizard,
                         showTipsAndTricks: $showTipsAndTricks
                     )
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                    .padding(.bottom, 40)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .padding(.horizontal, 20.scaled)
+                    .padding(.top, 20.scaled)
+                    .padding(.bottom, 40.scaled)
+                    // May overlap its bottom margin (as on the 13 Pro Max);
+                    // scrolls only when it overflows by more than that.
+                    .scrollsIfNeeded(tolerance: 40.scaled)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
@@ -863,34 +871,34 @@ struct InitialGoalPromptView: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
             
-            VStack(spacing: 32) {
+            VStack(spacing: 32.scaled) {
                 // Header
-                VStack(spacing: 12) {
+                VStack(spacing: 12.scaled) {
                     Image(systemName: "target")
-                        .font(.system(size: 48, weight: .light))
+                        .font(.system(size: 48.scaled, weight: .light))
                         .foregroundColor(AppTheme.textPrimary)
                     
                     Text("Set Your Goals")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.system(size: 28.scaled, weight: .bold))
                         .foregroundColor(AppTheme.textPrimary)
                     
                     Text("Set your calorie and macro goals to track your progress with the rings.")
-                        .font(.system(size: 15))
+                        .font(.system(size: 15.scaled))
                         .foregroundColor(AppTheme.textSecondary)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
+                        .padding(.horizontal, 24.scaled)
                 }
-                .padding(.top, 40)
+                .padding(.top, 40.scaled)
                 
                 // Buttons
-                VStack(spacing: 12) {
+                VStack(spacing: 12.scaled) {
                     Button {
                         showInitialGoalPrompt = false
                         showEditGoals = true
                     } label: {
-                        HStack(spacing: 12) {
+                        HStack(spacing: 12.scaled) {
                             Image(systemName: "slider.horizontal.3")
-                                .font(.system(size: 18))
+                                .font(.system(size: 18.scaled))
                             Text("Set My Goals")
                         }
                     }
@@ -900,9 +908,9 @@ struct InitialGoalPromptView: View {
                         showInitialGoalPrompt = false
                         showGoalWizard = true
                     } label: {
-                        HStack(spacing: 12) {
+                        HStack(spacing: 12.scaled) {
                             Image(systemName: "sparkles")
-                                .font(.system(size: 18))
+                                .font(.system(size: 18.scaled))
                             Text("Calculate for Me")
                         }
                     }
@@ -915,20 +923,20 @@ struct InitialGoalPromptView: View {
                         viewModel.fatGoal = 70
                         showInitialGoalPrompt = false
                     } label: {
-                        HStack(spacing: 12) {
+                        HStack(spacing: 12.scaled) {
                             Image(systemName: "checkmark.circle")
-                                .font(.system(size: 18))
+                                .font(.system(size: 18.scaled))
                             Text("Use Default Goals")
                         }
                     }
                     .buttonStyle(SleekButtonStyle(isSecondary: true))
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 24.scaled)
                 
                 Spacer()
             }
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.scaledMedium])
         .presentationDragIndicator(.visible)
     }
 }

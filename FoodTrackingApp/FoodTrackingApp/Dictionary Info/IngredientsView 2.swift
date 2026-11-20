@@ -57,7 +57,7 @@ struct IngredientsView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
+            VStack(spacing: 0.scaled) {
                 if let meal {
                     listView(meal: meal)
                 } else {
@@ -195,7 +195,7 @@ struct IngredientsView: View {
         List {
             Section {
                 if !ingredients.isEmpty {
-                    HStack(spacing: 10) {
+                    HStack(spacing: 10.scaled) {
                         metricTile(
                             title: "Calories",
                             value: "\(meal.calories)",
@@ -235,9 +235,10 @@ struct IngredientsView: View {
                     }
                 } else {
                     Text("No ingredients yet. Add or recreate this meal to populate ingredients.")
+                        .font(.system(size: 17.scaled))
                         .foregroundColor(AppTheme.textSecondary)
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.vertical, 8)
+                        .padding(.vertical, 8.scaled)
                 }
             } header: {
                 Text("Meal totals").foregroundColor(AppTheme.textSecondary)
@@ -263,22 +264,23 @@ struct IngredientsView: View {
                     }
                 } else {
                     Text("No ingredients saved for this meal.")
+                        .font(.system(size: 17.scaled))
                         .foregroundColor(AppTheme.textSecondary)
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.vertical, 12)
+                        .padding(.vertical, 12.scaled)
                 }
 
                 Button {
                     showFoodSelection = true
                 } label: {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 12.scaled) {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 18.scaled))
                         Text("Add Ingredient")
                     }
                 }
                 .buttonStyle(SleekButtonStyle())
-                .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                .listRowInsets(EdgeInsets(top: 8.scaled, leading: 0.scaled, bottom: 8.scaled, trailing: 0.scaled))
                 .listRowSeparator(.hidden)
             } header: {
                 Text("Ingredients").foregroundColor(AppTheme.textSecondary)
@@ -302,24 +304,24 @@ struct IngredientsView: View {
     }
     
     private func ingredientRow(_ ing: MealIngredient) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            VStack(alignment: .leading, spacing: 6) {
+        HStack(alignment: .top, spacing: 12.scaled) {
+            VStack(alignment: .leading, spacing: 6.scaled) {
                 Text(ing.name)
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.system(size: 16.scaled, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
 
-                HStack(spacing: 6) {
+                HStack(spacing: 6.scaled) {
                     Text(ing.mode == .serving ?
                          String(format: "%.1f serving%@", ing.quantity, ing.quantity > 1 ? "s" : "") :
                          String(format: "%.0f %@", ing.quantity, ing.servingUnit.rawValue))
-                    .font(.system(size: 12))
+                    .font(.system(size: 12.scaled))
                     .foregroundColor(AppTheme.textSecondary)
                     Image(systemName: "pencil.circle.fill")
-                        .font(.system(size: 12))
+                        .font(.system(size: 12.scaled))
                         .foregroundColor(AppTheme.textSecondary)
                 }
 
-                HStack(spacing: 6) {
+                HStack(spacing: 6.scaled) {
                     let ratio = ratioFor(ing)
                     MacroPill(value: "\(Int(Double(ing.calories) * ratio))", label: "cal", color: AppTheme.calorieColor)
                     MacroPill(value: String(format: "%.0f", ing.protein * ratio), label: "P", color: AppTheme.proteinColor)
@@ -334,9 +336,9 @@ struct IngredientsView: View {
                 ingredientPendingDelete = ing
             } label: {
                 Image(systemName: "trash")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.system(size: 16.scaled, weight: .semibold))
                     .foregroundColor(.red)
-                    .padding(8)
+                    .padding(8.scaled)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.borderless)
@@ -486,29 +488,29 @@ struct IngredientsView: View {
     }
     
     private func metricTile(title: String, value: String, icon: String, color: Color) -> some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 6.scaled) {
             Text(value)
-                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .font(.system(size: 14.scaled, weight: .bold, design: .rounded))
                 .foregroundColor(color)
                 .minimumScaleFactor(0.8)
                 .lineLimit(1)
             
             Text(title.uppercased())
-                .font(.system(size: 10, weight: .semibold))
+                .font(.system(size: 10.scaled, weight: .semibold))
                 .foregroundColor(AppTheme.textSecondary)
-                .tracking(0.8)
+                .tracking(0.8.scaled)
             
             Image(systemName: icon)
-                .font(.system(size: 16, weight: .semibold))
+                .font(.system(size: 16.scaled, weight: .semibold))
                 .foregroundColor(color)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
+        .padding(.vertical, 10.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 12.scaled)
                 .fill(color.opacity(0.08))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: 12.scaled)
                         .stroke(color.opacity(0.15), lineWidth: 1)
                 )
         )
@@ -564,7 +566,7 @@ private struct IngredientQuantityEditor: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
-            VStack(spacing: 24) {
+            VStack(spacing: 24.scaled) {
                 EditorHeader(
                     icon: headerIcon,
                     accent: AppTheme.calorieColor,
@@ -588,7 +590,7 @@ private struct IngredientQuantityEditor: View {
                     fats: liveFats
                 )
 
-                Spacer(minLength: 0)
+                Spacer(minLength: 0.scaled)
 
                 EditorActions(
                     saveTitle: "Save Changes",
@@ -597,11 +599,11 @@ private struct IngredientQuantityEditor: View {
                     onCancel: onCancel
                 )
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 28)
-            .padding(.bottom, 20)
+            .padding(.horizontal, 24.scaled)
+            .padding(.top, 28.scaled)
+            .padding(.bottom, 20.scaled)
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.scaledMedium])
         .presentationDragIndicator(.visible)
         .task { isFocused = true }
     }
@@ -641,7 +643,7 @@ private struct MealWeightEditor: View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
 
-            VStack(spacing: 24) {
+            VStack(spacing: 24.scaled) {
                 EditorHeader(
                     icon: "scalemass.fill",
                     accent: AppTheme.textPrimary,
@@ -665,12 +667,12 @@ private struct MealWeightEditor: View {
                 }
 
                 Text(deltaCaption)
-                    .font(.system(size: 13))
+                    .font(.system(size: 13.scaled))
                     .foregroundColor(AppTheme.textSecondary)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
 
-                Spacer(minLength: 0)
+                Spacer(minLength: 0.scaled)
 
                 EditorActions(
                     saveTitle: "Save Weight",
@@ -681,11 +683,11 @@ private struct MealWeightEditor: View {
                     onCancel: onCancel
                 )
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 28)
-            .padding(.bottom, 20)
+            .padding(.horizontal, 24.scaled)
+            .padding(.top, 28.scaled)
+            .padding(.bottom, 20.scaled)
         }
-        .presentationDetents([.medium])
+        .presentationDetents([.scaledMedium])
         .presentationDragIndicator(.visible)
         .task { isFocused = true }
     }
@@ -701,22 +703,22 @@ private struct EditorHeader: View {
     let subtitle: String
 
     var body: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 14.scaled) {
             ZStack {
                 Circle()
                     .fill(accent.opacity(0.15))
-                    .frame(width: 56, height: 56)
+                    .frame(width: 56.scaled, height: 56.scaled)
                 Image(systemName: icon)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(.system(size: 22.scaled, weight: .semibold))
                     .foregroundColor(accent)
             }
 
-            VStack(spacing: 4) {
+            VStack(spacing: 4.scaled) {
                 Text(title)
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.system(size: 20.scaled, weight: .bold))
                     .foregroundColor(AppTheme.textPrimary)
                 Text(subtitle)
-                    .font(.system(size: 14, weight: .medium))
+                    .font(.system(size: 14.scaled, weight: .medium))
                     .foregroundColor(AppTheme.textSecondary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
@@ -735,32 +737,32 @@ private struct LargeNumberField: View {
     @FocusState.Binding var isFocused: Bool
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 10.scaled) {
             Text(caption.uppercased())
-                .font(.system(size: 11, weight: .semibold))
-                .tracking(1.2)
+                .font(.system(size: 11.scaled, weight: .semibold))
+                .tracking(1.2.scaled)
                 .foregroundColor(AppTheme.textTertiary)
 
-            HStack(alignment: .firstTextBaseline, spacing: 10) {
+            HStack(alignment: .firstTextBaseline, spacing: 10.scaled) {
                 TextField(placeholder, text: $text)
                     .keyboardType(keyboard)
                     .focused($isFocused)
                     .multilineTextAlignment(.trailing)
-                    .font(.system(size: 44, weight: .bold, design: .rounded))
+                    .font(.system(size: 44.scaled, weight: .bold, design: .rounded))
                     .foregroundColor(AppTheme.textPrimary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
 
                 Text(unit)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: 18.scaled, weight: .semibold))
                     .foregroundColor(AppTheme.textTertiary)
             }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 18)
+            .padding(.horizontal, 24.scaled)
+            .padding(.vertical, 18.scaled)
             .background(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 16.scaled)
                     .fill(AppTheme.cardBackground)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 16)
+                        RoundedRectangle(cornerRadius: 16.scaled)
                             .stroke(
                                 isFocused ? AppTheme.accent.opacity(0.35) : AppTheme.border,
                                 lineWidth: 1
@@ -780,13 +782,13 @@ private struct NutritionPreview: View {
     let fats: Double
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 12.scaled) {
             Text("Nutrition Preview".uppercased())
-                .font(.system(size: 11, weight: .semibold))
-                .tracking(1.2)
+                .font(.system(size: 11.scaled, weight: .semibold))
+                .tracking(1.2.scaled)
                 .foregroundColor(AppTheme.textTertiary)
 
-            HStack(spacing: 10) {
+            HStack(spacing: 10.scaled) {
                 MacroPill(value: "\(calories)",
                           label: "cal",
                           color: AppTheme.calorieColor)
@@ -802,13 +804,13 @@ private struct NutritionPreview: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
-        .padding(.horizontal, 16)
+        .padding(.vertical, 14.scaled)
+        .padding(.horizontal, 16.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 14)
+            RoundedRectangle(cornerRadius: 14.scaled)
                 .fill(Color.white.opacity(0.04))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 14)
+                    RoundedRectangle(cornerRadius: 14.scaled)
                         .stroke(AppTheme.border, lineWidth: 1)
                 )
         )
@@ -823,11 +825,11 @@ private struct EditorActions: View {
     let onCancel: () -> Void
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 10.scaled) {
             Button(action: onSave) {
-                HStack(spacing: 8) {
+                HStack(spacing: 8.scaled) {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 17))
+                        .font(.system(size: 17.scaled))
                     Text(saveTitle)
                 }
             }
@@ -836,9 +838,9 @@ private struct EditorActions: View {
             .opacity(canSave ? 1.0 : 0.5)
 
             Button("Cancel", action: onCancel)
-                .font(.system(size: 14, weight: .medium))
+                .font(.system(size: 14.scaled, weight: .medium))
                 .foregroundColor(AppTheme.textSecondary)
-                .padding(.top, 2)
+                .padding(.top, 2.scaled)
         }
     }
 }

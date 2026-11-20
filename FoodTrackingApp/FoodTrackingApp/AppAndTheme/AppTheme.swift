@@ -45,29 +45,29 @@ struct SleekButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 15, weight: .semibold, design: .default))
+            .font(.system(size: 15.scaled, weight: .semibold, design: .default))
             .foregroundColor(isDestructive ? .red : (isSecondary ? AppTheme.textPrimary : .black))
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 14)
-            .padding(.horizontal, 20)
+            .padding(.vertical, 14.scaled)
+            .padding(.horizontal, 20.scaled)
             .background(
                 Group {
                     if isDestructive {
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 12.scaled)
                             .fill(Color.red.opacity(0.15))
                             .overlay(
-                                RoundedRectangle(cornerRadius: 12)
+                                RoundedRectangle(cornerRadius: 12.scaled)
                                     .stroke(Color.red.opacity(0.3), lineWidth: 1)
                             )
                     } else if isSecondary {
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 12.scaled)
                             .fill(Color.white.opacity(0.08))
                             .overlay(
-                                RoundedRectangle(cornerRadius: 12)
+                                RoundedRectangle(cornerRadius: 12.scaled)
                                     .stroke(Color.white.opacity(0.15), lineWidth: 1)
                             )
                     } else {
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 12.scaled)
                             .fill(Color.white)
                     }
                 }
@@ -83,12 +83,12 @@ struct SleekButtonStyle: ButtonStyle {
 struct CompactButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 14, weight: .medium))
+            .font(.system(size: 14.scaled, weight: .medium))
             .foregroundColor(.black)
-            .padding(.vertical, 10)
-            .padding(.horizontal, 16)
+            .padding(.vertical, 10.scaled)
+            .padding(.horizontal, 16.scaled)
             .background(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 10.scaled)
                     .fill(Color.white)
             )
             .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
@@ -101,17 +101,17 @@ struct NavigationButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label
-                .font(.system(size: 15, weight: .medium))
+                .font(.system(size: 15.scaled, weight: .medium))
                 .foregroundColor(AppTheme.textPrimary)
             Spacer()
             Image(systemName: "chevron.right")
-                .font(.system(size: 13, weight: .semibold))
+                .font(.system(size: 13.scaled, weight: .semibold))
                 .foregroundColor(AppTheme.textTertiary)
         }
-        .padding(.vertical, 14)
-        .padding(.horizontal, 16)
+        .padding(.vertical, 14.scaled)
+        .padding(.horizontal, 16.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 12.scaled)
                 .fill(Color.white.opacity(0.06))
         )
         .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
@@ -123,9 +123,9 @@ struct NavigationButtonStyle: ButtonStyle {
 // MARK: - Card Container
 struct ThemedCard<Content: View>: View {
     let content: Content
-    var padding: CGFloat = 16
+    var padding: CGFloat = 16.scaled
     
-    init(padding: CGFloat = 16, @ViewBuilder content: () -> Content) {
+    init(padding: CGFloat = 16.scaled, @ViewBuilder content: () -> Content) {
         self.padding = padding
         self.content = content()
     }
@@ -134,10 +134,10 @@ struct ThemedCard<Content: View>: View {
         content
             .padding(padding)
             .background(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 16.scaled)
                     .fill(AppTheme.cardBackground)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 16)
+                        RoundedRectangle(cornerRadius: 16.scaled)
                             .stroke(AppTheme.border, lineWidth: 1)
                     )
             )
@@ -150,12 +150,12 @@ struct SectionHeader: View {
     
     var body: some View {
         Text(title.uppercased())
-            .font(.system(size: 12, weight: .semibold, design: .default))
+            .font(.system(size: 12.scaled, weight: .semibold, design: .default))
             .foregroundColor(AppTheme.textTertiary)
-            .tracking(1.2)
+            .tracking(1.2.scaled)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 4)
-            .padding(.bottom, 8)
+            .padding(.horizontal, 4.scaled)
+            .padding(.bottom, 8.scaled)
     }
 }
 
@@ -168,15 +168,15 @@ struct ThemedTextField: View {
     var body: some View {
         TextField(placeholder, text: $text)
             .keyboardType(keyboardType)
-            .font(.system(size: 16))
+            .font(.system(size: 16.scaled))
             .foregroundColor(AppTheme.textPrimary)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
+            .padding(.horizontal, 16.scaled)
+            .padding(.vertical, 14.scaled)
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 12.scaled)
                     .fill(Color.white.opacity(0.06))
                     .overlay(
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: 12.scaled)
                             .stroke(AppTheme.border, lineWidth: 1)
                     )
             )
@@ -196,12 +196,12 @@ struct FormRow: View {
     var body: some View {
         HStack {
             Text(label)
-                .font(.system(size: 15))
+                .font(.system(size: 15.scaled))
                 .foregroundColor(AppTheme.textSecondary)
             Spacer()
             content
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 4.scaled)
     }
 }
 
@@ -213,12 +213,12 @@ extension View {
     
     func cardStyle() -> some View {
         self
-            .padding(16)
+            .padding(16.scaled)
             .background(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 16.scaled)
                     .fill(AppTheme.cardBackground)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 16)
+                        RoundedRectangle(cornerRadius: 16.scaled)
                             .stroke(AppTheme.border, lineWidth: 1)
                     )
             )

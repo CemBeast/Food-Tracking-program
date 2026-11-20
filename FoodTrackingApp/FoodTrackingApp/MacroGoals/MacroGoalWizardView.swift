@@ -42,102 +42,102 @@ struct MacroGoalWizardView: View {
                 AppTheme.background.ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 24.scaled) {
                         // Header
-                        VStack(spacing: 8) {
+                        VStack(spacing: 8.scaled) {
                             Image(systemName: "sparkles")
-                                .font(.system(size: 40, weight: .light))
+                                .font(.system(size: 40.scaled, weight: .light))
                                 .foregroundColor(AppTheme.textPrimary)
                             
                             Text("Calculate Your Macros")
-                                .font(.system(size: 22, weight: .bold))
+                                .font(.system(size: 22.scaled, weight: .bold))
                                 .foregroundColor(AppTheme.textPrimary)
                             
                             Text("We'll calculate your ideal daily targets")
-                                .font(.system(size: 14))
+                                .font(.system(size: 14.scaled))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
-                        .padding(.top, 20)
-                        .padding(.bottom, 8)
+                        .padding(.top, 20.scaled)
+                        .padding(.bottom, 8.scaled)
                         
                         // Personal Info Section
-                        VStack(alignment: .leading, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 12.scaled) {
                             SectionHeader(title: "Personal Info")
                             
-                            VStack(spacing: 0) {
+                            VStack(spacing: 0.scaled) {
                                 // Sex
                                 HStack {
                                     Text("Sex")
-                                        .font(.system(size: 15))
+                                        .font(.system(size: 15.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                     Spacer()
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         ForEach(sexes, id: \.self) { option in
                                             Button {
                                                 sex = option
                                             } label: {
                                                 Text(option)
-                                                    .font(.system(size: 14, weight: .medium))
+                                                    .font(.system(size: 14.scaled, weight: .medium))
                                                     .foregroundColor(sex == option ? .black : AppTheme.textSecondary)
-                                                    .padding(.horizontal, 16)
-                                                    .padding(.vertical, 8)
+                                                    .padding(.horizontal, 16.scaled)
+                                                    .padding(.vertical, 8.scaled)
                                                     .background(
-                                                        RoundedRectangle(cornerRadius: 8)
+                                                        RoundedRectangle(cornerRadius: 8.scaled)
                                                             .fill(sex == option ? Color.white : Color.clear)
                                                     )
                                             }
                                         }
                                     }
-                                    .padding(4)
+                                    .padding(4.scaled)
                                     .background(
-                                        RoundedRectangle(cornerRadius: 10)
+                                        RoundedRectangle(cornerRadius: 10.scaled)
                                             .fill(Color.white.opacity(0.06))
                                     )
                                 }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 14)
+                                .padding(.horizontal, 16.scaled)
+                                .padding(.vertical, 14.scaled)
                                 
-                                Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                                Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                                 
                                 // Age
                                 HStack {
                                     Text("Age")
-                                        .font(.system(size: 15))
+                                        .font(.system(size: 15.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                     Spacer()
-                                    HStack(spacing: 16) {
+                                    HStack(spacing: 16.scaled) {
                                         Button {
                                             if age > 10 { age -= 1 }
                                         } label: {
                                             Image(systemName: "minus.circle.fill")
-                                                .font(.system(size: 24))
+                                                .font(.system(size: 24.scaled))
                                                 .foregroundColor(AppTheme.textSecondary)
                                         }
                                         Text("\(age)")
-                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .font(.system(size: 18.scaled, weight: .bold, design: .rounded))
                                             .foregroundColor(AppTheme.textPrimary)
-                                            .frame(minWidth: 40)
+                                            .frame(minWidth: 40.scaled)
                                         Button {
                                             if age < 100 { age += 1 }
                                         } label: {
                                             Image(systemName: "plus.circle.fill")
-                                                .font(.system(size: 24))
+                                                .font(.system(size: 24.scaled))
                                                 .foregroundColor(AppTheme.textPrimary)
                                         }
                                     }
                                 }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 14)
+                                .padding(.horizontal, 16.scaled)
+                                .padding(.vertical, 14.scaled)
                                 
-                                Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                                Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                                 
                                 // Height
                                 HStack {
                                     Text("Height")
-                                        .font(.system(size: 15))
+                                        .font(.system(size: 15.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                     Spacer()
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         Button {
                                             if heightInches > 0 {
                                                 heightInches -= 1
@@ -147,13 +147,13 @@ struct MacroGoalWizardView: View {
                                             }
                                         } label: {
                                             Image(systemName: "minus.circle.fill")
-                                                .font(.system(size: 24))
+                                                .font(.system(size: 24.scaled))
                                                 .foregroundColor(AppTheme.textSecondary)
                                         }
                                         Text("\(heightFeet)'\(heightInches)\"")
-                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .font(.system(size: 18.scaled, weight: .bold, design: .rounded))
                                             .foregroundColor(AppTheme.textPrimary)
-                                            .frame(minWidth: 60)
+                                            .frame(minWidth: 60.scaled)
                                         Button {
                                             if heightInches < 11 {
                                                 heightInches += 1
@@ -163,83 +163,83 @@ struct MacroGoalWizardView: View {
                                             }
                                         } label: {
                                             Image(systemName: "plus.circle.fill")
-                                                .font(.system(size: 24))
+                                                .font(.system(size: 24.scaled))
                                                 .foregroundColor(AppTheme.textPrimary)
                                         }
                                     }
                                 }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 14)
+                                .padding(.horizontal, 16.scaled)
+                                .padding(.vertical, 14.scaled)
                                 
-                                Divider().background(AppTheme.divider).padding(.horizontal, 16)
+                                Divider().background(AppTheme.divider).padding(.horizontal, 16.scaled)
                                 
                                 // Weight
                                 HStack {
                                     Text("Weight")
-                                        .font(.system(size: 15))
+                                        .font(.system(size: 15.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                     Spacer()
-                                    HStack(spacing: 8) {
+                                    HStack(spacing: 8.scaled) {
                                         Button {
                                             if weightLbs > 66 { weightLbs -= 1 }
                                         } label: {
                                             Image(systemName: "minus.circle.fill")
-                                                .font(.system(size: 24))
+                                                .font(.system(size: 24.scaled))
                                                 .foregroundColor(AppTheme.textSecondary)
                                         }
                                         Text("\(Int(weightLbs)) lbs")
-                                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                                            .font(.system(size: 18.scaled, weight: .bold, design: .rounded))
                                             .foregroundColor(AppTheme.textPrimary)
-                                            .frame(minWidth: 80)
+                                            .frame(minWidth: 80.scaled)
                                         Button {
                                             if weightLbs < 400 { weightLbs += 1 }
                                         } label: {
                                             Image(systemName: "plus.circle.fill")
-                                                .font(.system(size: 24))
+                                                .font(.system(size: 24.scaled))
                                                 .foregroundColor(AppTheme.textPrimary)
                                         }
                                     }
                                 }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 14)
+                                .padding(.horizontal, 16.scaled)
+                                .padding(.vertical, 14.scaled)
                             }
                             .background(
-                                RoundedRectangle(cornerRadius: 16)
+                                RoundedRectangle(cornerRadius: 16.scaled)
                                     .fill(AppTheme.cardBackground)
                                     .overlay(
-                                        RoundedRectangle(cornerRadius: 16)
+                                        RoundedRectangle(cornerRadius: 16.scaled)
                                             .stroke(AppTheme.border, lineWidth: 1)
                                     )
                             )
                         }
                         
                         // Activity Level Section
-                        VStack(alignment: .leading, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 12.scaled) {
                             SectionHeader(title: "Activity Level")
                             
-                            VStack(spacing: 8) {
+                            VStack(spacing: 8.scaled) {
                                 ForEach(activityOptions, id: \.self) { option in
                                     Button {
                                         activityLevel = option
                                     } label: {
                                         HStack {
                                             Text(option)
-                                                .font(.system(size: 15, weight: activityLevel == option ? .semibold : .regular))
+                                                .font(.system(size: 15.scaled, weight: activityLevel == option ? .semibold : .regular))
                                                 .foregroundColor(activityLevel == option ? .black : AppTheme.textPrimary)
                                             Spacer()
                                             if activityLevel == option {
                                                 Image(systemName: "checkmark")
-                                                    .font(.system(size: 14, weight: .bold))
+                                                    .font(.system(size: 14.scaled, weight: .bold))
                                                     .foregroundColor(.black)
                                             }
                                         }
-                                        .padding(.horizontal, 16)
-                                        .padding(.vertical, 14)
+                                        .padding(.horizontal, 16.scaled)
+                                        .padding(.vertical, 14.scaled)
                                         .background(
-                                            RoundedRectangle(cornerRadius: 12)
+                                            RoundedRectangle(cornerRadius: 12.scaled)
                                                 .fill(activityLevel == option ? Color.white : AppTheme.cardBackground)
                                                 .overlay(
-                                                    RoundedRectangle(cornerRadius: 12)
+                                                    RoundedRectangle(cornerRadius: 12.scaled)
                                                         .stroke(activityLevel == option ? Color.clear : AppTheme.border, lineWidth: 1)
                                                 )
                                         )
@@ -249,7 +249,7 @@ struct MacroGoalWizardView: View {
                         }
                         
                         // Goal Section
-                        VStack(alignment: .leading, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 12.scaled) {
                             SectionHeader(title: "Your Goal")
                             
                             Menu {
@@ -263,20 +263,20 @@ struct MacroGoalWizardView: View {
                             } label: {
                                 HStack {
                                     Text(personalGoal)
-                                        .font(.system(size: 15))
+                                        .font(.system(size: 15.scaled))
                                         .foregroundColor(AppTheme.textPrimary)
                                     Spacer()
                                     Image(systemName: "chevron.up.chevron.down")
-                                        .font(.system(size: 12))
+                                        .font(.system(size: 12.scaled))
                                         .foregroundColor(AppTheme.textSecondary)
                                 }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 16)
+                                .padding(.horizontal, 16.scaled)
+                                .padding(.vertical, 16.scaled)
                                 .background(
-                                    RoundedRectangle(cornerRadius: 12)
+                                    RoundedRectangle(cornerRadius: 12.scaled)
                                         .fill(AppTheme.cardBackground)
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 12)
+                                            RoundedRectangle(cornerRadius: 12.scaled)
                                                 .stroke(AppTheme.border, lineWidth: 1)
                                         )
                                 )
@@ -285,29 +285,29 @@ struct MacroGoalWizardView: View {
                         
                         // Not-medical-advice disclaimer (App Store Guideline 1.4.1)
                         Text("These targets are estimates for general wellness and are not medical or nutritional advice. Consult a healthcare professional before making dietary changes.")
-                            .font(.system(size: 12))
+                            .font(.system(size: 12.scaled))
                             .foregroundColor(AppTheme.textSecondary)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(.horizontal, 8)
-                            .padding(.top, 4)
+                            .padding(.horizontal, 8.scaled)
+                            .padding(.top, 4.scaled)
 
                         // Calculate Button
                         Button {
                             calculateMacros()
                             dismiss()
                         } label: {
-                            HStack(spacing: 8) {
+                            HStack(spacing: 8.scaled) {
                                 Image(systemName: "sparkles")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 18.scaled))
                                 Text("Calculate My Macros")
                             }
                         }
                         .buttonStyle(SleekButtonStyle())
-                        .padding(.top, 8)
-                        .padding(.bottom, 40)
+                        .padding(.top, 8.scaled)
+                        .padding(.bottom, 40.scaled)
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 20.scaled)
                 }
             }
             .navigationTitle("Macro Calculator")

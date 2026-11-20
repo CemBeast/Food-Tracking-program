@@ -39,9 +39,9 @@ struct ScannerTrackingViewWithOverlay: View {
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(.system(size: 16.scaled, weight: .semibold))
                             .foregroundColor(.white)
-                            .padding(12)
+                            .padding(12.scaled)
                             .background(
                                 Circle()
                                     .fill(Color.black.opacity(0.5))
@@ -51,30 +51,30 @@ struct ScannerTrackingViewWithOverlay: View {
                     Spacer()
 
                     Text("Add by Barcode")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.system(size: 17.scaled, weight: .semibold))
                         .foregroundColor(.white)
 
                     Spacer()
 
                     Color.clear
-                        .frame(width: 40, height: 40)
+                        .frame(width: 40.scaled, height: 40.scaled)
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 60)
+                .padding(.horizontal, 20.scaled)
+                .padding(.top, 60.scaled)
 
                 Spacer()
 
                 // Barcode overlay
                 BarcodeOverlay()
-                    .frame(width: 280, height: 180)
+                    .frame(width: 280.scaled, height: 180.scaled)
 
                 Spacer()
 
                 // Bottom hint
                 Text("Position barcode within the frame")
-                    .font(.system(size: 14))
+                    .font(.system(size: 14.scaled))
                     .foregroundColor(.white.opacity(0.7))
-                    .padding(.bottom, 40)
+                    .padding(.bottom, 40.scaled)
             }
 
             if isLooking {
@@ -82,18 +82,18 @@ struct ScannerTrackingViewWithOverlay: View {
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
 
-                VStack(spacing: 12) {
+                VStack(spacing: 12.scaled) {
                     ProgressView()
                         .progressViewStyle(.circular)
                         .tint(.white)
                         .scaleEffect(1.4)
                     Text("Looking up…")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: 14.scaled, weight: .medium))
                         .foregroundColor(.white)
                 }
-                .padding(20)
+                .padding(20.scaled)
                 .background(
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: 12.scaled)
                         .fill(Color.black.opacity(0.7))
                 )
                 .transition(.opacity)

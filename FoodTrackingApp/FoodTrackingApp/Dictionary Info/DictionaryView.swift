@@ -179,7 +179,7 @@ struct DictionaryView: View {
     }()
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 0.scaled) {
             //searchBar
             SearchBar(text: $searchText, placeholder: "Search foods...")
             sortChips
@@ -245,7 +245,7 @@ struct DictionaryView: View {
     
     @ViewBuilder
     private var sortChips: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 8.scaled) {
             ForEach(SortOption.allCases) { option in
                 Button {
                     withAnimation(.easeOut(duration: 0.2)) {
@@ -253,19 +253,19 @@ struct DictionaryView: View {
                     }
                 } label: {
                     Text(option.rawValue)
-                        .font(.system(size: 12, weight: sortOption == option ? .semibold : .medium))
+                        .font(.system(size: 12.scaled, weight: sortOption == option ? .semibold : .medium))
                         .foregroundColor(sortOption == option ? .black : AppTheme.textSecondary)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 8)
+                        .padding(.horizontal, 14.scaled)
+                        .padding(.vertical, 8.scaled)
                         .background(
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: 8.scaled)
                                 .fill(sortOption == option ? Color.white : Color.white.opacity(0.06))
                         )
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 20.scaled)
     }
     
     @ViewBuilder
@@ -301,7 +301,7 @@ struct DictionaryView: View {
                     .buttonStyle(PlainButtonStyle())
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                    .listRowInsets(EdgeInsets(top: 6.scaled, leading: 20.scaled, bottom: 6.scaled, trailing: 20.scaled))
                 }
             } else {
                 ForEach(filteredFoodItems) { foodItem in
@@ -330,12 +330,12 @@ struct DictionaryView: View {
                     }
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
+                    .listRowInsets(EdgeInsets(top: 6.scaled, leading: 20.scaled, bottom: 6.scaled, trailing: 20.scaled))
                 }
                 .onDelete(perform: deleteItems)
             }
         }
-        .padding(.top, 8)
+        .padding(.top, 8.scaled)
         .listStyle(PlainListStyle())
         .scrollContentBackground(.hidden)
     }
@@ -393,16 +393,16 @@ struct FoodItemRow: View {
     let onToggleFavorite: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 10.scaled) {
             // Header with name and favorite
             HStack {
-                HStack(spacing: 8) {
+                HStack(spacing: 8.scaled) {
                     Text(foodItem.name)
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 16.scaled, weight: .semibold))
                         .foregroundColor(AppTheme.textPrimary)
                     if foodItem.isMeal {
                         Image(systemName: "square.stack.3d.up.fill")
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(.system(size: 14.scaled, weight: .semibold))
                             .foregroundColor(AppTheme.textSecondary)
                             .accessibilityLabel("Meal")
                     }
@@ -414,37 +414,37 @@ struct FoodItemRow: View {
                     onToggleFavorite()
                 } label: {
                     Image(systemName: foodItem.isFavorite ? "star.fill" : "star")
-                        .font(.system(size: 16))
+                        .font(.system(size: 16.scaled))
                         .foregroundColor(foodItem.isFavorite ? .yellow : AppTheme.textTertiary)
                 }
                 .buttonStyle(.plain)
             }
             
             // Serving info
-            HStack(spacing: 16) {
+            HStack(spacing: 16.scaled) {
                 Label("\(foodItem.servings) srv", systemImage: "number.circle")
-                    .font(.system(size: 12))
+                    .font(.system(size: 12.scaled))
                     .foregroundColor(AppTheme.textSecondary)
                 
                 Label("\(foodItem.weightInGrams)\(foodItem.servingUnit.rawValue)", systemImage: foodItem.servingUnit == .grams ? "scalemass" : "drop")
-                    .font(.system(size: 12))
+                    .font(.system(size: 12.scaled))
                     .foregroundColor(AppTheme.textSecondary)
             }
             
             // Macro pills
-            HStack(spacing: 8) {
+            HStack(spacing: 8.scaled) {
                 MacroPill(value: "\(foodItem.calories)", label: "cal", color: AppTheme.calorieColor)
                 MacroPill(value: String(format: "%.0f", foodItem.protein), label: "P", color: AppTheme.proteinColor)
                 MacroPill(value: String(format: "%.0f", foodItem.carbs), label: "C", color: AppTheme.carbColor)
                 MacroPill(value: String(format: "%.0f", foodItem.fats), label: "F", color: AppTheme.fatColor)
             }
         }
-        .padding(16)
+        .padding(16.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 14)
+            RoundedRectangle(cornerRadius: 14.scaled)
                 .fill(AppTheme.cardBackground)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 14)
+                    RoundedRectangle(cornerRadius: 14.scaled)
                         .stroke(isSelected ? Color.white.opacity(0.5) : AppTheme.border, lineWidth: isSelected ? 2 : 1)
                 )
         )
@@ -458,18 +458,18 @@ struct MacroPill: View {
     let color: Color
     
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 4.scaled) {
             Text(value)
-                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .font(.system(size: 13.scaled, weight: .bold, design: .rounded))
                 .foregroundColor(color)
             Text(label)
-                .font(.system(size: 11, weight: .medium))
+                .font(.system(size: 11.scaled, weight: .medium))
                 .foregroundColor(color.opacity(0.7))
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 10.scaled)
+        .padding(.vertical, 6.scaled)
         .background(
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: 8.scaled)
                 .fill(color.opacity(0.12))
         )
     }
