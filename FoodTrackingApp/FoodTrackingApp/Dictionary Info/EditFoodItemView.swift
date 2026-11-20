@@ -426,9 +426,13 @@ struct EditFoodItemView: View {
     private func applyScalingFromBase() {
         let bw = baseWeight
         let nw = foodItem.weightInGrams
+        // A 0 g base can't be scaled from (0/0 = NaN would crash Int(...)), so leave macros as-is.
+        guard bw > 0 else { return }
         let factor = Double(nw) / Double(bw)
-        
-        foodItem.calories = Int((Double(baseCalories) * factor).rounded())
+
+        // Clamp before Int(...) so an absurdly large typed weight can't overflow and crash.
+        let scaledCalories = min((Double(baseCalories) * factor).rounded(), Double(Int32.max))
+        foodItem.calories = Int(scaledCalories)
         foodItem.protein = baseProtein * factor
         foodItem.carbs = baseCarbs * factor
         foodItem.fats = baseFats * factor

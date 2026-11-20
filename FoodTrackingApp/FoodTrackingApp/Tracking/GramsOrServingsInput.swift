@@ -41,10 +41,14 @@ struct GramsOrServingsInput: View {
         }
         
         var inputRatio: Double {
+            // Guard zero denominators (same as MacroTrackerViewModel.computeFactor):
+            // 0/0 = NaN and Int(NaN) below would crash the preview.
             switch mode {
             case .serving:
+                guard food.servings > 0 else { return 0 }
                 return parsedInput / Double(food.servings)
             case .weight:
+                guard food.weightInGrams > 0 else { return 0 }
                 return parsedInput / Double(food.weightInGrams)
             }
         }
