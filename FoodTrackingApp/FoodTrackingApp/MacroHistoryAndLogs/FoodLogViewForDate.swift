@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FoodLogViewForDate: View {
     let entries: [LoggedFoodEntry]
+    @ObservedObject var foodModel: FoodModel
+    @State private var entryToAddToDictionary: LoggedFoodEntry?
 
     var body: some View {
         ZStack {
@@ -27,7 +29,9 @@ struct FoodLogViewForDate: View {
             } else {
                 List {
                     ForEach(entries) { entry in
-                        FoodLogEntryRow(entry: entry)
+                        FoodLogEntryRow(entry: entry) {
+                            entryToAddToDictionary = entry
+                        }
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
@@ -37,6 +41,7 @@ struct FoodLogViewForDate: View {
                 .scrollContentBackground(.hidden)
             }
         }
+        .addToDictionarySheet(entry: $entryToAddToDictionary, foodModel: foodModel)
         .navigationTitle("Daily Log")
         .navigationBarTitleDisplayMode(.large)
     }

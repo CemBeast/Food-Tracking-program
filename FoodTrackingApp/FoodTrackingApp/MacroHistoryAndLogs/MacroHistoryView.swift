@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MacroHistoryView: View {
     @ObservedObject var viewModel: MacroTrackerViewModel
+    @ObservedObject var foodModel: FoodModel
 
     var body: some View {
         let (avgCal, avgProtein, avgCarb, avgFat) = getAvgMacros()
@@ -75,7 +76,7 @@ struct MacroHistoryView: View {
                         ZStack {
                             HistoryDayRow(entry: entry)
                             NavigationLink {
-                                FoodLogViewForDate(entries: entry.foodsEaten)
+                                FoodLogViewForDate(entries: entry.foodsEaten, foodModel: foodModel)
                             } label: {
                                 EmptyView()
                             }

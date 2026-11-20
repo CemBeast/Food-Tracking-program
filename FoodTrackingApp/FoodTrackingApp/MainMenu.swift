@@ -329,6 +329,7 @@ struct TrackFoodTab: View {
 // MARK: - History Tab
 struct HistoryTab: View {
     @ObservedObject var viewModel: MacroTrackerViewModel
+    @ObservedObject var foodModel: FoodModel
     @Binding var showingClearDailyMacrosAlert: Bool
     @Binding var showingClearHistoryMacrosAlert: Bool
 
@@ -336,7 +337,7 @@ struct HistoryTab: View {
         VStack(spacing: 24) {
             // History Section
             SectionCard(title: "History") {
-                NavigationLink(destination: FoodLogView(viewModel: viewModel)) {
+                NavigationLink(destination: FoodLogView(viewModel: viewModel, foodModel: foodModel)) {
                     HStack(spacing: 12) {
                         Image(systemName: "list.clipboard.fill")
                             .font(.system(size: 18))
@@ -345,7 +346,7 @@ struct HistoryTab: View {
                 }
                 .buttonStyle(SleekButtonStyle())
                 
-                NavigationLink(destination: MacroHistoryView(viewModel: viewModel)) {
+                NavigationLink(destination: MacroHistoryView(viewModel: viewModel, foodModel: foodModel)) {
                     HStack(spacing: 12) {
                         Image(systemName: "chart.line.uptrend.xyaxis")
                             .font(.system(size: 18))
@@ -607,6 +608,7 @@ struct MainMenu: View {
 
                     HistoryTab(
                         viewModel: viewModel,
+                        foodModel: foodModel,
                         showingClearDailyMacrosAlert: $showingClearDailyMacrosAlert,
                         showingClearHistoryMacrosAlert: $showingClearHistoryMacrosAlert
                     )

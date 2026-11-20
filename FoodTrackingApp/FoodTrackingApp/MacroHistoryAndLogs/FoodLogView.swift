@@ -10,6 +10,8 @@ struct FoodLogView: View {
     @State private var foodToEditQuantity: LoggedFoodEntry?
     @State private var quickEntryToEdit: LoggedFoodEntry?
     @ObservedObject var viewModel: MacroTrackerViewModel
+    @ObservedObject var foodModel: FoodModel
+    @State private var entryToAddToDictionary: LoggedFoodEntry?
 
     var body: some View {
         ZStack {
@@ -33,7 +35,9 @@ struct FoodLogView: View {
             } else {
                 List {
                     ForEach(viewModel.foodLog) { entry in
-                        FoodLogEntryRow(entry: entry)
+                        FoodLogEntryRow(entry: entry) {
+                            entryToAddToDictionary = entry
+                        }
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
@@ -67,6 +71,7 @@ struct FoodLogView: View {
                 viewModel.updateQuickEntry(entry, with: updatedFood)
             }
         }
+        .addToDictionarySheet(entry: $entryToAddToDictionary, foodModel: foodModel)
         .navigationTitle("Today's Log")
         .navigationBarTitleDisplayMode(.large)
     }
@@ -75,6 +80,8 @@ struct FoodLogView: View {
 // MARK: - Food Log Entry Row
 struct FoodLogEntryRow: View {
     let entry: LoggedFoodEntry
+    /// Shown as a "+ Dictionary" button on Quick Track entries when provided.
+    var onAddToDictionary: (() -> Void)? = nil
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -101,6 +108,26 @@ struct FoodLogEntryRow: View {
                                 Capsule().fill(Color.white.opacity(0.12))
                             )
                             .accessibilityLabel("Quick Track entry")
+
+                            if let onAddToDictionary {
+                                Button(action: onAddToDictionary) {
+                                    HStack(spacing: 3) {
+                                        Image(systemName: "plus")
+                                            .font(.system(size: 10, weight: .bold))
+                                        Text("Dictionary")
+                                            .font(.system(size: 12, weight: .semibold))
+                                    }
+                                    .foregroundColor(AppTheme.textSecondary)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 3)
+                                    .overlay(
+                                        Capsule().stroke(AppTheme.border, lineWidth: 1)
+                                    )
+                                }
+                                // Borderless so tapping the row elsewhere doesn't trigger it.
+                                .buttonStyle(.borderless)
+                                .accessibilityLabel("Add to dictionary")
+                            }
                         } else if entry.mode == .weight {
                             Text(String(format: "%.0f %@", entry.quantity, entry.servingUnit.rawValue))
                                 .font(.system(size: 13))
@@ -143,5 +170,66 @@ struct FoodLogEntryRow: View {
                         .stroke(AppTheme.border, lineWidth: 1)
                 )
         )
+    }
+}
+
+// MARK: - Add Quick Entry to Dictionary
+extension LoggedFoodEntry {
+    /// A dictionary-ready food built from a quick entry: same name and
+    /// (scaled) macros, defaulted to 100 g so the user can adjust the weight.
+    var dictionaryDraft: FoodItem {
+        FoodItem(
+            name: food.name,
+            weightInGrams: 100,
+            servings: 1,
+            calories: scaledCalories,
+            protein: scaledProtein,
+            carbs: scaledCarbs,
+            fats: scaledFats,
+            servingUnit: .grams
+        )
+    }
+}
+
+private struct AddToDictionarySheet: ViewModifier {
+    @Binding var entry: LoggedFoodEntry?
+    let foodModel: FoodModel
+    // Set on save, shown once the sheet has fully dismissed (presenting an
+    // alert while a sheet is still closing is unreliable).
+    @State private var pendingMessage: String?
+    @State private var alertMessage: String?
+
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: $entry, onDismiss: {
+                alertMessage = pendingMessage
+                pendingMessage = nil
+            }) { entry in
+                EditFoodItemView(
+                    foodItem: entry.dictionaryDraft,
+                    isAdding: true,
+                    onSave: { food in
+                        pendingMessage = foodModel.add(food)
+                            ? "\"\(food.name)\" was added to your dictionary."
+                            : "A food named \"\(food.name)\" is already in your dictionary, so nothing was added."
+                    },
+                    onCancel: { }
+                )
+            }
+            .alert(
+                alertMessage ?? "",
+                isPresented: Binding(
+                    get: { alertMessage != nil },
+                    set: { if !$0 { alertMessage = nil } }
+                )
+            ) {
+                Button("OK", role: .cancel) { }
+            }
+    }
+}
+
+extension View {
+    func addToDictionarySheet(entry: Binding<LoggedFoodEntry?>, foodModel: FoodModel) -> some View {
+        modifier(AddToDictionarySheet(entry: entry, foodModel: foodModel))
     }
 }

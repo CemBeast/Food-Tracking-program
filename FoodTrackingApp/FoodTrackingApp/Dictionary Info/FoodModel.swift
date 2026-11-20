@@ -22,7 +22,9 @@ class FoodModel: ObservableObject {
         !bundledDefaultIDs.contains(item.id)
     }
     
-    func add(_ item: FoodItem) {
+    /// Returns false if a non-meal food with the same name already exists (nothing is added).
+    @discardableResult
+    func add(_ item: FoodItem) -> Bool {
         if item.isMeal {
             if let idx = items.firstIndex(where: { $0.id == item.id }) {
                 items[idx] = item
@@ -31,16 +33,17 @@ class FoodModel: ObservableObject {
             }
             debugLog("💾 FoodModel saved meal:", item.name, "id:", item.id, "ingredients:", item.ingredients.count)
             save()
-            return
+            return true
         }
         
         // non-meal: prevent duplicates by name
         if items.contains(where: { !$0.isMeal && $0.name.lowercased() == item.name.lowercased() }) {
-            return
+            return false
         }
         debugLog("💾 FoodModel.add() called for:", item.name)
         items.append(item)
         save()
+        return true
     }
     
     func save() {
