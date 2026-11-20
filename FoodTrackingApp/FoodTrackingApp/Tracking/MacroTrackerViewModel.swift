@@ -90,6 +90,15 @@ struct LoggedFoodEntry: Identifiable, Codable {
         food.weightInGrams == 0 && !food.isMeal
     }
 
+    /// Amount as shown in logs: "Quick", "200 g", or "1.5 servings".
+    var quantityLabel: String {
+        if isQuickEntry { return "Quick" }
+        if mode == .weight {
+            return String(format: "%.0f %@", quantity, servingUnit.rawValue)
+        }
+        return String(format: "%.1f serving%@", quantity, quantity > 1 ? "s" : "")
+    }
+
     // Computed macros
     var scaledCalories: Int {
         Int(Double(food.calories) * scalingFactor)

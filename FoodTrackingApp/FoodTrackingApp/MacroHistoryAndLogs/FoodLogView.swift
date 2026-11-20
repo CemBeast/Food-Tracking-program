@@ -128,12 +128,8 @@ struct FoodLogEntryRow: View {
                                 .buttonStyle(.borderless)
                                 .accessibilityLabel("Add to dictionary")
                             }
-                        } else if entry.mode == .weight {
-                            Text(String(format: "%.0f %@", entry.quantity, entry.servingUnit.rawValue))
-                                .font(.system(size: 13.scaled))
-                                .foregroundColor(AppTheme.textSecondary)
                         } else {
-                            Text(String(format: "%.1f serving%@", entry.quantity, entry.quantity > 1 ? "s" : ""))
+                            Text(entry.quantityLabel)
                                 .font(.system(size: 13.scaled))
                                 .foregroundColor(AppTheme.textSecondary)
                         }

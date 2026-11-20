@@ -159,9 +159,11 @@ struct HistoryDayRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12.scaled) {
             HStack {
-                Text(entry.date.formatted(date: .abbreviated, time: .omitted))
+                Text(entry.date.historyDayLabel)
                     .font(.system(size: 16.scaled, weight: .semibold))
                     .foregroundColor(AppTheme.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 
                 Spacer()
                 
@@ -186,5 +188,13 @@ struct HistoryDayRow: View {
                         .stroke(AppTheme.border, lineWidth: 1)
                 )
         )
+    }
+}
+
+// MARK: - Date label
+extension Date {
+    /// "Nov 17, 2026 · Monday"
+    var historyDayLabel: String {
+        formatted(date: .abbreviated, time: .omitted) + " · " + formatted(.dateTime.weekday(.wide))
     }
 }
