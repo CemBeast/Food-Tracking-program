@@ -118,7 +118,7 @@ struct MacroHistoryView: View {
                         ZStack {
                             HistoryDayRow(entry: entry, matches: matches(in: entry))
                             NavigationLink {
-                                FoodLogViewForDate(entries: entry.foodsEaten, foodModel: foodModel)
+                                FoodLogViewForDate(day: entry, foodModel: foodModel)
                             } label: {
                                 EmptyView()
                             }
