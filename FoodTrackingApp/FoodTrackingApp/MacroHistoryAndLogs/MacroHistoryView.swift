@@ -16,21 +16,33 @@ struct MacroHistoryView: View {
         searchText.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    /// Foods in this day whose name contains the query (empty when no query).
-    private func matches(in entry: MacroHistoryEntry) -> [LoggedFoodEntry] {
-        guard !trimmedQuery.isEmpty else { return [] }
-        return entry.foodsEaten.filter { $0.food.name.localizedCaseInsensitiveContains(trimmedQuery) }
-    }
-
-    /// Newest first; when searching, only days containing a match.
-    private var visibleDays: [MacroHistoryEntry] {
+    /// Days to show, newest first, each with the foods matching the search.
+    /// No query → every day with no matches. With a query → only days that
+    /// have a match. Runs once per render; each distinct food name is checked
+    /// once (the same foods repeat across days), which keeps typing fast
+    /// even with years of history.
+    private func searchResults() -> [HistorySearchResult] {
         let sorted = viewModel.history.sorted(by: { $0.date > $1.date })
-        guard !trimmedQuery.isEmpty else { return sorted }
-        return sorted.filter { !matches(in: $0).isEmpty }
+        let query = trimmedQuery
+        guard !query.isEmpty else {
+            return sorted.map { HistorySearchResult(entry: $0, matches: []) }
+        }
+        var nameMatches: [String: Bool] = [:]
+        return sorted.compactMap { entry in
+            let hits = entry.foodsEaten.filter { logged in
+                let name = logged.food.name
+                if let cached = nameMatches[name] { return cached }
+                let hit = name.localizedCaseInsensitiveContains(query)
+                nameMatches[name] = hit
+                return hit
+            }
+            return hits.isEmpty ? nil : HistorySearchResult(entry: entry, matches: hits)
+        }
     }
 
     var body: some View {
         let (avgCal, avgProtein, avgCarb, avgFat) = getAvgMacros()
+        let visibleDays = searchResults()
 
         ZStack {
             AppTheme.background.ignoresSafeArea()
@@ -114,9 +126,10 @@ struct MacroHistoryView: View {
                         .listRowSeparator(.hidden)
                     }
 
-                    ForEach(visibleDays) { entry in
+                    ForEach(visibleDays) { result in
+                        let entry = result.entry
                         ZStack {
-                            HistoryDayRow(entry: entry, matches: matches(in: entry))
+                            HistoryDayRow(entry: entry, matches: result.matches)
                             NavigationLink {
                                 FoodLogViewForDate(day: entry, foodModel: foodModel)
                             } label: {
@@ -267,4 +280,12 @@ extension Date {
     var historyDayLabel: String {
         formatted(date: .abbreviated, time: .omitted) + " · " + formatted(.dateTime.weekday(.wide))
     }
+}
+
+// MARK: - Search result
+/// One History card: the day plus the foods that matched the search.
+struct HistorySearchResult: Identifiable {
+    let entry: MacroHistoryEntry
+    let matches: [LoggedFoodEntry]
+    var id: UUID { entry.id }
 }
