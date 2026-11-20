@@ -84,6 +84,12 @@ struct LoggedFoodEntry: Identifiable, Codable {
         }
     }
 
+    /// Quick Track entries are logged with weightInGrams == 0 (they have no
+    /// real weight), so they get edited by macros instead of by quantity.
+    var isQuickEntry: Bool {
+        food.weightInGrams == 0 && !food.isMeal
+    }
+
     // Computed macros
     var scaledCalories: Int {
         Int(Double(food.calories) * scalingFactor)
@@ -346,6 +352,24 @@ class MacroTrackerViewModel: ObservableObject {
         saveFoodLog()
     }
     
+    /// Replace a quick entry's name/macros, keeping its id and timestamp.
+    /// Daily totals shift by the difference between old and new values.
+    func updateQuickEntry(_ entry: LoggedFoodEntry, with newFood: FoodItem) {
+        guard let index = foodLog.firstIndex(where: { $0.id == entry.id }) else { return }
+
+        calories = max(0, calories - entry.scaledCalories + newFood.calories)
+        protein  = max(0, protein  - entry.scaledProtein  + newFood.protein)
+        carbs    = max(0, carbs    - entry.scaledCarbs    + newFood.carbs)
+        fats     = max(0, fats     - entry.scaledFats     + newFood.fats)
+
+        var updatedEntry = foodLog[index]
+        updatedEntry.food = newFood
+        updatedEntry.quantity = 1   // values are now absolute, so reset any old scaling
+        updatedEntry.mode = .serving
+        foodLog[index] = updatedEntry
+        saveFoodLog()
+    }
+
     private func computeFactor(_ quantity: Double, _ food: FoodItem, _ mode: MeasurementMode) -> Double {
         switch mode {
             case .weight:

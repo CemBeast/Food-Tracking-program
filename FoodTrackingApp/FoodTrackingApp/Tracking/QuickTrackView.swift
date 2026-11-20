@@ -9,7 +9,30 @@ struct QuickMacroTrackView: View {
     @State private var carbs = ""
     @State private var fats = ""
 
+    /// Non-nil when editing an already-logged quick entry instead of creating one.
+    private let editingEntry: LoggedFoodEntry?
     var onLog: (FoodItem) -> Void
+
+    init(editing entry: LoggedFoodEntry? = nil, onLog: @escaping (FoodItem) -> Void) {
+        self.editingEntry = entry
+        self.onLog = onLog
+        if let entry {
+            // Prefill with the entry's current (scaled) values.
+            _name = State(initialValue: entry.food.name)
+            _calories = State(initialValue: "\(entry.scaledCalories)")
+            _protein = State(initialValue: Self.format(entry.scaledProtein))
+            _carbs = State(initialValue: Self.format(entry.scaledCarbs))
+            _fats = State(initialValue: Self.format(entry.scaledFats))
+        }
+    }
+
+    private var isEditing: Bool { editingEntry != nil }
+
+    /// "12" for whole numbers, "12.5" otherwise.
+    private static func format(_ value: Double) -> String {
+        let rounded = (value * 10).rounded() / 10
+        return rounded == rounded.rounded() ? String(Int(rounded)) : String(format: "%.1f", rounded)
+    }
 
     var body: some View {
         NavigationView {
@@ -24,11 +47,11 @@ struct QuickMacroTrackView: View {
                                 .font(.system(size: 40, weight: .light))
                                 .foregroundColor(AppTheme.textPrimary)
                             
-                            Text("Quick Track")
+                            Text(isEditing ? "Edit Quick Entry" : "Quick Track")
                                 .font(.system(size: 22, weight: .bold))
                                 .foregroundColor(AppTheme.textPrimary)
                             
-                            Text("Log macros without saving to dictionary")
+                            Text(isEditing ? "Update this entry's name and macros" : "Log macros without saving to dictionary")
                                 .font(.system(size: 14))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
@@ -168,9 +191,9 @@ struct QuickMacroTrackView: View {
                             presentationMode.wrappedValue.dismiss()
                         } label: {
                             HStack(spacing: 8) {
-                                Image(systemName: "plus.circle.fill")
+                                Image(systemName: isEditing ? "checkmark.circle.fill" : "plus.circle.fill")
                                     .font(.system(size: 18))
-                                Text("Log Macros")
+                                Text(isEditing ? "Save Changes" : "Log Macros")
                             }
                         }
                         .buttonStyle(SleekButtonStyle())
@@ -180,7 +203,7 @@ struct QuickMacroTrackView: View {
                     .padding(.bottom, 40)
                 }
             }
-            .navigationTitle("Quick Track")
+            .navigationTitle(isEditing ? "Edit Quick Entry" : "Quick Track")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

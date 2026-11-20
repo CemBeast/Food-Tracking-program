@@ -8,6 +8,7 @@ import SwiftUI
 
 struct FoodLogView: View {
     @State private var foodToEditQuantity: LoggedFoodEntry?
+    @State private var quickEntryToEdit: LoggedFoodEntry?
     @ObservedObject var viewModel: MacroTrackerViewModel
 
     var body: some View {
@@ -37,7 +38,11 @@ struct FoodLogView: View {
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: 6, leading: 20, bottom: 6, trailing: 20))
                             .onLongPressGesture {
-                                foodToEditQuantity = entry
+                                if entry.isQuickEntry {
+                                    quickEntryToEdit = entry
+                                } else {
+                                    foodToEditQuantity = entry
+                                }
                             }
                     }
                     .onDelete { indexSet in
@@ -55,6 +60,11 @@ struct FoodLogView: View {
             EditQuantityView(entry: entry) { newQuantity in
                 viewModel.updateFoodEntryQuantity(entry, newQuantity: Double(newQuantity))
                 foodToEditQuantity = nil
+            }
+        }
+        .sheet(item: $quickEntryToEdit) { entry in
+            QuickMacroTrackView(editing: entry) { updatedFood in
+                viewModel.updateQuickEntry(entry, with: updatedFood)
             }
         }
         .navigationTitle("Today's Log")
@@ -76,7 +86,22 @@ struct FoodLogEntryRow: View {
                         .foregroundColor(AppTheme.textPrimary)
                     
                     HStack(spacing: 8) {
-                        if entry.mode == .weight {
+                        if entry.isQuickEntry {
+                            // Quick Track entries have no real quantity, so show a badge instead.
+                            HStack(spacing: 4) {
+                                Image(systemName: "bolt.fill")
+                                    .font(.system(size: 10, weight: .semibold))
+                                Text("Quick")
+                                    .font(.system(size: 12, weight: .semibold))
+                            }
+                            .foregroundColor(AppTheme.textPrimary)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(
+                                Capsule().fill(Color.white.opacity(0.12))
+                            )
+                            .accessibilityLabel("Quick Track entry")
+                        } else if entry.mode == .weight {
                             Text(String(format: "%.0f %@", entry.quantity, entry.servingUnit.rawValue))
                                 .font(.system(size: 13))
                                 .foregroundColor(AppTheme.textSecondary)
